@@ -7,17 +7,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ordermade.domain.ProductPage;
+import ordermade.domain.Product;
 import ordermade.service.facade.ProductPageService;
 
 @Controller
-public class ProductPageController {
+public class ProductController {
 	
 	@Autowired
 	private ProductPageService ppService;
 	
 	@RequestMapping(value="/productpage/register.do", method=RequestMethod.GET)
-	public String registerProductPage(ProductPage productPage, HttpSession session) {
+	public String registerProductPage(Product productPage, HttpSession session) {
 		return "";
 	}
 }
