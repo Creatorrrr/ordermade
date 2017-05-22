@@ -1,5 +1,9 @@
 package ordermade.store.facade;
 
-public interface CategoryStore {
+import java.util.List;
 
+import ordermade.domain.Category;
+
+public interface CategoryStore {
+	public List<Category> selectAllCategory();
 }
