@@ -2,7 +2,7 @@ package ordermade.domain;
 
 import java.util.List;
 
-public class ProductPage {
+public class Product {
 	private String id;
 	private String title;
 	private Member maker;
