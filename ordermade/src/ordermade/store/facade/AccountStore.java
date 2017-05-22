@@ -1,5 +1,10 @@
 package ordermade.store.facade;
 
-public interface AccountStore {
+import ordermade.domain.Account;
 
+public interface AccountStore {
+	
+	public boolean updateAccountById(Account account);
+	public Account selectAccountById(String id);
+	
 }

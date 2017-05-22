@@ -1,5 +1,19 @@
 package ordermade.store.facade;
 
-public interface RequestStore {
+import java.util.List;
 
+import ordermade.domain.Request;
+
+public interface RequestStore {
+	
+	public boolean insertRequest(Request request);
+	public boolean updateReqeust(Request request);
+	public boolean deleteRequest(String id);
+	public Request selectRequestById(String id); 
+	public List<Request> selectRequestsByBound(String bound, String title, String page);
+	public List<Request> selectRequestsByBoundAndTitle(String bound, String title, String page);
+	public List<Request> selectRequestsByBoundAndContent(String bound, String content, String page);
+	public List<Request> selectRequestsByConsumerId(String consumerId, String page);
+	public List<Request> selectRequestsByConsumerIdWithMaker(String consumerId, String page);
+	public List<Request> selectRequestsByConsumerIdWithPayment(String consumerId, String page);
 }
