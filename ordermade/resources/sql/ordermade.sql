@@ -1,8 +1,8 @@
--- cmd¿¡¼­ ´ÙÀ½ ÀÔ·Â
+-- cmdì—ì„œ ë‹¤ìŒ ì…ë ¥
 -- sqlplus / as sysdba
--- ±× ´ÙÀ½ °èÁ¤ »ı¼º
+-- ê·¸ ë‹¤ìŒ ê³„ì • ìƒì„±
 -- CREATE USER ordermade IDENTIFIED BY ordermade;
--- °èÁ¤¿¡ ±ÇÇÑ ºÎ¿©
+-- ê³„ì •ì— ê¶Œí•œ ë¶€ì—¬
 -- GRANT connect, resource, dba TO ordermade;
 
 DROP TABLE product;
@@ -59,7 +59,7 @@ CREATE TABLE invite_request (
   form VARCHAR2(5)
 );
 
-CREATE TABLE comm (-- Å×ÀÌºí ÀÌ¸§ : comment¿¡¼­ commÀ¸·Î ¼öÁ¤
+CREATE TABLE comm (-- í…Œì´ë¸” ì´ë¦„ : commentì—ì„œ commìœ¼ë¡œ ìˆ˜ì •
   id VARCHAR2(50) PRIMARY KEY,
   content VARCHAR2(2000),
   attach_id VARCHAR2(50),

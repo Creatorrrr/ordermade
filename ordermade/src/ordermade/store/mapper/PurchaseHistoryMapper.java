@@ -1,10 +1,10 @@
-package ordermade.store.facade;
+package ordermade.store.mapper;
 
 import java.util.List;
 
 import ordermade.domain.PurchaseHistory;
 
-public interface PurchaseHistoryStore {
+public interface PurchaseHistoryMapper {
 
 	public boolean insertPurchaseHistory(PurchaseHistory purchaseHistory);
 	public boolean updatePurchaseHistoryById(PurchaseHistory purchaseHistory);
