@@ -1,12 +1,19 @@
 package ordermade.domain;
 
 public class InviteRequest {
+	private String id;
 	private String message;
 	private Member member;
 	private int requestTime;
 	private Request request;
 	private String form;
 	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getMessage() {
 		return message;
 	}
