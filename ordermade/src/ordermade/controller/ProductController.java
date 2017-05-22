@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ordermade.domain.Product;
-import ordermade.service.facade.ProductPageService;
+import ordermade.service.facade.ProductService;
 
 @Controller
 public class ProductController {
 	
 	@Autowired
-	private ProductPageService ppService;
+	private ProductService pService;
 	
-	@RequestMapping(value="/productpage/register.do", method=RequestMethod.GET)
+	@RequestMapping(value="/product/register.do", method=RequestMethod.GET)
 	public String registerProductPage(Product productPage, HttpSession session) {
 		return "";
 	}

@@ -1,5 +1,5 @@
 package ordermade.store.facade;
 
-public interface ProductPageStore {
+public interface ProductStore {
 
 }

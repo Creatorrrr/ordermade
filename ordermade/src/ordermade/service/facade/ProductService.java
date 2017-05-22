@@ -1,5 +1,5 @@
 package ordermade.service.facade;
 
-public interface ProductPageService {
+public interface ProductService {
 
 }
