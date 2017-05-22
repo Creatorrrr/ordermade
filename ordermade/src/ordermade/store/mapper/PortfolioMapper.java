@@ -1,10 +1,10 @@
-package ordermade.store.facade;
+package ordermade.store.mapper;
 
 import java.util.List;
 
 import ordermade.domain.Portfolio;
 
-public interface PortfolioStore {
+public interface PortfolioMapper {
 
 	public boolean insertPortfolio(Portfolio portfolio);
 	public boolean updatePortfolioById(Portfolio portfolio);
