@@ -18,7 +18,6 @@ public class CategoryStoreLogic implements CategoryStore {
 
 	@Override
 	public List<Category> selectAllCategory() {
-		return null;
 //		SqlSession session = OrderMadeSessionFactory.getInstance().getSession();
 
 		CategoryMapper mapper = session.getMapper(CategoryMapper.class);

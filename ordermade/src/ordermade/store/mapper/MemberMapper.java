@@ -3,11 +3,11 @@ package ordermade.store.mapper;
 import ordermade.domain.Member;
 
 public interface MemberMapper {
-	public boolean insertMember(Member member);
+	public int insertMember(Member member);
 
-	public boolean updateMember(Member member);
+	public int updateMemberById(Member member);
 
-	public boolean deleteMember(String id);
+	public int deleteMemberById(String id);
 
 	public Member selectMemberById(String id);
 }

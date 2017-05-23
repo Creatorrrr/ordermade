@@ -25,30 +25,23 @@ public class MemberStoreLogic implements MemberStore {
 	}
 
 	@Override
-	public boolean updateMember(Member member) {
-
-		boolean check = false;
-
+	public boolean updateMemberById(Member member) {
 		MemberMapper mapper = session.getMapper(MemberMapper.class);
-		int check = mapper.updateMember(member);
+		int check = mapper.updateMemberById(member);
 		session.close();
 		return check > 0;
 	}
 
 	@Override
-	public boolean deleteMember(String id) {
-
+	public boolean deleteMemberById(String id) {
 		MemberMapper mapper = session.getMapper(MemberMapper.class);
-		int check = mapper.deleteMember(id);
+		int check = mapper.deleteMemberById(id);
 		session.close();
 		return check > 0;
 	}
 
 	@Override
-	public Member selectMemberBy(String id) {
-		
-		Member member = null;
-
+	public Member selectMemberById(String id) {
 		MemberMapper mapper = session.getMapper(MemberMapper.class);
 		Member member = mapper.selectMemberById(id);
 		session.close();

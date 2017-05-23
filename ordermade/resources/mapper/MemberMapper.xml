@@ -23,12 +23,12 @@
 		VALUES
 		(#{id},#{password},#{email},#{address},#{memberType},#{name},#{introduce},#{licenseNumber},#{image})
 	</insert>
-	<update id="updateMember" parameterType="Member">
+	<update id="updateMemberById" parameterType="Member">
 		UPDATE member SET
 		id=#{id},password=#{password},email=#{email},address=#{address},member_type=#{memberType},name=#{name},introduce=#{introduce},license_number=#{licenseNumber},image=#{image}
 		WHERE id=#{id}
 	</update>
-	<delete id="deleteMember" parameterType="string">
+	<delete id="deleteMemberById" parameterType="string">
 		DELETE FROM member
 		WHERE
 		id=#{id}
