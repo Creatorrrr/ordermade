@@ -8,7 +8,18 @@
 	
 	<typeAliases>
 		<!-- write typeAlias -->
-		<typeAlias type="ordermade.domain.ProductPage" alias="ProductPage"/>
+		<typeAlias type="ordermade.domain.Account" alias="Account"/>
+		<typeAlias type="ordermade.domain.Attach" alias="Attach"/>
+		<typeAlias type="ordermade.domain.Category" alias="Category"/>
+		<typeAlias type="ordermade.domain.Comment" alias="Comment"/>
+		<typeAlias type="ordermade.domain.InviteRequest" alias="InviteRequest"/>
+		<typeAlias type="ordermade.domain.Member" alias="Member"/>
+		<typeAlias type="ordermade.domain.Portfolio" alias="Portfolio"/>
+		<typeAlias type="ordermade.domain.Product" alias="Product"/>
+		<typeAlias type="ordermade.domain.PurchaseHistory" alias="PurchaseHistory"/>
+		<typeAlias type="ordermade.domain.Request" alias="Request"/>
+		<typeAlias type="ordermade.domain.Review" alias="Review"/>
+		<typeAlias type="ordermade.domain.Tag" alias="Tag"/>
 	</typeAliases>
 	
 	<environments default="development">
@@ -24,6 +35,7 @@
 	</environments>
 	
 	<mappers>
-		<mapper resource="mapper/ProductPageMapper.xml"/>
+		<mapper resource="mapper/PortfolioMapper.xml"/>
+		<mapper resource="mapper/PurchaseHistorymapper.xml"/>
 	</mappers>
 </configuration>

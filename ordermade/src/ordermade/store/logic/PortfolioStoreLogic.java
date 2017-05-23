@@ -2,51 +2,56 @@ package ordermade.store.logic;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
 import ordermade.domain.Portfolio;
 import ordermade.store.facade.PortfolioStore;
+import ordermade.store.mapper.PortfolioMapper;
 
 public class PortfolioStoreLogic implements PortfolioStore {
 
+	private SqlSession session;
+	
+	
 	@Override
 	public boolean insertPortfolio(Portfolio portfolio) {
-		// TODO Auto-generated method stub
-		return false;
+		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+		return mapper.insertPortfolio(portfolio);
 	}
 
 	@Override
 	public boolean updatePortfolioById(Portfolio portfolio) {
-		// TODO Auto-generated method stub
-		return false;
+		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+		return mapper.updatePortfolioById(portfolio);
 	}
 
 	@Override
 	public boolean deletePortfolioById(String id) {
-		// TODO Auto-generated method stub
-		return false;
+		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+		return mapper.deletePortfolioById(id);
 	}
 
 	@Override
 	public Portfolio selectPortfolioById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return session.selectOne("ordermade.store.mapper.PortfolioMapper.selectPortfolioById", id);
 	}
 
 	@Override
 	public List<Portfolio> selectPortfoliosByMakerId(String makerId, String page) {
-		// TODO Auto-generated method stub
-		return null;
+		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+		return mapper.selectPortfoliosByMakerId(makerId, page);
 	}
 
 	@Override
 	public List<Portfolio> selectPortfoliosByMakerIdAndTitle(String makerId, String title, String page) {
-		// TODO Auto-generated method stub
-		return null;
+		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+		return mapper.selectPortfoliosByMakerIdAndTitle(makerId, title, page);
 	}
 
 	@Override
 	public List<Portfolio> selectPortfoliosByCategory(String category, String page) {
-		// TODO Auto-generated method stub
-		return null;
+		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+		return mapper.selectPortfoliosByCategory(category, page);
 	}
 
 }
