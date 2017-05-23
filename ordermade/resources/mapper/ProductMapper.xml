@@ -3,6 +3,173 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <mapper namespace="ordermade.store.mapper.ProductPageMapper">
-  
+  <mapper namespace="ordermade.store.mapper.ProductMapper">
+  	<resultMap type="Product" id="productMap">
+		<id column="id" property="id" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="image" property="image" />
+		<result column="price" property="price" />
+		<result column="period" property="period" />
+		<result column="hit" property="hit" />
+		<association property="maker" column="maker_id"
+			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
+			jdbcType="VARCHAR" />
+		<association property="type" column="category"
+			select="ordermade.store.mapper.CategoryMapper.selectCategoryById" javaType="Category"
+			jdbcType="VARCHAR" />
+		<collection property="reviews" column="id" ofType="Review"
+			select="ordermade.store.mapper.ReviewMapper.selectReviewsByProductId" javaType="ArrayList"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="selectProduct">
+		SELECT id, 
+				title, 
+				content, 
+				image, 
+				price, 
+				period, 
+				maker_id, 
+				category,
+				hit
+	</sql>
+	
+	<sql id="selectProductWithRowNum">
+		SELECT rownum,
+				id, 
+				title, 
+				content, 
+				image, 
+				price, 
+				period, 
+				maker_id, 
+				category,
+				hit
+	</sql>
+	
+	<insert id="insertProduct" parameterType="Product">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			SELECT product_seq.nextval FROM dual;
+		</selectKey>
+		INSERT INTO product(id, 
+							title, 
+							content, 
+							image, 
+							price, 
+							period, 
+							maker_id, 
+							category,
+							hit)
+		VALUES(#{id}, 
+				#{title}, 
+				#{content}, 
+				#{image}, 
+				#{price}, 
+				#{period}, 
+				#{maker.id}, 
+				#{category.type}
+				#{hit})
+	</insert>
+	
+	<update id="updateProductById" parameterType="Product">
+		UPDATE product
+		SET title = #{title}, 
+			content = #{content}, 
+			image = #{image}, 
+			price = #{price}, 
+			period = #{period}, 
+			maker_id = #{maker.id}, 
+			category = #{category.type}
+			hit = #{hit}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="deleteProductById" parameterType="String">
+		DELETE FROM product 
+		WHERE id = #{id}
+	</delete>
+	
+	<select id="selectProductById" parameterType="String" resultMap="productMap">
+		<include refid="selectProduct" />
+		FROM product
+		WHERE id = #{id}
+	</select>
+	
+	<select id="selectProductsByCategoryOrderByHitsForMain" parameterType="HashMap" resultMap="productMap">
+		<include refid="selectProduct" />
+		FROM (<include refid="selectProductWithRowNum" />
+				FROM product
+				WHERE type = #{category}
+				ORDER BY hit DESC)
+		WHERE rownum BETWEEN 1 AND #{page}
+	</select>
+	
+	<select id="selectProductsByCategoryOrderByIdForMain" parameterType="HashMap" resultMap="productMap">
+		<include refid="selectProduct" />
+		FROM (<include refid="selectProductWithRowNum" />
+				FROM product
+				WHERE type = #{category}
+				ORDER BY id DESC)
+		WHERE rownum BETWEEN 1 AND #{page}
+	</select>
+	
+	<select id="selectProductsByCategory" parameterType="HashMap" resultMap="productMap">
+		<include refid="selectProduct" />
+		FROM (<include refid="selectProductWithRowNum" />
+				FROM product
+				WHERE type = #{category}
+				ORDER BY id DESC)
+		WHERE rownum BETWEEN #{begin} AND #{end}
+	</select>
+	
+	<select id="selectProductsByCategoryAndTitle" parameterType="HashMap" resultMap="productMap">
+		<include refid="selectProduct" />
+		FROM (<include refid="selectProductWithRowNum" />
+				FROM product
+				WHERE type = #{category} AND title = #{title}
+				ORDER BY id DESC)
+		WHERE rownum BETWEEN #{begin} AND #{end}
+	</select>
+	
+	<select id="selectProductsByCategoryAndMakerName" parameterType="HashMap" resultMap="productMap">
+		<include refid="selectProduct" />
+		FROM (<include refid="selectProductWithRowNum" />
+				FROM product INNER JOIN member ON product.member_id = member.id
+				WHERE product.type = #{category} AND member.name = #{makerName}
+				ORDER BY product.id DESC)
+		WHERE rownum BETWEEN #{begin} AND #{end}
+	</select>
+	
+	<select id="selectProductsByCategoryAndMakerId" parameterType="HashMap" resultMap="productMap">
+		<include refid="selectProduct" />
+		FROM (<include refid="selectProductWithRowNum" />
+				FROM product
+				WHERE type = #{category} AND member_id = #{makerId}
+				ORDER BY id DESC)
+		WHERE rownum BETWEEN #{begin} AND #{end}
+	</select>
+	
+	<select id="selectProductsByMakerId" parameterType="HashMap" resultMap="productMap">
+		<include refid="selectProduct" />
+		FROM (<include refid="selectProductWithRowNum" />
+				FROM product
+				WHERE member_id = #{makerId}
+				ORDER BY id DESC)
+		WHERE rownum BETWEEN #{begin} AND #{end}
+	</select>
+	
+	<select id="selectProductsByMakerIdAndTitle" parameterType="HashMap" resultMap="productMap">
+		<include refid="selectProduct" />
+		FROM (<include refid="selectProductWithRowNum" />
+				FROM product
+				WHERE title = #{title} AND member_id = #{makerId}
+				ORDER BY id DESC)
+		WHERE rownum BETWEEN #{begin} AND #{end}
+	</select>
+	
+	<select id="selectAllCategory" parameterType="HashMap" resultType="Category">
+		SELECT type
+		FROM category
+	</select>
   </mapper>

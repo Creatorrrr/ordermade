@@ -7,8 +7,8 @@
 	<properties resource="dataSource.properties"></properties>
 	
 	<typeAliases>
-		<!-- write typeAlias -->
-		<typeAlias type="ordermade.domain.ProductPage" alias="ProductPage"/>
+		<typeAlias type="ordermade.domain.Product" alias="Product"/>
+		<typeAlias type="ordermade.domain.Review" alias="Review"/>
 	</typeAliases>
 	
 	<environments default="development">
@@ -24,6 +24,7 @@
 	</environments>
 	
 	<mappers>
-		<mapper resource="mapper/ProductPageMapper.xml"/>
+		<mapper resource="mapper/ProductMapper.xml"/>
+		<mapper resource="mapper/ReviewMapper.xml"/>
 	</mappers>
 </configuration>

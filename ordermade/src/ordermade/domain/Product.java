@@ -9,7 +9,9 @@ public class Product {
 	private Category category;
 	private String content;
 	private String image;
+	private int price;
 	private int period;
+	private int hit;
 	private List<Review> reviews;
 	
 	public String getId() {
@@ -48,11 +50,23 @@ public class Product {
 	public void setImage(String image) {
 		this.image = image;
 	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
 	public int getPeriod() {
 		return period;
 	}
 	public void setPeriod(int period) {
 		this.period = period;
+	}
+	public int getHit() {
+		return hit;
+	}
+	public void setHit(int hit) {
+		this.hit = hit;
 	}
 	public List<Review> getReviews() {
 		return reviews;

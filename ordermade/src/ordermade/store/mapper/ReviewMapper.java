@@ -1,10 +1,10 @@
-package ordermade.store.facade;
+package ordermade.store.mapper;
 
 import java.util.List;
 
 import ordermade.domain.Review;
 
-public interface ReviewStore {
+public interface ReviewMapper {
 	public boolean insertReview(Review review);
 	public boolean updateReview(Review review);
 	public boolean deleteReviewById(String id);
