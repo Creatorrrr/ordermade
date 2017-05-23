@@ -2,6 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="ordermade.store.mapper.RequestMapper">
 	<resultMap type="Request" id="requestMap">
 		<result property="id" column="id" />
@@ -19,13 +20,16 @@
 		<association property="category" column="type"
 			select="store.mapper.CategoryMapper.selectAllCategory" javaType="Category"
 			jdbcType="VARCHAR" />
-		<collection property=""></collection>	
-			private List<Comment> comments;
-	private List<Attach> attachs;
-			
+		<collection property="comments" column="id"
+			select="store.mapper.CommentMapper.selectCommentsByRequestId"
+			javaType="ArrayList" jdbcType="VARCHAR" />
+		<collection property="attachs" column="id"
+			select="store.mapper.AttachMapper.selectAllAttachsByRequestId"
+			javaType="ArrayList" jdbcType="VARCHAR" />
 	</resultMap>
-	
-	<sql id="selectInviteRequest">
-		SELECT id, message, member_id, request_time, request_id, form
-		FROM invite_request
+
+	<sql id="selectRequest">
+		SELECT id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+		FROM request
 	</sql>
+</mapper>
