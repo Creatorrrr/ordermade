@@ -7,8 +7,8 @@ import ordermade.domain.Request;
 public interface RequestStore {
 	
 	public boolean insertRequest(Request request);
-	public boolean updateReqeust(Request request);
-	public boolean deleteRequest(String id);
+	public boolean updateReqeustById(Request request);
+	public boolean deleteRequestById(String id);
 	public Request selectRequestById(String id); 
 	public List<Request> selectRequestsByBound(String bound,  String begin, String end);
 	public List<Request> selectRequestsByBoundAndTitle(String bound, String title,  String begin, String end);

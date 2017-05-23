@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import ordermade.domain.InviteRequest;
 import ordermade.store.facade.InviteRequestStore;
 import ordermade.store.mapper.InviteRequestMapper;
+import ordermade.store.mapper.ProductMapper;
 
 public class InviteRequestStoreLogic implements InviteRequestStore {
 
@@ -24,10 +25,10 @@ public class InviteRequestStoreLogic implements InviteRequestStore {
 		SqlSession session = factory.openSession();
 		boolean check = false;
 
-		InviteRequestMapper mapper = session.getMapper(InviteRequestMapper.class);
-
 		try {
-			if (check = mapper.insertInviteRequest(inviteRequest) == true) {
+			InviteRequestMapper mapper = session.getMapper(InviteRequestMapper.class);
+			check = mapper.insertInviteRequest(inviteRequest);
+			if (check) {
 				session.commit();
 			} else {
 				session.rollback();
@@ -36,14 +37,6 @@ public class InviteRequestStoreLogic implements InviteRequestStore {
 			session.close();
 		}
 		return check;
-
-		// check = mapper.insertInviteRequest(inviteRequest);
-		// if(check ==true){
-		// session.commit();
-		// }else {
-		// session.close();
-		// }
-		// return check;
 	}
 
 	@Override
@@ -52,9 +45,18 @@ public class InviteRequestStoreLogic implements InviteRequestStore {
 		SqlSession session = factory.openSession();
 		boolean check = false;
 
-		HashMap<String, String> map = new HashMap<>();
-
-		return false;
+		try {
+			InviteRequestMapper mapper = session.getMapper(InviteRequestMapper.class);
+			check = mapper.deleteInviteRequestById(id);
+			if (check) {
+				session.commit();
+			} else {
+				session.rollback();
+			}
+		} finally {
+			session.close();
+		}
+		return check;
 	}
 
 	@Override // 의뢰서가 참가가 완료되었을 때 그 에 해당되는 모든 참가요청을 다 지움
@@ -62,15 +64,16 @@ public class InviteRequestStoreLogic implements InviteRequestStore {
 
 		SqlSession session = factory.openSession();
 		boolean check = false;
-		
-		try{
+
+		try {
 			InviteRequestMapper mapper = session.getMapper(InviteRequestMapper.class);
-			if(check = mapper.deleteInviteRequestsByRequestId(requestId)){
+			check = mapper.deleteInviteRequestsByRequestId(requestId);
+			if (check) {
 				session.commit();
-			}else{
+			} else {
 				session.rollback();
 			}
-		}finally{
+		} finally {
 			session.close();
 		}
 		return check;
@@ -83,10 +86,10 @@ public class InviteRequestStoreLogic implements InviteRequestStore {
 		List<InviteRequest> list = null;
 
 		HashMap<String, String> map = new HashMap();
-		map.put("makerId",makerId);
+		map.put("makerId", makerId);
 		map.put("begin", begin);
 		map.put("end", end);
-		
+
 		try {
 			InviteRequestMapper mapper = session.getMapper(InviteRequestMapper.class);
 			list = mapper.selectInviteRequestsByMakerId(map);
@@ -101,9 +104,9 @@ public class InviteRequestStoreLogic implements InviteRequestStore {
 
 		SqlSession session = factory.openSession();
 		List<InviteRequest> list = null;
-		
+
 		HashMap<String, String> map = new HashMap();
-		map.put("consumerId",consumerId);
+		map.put("consumerId", consumerId);
 		map.put("begin", begin);
 		map.put("end", end);
 
