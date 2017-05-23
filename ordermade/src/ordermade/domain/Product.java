@@ -6,7 +6,7 @@ public class Product {
 	private String id;
 	private String title;
 	private Member maker;
-	private Category category;
+	private String category;
 	private String content;
 	private String image;
 	private int price;
@@ -32,10 +32,10 @@ public class Product {
 	public void setMaker(Member maker) {
 		this.maker = maker;
 	}
-	public Category getCategory() {
+	public String getCategory() {
 		return category;
 	}
-	public void setCategory(Category category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 	public String getContent() {

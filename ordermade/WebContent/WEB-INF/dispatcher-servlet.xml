@@ -9,9 +9,9 @@
 
 	<mvc:annotation-driven/>
 	
-	<context:component-scan base-package="ordermade.controller"/>
-	<context:component-scan base-package="ordermade.service"/>
-	<context:component-scan base-package="ordermade.store"/>
+	<mvc:resources location="/resources/" mapping="/resources/**"/>
+	
+	<context:component-scan base-package="ordermade"/>
 	
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/views/"/>

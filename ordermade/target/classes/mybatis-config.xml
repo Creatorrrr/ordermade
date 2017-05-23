@@ -34,8 +34,8 @@
 	</environments>
 
 	<mappers>
-		<mapper resource="mapper/ReviewMapper.xml"/>
 		<mapper resource="mapper/ProductMapper.xml"/>
+		<!-- <mapper resource="mapper/ReviewMapper.xml"/>
 		<mapper resource="mapper/InviteRequestMapper.xml"/>
 		<mapper resource="mapper/RequestMapper.xml"/>
 		<mapper resource="mapper/MemberMapper.xml" />
@@ -44,6 +44,6 @@
 		<mapper resource="mapper/AccountMapper.xml"/>
 		<mapper resource="mapper/CommentMapper.xml"/>
 		<mapper resource="mapper/PortfolioMapper.xml"/>
-		<mapper resource="mapper/PurchaseHistorymapper.xml"/>
+		<mapper resource="mapper/PurchaseHistorymapper.xml"/> -->
 	</mappers>
 </configuration>
