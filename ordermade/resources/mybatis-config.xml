@@ -14,6 +14,7 @@
 		<typeAlias type="ordermade.domain.Member" alias="Member" />
 		<typeAlias type="ordermade.domain.Tag" alias="Tag" />
 		<typeAlias type="ordermade.domain.Category" alias="Category" />
+		<typeAlias type="ordermade.domain.Account" alias="Account"/>
 	</typeAliases>
 
 	<environments default="development">
@@ -36,5 +37,7 @@
 		<mapper resource="mapper/MemberMapper.xml" />
 		<mapper resource="mapper/TagMapper.xml" />
 		<mapper resource="mapper/CategoryMapper.xml" />
+		<mapper resource="mapper/AccountMapper.xml"/>
+		<mapper resource="mapper/CommentMapper.xml"/>
 	</mappers>
 </configuration>

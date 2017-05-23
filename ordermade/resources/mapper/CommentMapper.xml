@@ -3,12 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <mapper namespace="ordermade.store.mapper.AccountMapper">
+  <mapper namespace="ordermade.store.mapper.CommentMapper">
   
-  	<update id="updateAccountById" parameterType="Account">
-  		UPDATE ACCOUNT
-  		SET MONEY  = #{MONEY}
-  		WHERE MEMBER_ID = #{member.id}
+  	<update id="insertComment" parameterType="Comment">
   	</update>
   	
   	<select id="selectAccountById" parameterType="String" resultMap="Account">
