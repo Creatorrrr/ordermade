@@ -35,13 +35,13 @@ public class TagTest {
 //		store.insertTag(tag);
 //		
 //	}
-
-	@Test
-	public void testDeleteTagById() {
-	boolean cheak = store.deleteTagById("2");
-		System.out.println(cheak);
-		
-	}
+//
+//	@Test
+//	public void testDeleteTagById() {
+//	boolean cheak = store.deleteTagById("2");
+//		System.out.println(cheak);
+//		
+//	}
 //
 //	@Test
 //	public void testSelectTagById() {
