@@ -10,10 +10,10 @@ public interface RequestStore {
 	public boolean updateReqeust(Request request);
 	public boolean deleteRequest(String id);
 	public Request selectRequestById(String id); 
-	public List<Request> selectRequestsByBound(String bound, String title, String page);
-	public List<Request> selectRequestsByBoundAndTitle(String bound, String title, String page);
-	public List<Request> selectRequestsByBoundAndContent(String bound, String content, String page);
-	public List<Request> selectRequestsByConsumerId(String consumerId, String page);
-	public List<Request> selectRequestsByConsumerIdWithMaker(String consumerId, String page);
-	public List<Request> selectRequestsByConsumerIdWithPayment(String consumerId, String page);
+	public List<Request> selectRequestsByBound(String bound,  String begin, String end);
+	public List<Request> selectRequestsByBoundAndTitle(String bound, String title,  String begin, String end);
+	public List<Request> selectRequestsByBoundAndContent(String bound, String content,  String begin, String end);
+	public List<Request> selectRequestsByConsumerId(String consumerId,  String begin, String end);
+	public List<Request> selectRequestsByConsumerIdWithMaker(String consumerId,  String begin, String end);
+	public List<Request> selectRequestsByConsumerIdWithPayment(String consumerId, String begin, String end);
 }

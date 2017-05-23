@@ -9,5 +9,5 @@ public interface MemberMapper {
 
 	public boolean deleteMember(String id);
 
-	public Member selectMemberBy(String id);
+	public Member selectMemberById(String id);
 }
