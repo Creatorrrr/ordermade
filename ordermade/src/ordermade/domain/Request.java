@@ -7,7 +7,7 @@ public class Request {
 	private String title;
 	private Member maker;
 	private Member consumer;
-	private Category category;
+	private String category;
 	private String content;
 	private int hopePrice;
 	private int price;
@@ -39,10 +39,10 @@ public class Request {
 	public void setConsumer(Member consumer) {
 		this.consumer = consumer;
 	}
-	public Category getCategory() {
+	public String getCategory() {
 		return category;
 	}
-	public void setCategory(Category category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 	public String getContent() {

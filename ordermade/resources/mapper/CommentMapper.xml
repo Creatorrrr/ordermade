@@ -5,13 +5,13 @@
   
   <mapper namespace="ordermade.store.mapper.CommentMapper">
   
-  	<update id="insertComment" parameterType="Comment">
+  <!-- 	<update id="insertComment" parameterType="Comment">
   	</update>
   	
   	<select id="selectAccountById" parameterType="String" resultMap="Account">
   		SELECT MONEY
   		FROM ACCOUNT
   		WHERE MEMBER_ID = #{member.id}
-  	</select>
+  	</select> -->
   
   </mapper>

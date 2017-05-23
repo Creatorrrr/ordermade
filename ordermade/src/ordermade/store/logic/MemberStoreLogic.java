@@ -52,12 +52,12 @@ public class MemberStoreLogic implements MemberStore {
 	}
 
 	@Override
-	public Member selectMemberBy(String id) {
+	public Member selectMemberById(String id) {
 
 		SqlSession session = OrderMadeSessionFactory.getInstance().getSession();
 
 		MemberMapper mapper = session.getMapper(MemberMapper.class);
-		Member member = mapper.selectMemberBy(id);
+		Member member = mapper.selectMemberById(id);
 		session.close();
 
 		return member;

@@ -32,7 +32,7 @@
 		WHERE
 		id=#{id}
 	</delete>
-	<select id="selectMemberBy" parameterType="string" resultMap="MemberMap">
+	<select id="selectMemberById" parameterType="string" resultMap="MemberMap">
 		SELECT
 		id,password,email,address,member_type,name,introduce,license_number,image
 		FROM member

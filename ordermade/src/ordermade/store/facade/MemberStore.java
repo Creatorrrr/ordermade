@@ -9,5 +9,5 @@ public interface MemberStore {
 
 	public boolean deleteMember(String id);
 
-	public Member selectMemberBy(String id);
+	public Member selectMemberById(String id);
 }

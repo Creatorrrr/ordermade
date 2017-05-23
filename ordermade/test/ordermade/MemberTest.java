@@ -60,11 +60,11 @@ public class MemberTest {
 	// System.out.println(check);
 	// }
 	//
-	@Test
-	public void testSelectMemberBy() {
-		Member member = store.selectMemberBy("qq");
-		
-		assertEquals("ee", member.getId());
-	}
+//	@Test
+//	public void testSelectMemberBy() {
+//		Member member = store.selectMemberBy("qq");
+//		
+//		assertEquals("ee", member.getId());
+//	}
 
 }
