@@ -22,8 +22,7 @@ public class CategoryTest {
 	@Test
 	public void test() {
 		List<Category> list = store.selectAllCategory();
-		System.out.println(list.size());
-		assertEquals(4, list.size());
+		assertEquals(5, list.size());
 	}
 
 }

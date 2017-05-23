@@ -26,13 +26,14 @@
 	<update id="updateMember" parameterType="Member">
 		UPDATE member SET
 		id=#{id},password=#{password},email=#{email},address=#{address},member_type=#{memberType},name=#{name},introduce=#{introduce},license_number=#{licenseNumber},image=#{image}
+		WHERE id=#{id}
 	</update>
 	<delete id="deleteMember" parameterType="string">
 		DELETE FROM member
 		WHERE
 		id=#{id}
 	</delete>
-	<select id="selectMemberBy" parameterType="string" resultMap="MemberMap">
+	<select id="selectMemberById" parameterType="string" resultMap="MemberMap">
 		SELECT
 		id,password,email,address,member_type,name,introduce,license_number,image
 		FROM member

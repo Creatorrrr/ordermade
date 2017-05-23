@@ -8,9 +8,10 @@
 	<resultMap type="ordermade.domain.Tag" id="TagMap">
 		<id column="id" property="id" />
 		<result column="keyword" property="keyword" />
-		<result column="score" property="score"  />
-		<!-- <association column="portfolioid" property="portfolio" javaType="Portfolio" 
-			jdbcType="VARCHER" select="ordermade.store.mapper.PortfolioMapper.find"></association> -->
+		<result column="score" property="score" />
+		<association column="portfolioid" property="portfolio"
+			javaType="Portfolio" jdbcType="VARCHAR"
+			select="ordermade.store.mapper.PortfolioMapper.selectPortfolioById" />
 	</resultMap>
 
 	<insert id="insertTag" parameterType="Tag">
