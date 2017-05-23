@@ -4,20 +4,34 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="ordermade.store.mapper.PortfolioMapper">
   
+  	<resultMap type="Portfolio" id="portfolioMap">
+
+  		<id property="id" column="id"/>
+  		<result property="title" column="title"/>
+  		<result property="content" column="content"/>
+  		<!-- <collection property="tags" column="id" ofType="Tag" select="ordermade.store.mapper.TagMapper.selectTagById" javaType="ArrayList" jdbcType="varchar" /> -->
+  		<result property="category" column="type" />
+  		<!-- <association property="maker" column="maker_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="String" jdbcType="varchar"/> -->
+  		<result property="image" column="image"/>
+
+  	</resultMap>
+  
+  
+  
   	<insert id="insertPortfolio">
-  		<selectKey resultType="int" keyProperty="id" order="BEFORE">
+  		<selectKey resultType="String" keyProperty="id" order="BEFORE">
   			select portfolio_seq.nextval from dual
   		</selectKey>
   		insert into portfolio(id, title, type, content, maker_id, image) 
-  		values(#{id}, #{title}, #{category.type} , #{content}, #{maker.id}, #{image})
+  		values(#{id}, #{title}, #{category} , #{content}, #{maker.id}, #{image})
   	</insert>
   
   	<update id="updatePortfolioById">
-  		update portfolio set title=#{title}, type=#{category.type}, content=#{content}, maker_id=#{maker.id}, image={image} where id=#{id}
+  		update portfolio set title=#{title}, type=#{category}, content=#{content}, maker_id=#{maker.id}, image=#{image} where id=#{id}
   	</update>
   
   
-  	<delete id="deletePortfolioById">
+  	<delete id="deletePortfolioById" parameterType="string">
   		delete from portfolio where id=#{id}
   	</delete>
   
@@ -26,11 +40,27 @@
   	</select>
   
   	<select id="selectPortfoliosByMakerId" resultMap="portfolioMap">
-  	 select * from (select t.*, row_number() over (order by t.OBJECT_ID) as limitNum from portfolio t) 
-  	 where maker_id=#{maker.id} and limitNum between 0 and 10
+		select * from (
+			select rownum limitNum, A.* from portfolio A where maker_id=#{makerId}
+			and rownum &lt;= ((#{page}-1)*10+10)
+		) where limitNum > ((#{page}-1)*10)
+
+  	</select>
+  	
+  
+  	<select id="selectPortfoliosByMakerIdAndTitle" resultMap="portfolioMap">
+  		select * from (
+			select rownum limitNum, A.* from portfolio A where maker_id=#{makerId} and #{title}
+			and rownum &lt;= ((#{page}-1)*10+10)
+		) where limitNum > ((#{page}-1)*10)
   	</select>
   
-  
+    <select id="selectPortfoliosByCategory" resultMap="portfolioMap">
+		select * from (
+			select rownum limitNum, A.* from portfolio A where type=#{category}
+			and rownum &lt;= ((#{page}-1)*10+10)
+		) where limitNum > ((#{page}-1)*10)
+  	</select>
   
   </mapper>
   

@@ -7,7 +7,7 @@ public class Portfolio {
 	private String title;
 	private String content;
 	private List<Tag> tags;
-	private Category category;
+	private String category;
 	private Member maker;
 	private String image;
 	
@@ -35,10 +35,10 @@ public class Portfolio {
 	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
-	public Category getCategory() {
+	public String getCategory() {
 		return category;
 	}
-	public void setCategory(Category category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 	public Member getMaker() {
