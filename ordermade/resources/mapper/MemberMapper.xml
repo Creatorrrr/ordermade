@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ordermade.store.mapper.MemberMapper">
+	<resultMap type="ordermade.domain.Member" id="MemberMap">
+		<result column="id" property="id" />
+		<result column="password" property="password" />
+		<result column="email" property="email" />
+		<result column="address" property="address" />
+		<result column="member_type" property="memberType" />
+		<result column="name" property="name" />
+		<result column="introduce" property="introduce" />
+		<result column="license_number" property="licenseNumber" />
+		<result column="image" property="image" />
+	</resultMap>
+
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO member
+		(id,password,email,address,member_type,name,introduce,license_number,image)
+		VALUES
+		(#{id},#{password},#{email},#{address},#{memberType},#{name},#{introduce},#{licenseNumber},#{image})
+	</insert>
+	<update id="updateMember" parameterType="Member">
+		UPDATE member SET
+		id=#{id},password=#{password},email=#{email},address=#{address},member_type=#{memberType},name=#{name},introduce=#{introduce},license_number=#{licenseNumber},image=#{image}
+	</update>
+	<delete id="deleteMember" parameterType="string">
+		DELETE FROM member
+		WHERE
+		id=#{id}
+	</delete>
+	<select id="selectMemberBy" parameterType="string" resultMap="MemberMap">
+		SELECT
+		id,password,email,address,member_type,name,introduce,license_number,image
+		FROM member
+		WHERE id = #{id}
+	</select>
+
+</mapper>

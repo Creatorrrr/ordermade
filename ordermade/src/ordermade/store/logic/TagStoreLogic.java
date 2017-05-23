@@ -12,34 +12,61 @@ import ordermade.store.mapper.TagMapper;
 
 @Repository
 public class TagStoreLogic implements TagStore {
-	@Autowired
-	private SqlSession sqlSession;
 
 	@Override
 	public boolean insertTag(Tag tag) {
-		
+
 		int check = 0;
-		
-		TagMapper mapper = sqlSession.getMapper(TagMapper.class);
-		return false;
+
+		SqlSession session = OrderMadeSessionFactory.getInstance().getSession();
+
+		TagMapper mapper = session.getMapper(TagMapper.class);
+		check = mapper.insertTag(tag);
+		session.close();
+
+		return check > 0;
+
 	}
 
 	@Override
 	public boolean deleteTagById(String id) {
-		// TODO Auto-generated method stub
-		return false;
+
+		int check = 0;
+
+		SqlSession session = OrderMadeSessionFactory.getInstance().getSession();
+
+		TagMapper mapper = session.getMapper(TagMapper.class);
+		check = mapper.deleteTagById(id);
+		session.close();
+		
+		return check > 0;
+
 	}
 
 	@Override
 	public Tag selectTagById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	
+		SqlSession session = OrderMadeSessionFactory.getInstance().getSession();
+		
+		TagMapper mapper = session.getMapper(TagMapper.class);
+		Tag tag = mapper.selectTagById(id);
+		session.close();
+		
+		return tag;
+
 	}
 
 	@Override
 	public List<Tag> TagsFromGoogleVision(String path) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		SqlSession session = OrderMadeSessionFactory.getInstance().getSession();
+		
+		TagMapper mapper = session.getMapper(TagMapper.class);
+		List<Tag> list = mapper.TagsFromGoogleVision(path);
+		session.close();
+		
+		return list;
+
 	}
 
 }
