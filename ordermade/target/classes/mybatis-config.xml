@@ -5,30 +5,48 @@
 
 <configuration>
 	<properties resource="dataSource.properties"></properties>
+<<<<<<< HEAD
 	
 	<typeAliases>
 		<typeAlias type="ordermade.domain.Product" alias="Product"/>
 		<typeAlias type="ordermade.domain.Review" alias="Review"/>
 		<typeAlias type="ordermade.domain.InviteRequest" alias="InviteRequest"/>
 		<typeAlias type="ordermade.domain.Request" alias="Request"/>
+=======
+
+	<typeAliases>
+		<!-- write typeAlias -->
+		<!-- <typeAlias type="ordermade.domain.ProductPage" alias="ProductPage" 
+			/> -->
+		<typeAlias type="ordermade.domain.Member" alias="Member" />
+		<typeAlias type="ordermade.domain.Tag" alias="Tag" />
+		<typeAlias type="ordermade.domain.Category" alias="Category" />
+>>>>>>> refs/remotes/origin/Eom0523
 	</typeAliases>
-	
+
 	<environments default="development">
-	  	<environment id="development">
-	  		<transactionManager type="JDBC"/>
-	  		<dataSource type="POOLED">
-	  			<property name="driver" value="${driver}"/>
-	  			<property name="url" value="${url}"/>
-	  			<property name="username" value="${username}"/>
-	  			<property name="password" value="${password}"/>
-	  		</dataSource>
-	  	</environment>
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
 	</environments>
-	
+
 	<mappers>
+<<<<<<< HEAD
 		<mapper resource="mapper/ReviewMapper.xml"/>
 		<mapper resource="mapper/ProductMapper.xml"/>
 		<mapper resource="mapper/InviteRequestMapper.xml"/>
 		<mapper resource="mapper/RequestMapper.xml"/>
+=======
+		<!-- <mapper resource="mapper/ProductPageMapper.xml" /> -->
+		<mapper resource="mapper/MemberMapper.xml" />
+		<mapper resource="mapper/TagMapper.xml" />
+		<mapper resource="mapper/CategoryMapper.xml" />
+>>>>>>> refs/remotes/origin/Eom0523
 	</mappers>
 </configuration>

@@ -5,7 +5,7 @@ public class Member {
 	private String password;
 	private String email;
 	private String address;
-	private String memeberType;
+	private String memberType;
 	private String name;
 	private String introduce;
 	private String licenseNumber;
@@ -35,11 +35,11 @@ public class Member {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getMemeberType() {
-		return memeberType;
+	public String getMemberType() {
+		return memberType;
 	}
-	public void setMemeberType(String memeberType) {
-		this.memeberType = memeberType;
+	public void setMemberType(String memberType) {
+		this.memberType = memberType;
 	}
 	public String getName() {
 		return name;

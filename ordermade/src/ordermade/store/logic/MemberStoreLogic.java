@@ -1,40 +1,66 @@
 package ordermade.store.logic;
 
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ordermade.domain.Member;
 import ordermade.store.facade.MemberStore;
 import ordermade.store.mapper.MemberMapper;
+
 @Repository
-public class MemberStoreLogic implements MemberStore{
-	@Autowired
-	private SqlSession sqlSession;
-	
+public class MemberStoreLogic implements MemberStore {
+
 	@Override
 	public boolean insertMember(Member member) {
-		
-		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		return false;
+
+		int check = 0;
+
+		SqlSession session = OrderMadeSessionFactory.getInstance().getSession();
+
+		MemberMapper mapper = session.getMapper(MemberMapper.class);
+		check = mapper.insertMember(member);
+		session.close();
+		return check > 0;
 	}
 
 	@Override
 	public boolean updateMember(Member member) {
-		// TODO Auto-generated method stub
-		return false;
+
+		int check = 0;
+
+		SqlSession session = OrderMadeSessionFactory.getInstance().getSession();
+
+		MemberMapper mapper = session.getMapper(MemberMapper.class);
+		check = mapper.updateMember(member);
+		session.close();
+
+		return check > 0;
 	}
 
 	@Override
 	public boolean deleteMember(String id) {
-		// TODO Auto-generated method stub
-		return false;
+
+		int check = 0;
+
+		SqlSession session = OrderMadeSessionFactory.getInstance().getSession();
+
+		MemberMapper mapper = session.getMapper(MemberMapper.class);
+		check = mapper.deleteMember(id);
+		session.close();
+
+		return check > 0;
 	}
 
 	@Override
 	public Member selectMemberBy(String id) {
-		// TODO Auto-generated method stub
-		return null;
+
+		SqlSession session = OrderMadeSessionFactory.getInstance().getSession();
+
+		MemberMapper mapper = session.getMapper(MemberMapper.class);
+		Member member = mapper.selectMemberBy(id);
+		session.close();
+
+		return member;
 	}
 
 }

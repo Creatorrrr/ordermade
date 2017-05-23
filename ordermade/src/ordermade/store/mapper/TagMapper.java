@@ -5,9 +5,9 @@ import java.util.List;
 import ordermade.domain.Tag;
 
 public interface TagMapper {
-	public boolean insertTag(Tag tag);
+	public int insertTag(Tag tag);
 
-	public boolean deleteTagById(String id);
+	public int deleteTagById(String id);
 
 	public Tag selectTagById(String id);
 

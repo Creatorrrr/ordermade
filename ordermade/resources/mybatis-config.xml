@@ -11,24 +11,30 @@
 		<typeAlias type="ordermade.domain.Review" alias="Review"/>
 		<typeAlias type="ordermade.domain.InviteRequest" alias="InviteRequest"/>
 		<typeAlias type="ordermade.domain.Request" alias="Request"/>
+		<typeAlias type="ordermade.domain.Member" alias="Member" />
+		<typeAlias type="ordermade.domain.Tag" alias="Tag" />
+		<typeAlias type="ordermade.domain.Category" alias="Category" />
 	</typeAliases>
-	
+
 	<environments default="development">
-	  	<environment id="development">
-	  		<transactionManager type="JDBC"/>
-	  		<dataSource type="POOLED">
-	  			<property name="driver" value="${driver}"/>
-	  			<property name="url" value="${url}"/>
-	  			<property name="username" value="${username}"/>
-	  			<property name="password" value="${password}"/>
-	  		</dataSource>
-	  	</environment>
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
 	</environments>
-	
+
 	<mappers>
 		<mapper resource="mapper/ReviewMapper.xml"/>
 		<mapper resource="mapper/ProductMapper.xml"/>
 		<mapper resource="mapper/InviteRequestMapper.xml"/>
 		<mapper resource="mapper/RequestMapper.xml"/>
+		<mapper resource="mapper/MemberMapper.xml" />
+		<mapper resource="mapper/TagMapper.xml" />
+		<mapper resource="mapper/CategoryMapper.xml" />
 	</mappers>
 </configuration>
