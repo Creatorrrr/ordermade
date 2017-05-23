@@ -23,35 +23,35 @@ public class TagTest {
 //	public void testInsertTag() {
 //		Tag tag = new Tag();
 //		
-//		tag.setId("qq");
-//		tag.setKeyword("qq");
+//		tag.setId("qq123");
+//		tag.setKeyword("qq123");
 //		tag.setScore(1322);
 //		
 //		Portfolio pf = new Portfolio();
 //		
-//		pf.setId("rr");
+//		pf.setId("rr123");
 //		
 //		tag.setPortfolio(pf);
 //		store.insertTag(tag);
 //		
 //	}
 
-//	@Test
-//	public void testDeleteTagById() {
-//	boolean cheak = store.deleteTagById("1");
-//		System.out.println(cheak);
-//		
-//	}
+	@Test
+	public void testDeleteTagById() {
+	boolean cheak = store.deleteTagById("2");
+		System.out.println(cheak);
+		
+	}
 //
 //	@Test
 //	public void testSelectTagById() {
 //		
-//		Tag tag = store.selectTagById("1");
+//		Tag tag = store.selectTagById("3");
 //		
 //		assertEquals("qr", tag.getKeyword());
 //		
 //	}
-//
+
 //	@Test
 //	public void testTagsFromGoogleVision() {
 //		

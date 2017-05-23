@@ -22,49 +22,49 @@ public class MemberTest {
 //
 //		Member member = new Member();
 //
-//		member.setId("qq");
-//		member.setPassword("123");
-//		member.setEmail("qq");
-//		member.setAddress("qq");
-//		member.setMemberType("qq");
-//		member.setName("qq");
-//		member.setIntroduce("qq");
-//		member.setLicenseNumber("qq");
-//		member.setImage("qq");
+//		member.setId("qq12");
+//		member.setPassword("12312");
+//		member.setEmail("qq12");
+//		member.setAddress("qq12");
+//		member.setMemberType("qq21");
+//		member.setName("qq12");
+//		member.setIntroduce("qq12");
+//		member.setLicenseNumber("qq12");
+//		member.setImage("qq12");
 //
 //		store.insertMember(member);
 //
 //	}
 
-	// @Test
-	// public void testUpdateMember() {
-	// Member member = new Member();
+//	 @Test
+//	 public void testUpdateMember() {
+//	 Member member = new Member();
+//	
+//	 member.setId("qq");
+//	 member.setPassword("456");
+//	 member.setEmail("ww");
+//	 member.setAddress("ww");
+//	 member.setMemberType("ww");
+//	 member.setName("ww");
+//	 member.setIntroduce("ww");
+//	 member.setLicenseNumber("ww");
+//	 member.setImage("ww");
+//	
+//	 store.updateMember(member);
+//	 }
 	//
-	// member.setId("ww");
-	// member.setPassword("456");
-	// member.setEmail("ww");
-	// member.setAddress("ww");
-	// member.setMemberType("ww");
-	// member.setName("ww");
-	// member.setIntroduce("ww");
-	// member.setLicenseNumber("ww");
-	// member.setImage("ww");
+//	 @Test
+//	 public void testDeleteMember() {
+//	
+//	 boolean check = store.deleteMember("qq");
+//	 System.out.println(check);
+//	 }
 	//
-	// store.updateMember(member);
-	// }
-	//
-	// @Test
-	// public void testDeleteMember() {
-	//
-	// boolean check = store.deleteMember("ww");
-	// System.out.println(check);
-	// }
-	//
-//	@Test
-//	public void testSelectMemberBy() {
-//		Member member = store.selectMemberBy("qq");
-//		
-//		assertEquals("ee", member.getId());
-//	}
+	@Test
+	public void testSelectMemberBy() {
+		Member member = store.selectMemberBy("qq1");
+		
+		assertEquals("ee", member.getId());
+	}
 
 }

@@ -19,11 +19,10 @@ public class CategoryTest {
 		store = new CategoryStoreLogic();
 	}
 
-//	@Test
-//	public void test() {
-//		List<Category> list = store.selectAllCategory();
-//		System.out.println(list.size());
-//		assertEquals(4, list.size());
-//	}
+	@Test
+	public void test() {
+		List<Category> list = store.selectAllCategory();
+		assertEquals(5, list.size());
+	}
 
 }
