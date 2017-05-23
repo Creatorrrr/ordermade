@@ -7,11 +7,11 @@
   
   	<!-- <update id="updateAccountById" parameterType="Account">
   		UPDATE ACCOUNT
-  		SET MONEY  = #{MONEY}
+  		SET MONEY  = #{money}
   		WHERE MEMBER_ID = #{member.id}
   	</update>
   	
-  	<select id="selectAccountById" parameterType="String" resultMap="Account">
+  	<select id="selectAccountById" parameterType="String" resultType="Account">
   		SELECT MONEY
   		FROM ACCOUNT
   		WHERE MEMBER_ID = #{member.id}

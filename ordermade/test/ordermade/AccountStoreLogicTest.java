@@ -15,7 +15,7 @@ public class AccountStoreLogicTest {
 	private AccountStore store;
 	
 	@Before
-	public void setUp(){
+	public void setUp() throws Exception{
 		store = new AccountStoreLogic();
 	}
 
@@ -25,8 +25,8 @@ public class AccountStoreLogicTest {
 //		Account account = new Account();
 //		Member member = new Member();
 //		member.setId("hjKing");
-//		member.setName("킹왕짱");
-//		int money = 10000;
+//		member.setName("�궧�솗吏�");
+//		int money = 12000;
 //		
 //		account.setMember(member);
 //		account.setMoney(money);

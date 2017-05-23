@@ -53,18 +53,31 @@ public class MemberTest {
 //	 store.updateMember(member);
 //	 }
 	//
-//	 @Test
-//	 public void testDeleteMember() {
-//	
-//	 boolean check = store.deleteMember("qq");
-//	 System.out.println(check);
-//	 }
+	// member.setId("ww");
+	// member.setPassword("456");
+	// member.setEmail("ww");
+	// member.setAddress("ww");
+	// member.setMemberType("ww");
+	// member.setName("ww");
+	// member.setIntroduce("ww");
+	// member.setLicenseNumber("ww");
+	// member.setImage("ww");
 	//
-	@Test
-	public void testSelectMemberBy() {
-		Member member = store.selectMemberBy("qq1");
-		
-		assertEquals("ee", member.getId());
-	}
+	// store.updateMember(member);
+	// }
+	//
+	// @Test
+	// public void testDeleteMember() {
+	//
+	// boolean check = store.deleteMember("ww");
+	// System.out.println(check);
+	// }
+	//
+//	@Test
+//	public void testSelectMemberBy() {
+//		Member member = store.selectMemberBy("qq");
+//		
+//		assertEquals("ee", member.getId());
+//	}
 
 }

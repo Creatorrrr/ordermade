@@ -19,6 +19,7 @@
 		<typeAlias type="ordermade.domain.Request" alias="Request"/>
 		<typeAlias type="ordermade.domain.Review" alias="Review"/>
 		<typeAlias type="ordermade.domain.Tag" alias="Tag"/>
+		<typeAlias type="ordermade.domain.Comment" alias="Comment"/>
 	</typeAliases>
 
 	<environments default="development">
@@ -43,6 +44,7 @@
 		<mapper resource="mapper/CategoryMapper.xml" />
 		<mapper resource="mapper/AccountMapper.xml"/>
 		<mapper resource="mapper/CommentMapper.xml"/>
+		<mapper resource="mapper/AttachMapper.xml"/>
 		<mapper resource="mapper/PortfolioMapper.xml"/>
 		<mapper resource="mapper/PurchaseHistorymapper.xml"/>
 	</mappers>

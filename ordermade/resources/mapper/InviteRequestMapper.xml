@@ -36,7 +36,7 @@
 		WHERE request_id = #{request.id}
 	</delete>
 	
-	<select id="selectInviteRequestsByMakerId" parameterType="HashMap" resultMap="inviteRequestMap">
+	<!-- <select id="selectInviteRequestsByMakerId" parameterType="HashMap" resultMap="inviteRequestMap">
 		SELECT id, message, member_id, request_time, request_id, form
 		FROM (SELECT rownum, id, message, maker_id, request_time, request_id, form FROM invite_request WHERE maker_Id = #{maker.Id})
 		WHERE rownum BETWEEN #{begin} AND #{end}
@@ -46,6 +46,6 @@
 		SELECT id, message, member_id, request_time, request_id, form
 		FROM (SELECT rownum, id, message, member_id, request_time, request_id, form FROM invite_request WHERE consumerId = #{consumer.Id})
 		WHERE rownum BETWEEN #{begin} AND #{end}
-	</select>
+	</select> -->
 </mapper>
   

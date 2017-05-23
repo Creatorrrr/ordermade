@@ -16,46 +16,69 @@ public class MemberStoreLogic implements MemberStore {
 		session = SqlSessionFactoryProvider.getSqlSessionFactory().openSession();
 	}
 
+	private SqlSession session;
+
+	public MemberStoreLogic() {
+		session = SqlSessionFactoryProvider.getSqlSessionFactory().openSession();
+	}
+
 	@Override
 	public boolean insertMember(Member member) {
 
-		MemberMapper mapper = session.getMapper(MemberMapper.class);
-		int check = mapper.insertMember(member);
-		session.commit();
-		session.close();
-		return check > 0;
+		boolean check = false;
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			check = mapper.insertMember(member);
+			session.commit();
+		} finally {
+			session.close();
+		}
+		return check;
 	}
 
 	@Override
 	public boolean updateMember(Member member) {
 
-		MemberMapper mapper = session.getMapper(MemberMapper.class);
-		int check = mapper.updateMember(member);
-		session.commit();
-		session.close();
+		boolean check = false;
 
-		return check > 0;
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			check = mapper.updateMember(member);
+			session.commit();
+		} finally {
+			session.close();
+		}
+
+		return check;
 	}
 
 	@Override
 	public boolean deleteMember(String id) {
 
-		MemberMapper mapper = session.getMapper(MemberMapper.class);
-		int check = mapper.deleteMember(id);
-		session.commit();
-		session.close();
-
-		return check > 0;
+		boolean check = false;
+		
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			check = mapper.deleteMember(id);
+			session.commit();
+		} finally {
+			session.close();
+		}
+		return check;
 	}
 
 	@Override
-	public Member selectMemberById(String id) {
+	public Member selectMemberBy(String id) {
+		
+		Member member = null;
 
-		MemberMapper mapper = session.getMapper(MemberMapper.class);
-		Member member = mapper.selectMemberById(id);
-		session.commit();
-		session.close();
-
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			member = mapper.selectMemberById(id);
+			session.commit();
+		} finally {
+			session.close();
+		}
 		return member;
 	}
 

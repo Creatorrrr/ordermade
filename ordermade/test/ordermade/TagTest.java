@@ -12,12 +12,12 @@ import ordermade.store.logic.TagStoreLogic;
 
 public class TagTest {
 
-	private TagStoreLogic store;
-	@Before
-	public void setUp() throws Exception {
-		
-		store = new TagStoreLogic();
-	}
+//	private TagStoreLogic store;
+//	@Before
+//	public void setUp() throws Exception {
+//		
+//		store = new TagStoreLogic();
+//	}
 
 //	@Test
 //	public void testInsertTag() {
