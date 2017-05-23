@@ -8,7 +8,9 @@
 	
 	<typeAliases>
 		<!-- write typeAlias -->
-		<typeAlias type="ordermade.domain.ProductPage" alias="ProductPage"/>
+		<typeAlias type="ordermade.domain.Product" alias="Product"/>
+		<typeAlias type="ordermade.domain.InviteRequest" alias="InviteRequest"/>
+		<typeAlias type="ordermade.domain.Request" alias="Request"/>
 	</typeAliases>
 	
 	<environments default="development">
@@ -24,6 +26,8 @@
 	</environments>
 	
 	<mappers>
-		<mapper resource="mapper/ProductPageMapper.xml"/>
+		<mapper resource="store/mapper/ProductMapper.xml"/>
+		<mapper resource="store/mapper/InviteRequestMapper.xml"/>
+		<mapper resource="store/mapper/RequestMapper.xml"/>
 	</mappers>
 </configuration>
