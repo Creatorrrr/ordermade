@@ -14,12 +14,12 @@
 	</resultMap>
 
 	<insert id="insertTag" parameterType="Tag">
-		<selectKey keyProperty="TagId" resultType="string" order="BEFORE">
-			select Tag_SEQ.nextval from dual
+		<selectKey keyProperty="id" resultType="string" order="BEFORE">
+			select tag_seq.nextval from dual
 		</selectKey>
 		INSERT INTO tag(id,keyword,score,portfolio_id)
 		VALUES
-		(#{TagId},#{keyword},#{score},#{portfolio.id})
+		(#{id},#{keyword},#{score},#{portfolio.id})
 
 	</insert>
 	<select id="selectTagById" parameterType="string" resultMap="TagMap">
@@ -32,12 +32,5 @@
 		WHERE id
 		= #{id}
 	</delete>
-
-
-
-
-
-
-
 
 </mapper>

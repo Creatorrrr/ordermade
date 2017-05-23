@@ -31,6 +31,6 @@
 		<!-- <mapper resource="mapper/ProductPageMapper.xml" /> -->
 		<mapper resource="mapper/MemberMapper.xml" />
 		<mapper resource="mapper/TagMapper.xml" />
-		<!-- <mapper resource="mapper/CategoryMapper.xml" /> -->
+		<mapper resource="mapper/CategoryMapper.xml" />
 	</mappers>
 </configuration>

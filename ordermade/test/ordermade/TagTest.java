@@ -1,5 +1,6 @@
 package ordermade;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import org.junit.Before;
@@ -18,36 +19,41 @@ public class TagTest {
 		store = new TagStoreLogic();
 	}
 
-	@Test
-	public void testInsertTag() {
-		Tag tag = new Tag();
-		
-		tag.setId("qq");
-		tag.setKeyword("qq");
-		tag.setScore(1322);
-		
-		Portfolio pf = new Portfolio();
-		
-		pf.setId("rr");
-		
-		tag.setPortfolio(pf);
-		store.insertTag(tag);
-		
-	}
+//	@Test
+//	public void testInsertTag() {
+//		Tag tag = new Tag();
+//		
+//		tag.setId("qq");
+//		tag.setKeyword("qq");
+//		tag.setScore(1322);
+//		
+//		Portfolio pf = new Portfolio();
+//		
+//		pf.setId("rr");
+//		
+//		tag.setPortfolio(pf);
+//		store.insertTag(tag);
+//		
+//	}
 
 //	@Test
 //	public void testDeleteTagById() {
-//		fail("Not yet implemented");
+//	boolean cheak = store.deleteTagById("1");
+//		System.out.println(cheak);
+//		
 //	}
 //
 //	@Test
 //	public void testSelectTagById() {
-//		fail("Not yet implemented");
+//		
+//		Tag tag = store.selectTagById("1");
+//		
+//		assertEquals("qr", tag.getKeyword());
+//		
 //	}
 //
 //	@Test
 //	public void testTagsFromGoogleVision() {
-//		fail("Not yet implemented");
+//		
 //	}
-
 }
