@@ -12,13 +12,17 @@ import ordermade.store.mapper.TagMapper;
 
 @Repository
 public class TagStoreLogic implements TagStore {
+	
+	private SqlSession session;
+	
+	public TagStoreLogic() {
+		session = SqlSessionFactoryProvider.getSqlSessionFactory().openSession();
+	}
 
 	@Override
 	public boolean insertTag(Tag tag) {
 
 		int check = 0;
-
-		SqlSession session = OrderMadeSessionFactory.getInstance().getSession();
 
 		TagMapper mapper = session.getMapper(TagMapper.class);
 		check = mapper.insertTag(tag);
@@ -33,8 +37,6 @@ public class TagStoreLogic implements TagStore {
 
 		int check = 0;
 
-		SqlSession session = OrderMadeSessionFactory.getInstance().getSession();
-
 		TagMapper mapper = session.getMapper(TagMapper.class);
 		check = mapper.deleteTagById(id);
 		session.close();
@@ -46,8 +48,6 @@ public class TagStoreLogic implements TagStore {
 	@Override
 	public Tag selectTagById(String id) {
 	
-		SqlSession session = OrderMadeSessionFactory.getInstance().getSession();
-		
 		TagMapper mapper = session.getMapper(TagMapper.class);
 		Tag tag = mapper.selectTagById(id);
 		session.close();
@@ -58,8 +58,6 @@ public class TagStoreLogic implements TagStore {
 
 	@Override
 	public List<Tag> TagsFromGoogleVision(String path) {
-		
-		SqlSession session = OrderMadeSessionFactory.getInstance().getSession();
 		
 		TagMapper mapper = session.getMapper(TagMapper.class);
 		List<Tag> list = mapper.TagsFromGoogleVision(path);

@@ -36,10 +36,10 @@
 		WHERE reuquest_id = #{id}
 	</delete>
 	
-	<select id="selectInviteRequestsByMakerId" parameterType="HashMap" resultMap="inviteRequestMap">
+	<!-- <select id="selectInviteRequestsByMakerId" parameterType="HashMap" resultMap="inviteRequestMap">
 		SELECT id, message, member_id, request_time, request_id, form
 		FROM (SELECT rownum, id, message, member_id, request_time, request_id, form FROM invite_request WHERE makerId = #{member.Id})
 		WHERE rownum BETWEEN #{begin} AND #{end}
-	</select>
+	</select> -->
 </mapper>
   

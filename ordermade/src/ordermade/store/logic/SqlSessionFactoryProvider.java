@@ -7,7 +7,8 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class SqlSessionFactoryProvider{
+public class SqlSessionFactoryProvider {
+	
 	private static final String resource = "mybatis-config.xml";
 	
 	private static SqlSessionFactory factory;
