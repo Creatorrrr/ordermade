@@ -4,6 +4,49 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="ordermade.store.mapper.PurchaseHistoryMapper">
   
+  	<resultMap type="PurchaseHistory" id="purchaseHistoryMap">
+  	
+  		<id property="id" column="id"/>
+  		<!-- <association property="maker" column="maker_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="String" jdbcType="varchar"/> -->
+  		<!-- <association property="consumer" column="consumer_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="String" jdbcType="varchar"/> -->
+  		<!-- <association property="request" column="request_id" select="ordermade.store.mapper.RequestMapper.selectRequestById" javaType="String" jdbcType="varchar"/> -->
+  		<!-- <result property="orderDate" column="order_date"/> -->
+  		<!-- <result property="invoiceNumber" column="invoice_number"/> -->
+  		<result property="charge" column="charge"/>
+  		<result property="deliveryStatus" column="delivery_status"/>
+  		<result property="payment" column="payment"/>
+  		
+  	</resultMap>
+  
+  
+  	<insert id="insertPurchaseHistory">
+  		<selectKey resultType="String" keyProperty="id" order="BEFORE">
+  			select purchase_history_seq.nextval from dual
+  		</selectKey>
+  		insert into purchase_history(id, consumer_id, maker_id, request_id, order_date, invoice_number, charge, delivery_status, payment) 
+  		values(#{id}, #{consumer.id}, #{maker.id}, #{request.id}, #{orderDate}, #{invoiceNumber}, #{charge}, #{deliveryStatus}, #{payment})
+  	</insert>
+  	
+  	<update id="updatePurchaseHistoryById" parameterType="PurchaseHistory">
+  		update purchase_history set  consumer_id=#{consumer.id}, maker_id=#{maker.id}, request_id=#{request.id}, order_date=#{orderDate}, invoice_number=#{invoiceNumber}, charge=#{charge}, delivery_status=#{deliveryStatus}, payment=#{payment} where id=#{id}
+  	</update>
+  
+  	<select id="selectPurchaseHistoriesByConsumerId" resultMap="purchaseHistoryMap">
+  		select id, consumer_id, maker_id, request_id, order_date, invoice_number, charge, delivery_status, payment from purchase_history where consumer_id=#{consumerId}
+  	</select>
+  	
+  	<select id="selectPurchaseHistoriesByConsumerIdAndRequestTitle" resultMap="purchaseHistoryMap">
+  		select id, consumer_id, maker_id, request_id, order_date, invoice_number, charge, delivery_status, payment from purchase_history where consumer_id=#{consumer.id} 
+  	</select><!-- 미완성 -->
+  	
+  	<select id="selectPurchaseHistoriesByMakerId" resultMap="purchaseHistoryMap">
+  		select id, consumer_id, maker_id, request_id, order_date, invoice_number, charge, delivery_status, payment from purchase_history where maker_id=#{maker.id} 
+  	</select>
+  	
+  	<select id="selectPurchaseHistoriesByMakerIdAndRequestTitle" resultMap="purchaseHistoryMap">
+  		select id, consumer_id, maker_id, request_id, order_date, invoice_number, charge, delivery_status, payment from purchase_history where maker_id=#{maker.id} 
+  	</select><!-- 미완성 -->
+  	
   
   </mapper>
   

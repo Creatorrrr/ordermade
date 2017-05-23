@@ -46,6 +46,6 @@
 		<mapper resource="mapper/CommentMapper.xml"/>
 		<mapper resource="mapper/AttachMapper.xml"/>
 		<mapper resource="mapper/PortfolioMapper.xml"/>
-		<mapper resource="mapper/PurchaseHistorymapper.xml"/>
+		<mapper resource="mapper/PurchaseHistoryMapper.xml"/>
 	</mappers>
 </configuration>
