@@ -8,7 +8,8 @@
 	
 	<typeAliases>
 		<!-- write typeAlias -->
-		<typeAlias type="ordermade.domain.ProductPage" alias="ProductPage"/>
+		<typeAlias type="ordermade.domain.Product" alias="Product"/>
+		<typeAlias type="ordermade.domain.Account" alias="Account"/>
 	</typeAliases>
 	
 	<environments default="development">
@@ -24,6 +25,7 @@
 	</environments>
 	
 	<mappers>
-		<mapper resource="mapper/ProductPageMapper.xml"/>
+		<mapper resource="mapper/AccountMapper.xml"/>
+		<mapper resource="mapper/CommentMapper.xml"/>
 	</mappers>
 </configuration>
