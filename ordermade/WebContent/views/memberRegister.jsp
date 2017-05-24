@@ -11,7 +11,7 @@
 	<h3>회원가입</h3>
 
 	<br>
-	<form id="registerForm" action="${ctx }/member/register.do"
+	<form id="registerForm" action="${ctx }/member/join"
 		method="post">
 		<table class="table">
 			<tr>
