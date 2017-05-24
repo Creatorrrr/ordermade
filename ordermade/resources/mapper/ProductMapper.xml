@@ -13,12 +13,12 @@
 		<result column="period" property="period" />
 		<result column="hit" property="hit" />
 		<result column="type" property="category" />
-		<!-- <association property="maker" column="maker_id"
+		<association property="maker" column="maker_id"
 			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
 			jdbcType="VARCHAR" />
 		<collection property="reviews" column="id" ofType="Review"
 			select="ordermade.store.mapper.ReviewMapper.selectReviewsByProductId" javaType="ArrayList"
-			jdbcType="VARCHAR" /> -->
+			jdbcType="VARCHAR" /> 
 	</resultMap>
 	
 	<sql id="selectProduct">
