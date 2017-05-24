@@ -1,5 +1,5 @@
 package ordermade.service.logic;
 
-public class ProductServiceLogic {
+public class ProductServiceLogic implements{
 
 }
