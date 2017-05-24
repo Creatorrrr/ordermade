@@ -36,11 +36,11 @@
 
 	<mappers>
 		<mapper resource="mapper/ProductMapper.xml"/>
-		<!-- <mapper resource="mapper/ReviewMapper.xml"/>
-		<mapper resource="mapper/InviteRequestMapper.xml"/>
-		<mapper resource="mapper/RequestMapper.xml"/>
+		<mapper resource="mapper/ReviewMapper.xml"/>
+		<!-- <mapper resource="mapper/InviteRequestMapper.xml"/>
+		<mapper resource="mapper/RequestMapper.xml"/> -->
 		<mapper resource="mapper/MemberMapper.xml" />
-		<mapper resource="mapper/TagMapper.xml" />
+		<!-- <mapper resource="mapper/TagMapper.xml" />
 		<mapper resource="mapper/CategoryMapper.xml" />
 		<mapper resource="mapper/AccountMapper.xml"/>
 		<mapper resource="mapper/CommentMapper.xml"/>

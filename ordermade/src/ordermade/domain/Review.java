@@ -6,7 +6,7 @@ public class Review {
 	private Member consumer;
 	private String content;
 	private int grade;
-	private Product productPage;
+	private Product product;
 	
 	public String getId() {
 		return id;
@@ -38,10 +38,10 @@ public class Review {
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
-	public Product getProductPage() {
-		return productPage;
+	public Product getProduct() {
+		return product;
 	}
-	public void setProductPage(Product productPage) {
-		this.productPage = productPage;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 }

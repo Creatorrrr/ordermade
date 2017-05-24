@@ -9,7 +9,9 @@
 		<result column="title" property="title" />
 		<result column="content" property="content" />
 		<result column="grade" property="grade" />
-		<result column="product_id" property="product" />
+		<association property="product" column="product_id"
+			select="ordermade.store.mapper.ProductMapper.selectProductById" javaType="Product"
+			jdbcType="VARCHAR" />
 		<association property="consumer" column="consumer_id"
 			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
 			jdbcType="VARCHAR" />
@@ -73,6 +75,14 @@
 				FROM review
 				WHERE product_id = #{productId})
 		WHERE rnum BETWEEN #{begin} AND #{end}
+	</select>
+	
+	<select id="selectReviewsByProductIdForCollection" parameterType="String" resultMap="reviewMap">
+		<include refid="selectReview" />
+		FROM (<include refid="selectReviewWithRowNum" />
+				FROM review
+				WHERE product_id = #{productId})
+		WHERE rnum BETWEEN 1 AND 10
 	</select>
 	
 	<select id="selectReviewsByTitleAndProductId" parameterType="HashMap" resultMap="reviewMap">
