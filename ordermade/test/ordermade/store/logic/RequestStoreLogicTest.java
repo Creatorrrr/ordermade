@@ -29,17 +29,17 @@ public class RequestStoreLogicTest {
 //
 //		maker.setId("testM");
 //		consumer.setId("testC");
-//
-//		rs.setId("test");
-//		rs.setTitle("의뢰");
-//		rs.setContent("12345");
-//		rs.setBound("");
-//		rs.setCategory("가구");
-//		rs.setHopePrice(10000);
-//		rs.setPrice(10500);
-//		rs.setMaker(maker);
-//		rs.setConsumer(consumer);
-//
+//		for(int i =10 ; i < 30 ; i++){
+//			rs.setTitle("의뢰 :" + i);
+//			rs.setContent("내용 :" + i);
+//			rs.setBound("");
+//			rs.setCategory("가구 :" + i);
+//			rs.setHopePrice(i+1000);
+//			rs.setPrice(i+10000);
+//			rs.setMaker(maker);
+//			rs.setConsumer(consumer);
+//			
+//		}
 //		assertTrue(rStore.insertRequest(rs));
 //	}
 	

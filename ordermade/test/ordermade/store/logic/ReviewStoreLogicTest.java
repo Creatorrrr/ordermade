@@ -57,13 +57,13 @@ public class ReviewStoreLogicTest {
 //		assertTrue(rStore.deleteReviewById("7"));
 //	}
 //
-	@Test
-	public void testSelectReviewsByProductId() {
-		List<Review> reviewList = rStore.selectReviewsByProductId("6", "1", "5");
-		System.out.println(reviewList.size());
-		System.out.println(reviewList.get(0).getProduct().getCategory());
-		System.out.println(reviewList.get(1).getConsumer().getId());
-	}
+//	@Test
+//	public void testSelectReviewsByProductId() {
+//		List<Review> reviewList = rStore.selectReviewsByProductId("6", "1", "5");
+//		System.out.println(reviewList.size());
+//		System.out.println(reviewList.get(0).getProduct().getCategory());
+//		System.out.println(reviewList.get(1).getConsumer().getId());
+//	}
 //
 //	@Test
 //	public void testSelectReviewsByTitleAndProductId() {

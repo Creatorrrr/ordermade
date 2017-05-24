@@ -88,12 +88,12 @@ public class PortfolioStoreLogicTest {
 //		}
 //	}
 
-	@Test
-	public void testSelectPortfoliosByCategory() {
-		List<Portfolio> list = store.selectPortfoliosByCategory("bbb", "1");
-		for(Portfolio p : list){
-			System.out.println(p.toString());
-		}
-	}
+//	@Test
+//	public void testSelectPortfoliosByCategory() {
+//		List<Portfolio> list = store.selectPortfoliosByCategory("bbb", "1");
+//		for(Portfolio p : list){
+//			System.out.println(p.toString());
+//		}
+//	}
 
 }

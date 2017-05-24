@@ -30,24 +30,24 @@ public class CommentStoreLogicTest {
 //	public void testInsertComment() {
 //		Comment comment = new Comment();
 //		String content = "정말 기대됩니다.";
-//		Attach attach = new Attach();
 //		Member member = new Member();
 //		Request request = new Request();
 //		java.util.Date udate = new java.util.Date();
 //		Date date = new Date(udate.getTime());
 //		
-//		attach.setId("no : " + i);
-//		member.setId("kkjin" + i);
-//		request.setId("idn" + i);
-//		
-//		comment.setAttach(attach);
-//		comment.setContent(content);
-//		comment.setMember(member);
-//		comment.setRequest(request);
-//		comment.setTime(date);
-//		
-//		assertFalse(!store.insertComment(comment));
-//	    insert를 여러번 하고 싶으면 store의 try/catch를 삭제 
+//		for(int i=0 ; i < 30 ; i++) {
+//			member.setId("kkjin" + i);
+//			request.setId("idn" + i);
+//			comment.setContent(content + i);
+//			comment.setMember(member);
+//			comment.setRequest(request);
+//			comment.setTime(date);
+//			
+//			store.insertComment(comment);
+//			System.out.println(comment.toString());
+//		}
+////		assertFalse(!store.insertComment(comment));
+////	    insert를 여러번 하고 싶으면 store의 try/catch를 삭제 
 //	}
 	
 //	@Test

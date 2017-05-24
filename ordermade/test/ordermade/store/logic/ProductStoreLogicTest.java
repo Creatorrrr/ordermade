@@ -59,21 +59,21 @@ public class ProductStoreLogicTest {
 //		pStore.deleteProductById("2");
 //	}
 //
-	@Test
-	public void testSelectProductById() {
-		Product product = pStore.selectProductById("6");
-
-		System.out.println("Id : " + product.getId());
-		System.out.println("Category : " + product.getCategory());
-		System.out.println("Content : " + product.getContent());
-		System.out.println("Hit : " + product.getHit());
-		System.out.println("Image : " + product.getImage());
-		System.out.println("Period : " + product.getPeriod());
-		System.out.println("Price : " + product.getPrice());
-		System.out.println("Title : " + product.getTitle());
-		System.out.println("Maker : " + product.getMaker().getImage());
-		System.out.println("Review : " + product.getReviews().get(0).getId());
-	}
+//	@Test
+//	public void testSelectProductById() {
+//		Product product = pStore.selectProductById("6");
+//
+//		System.out.println("Id : " + product.getId());
+//		System.out.println("Category : " + product.getCategory());
+//		System.out.println("Content : " + product.getContent());
+//		System.out.println("Hit : " + product.getHit());
+//		System.out.println("Image : " + product.getImage());
+//		System.out.println("Period : " + product.getPeriod());
+//		System.out.println("Price : " + product.getPrice());
+//		System.out.println("Title : " + product.getTitle());
+//		System.out.println("Maker : " + product.getMaker().getImage());
+//		System.out.println("Review : " + product.getReviews().get(0).getId());
+//	}
 //
 //	@Test
 //	public void testSelectProductsByCategoryOrderByHitsForMain() {

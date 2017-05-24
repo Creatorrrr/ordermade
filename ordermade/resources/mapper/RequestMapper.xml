@@ -35,6 +35,9 @@
 	</sql>
 	
 	<insert id="insertRequest" parameterType="request">
+	<selectKey keyProperty="id" resultType="String" order="BEFORE">
+  			select request_seq.nextval FROM DUAL
+  		</selectKey>
 		INSERT INTO request(id, title, maker_id, consumer_id, type, content, hope_price, price, bound)
 		VALUES (#{id},#{title},#{maker.id},#{consumer.id},#{category},#{content},#{hopePrice},#{price},#{bound})
 	</insert>

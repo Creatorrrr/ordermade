@@ -2,60 +2,62 @@ package ordermade.service.logic;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import ordermade.domain.Account;
 import ordermade.domain.PurchaseHistory;
 import ordermade.service.facade.DealService;
+import ordermade.store.facade.AccountStore;
+import ordermade.store.facade.PurchaseHistoryStore;
 
 public class DealServiceLogic implements DealService{
+	
+	@Autowired
+	private AccountStore accountStore;
+	
+	@Autowired
+	private PurchaseHistoryStore purchaseHistoryStore;
 
 	@Override
 	public boolean modifyAccountById(Account account) {
-		// TODO Auto-generated method stub
-		return false;
+		return accountStore.updateAccountById(account);
 	}
 
 	@Override
 	public Account findAccountById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return accountStore.selectAccountById(id);
 	}
 
 	@Override
 	public boolean registerPurchaseHistory(PurchaseHistory purchaseHistory) {
-		// TODO Auto-generated method stub
-		return false;
+		return purchaseHistoryStore.insertPurchaseHistory(purchaseHistory);
 	}
 
 	@Override
 	public boolean modifyPurchaseHistoryById(PurchaseHistory purchaseHistory) {
-		// TODO Auto-generated method stub
-		return false;
+		return purchaseHistoryStore.updatePurchaseHistoryById(purchaseHistory);
 	}
 
 	@Override
 	public List<PurchaseHistory> findpurchaseHistoriesByConsumerId(String consumerId, String page) {
-		// TODO Auto-generated method stub
-		return null;
+		return purchaseHistoryStore.selectPurchaseHistoriesByConsumerId(consumerId, page);
 	}
 
 	@Override
 	public List<PurchaseHistory> findpurchaseHistoriesByConsumerIdAndRequestTitle(String consumerId,
 			String requestTitle, String page) {
-		// TODO Auto-generated method stub
-		return null;
+		return purchaseHistoryStore.selectPurchaseHistoriesByConsumerIdAndRequestTitle(consumerId, requestTitle, page);
 	}
 
 	@Override
 	public List<PurchaseHistory> findpurchaseHistoriesByMakerId(String makerId, String page) {
-		// TODO Auto-generated method stub
-		return null;
+		return purchaseHistoryStore.selectPurchaseHistoriesByMakerId(makerId, page);
 	}
 
 	@Override
 	public List<PurchaseHistory> findpurchaseHistoriesByMakerIdAndRequestTitle(String makerId, String requestTitle,
 			String page) {
-		// TODO Auto-generated method stub
-		return null;
+		return purchaseHistoryStore.selectPurchaseHistoriesByMakerIdAndRequestTitle(makerId, requestTitle, page);
 	}
 
 }

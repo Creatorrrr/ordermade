@@ -38,7 +38,7 @@ public class AccountStoreLogicTest {
 //	@Test
 //	public void testSelectAccountById() {
 //		String id = "hjKing";
-//		assertEquals(10000, store.selectAccountById(id));
+//		assertEquals(10000, store.selectAccountById(id).getMoney());
 //	}
 
 }

@@ -26,16 +26,16 @@ public class RequestStoreLogic implements RequestStore {
 		SqlSession session = factory.openSession();
 		boolean result = false;
 
-		try {
+//		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
 			if (result = mapper.insertRequest(request) == true) {
 				session.commit();
 			} else {
 				session.rollback();
 			}
-		} finally {
-			session.close();
-		}
+//		} finally {
+//			session.close();
+//		}
 		return result;
 	}
 
