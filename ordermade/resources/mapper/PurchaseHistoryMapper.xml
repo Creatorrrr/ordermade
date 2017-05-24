@@ -10,8 +10,8 @@
   		<!-- <association property="maker" column="maker_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="String" jdbcType="varchar"/> -->
   		<!-- <association property="consumer" column="consumer_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="String" jdbcType="varchar"/> -->
   		<!-- <association property="request" column="request_id" select="ordermade.store.mapper.RequestMapper.selectRequestById" javaType="String" jdbcType="varchar"/> -->
-  		<!-- <result property="orderDate" column="order_date"/> -->
-  		<!-- <result property="invoiceNumber" column="invoice_number"/> -->
+		<result property="orderDate" column="order_date"/>
+  		<result property="invoiceNumber" column="invoice_number"/>
   		<result property="charge" column="charge"/>
   		<result property="deliveryStatus" column="delivery_status"/>
   		<result property="payment" column="payment"/>
@@ -32,23 +32,34 @@
   	</update>
   
   	<select id="selectPurchaseHistoriesByConsumerId" resultMap="purchaseHistoryMap">
-  		select id, consumer_id, maker_id, request_id, order_date, invoice_number, charge, delivery_status, payment from purchase_history where consumer_id=#{consumerId}
+  		select * from (
+			select rownum limitNum, A.* from purchase_history A where consumer_id=#{consumerId}
+			and rownum &lt;= (#{page}*10) order by A.id desc
+		) where limitNum > ((#{page}-1)*10)
+  
   	</select>
   	
   	<select id="selectPurchaseHistoriesByConsumerIdAndRequestTitle" resultMap="purchaseHistoryMap">
-  		select id, consumer_id, maker_id, request_id, order_date, invoice_number, charge, delivery_status, payment from purchase_history where consumer_id=#{consumer.id} 
-  	</select><!-- 미완성 -->
+  		select * from (
+  			select rownum limitNum, A.* from purchase_history A, request B  where A.consumer_id=#{consumerId} and B.title like '%${title}%' and A.request_id = B.id
+			and rownum &lt;= (#{page}*10) order by A.id desc
+		) where limitNum > ((#{page}-1)*10)
+  	</select>
   	
   	<select id="selectPurchaseHistoriesByMakerId" resultMap="purchaseHistoryMap">
-  		select id, consumer_id, maker_id, request_id, order_date, invoice_number, charge, delivery_status, payment from purchase_history where maker_id=#{maker.id} 
+  		select * from (
+			select rownum limitNum, A.* from purchase_history A where maker_id=#{makerId}
+			and rownum &lt;= (#{page}*10) order by A.id desc
+		) where limitNum > ((#{page}-1)*10)
   	</select>
   	
   	<select id="selectPurchaseHistoriesByMakerIdAndRequestTitle" resultMap="purchaseHistoryMap">
-  		select id, consumer_id, maker_id, request_id, order_date, invoice_number, charge, delivery_status, payment from purchase_history where maker_id=#{maker.id} 
-  	</select><!-- 미완성 -->
+  		select * from (
+			select rownum limitNum, A.* from purchase_history A, request B  where A.maker_id=#{makerId} and B.title like '%${title}%' and A.request_id = B.id 
+			and rownum &lt;= (#{page}*10) order by A.id desc
+		) where limitNum > ((#{page}-1)*10)
+  	</select>
   	
   
   </mapper>
-  
-  
   
