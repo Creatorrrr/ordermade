@@ -11,6 +11,7 @@
   		WHERE MEMBER_ID = #{member.id}
   	</update>
   	
+  	회원ID로 금액 불러오기
   	<select id="selectAccountById" parameterType="String" resultType="Account">
   		SELECT MONEY
   		FROM ACCOUNT

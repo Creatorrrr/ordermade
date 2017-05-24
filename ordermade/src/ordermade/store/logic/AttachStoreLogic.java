@@ -52,7 +52,6 @@ public class AttachStoreLogic implements AttachStore{
 		try {
 			AttachMapper mapper = session.getMapper(AttachMapper.class);
 			attachList = mapper.selectAllAttachsByRequestId(requestId, page);
-			session.commit();
 		} finally {
 			session.close();
 		}
@@ -65,7 +64,6 @@ public class AttachStoreLogic implements AttachStore{
 		try {
 			AttachMapper mapper = session.getMapper(AttachMapper.class);
 			attachList = mapper.selectAttachsByFileNameAndRequestId(fileName, requestId, page);
-			session.commit();
 		} finally {
 			session.close();
 		}

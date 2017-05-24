@@ -2,6 +2,9 @@ package ordermade.store.logic;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,35 +21,50 @@ public class AttachStoreLogicTest {
 		store = new AttachStoreLogic();
 	}
 
-	@Test
-	public void testInsertAttach() {
-		
-		Attach attach = new Attach();
-		Request request = new Request();
-		request.setId("11");
-		
-		attach.setFileName("hi");
-		attach.setExtension("jpg");
-		attach.setPath("system32/root/user");
-		attach.setRequest(request);
-		
-		assertFalse(!store.insertAttach(attach));
-		
-	}
+//	@Test
+//	public void testInsertAttach() {
+//		Attach attach = new Attach();
+//		Request request = new Request();
+//		
+//		for(int i=0; i < 100 ; i++){
+//			request.setId("id : " + i);
+//			attach.setFileName("fName : " + i);
+//			attach.setExtension("extens : " + i);
+//			attach.setPath("system32/root/user" + i);
+//			attach.setRequest(request);
+//			
+////			store.insertAttach(attach);
+//		}
+//		assertFalse(!store.insertAttach(attach));
+//	}
 
 //	@Test
 //	public void testDeleteAttachById() {
-//		fail("Not yet implemented");
+//		Attach attach = new Attach();
+//		Request request = new Request();
+//		request.setId("11");
+//		attach.setId("1");
+//		attach.setRequest(request);
+//		
+//		assertFalse(!store.deleteAttachById(attach));
 //	}
 //
 //	@Test
 //	public void testSelectAllAttachsByRequestId() {
-//		fail("Not yet implemented");
+//		String requestId = "id : 1";
+//		String page = "1";
+//		List<Attach> attachList = new ArrayList<>();
+//		attachList = store.selectAllAttachsByRequestId(requestId, page);
+//		assertEquals(10, attachList.size());
 //	}
 //
 //	@Test
 //	public void testSelectAttachsByFileNameAndRequestId() {
-//		fail("Not yet implemented");
+//		String fileName = "fName : 1";
+//		String requestId = "id : 1";
+//		String page = "1";
+//		List<Attach> attachList = new ArrayList<>();
+//		attachList = store.selectAttachsByFileNameAndRequestId(fileName, requestId, page);
+//		assertEquals(5, attachList.size());
 //	}
-
 }

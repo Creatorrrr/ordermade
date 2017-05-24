@@ -13,24 +13,27 @@
 		VALUES (#{id}, #{path}, #{fileName}, #{extension}, #{request.id})
   	</insert>
   	
-  	<!-- Not Yet -->
   	<delete id="deleteAttachById" parameterType="String">
   		DELETE FROM ATTACH
   		WHERE id = #{id}
   	</delete>
   
-  	<!-- Not Yet -->
+  	<!-- 의뢰서에 관한 모든 첨부파일 10개씩 불러오기 -->
   	<select id="selectAllAttachsByRequestId" parameterType="String" resultType="Attach">
-  		SELECT id, path, file_name, extension, request_id
-  		FROM ATTACH
-  		WHERE REQUEST_ID = #{request.id}
+  		SELECT * FROM ( 
+              SELECT rownum limitNum, A.* FROM ATTACH A  
+              WHERE REQUEST_ID=#{requestId}  
+              and rownum &lt;= #{page}*10) 
+          WHERE limitNum > (#{page}-1)*10
   	</select>
   	
-  	<!-- Not Yet -->
+  	<!-- 의뢰서에 관한 첨부파일 이름으로 검색 -->
   	<select id="selectAttachsByFileNameAndRequestId" parameterType="String" resultType="Attach">
-  		SELECT id, path, file_name, extension, request_id
-  		FROM ATTACH
-  		WHERE REQUEST_ID = #{request.id} AND file_name = #{filename}
+  		SELECT * FROM ( 
+              SELECT rownum limitNum, A.* FROM ATTACH A  
+              WHERE FILE_NAME=#{fileName} and REQUEST_ID=#{requestId}  
+              and rownum &lt;= #{page}*10) 
+          WHERE limitNum > (#{page}-1)*10
   	</select>
   
   </mapper>

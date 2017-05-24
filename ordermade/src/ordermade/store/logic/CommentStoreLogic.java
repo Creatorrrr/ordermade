@@ -65,7 +65,6 @@ public class CommentStoreLogic implements CommentStore{
 		try {
 			CommentMapper mapper = session.getMapper(CommentMapper.class);
 			commentList = mapper.selectCommentsByRequestId(requestId, page);
-			session.commit();
 		} finally {
 			session.close();
 		}
