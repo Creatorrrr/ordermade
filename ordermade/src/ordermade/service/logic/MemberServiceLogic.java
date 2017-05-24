@@ -19,17 +19,17 @@ public class MemberServiceLogic implements MemberService{
 
 	@Override
 	public boolean modifyMemberById(Member member) {
-		return store.updateMember(member);
+		return store.updateMemberById(member);
 	}
 
 	@Override
 	public boolean removeMemberById(String id) {
-		return store.deleteMember(id);
+		return store.deleteMemberById(id);
 	}
 
 	@Override
 	public Member findMemberById(String id) {
-		return store.selectMemberBy(id);
+		return store.selectMemberById(id);
 	}
 
 }
