@@ -5,6 +5,16 @@
   
   <mapper namespace="ordermade.store.mapper.AttachMapper">
   
+  	<resultMap type="Attach" id="attachMap">
+  		<id property="id" column="id" />
+  		<result property="path" column="path" />
+  		<result property="fileName" column="file_name" />
+  		<result property="extension" column="extension" />
+  		<association property="request" column="request_id"
+  			select="ordermade.store.mapper.RequestMapper.selectRequestById" javaType="Request"
+  			jdbcType="VARCHAR" />
+  	</resultMap>
+  
   	<insert id="insertAttach" parameterType="Attach">
   		<selectKey keyProperty="id" resultType="String" order="BEFORE">
   			select attach_seq.nextval FROM DUAL
@@ -19,7 +29,7 @@
   	</delete>
   
   	<!-- 의뢰서에 관한 모든 첨부파일 10개씩 불러오기 -->
-  	<select id="selectAllAttachsByRequestId" parameterType="String" resultType="Attach">
+  	<select id="selectAllAttachsByRequestId" parameterType="String" resultMap="attachMap">
   		SELECT * FROM ( 
               SELECT rownum limitNum, A.* FROM ATTACH A  
               WHERE REQUEST_ID=#{requestId}  
@@ -28,7 +38,7 @@
   	</select>
   	
   	<!-- 의뢰서에 관한 첨부파일 이름으로 검색 -->
-  	<select id="selectAttachsByFileNameAndRequestId" parameterType="String" resultType="Attach">
+  	<select id="selectAttachsByFileNameAndRequestId" parameterType="String" resultMap="attachMap">
   		SELECT * FROM ( 
               SELECT rownum limitNum, A.* FROM ATTACH A  
               WHERE FILE_NAME=#{fileName} and REQUEST_ID=#{requestId}  

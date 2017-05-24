@@ -37,4 +37,9 @@ public class Attach {
 	public void setRequest(Request request) {
 		this.request = request;
 	}
+	@Override
+	public String toString() {
+		return "Attach [id=" + id + ", path=" + path + ", fileName=" + fileName + ", extension=" + extension
+				+ ", request=" + request + "]";
+	}
 }

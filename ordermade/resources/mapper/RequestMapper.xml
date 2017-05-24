@@ -104,5 +104,4 @@
 			WHERE r.consumer_id = #{consumerId})   
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
-	
 </mapper>

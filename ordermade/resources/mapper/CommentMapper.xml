@@ -4,13 +4,24 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="ordermade.store.mapper.CommentMapper">
+  
+  	<resultMap type="Comment" id="commentMap">
+  		<id property="id" column="id"/>
+  		<result property="content" column="content"/>
+  		<association property="member" column="member_id"
+  			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
+  			jdbcType="VARCHAR" />
+  		<association property="request" column="request_id"
+  			select="ordermade.store.mapper.RequestMapper.selectRequestById" javaType="Request"
+  			jdbcType="VARCHAR" />
+  	</resultMap>
   	
   	<insert id="insertComment" parameterType="Comment">
   		<selectKey keyProperty="id" resultType="String" order="BEFORE">
   			select comment_seq.nextval FROM DUAL
   		</selectKey>
-		INSERT INTO COMM(id, content, attach_id, member_id, request_id, time)
-		VALUES (#{id}, #{content}, #{attach.id}, #{member.id}, #{request.id}, TO_DATE(sysdate,'yyyy/mm/dd hh24:mi:ss'))
+		INSERT INTO COMM(id, content, member_id, request_id, time)
+		VALUES (#{id}, #{content}, #{member.id}, #{request.id}, TO_DATE(sysdate,'yyyy/mm/dd hh24:mi:ss'))
   	</insert>
   	
   	<update id="updateCommentById" parameterType="Comment">
