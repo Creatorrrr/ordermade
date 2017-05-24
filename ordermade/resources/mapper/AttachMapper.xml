@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ordermade.store.mapper.AttachMapper">
+  
+  	<insert id="insertAttach" parameterType="Attach">
+  		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+  			select attach_seq.nextval FROM DUAL
+  		</selectKey>
+		INSERT INTO ATTACH(id, path, file_name, extension, request_id)
+		VALUES (#{id}, #{path}, #{fileName}, #{extension}, #{request.id})
+  	</insert>
+  	
+  	<!-- Not Yet -->
+  	<delete id="deleteAttachById" parameterType="String">
+  		DELETE FROM ATTACH
+  		WHERE id = #{id}
+  	</delete>
+  
+  	<!-- Not Yet -->
+  	<select id="selectAllAttachsByRequestId" parameterType="String" resultType="Attach">
+  		SELECT id, path, file_name, extension, request_id
+  		FROM ATTACH
+  		WHERE REQUEST_ID = #{request.id}
+  	</select>
+  	
+  	<!-- Not Yet -->
+  	<select id="selectAttachsByFileNameAndRequestId" parameterType="String" resultType="Attach">
+  		SELECT id, path, file_name, extension, request_id
+  		FROM ATTACH
+  		WHERE REQUEST_ID = #{request.id} AND file_name = #{filename}
+  	</select>
+  
+  </mapper>
