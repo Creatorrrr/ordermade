@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import ordermade.domain.Member;
 import ordermade.service.facade.MemberService;
@@ -45,15 +46,19 @@ public class MemberController {
 		 * 로그인 --아이디와 비밀 번호 일치할 경우 main서블릿으로 이동 --아이디와 비밀 번호 불일치할 경우 login.jsp으로
 		 * 이동
 		 */
+
 		Member loginedUser = service.findMemberById(member.getId());
 
 		if (loginedUser != null && loginedUser.getPassword().equals(member.getPassword())) {
 
 			HttpSession session = req.getSession();
 			session.setAttribute("loginId", member.getId());
-			return "redirect:main";
+
+			// 여기는 임의로 index2.jsp로
+			// 보냄******************************************************************
+			return "index2";
 		} else {
-			return "join";
+			return "login";
 		}
 	}
 
@@ -62,6 +67,40 @@ public class MemberController {
 		// 로그아웃시 메인 서블릿으로 이동
 		HttpSession session = req.getSession();
 		session.invalidate();
-		return "redirect:main";
+		// 여기는 임의로 index2.jsp로
+		// 보냄******************************************************************
+		return "index2";
+	}
+
+	public ModelAndView modifyMemberById(Member memeber, HttpServletRequest req) {
+
+		String id = (String) req.getSession().getAttribute("loginId");
+
+		Member member = service.findMemberById(id);
+
+		boolean result = service.modifyMemberById(member);
+		if (result) {
+			ModelAndView modelAndView = new ModelAndView("memberRegister");
+			Member updateMember = service.findMemberById(id);
+			modelAndView.addObject("updateMember",updateMember);
+			
+			return modelAndView;
+		}
+		
+		return null;
+	}
+
+	@RequestMapping("/removeMember")
+	public String removeMemberById(HttpServletRequest req) {
+
+		String id = (String) req.getSession().getAttribute("loginId");
+
+		boolean result = service.removeMemberById(id);
+		if (result) {
+			HttpSession session = req.getSession();
+			session.invalidate();
+		}
+
+		return "index2";
 	}
 }

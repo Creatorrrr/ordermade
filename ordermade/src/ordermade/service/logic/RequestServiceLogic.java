@@ -2,189 +2,150 @@ package ordermade.service.logic;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import ordermade.constants.Constants;
 import ordermade.domain.Attach;
 import ordermade.domain.Comment;
 import ordermade.domain.InviteRequest;
 import ordermade.domain.Request;
 import ordermade.service.facade.RequestService;
-import ordermade.store.facade.AttachStore;
-import ordermade.store.facade.CommentStore;
-import ordermade.store.facade.InviteRequestStore;
-import ordermade.store.facade.RequestStore;
 
-@Service
 public class RequestServiceLogic implements RequestService{
 
-	@Autowired
-	private RequestStore rStore;
-	@Autowired
-	private InviteRequestStore irStore;
-	@Autowired
-	private CommentStore cStore;
-	@Autowired
-	private AttachStore aStore;
-	
 	@Override
 	public boolean registerRequest(Request request) {
-		return rStore.insertRequest(request);
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public boolean modifyRequestById(Request request) {
-		return rStore.updateReqeustById(request);
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public boolean removeRequestById(String id) {
-		return rStore.deleteRequestById(id);
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public Request findRequestById(String id) {
-		return rStore.selectRequestById(id);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public List<Request> findRequestByBound(String bound, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return rStore.selectRequestsByBound(bound, begin, end);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public List<Request> findRequestByBoundAndTitle(String bound, String title, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return rStore.selectRequestsByBoundAndTitle(bound, title, begin, end);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public List<Request> findRequestByBoundAndContent(String bound, String content, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return rStore.selectRequestsByBoundAndContent(bound, content, begin, end);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public List<Request> findRequestByConsumerId(String consumerId, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return rStore.selectRequestsByConsumerId(consumerId, begin, end);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public List<Request> findRequestsByConsumerIdWithMake(String consumerId, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return rStore.selectRequestsByConsumerIdWithMaker(consumerId, begin, end);
+	public List<Request> findRequestsByConsumerIdWithMaker(String consumerId, String page) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public List<Request> findRequestByConsumerIdWithPayment(String consumerId, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return rStore.selectRequestsByConsumerIdWithPayment(consumerId, begin, end);
+	public List<Request> findRequestByConsumerIdWithPayment(String inconsumerId, String page) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public boolean registerInviteRequest(InviteRequest inviteRequest) {
-		return irStore.insertInviteRequest(inviteRequest);
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public boolean removeInviteRequestById(String id) {
-		return irStore.deleteInviteRequestById(id);
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public boolean removeInviteRequestByRequestId(String requestId) {
-		return irStore.deleteInviteRequestsByRequestId(requestId);
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
-	public List<InviteRequest> findInviteRequestsByMakerId(String makerId, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return irStore.selectInviteRequestsByMakerId(makerId, begin, end);
+	public List<InviteRequest> findInviteRequestsByMakerId(String MakerId, String page) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public List<InviteRequest> findInviteRequestsByConsumerId(String consumerId, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return irStore.selectInviteRequestsByConsumerId(consumerId, begin, end);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public boolean registerComment(Comment comment) {
-		return cStore.insertComment(comment);
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public boolean modifyCommentById(Comment comment) {
-		return cStore.updateCommentById(comment);
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public boolean removeCommentById(String id) {
-		return cStore.deleteCommentById(id);
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public List<Comment> findCommentsByRequestId(String requestId,String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return cStore.selectCommentsByRequestId(requestId, page);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public boolean registerAttach(Attach attach) {
-		return aStore.insertAttach(attach);
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public boolean removeAttachById(String id) {
-		return aStore.deleteAttachById(id);
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public List<Attach> findAllAttachsByRequestId(String requestId, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return aStore.selectAllAttachsByRequestId(requestId, page);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public List<Attach> findAttachsByFileNameAndRequestId(String fileName, String requestId, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return aStore.selectAttachsByFileNameAndRequestId(fileName, requestId, page);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
