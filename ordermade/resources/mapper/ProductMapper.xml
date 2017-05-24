@@ -22,28 +22,28 @@
 	</resultMap>
 	
 	<sql id="selectProduct">
-		SELECT product.id, 
-				product.title, 
-				product.content, 
-				product.image, 
-				product.price, 
-				product.period, 
-				product.maker_id, 
-				product.type,
-				product.hit
+		SELECT id, 
+				title, 
+				content, 
+				image, 
+				price, 
+				period, 
+				maker_id, 
+				type,
+				hit
 	</sql>
 	
 	<sql id="selectProductWithRowNum">
 		SELECT rownum rnum,
-				product.id, 
-				product.title, 
-				product.content, 
-				product.image, 
-				product.price, 
-				product.period, 
-				product.maker_id, 
-				product.type,
-				product.hit
+				id, 
+				title, 
+				content, 
+				image, 
+				price, 
+				period, 
+				maker_id, 
+				type,
+				hit
 	</sql>
 	
 	<insert id="insertProduct" parameterType="Product">
@@ -132,7 +132,16 @@
 	
 	<select id="selectProductsByCategoryAndMakerName" parameterType="HashMap" resultMap="productMap">
 		<include refid="selectProduct" />
-		FROM (<include refid="selectProductWithRowNum" />
+		FROM (SELECT rownum rnum,
+						product.id, 
+						product.title, 
+						product.content, 
+						product.image, 
+						product.price, 
+						product.period, 
+						product.maker_id, 
+						product.type,
+						product.hit
 				FROM product INNER JOIN member ON product.maker_id = member.id
 				WHERE product.type = #{category} AND member.name = #{makerName}
 				ORDER BY product.id DESC)
@@ -143,7 +152,7 @@
 		<include refid="selectProduct" />
 		FROM (<include refid="selectProductWithRowNum" />
 				FROM product
-				WHERE type = #{category} AND member_id = #{makerId}
+				WHERE type = #{category} AND maker_id = #{makerId}
 				ORDER BY id DESC)
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
@@ -152,7 +161,7 @@
 		<include refid="selectProduct" />
 		FROM (<include refid="selectProductWithRowNum" />
 				FROM product
-				WHERE member_id = #{makerId}
+				WHERE maker_id = #{makerId}
 				ORDER BY id DESC)
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
@@ -161,7 +170,7 @@
 		<include refid="selectProduct" />
 		FROM (<include refid="selectProductWithRowNum" />
 				FROM product
-				WHERE title = #{title} AND member_id = #{makerId}
+				WHERE title = #{title} AND maker_id = #{makerId}
 				ORDER BY id DESC)
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>

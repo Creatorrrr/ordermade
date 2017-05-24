@@ -9,7 +9,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import ordermade.domain.InviteRequest;
 import ordermade.store.facade.InviteRequestStore;
 import ordermade.store.mapper.InviteRequestMapper;
-import ordermade.store.mapper.ProductMapper;
 
 public class InviteRequestStoreLogic implements InviteRequestStore {
 
@@ -59,7 +58,7 @@ public class InviteRequestStoreLogic implements InviteRequestStore {
 		return check;
 	}
 
-	@Override // 의뢰서가 참가가 완료되었을 때 그 에 해당되는 모든 참가요청을 다 지움
+	@Override // �쓽猶곗꽌媛� 李멸�媛� �셿猷뚮릺�뿀�쓣 �븣 洹� �뿉 �빐�떦�릺�뒗 紐⑤뱺 李멸��슂泥��쓣 �떎 吏���
 	public boolean deleteInviteRequestsByRequestId(String requestId) {
 
 		SqlSession session = factory.openSession();
