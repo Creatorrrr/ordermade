@@ -38,12 +38,11 @@ public class TagStoreLogic implements TagStore {
 	}
 
 	@Override
-	public Tag selectTagById(String id) {
+	public List<Tag> selectTagsByPortfolioId(String portfolioId) {
 		TagMapper mapper = session.getMapper(TagMapper.class);
-		Tag tag = mapper.selectTagById(id);
-		session.commit();
+		List<Tag> list = mapper.selectTagsByPortfolioId(portfolioId);
 		session.close();
-		return tag;
+		return list;
 
 	}
 

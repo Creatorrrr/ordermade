@@ -16,4 +16,8 @@ public interface PortfolioService {
 	public List<Portfolio> findPortfoliosByMakerId(String makerId, String page);
 
 	public List<Portfolio> findPortfoliosByMakerIdAndTitle(String makerId, String title, String page);
+
+	public List<Portfolio> findPortfoliosByCategory(String category, String page);
+
+
 }

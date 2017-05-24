@@ -3,6 +3,8 @@ package ordermade;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,12 +14,12 @@ import ordermade.store.logic.TagStoreLogic;
 
 public class TagTest {
 
-//	private TagStoreLogic store;
-//	@Before
-//	public void setUp() throws Exception {
-//		
-//		store = new TagStoreLogic();
-//	}
+	private TagStoreLogic store;
+	
+	@Before
+	public void setUp() throws Exception {
+		store = new TagStoreLogic();
+	}
 
 //	@Test
 //	public void testInsertTag() {
@@ -38,18 +40,17 @@ public class TagTest {
 //
 //	@Test
 //	public void testDeleteTagById() {
-//	boolean cheak = store.deleteTagById("2");
+//		boolean cheak = store.deleteTagById("2");
 //		System.out.println(cheak);
 //		
 //	}
 //
 //	@Test
 //	public void testSelectTagById() {
-//		
-//		Tag tag = store.selectTagById("3");
-//		
-//		assertEquals("qr", tag.getKeyword());
-//		
+//		List<Tag> list = store.selectTagsByPortfolioId("7");
+//		for(Tag tag : list){			
+//			System.out.println(tag.getId());
+//		}
 //	}
 
 //	@Test
