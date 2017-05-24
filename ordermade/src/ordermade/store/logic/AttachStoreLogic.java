@@ -34,11 +34,11 @@ public class AttachStoreLogic implements AttachStore{
 	}
 
 	@Override
-	public boolean deleteAttachById(Attach attach) {
+	public boolean deleteAttachById(String id) {
 		boolean check = false;
 		try {
 			AttachMapper mapper = session.getMapper(AttachMapper.class);
-			check = mapper.deleteAttachById(attach);
+			check = mapper.deleteAttachById(id);
 			session.commit();
 		} finally {
 			session.close();

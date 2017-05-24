@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package ordermade.store.logic;
 
 import java.io.IOException;
@@ -29,6 +30,25 @@ public class TagStoreLogic implements TagStore {
 	
 	private SqlSession session;
 	
+=======
+package ordermade.store.logic;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import ordermade.domain.Tag;
+import ordermade.store.facade.TagStore;
+import ordermade.store.mapper.TagMapper;
+
+@Repository
+public class TagStoreLogic implements TagStore {
+	
+	private SqlSession session;
+	
+>>>>>>> refs/remotes/origin/jo
 	public TagStoreLogic() {
 		 session = SqlSessionFactoryProvider.getSqlSessionFactory().openSession();
 	}

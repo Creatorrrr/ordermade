@@ -49,8 +49,8 @@
 	
 	<select id="selectInviteRequestsByConsumerId" parameterType="HashMap" resultMap="inviteRequestMap">
 		<include refid="selectInviteRequest"/>
-		FROM (<include refid="selectInviteRequestRownum"/>
-			 FROM invite_request ir INNER JOIN member m ON ir.memberid = m.id
+		FROM (SELECT rownum rnum, ir.id, ir.message, ir.maker_id, ir.request_time, ir.request_id, ir.form
+			 FROM invite_request ir INNER JOIN member m ON ir.consumer_id = m.id    <!--memberid? consumerid?  -->
 			 WHERE ir.consumerId = #{consumerId})
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select> 
