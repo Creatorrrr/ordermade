@@ -12,7 +12,7 @@
 		<result property="category" column="type" />
 		<result property="hopePrice" column="hope_price" jdbcType="NUMERIC" />
 		<result property="price" column="price" jdbcType="NUMERIC" />
-		<!--<association property="maker" column="maker_id"
+		<association property="maker" column="maker_id"
 			select="store.mapper.MemberMapper.selectMemberById" javaType="Member"
 			jdbcType="VARCHAR" />
 		<association property="consumer" column=" consumer_id"
@@ -23,15 +23,15 @@
 			javaType="ArrayList" jdbcType="VARCHAR" />
 		<collection property="attachs" column="id"
 			select="store.mapper.AttachMapper.selectAllAttachsByRequestId"
-			javaType="ArrayList" jdbcType="VARCHAR" /> -->
+			javaType="ArrayList" jdbcType="VARCHAR" /> 
 	</resultMap>
 
 	<sql id="selectRequest">
-		SELECT id, title, <!--  maker_id, consumer_id, --> type, content, hope_price, price, bound
+		SELECT id, title, maker_id, consumer_id, type, content, hope_price, price, bound
 	</sql>
 
 	<sql id="selectRequestRownum">
-		SELECT rownum rnum, id, title, <!--  maker_id, consumer_id, --> type, content, hope_price, price, bound
+		SELECT rownum rnum, id, title, maker_id, consumer_id, type, content, hope_price, price, bound
 	</sql>
 	
 	<insert id="insertRequest" parameterType="request">
@@ -93,17 +93,16 @@
 		<include refid="selectRequest"/>
 		FROM (<include refid="selectRequestRownum"/>
 		 	FROM request 
-		 	WHERE consumer_id = #{consumerId}
-		 	ORDER BY id DESC)        
+		 	WHERE consumer_id = #{consumerId} AND maker_id IS NOT NULL)        
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>		
 	
 	<select id="selectRequestsByConsumerIdWithPayment" parameterType="HashMap" resultMap="requestMap">
 		<include refid="selectRequest"/>
-		FROM (<include refid="selectRequestRownum"/>
-		 	FROM request 
-		 	WHERE consumer_id = #{consumerId}
-		 	ORDER BY id DESC)         
+		FROM (SELECT rownum rnum, r.id, r.title, r.maker_id, r.consumer_id, r.type, r.content, r.hope_price, r.price, r.bound
+		 	FROM request r INNER JOIN  purchase_history ph ON r.consumer_id = ph.consumer_id
+			WHERE r.consumer_id = #{consumerId})   
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
+	
 </mapper>

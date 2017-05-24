@@ -121,24 +121,27 @@ public class RequestStoreLogicTest {
 //	@Test 		//ok
 //	public void testSelectRequestsByConsumerId() {
 //		
-//		List<Request> list = rStore.selectRequestsByConsumerId("testC", "1", "2");
+//		List<Request> list = rStore.selectRequestsByConsumerId("test", "1", "2");
 //		System.out.println(list.size());
-//		assertEquals(1, list.size());
+//		assertEquals(0, list.size());
 //	}
 	
 //	@Test		//ok
 //	public void testSelectRequestsByConsumerIdWithMaker() {
 //		
-//		List<Request> list = rStore.selectRequestsByConsumerIdWithMaker("testC", "1", "2");
+//		List<Request> list = rStore.selectRequestsByConsumerIdWithMaker("test", "1", "2");
+//	//	Request r = list.get(0);//list.get(0).
 //		System.out.println(list.size());
-//		assertEquals(1, list.size());
+//		//System.out.println("1111"+r.getMaker().getId());
+//		//System.out.println("aaaa"+r.getContent());
+//		assertEquals(0, list.size());
 //	}
 
 //	@Test		//ok
 //	public void testSelectRequestsByConsumerIdWithPayment() {
 //		
-//		List<Request> list = rStore.selectRequestsByConsumerIdWithPayment("testC", "1", "2");
+//		List<Request> list = rStore.selectRequestsByConsumerIdWithPayment("test", "1", "2");
 //		System.out.println(list.size());
-//		assertEquals(1, list.size());
+//		assertEquals(0, list.size());
 //	}
 }
