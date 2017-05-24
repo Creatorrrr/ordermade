@@ -11,5 +11,5 @@ public interface TagStore {
 
 	public Tag selectTagById(String id);
 
-	public List<Tag> TagsFromGoogleVision(String path);
+	public List<Tag> retrieveTagsFromGoogleVision(String path);
 }

@@ -38,7 +38,6 @@ public class AccountStoreLogic implements AccountStore{
 		try{
 			AccountMapper mapper = session.getMapper(AccountMapper.class);
 			account = mapper.selectAccountById(id);
-			session.commit();
 		} finally {
 			session.close();
 		}

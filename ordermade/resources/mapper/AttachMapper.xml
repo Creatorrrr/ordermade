@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ordermade.store.mapper.AttachMapper">
+  
+  	<insert id="insertAttach" parameterType="Attach">
+  		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+  			select attach_seq.nextval FROM DUAL
+  		</selectKey>
+		INSERT INTO ATTACH(id, path, file_name, extension, request_id)
+		VALUES (#{id}, #{path}, #{fileName}, #{extension}, #{request.id})
+  	</insert>
+  	
+  	<delete id="deleteAttachById" parameterType="String">
+  		DELETE FROM ATTACH
+  		WHERE id = #{id}
+  	</delete>
+  
+  	<!-- 의뢰서에 관한 모든 첨부파일 10개씩 불러오기 -->
+  	<select id="selectAllAttachsByRequestId" parameterType="String" resultType="Attach">
+  		SELECT * FROM ( 
+              SELECT rownum limitNum, A.* FROM ATTACH A  
+              WHERE REQUEST_ID=#{requestId}  
+              and rownum &lt;= #{page}*10) 
+          WHERE limitNum > (#{page}-1)*10
+  	</select>
+  	
+  	<!-- 의뢰서에 관한 첨부파일 이름으로 검색 -->
+  	<select id="selectAttachsByFileNameAndRequestId" parameterType="String" resultType="Attach">
+  		SELECT * FROM ( 
+              SELECT rownum limitNum, A.* FROM ATTACH A  
+              WHERE FILE_NAME=#{fileName} and REQUEST_ID=#{requestId}  
+              and rownum &lt;= #{page}*10) 
+          WHERE limitNum > (#{page}-1)*10
+  	</select>
+  
+  </mapper>

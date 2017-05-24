@@ -91,6 +91,7 @@ public class ProductStoreLogic implements ProductStore {
 	public List<Product> selectProductsByCategoryOrderByHitsForMain(String category, String page) {
 		SqlSession session = factory.openSession();
 		List<Product> productList = null;
+		
 		HashMap<String, String> map = new HashMap<>();
 		map.put("category", category);
 		map.put("page", page);

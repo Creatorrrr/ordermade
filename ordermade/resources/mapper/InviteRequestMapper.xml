@@ -18,7 +18,10 @@
 	
 	<sql id="selectInviteRequest">
 		SELECT id, message, maker_id, request_time, request_id, form
-		FROM invite_request
+	</sql>
+	
+	<sql id="selectInviteRequestRownum">
+		SELECT rownum rnum, id, message, maker_id, request_time, request_id, form
 	</sql>
 	
 	<insert id="insertInviteRequest" parameterType="inviteRequest">
@@ -36,16 +39,20 @@
 		WHERE request_id = #{request.id}
 	</delete>
 	
-	<!-- <select id="selectInviteRequestsByMakerId" parameterType="HashMap" resultMap="inviteRequestMap">
-		SELECT id, message, member_id, request_time, request_id, form
-		FROM (SELECT rownum, id, message, maker_id, request_time, request_id, form FROM invite_request WHERE maker_Id = #{maker.Id})
-		WHERE rownum BETWEEN #{begin} AND #{end}
+	 <select id="selectInviteRequestsByMakerId" parameterType="HashMap" resultMap="inviteRequestMap">
+		<include refid="selectInviteRequest"/>
+		FROM (<include refid="selectInviteRequestRownum"/>
+			 FROM invite_request 
+			 WHERE maker_Id = #{makerId})
+		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 	
 	<select id="selectInviteRequestsByConsumerId" parameterType="HashMap" resultMap="inviteRequestMap">
-		SELECT id, message, member_id, request_time, request_id, form
-		FROM (SELECT rownum, id, message, member_id, request_time, request_id, form FROM invite_request WHERE consumerId = #{consumer.Id})
-		WHERE rownum BETWEEN #{begin} AND #{end}
-	</select> -->
+		<include refid="selectInviteRequest"/>
+		FROM (<include refid="selectInviteRequestRownum"/>
+			 FROM invite_request ir INNER JOIN member m ON ir.memberid = m.id
+			 WHERE ir.consumerId = #{consumerId})
+		WHERE rnum BETWEEN #{begin} AND #{end}
+	</select> 
 </mapper>
   

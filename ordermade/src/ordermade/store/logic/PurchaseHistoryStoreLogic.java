@@ -19,15 +19,15 @@ public class PurchaseHistoryStoreLogic implements PurchaseHistoryStore {
 	
 	@Override
 	public boolean insertPurchaseHistory(PurchaseHistory purchaseHistory) {
-		try{
+		//try{
 			PurchaseHistoryMapper mapper = session.getMapper(PurchaseHistoryMapper.class);
 			boolean check = mapper.insertPurchaseHistory(purchaseHistory);
 			session.commit();
 			return check;
 		
-		} finally{
-			session.close();
-		}
+//		} finally{
+//			session.close();
+//		}
 	}
 
 	@Override

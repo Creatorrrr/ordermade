@@ -67,4 +67,12 @@ public class PurchaseHistory {
 	public void setPayment(String payment) {
 		this.payment = payment;
 	}
+	@Override
+	public String toString() {
+		return "PurchaseHistory [id=" + id + ", maker=" + maker + ", consumer=" + consumer + ", request=" + request
+				+ ", orderDate=" + orderDate + ", invoiceNumber=" + invoiceNumber + ", charge=" + charge
+				+ ", deliveryStatus=" + deliveryStatus + ", payment=" + payment + "]";
+	}
+	
+	
 }

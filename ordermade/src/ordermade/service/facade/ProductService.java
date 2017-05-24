@@ -2,6 +2,7 @@ package ordermade.service.facade;
 
 import java.util.List;
 
+import ordermade.domain.Category;
 import ordermade.domain.Product;
 import ordermade.domain.Review;
 
@@ -14,9 +15,9 @@ public interface ProductService {
 
 	public Product findProductById(String id);
 
-	public List<Product> findProductsByCategoryOrderByHitsForMain(String hits, String page);
+	public List<Product> findProductsByCategoryOrderByHitsForMain(String category, String page);
 
-	public List<Product> findProductsByCategoryOrderByIdForMain(String id, String page);
+	public List<Product> findProductsByCategoryOrderByIdForMain(String category, String page);
 
 	public List<Product> findProductsByCategoryAndImage(String category, String image, String page);
 
@@ -42,5 +43,5 @@ public interface ProductService {
 
 	public List<Review> findReviewsByConsumerIdAndProductId(String consumerId, String productId, String page);
 
-	public List<Review> findAllCategory();
+	public List<Category> findAllCategory();
 }

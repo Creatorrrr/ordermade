@@ -41,7 +41,7 @@
   	<select id="selectPortfoliosByMakerId" resultMap="portfolioMap">
 		select * from (
 			select rownum limitNum, A.* from portfolio A where maker_id=#{makerId}
-			and rownum &lt;= ((#{page}-1)*10+10)
+			and rownum &lt;= (#{page}*10) order by A.id desc
 		) where limitNum > ((#{page}-1)*10)
 
   	</select>
@@ -49,19 +49,17 @@
   
   	<select id="selectPortfoliosByMakerIdAndTitle" resultMap="portfolioMap">
   		select * from (
-			select rownum limitNum, A.* from portfolio A where maker_id=#{makerId} and #{title}
-			and rownum &lt;= ((#{page}-1)*10+10)
+			select rownum limitNum, A.* from portfolio A where maker_id=#{makerId} and title like '%${title}%'
+			and rownum &lt;= (#{page}*10) order by A.id desc
 		) where limitNum > ((#{page}-1)*10)
   	</select>
   
     <select id="selectPortfoliosByCategory" resultMap="portfolioMap">
 		select * from (
 			select rownum limitNum, A.* from portfolio A where type=#{category}
-			and rownum &lt;= ((#{page}-1)*10+10)
+			and rownum &lt;= (#{page}*10) order by A.id desc
 		) where limitNum > ((#{page}-1)*10)
   	</select>
   
   </mapper>
-  
-  
   

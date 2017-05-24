@@ -10,7 +10,7 @@
   			select comment_seq.nextval FROM DUAL
   		</selectKey>
 		INSERT INTO COMM(id, content, attach_id, member_id, request_id, time)
-		VALUES (#{id}, #{content}, #{attach.id}, #{member.id}, #{request.id}, #{time})
+		VALUES (#{id}, #{content}, #{attach.id}, #{member.id}, #{request.id}, TO_DATE(sysdate,'yyyy/mm/dd hh24:mi:ss'))
   	</insert>
   	
   	<update id="updateCommentById" parameterType="Comment">
@@ -25,11 +25,13 @@
   		WHERE member_id = #{id}
   	</delete>
   	
-  	<!-- Not Yet -->
-  	<select id="selectCommentsByRequestId" parameterType="String" resultType="Comment">
-  		SELECT id, content, attach_id, member_id, request_id, time
-  		FROM COMM
-  		WHERE REQUEST_ID = #{request.id}
+  	<!-- 의뢰서에 관한 답변 10개씩 불러오기 -->
+  	<select id="selectCommentsByRequestId" resultType="Comment">
+  		SELECT * FROM (
+  			SELECT rownum limitNum, A.* FROM COMM A 
+  			WHERE REQUEST_ID=#{requestId} 
+  			and rownum &lt;= #{page}*10)
+  		WHERE limitNum > (#{page}-1)*10
   	</select>
   
   </mapper>
