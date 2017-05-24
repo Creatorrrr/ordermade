@@ -1,10 +1,12 @@
 package ordermade.domain;
 
+import java.sql.Date;
+
 public class InviteRequest {
 	private String id;
 	private String message;
-	private Member member;
-	private int requestTime;
+	private Member maker;
+	private Date requestTime;
 	private Request request;
 	private String form;
 	
@@ -20,16 +22,16 @@ public class InviteRequest {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public Member getMember() {
-		return member;
+	public Member getMaker() {
+		return maker;
 	}
-	public void setMember(Member member) {
-		this.member = member;
+	public void setMaker(Member maker) {
+		this.maker = maker;
 	}
-	public int getRequestTime() {
+	public Date getRequestTime() {
 		return requestTime;
 	}
-	public void setRequestTime(int requestTime) {
+	public void setRequestTime(Date requestTime) {
 		this.requestTime = requestTime;
 	}
 	public Request getRequest() {

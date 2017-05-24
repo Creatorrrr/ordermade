@@ -54,8 +54,8 @@ CREATE TABLE request (
 CREATE TABLE invite_request (
   id VARCHAR2(50) PRIMARY KEY,
   message VARCHAR2(500),
-  member_id VARCHAR2(50),
-  request_time NUMBER,
+  maker_id VARCHAR2(50),
+  request_time DATE,
   request_id VARCHAR2(50),
   form VARCHAR2(5)
 );

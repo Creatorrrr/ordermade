@@ -40,13 +40,13 @@ public class RequestStoreLogic implements RequestStore {
 	}
 
 	@Override
-	public boolean updateReqeust(Request request) {
+	public boolean updateReqeustById(Request request) {
 		SqlSession session = factory.openSession();
 		boolean result = false;
 		
 		try{
 			RequestMapper mapper= session.getMapper(RequestMapper.class);
-			if(result=mapper.updateReqeust(request)){
+			if(result=mapper.updateReqeustById(request)){
 				session.commit();
 			}else{
 				session.rollback();
@@ -58,13 +58,13 @@ public class RequestStoreLogic implements RequestStore {
 	}
 
 	@Override
-	public boolean deleteRequest(String id) {
+	public boolean deleteRequestById(String id) {
 		SqlSession session = factory.openSession();
 		boolean result = false;
 
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			if (result = mapper.deleteRequest(id) == true) {
+			if (result = mapper.deleteRequestById(id) == true) {
 				session.commit();
 			} else {
 				session.rollback();

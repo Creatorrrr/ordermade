@@ -8,8 +8,8 @@ import ordermade.domain.Request;
 public interface RequestMapper {
 
 	public boolean insertRequest(Request request);
-	public boolean updateReqeust(Request request);
-	public boolean deleteRequest(String id);
+	public boolean updateReqeustById(Request request);
+	public boolean deleteRequestById(String id);
 	public Request selectRequestById(String id); 
 	public List<Request> selectRequestsByBound(HashMap<String , String> map);
 	public List<Request> selectRequestsByBoundAndTitle(HashMap<String , String> map);

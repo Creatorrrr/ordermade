@@ -12,28 +12,48 @@ public class PortfolioStoreLogic implements PortfolioStore {
 
 	private SqlSession session;
 	
+	public PortfolioStoreLogic() {
+		session = SqlSessionFactoryProvider.getSqlSessionFactory().openSession();
+	}
+	
 	
 	@Override
 	public boolean insertPortfolio(Portfolio portfolio) {
-		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
-		return mapper.insertPortfolio(portfolio);
+		
+		try{
+			PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+			boolean check = mapper.insertPortfolio(portfolio);
+			session.commit();
+			return check;
+		
+		} finally{
+			session.close();
+		}
+		
 	}
 
 	@Override
 	public boolean updatePortfolioById(Portfolio portfolio) {
+		
 		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
-		return mapper.updatePortfolioById(portfolio);
+		boolean check = mapper.updatePortfolioById(portfolio);
+		session.commit();
+		return check;
 	}
 
 	@Override
 	public boolean deletePortfolioById(String id) {
+		
 		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
-		return mapper.deletePortfolioById(id);
+		boolean check = mapper.deletePortfolioById(id);
+		session.commit();
+		return check;
 	}
 
 	@Override
 	public Portfolio selectPortfolioById(String id) {
-		return session.selectOne("ordermade.store.mapper.PortfolioMapper.selectPortfolioById", id);
+		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+		return  mapper.selectPortfolioById(id);
 	}
 
 	@Override

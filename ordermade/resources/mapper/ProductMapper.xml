@@ -12,45 +12,43 @@
 		<result column="price" property="price" />
 		<result column="period" property="period" />
 		<result column="hit" property="hit" />
-		<association property="maker" column="maker_id"
+		<result column="type" property="category" />
+		<!-- <association property="maker" column="maker_id"
 			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
-			jdbcType="VARCHAR" />
-		<association property="type" column="category"
-			select="ordermade.store.mapper.CategoryMapper.selectCategoryById" javaType="Category"
 			jdbcType="VARCHAR" />
 		<collection property="reviews" column="id" ofType="Review"
 			select="ordermade.store.mapper.ReviewMapper.selectReviewsByProductId" javaType="ArrayList"
-			jdbcType="VARCHAR" />
+			jdbcType="VARCHAR" /> -->
 	</resultMap>
 	
 	<sql id="selectProduct">
-		SELECT id, 
-				title, 
-				content, 
-				image, 
-				price, 
-				period, 
-				maker_id, 
-				category,
-				hit
+		SELECT product.id, 
+				product.title, 
+				product.content, 
+				product.image, 
+				product.price, 
+				product.period, 
+				product.maker_id, 
+				product.type,
+				product.hit
 	</sql>
 	
 	<sql id="selectProductWithRowNum">
-		SELECT rownum,
-				id, 
-				title, 
-				content, 
-				image, 
-				price, 
-				period, 
-				maker_id, 
-				category,
-				hit
+		SELECT rownum rnum,
+				product.id, 
+				product.title, 
+				product.content, 
+				product.image, 
+				product.price, 
+				product.period, 
+				product.maker_id, 
+				product.type,
+				product.hit
 	</sql>
 	
 	<insert id="insertProduct" parameterType="Product">
 		<selectKey keyProperty="id" resultType="String" order="BEFORE">
-			SELECT product_seq.nextval FROM dual;
+			SELECT product_seq.nextval FROM dual
 		</selectKey>
 		INSERT INTO product(id, 
 							title, 
@@ -59,7 +57,7 @@
 							price, 
 							period, 
 							maker_id, 
-							category,
+							type,
 							hit)
 		VALUES(#{id}, 
 				#{title}, 
@@ -68,7 +66,7 @@
 				#{price}, 
 				#{period}, 
 				#{maker.id}, 
-				#{category.type}
+				#{category},
 				#{hit})
 	</insert>
 	
@@ -80,7 +78,7 @@
 			price = #{price}, 
 			period = #{period}, 
 			maker_id = #{maker.id}, 
-			category = #{category.type}
+			type = #{category},
 			hit = #{hit}
 		WHERE id = #{id}
 	</update>
@@ -102,7 +100,7 @@
 				FROM product
 				WHERE type = #{category}
 				ORDER BY hit DESC)
-		WHERE rownum BETWEEN 1 AND #{page}
+		WHERE rnum BETWEEN 1 AND #{page}
 	</select>
 	
 	<select id="selectProductsByCategoryOrderByIdForMain" parameterType="HashMap" resultMap="productMap">
@@ -111,7 +109,7 @@
 				FROM product
 				WHERE type = #{category}
 				ORDER BY id DESC)
-		WHERE rownum BETWEEN 1 AND #{page}
+		WHERE rnum BETWEEN 1 AND #{page}
 	</select>
 	
 	<select id="selectProductsByCategory" parameterType="HashMap" resultMap="productMap">
@@ -120,7 +118,7 @@
 				FROM product
 				WHERE type = #{category}
 				ORDER BY id DESC)
-		WHERE rownum BETWEEN #{begin} AND #{end}
+		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 	
 	<select id="selectProductsByCategoryAndTitle" parameterType="HashMap" resultMap="productMap">
@@ -129,16 +127,16 @@
 				FROM product
 				WHERE type = #{category} AND title = #{title}
 				ORDER BY id DESC)
-		WHERE rownum BETWEEN #{begin} AND #{end}
+		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 	
 	<select id="selectProductsByCategoryAndMakerName" parameterType="HashMap" resultMap="productMap">
 		<include refid="selectProduct" />
 		FROM (<include refid="selectProductWithRowNum" />
-				FROM product INNER JOIN member ON product.member_id = member.id
+				FROM product INNER JOIN member ON product.maker_id = member.id
 				WHERE product.type = #{category} AND member.name = #{makerName}
 				ORDER BY product.id DESC)
-		WHERE rownum BETWEEN #{begin} AND #{end}
+		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 	
 	<select id="selectProductsByCategoryAndMakerId" parameterType="HashMap" resultMap="productMap">
@@ -147,7 +145,7 @@
 				FROM product
 				WHERE type = #{category} AND member_id = #{makerId}
 				ORDER BY id DESC)
-		WHERE rownum BETWEEN #{begin} AND #{end}
+		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 	
 	<select id="selectProductsByMakerId" parameterType="HashMap" resultMap="productMap">
@@ -156,7 +154,7 @@
 				FROM product
 				WHERE member_id = #{makerId}
 				ORDER BY id DESC)
-		WHERE rownum BETWEEN #{begin} AND #{end}
+		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 	
 	<select id="selectProductsByMakerIdAndTitle" parameterType="HashMap" resultMap="productMap">
@@ -165,7 +163,7 @@
 				FROM product
 				WHERE title = #{title} AND member_id = #{makerId}
 				ORDER BY id DESC)
-		WHERE rownum BETWEEN #{begin} AND #{end}
+		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 	
 	<select id="selectAllCategory" parameterType="HashMap" resultType="Category">

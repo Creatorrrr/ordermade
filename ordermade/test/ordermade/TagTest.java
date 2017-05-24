@@ -12,12 +12,12 @@ import ordermade.store.logic.TagStoreLogic;
 
 public class TagTest {
 
-	private TagStoreLogic store;
-	@Before
-	public void setUp() throws Exception {
-		
-		store = new TagStoreLogic();
-	}
+//	private TagStoreLogic store;
+//	@Before
+//	public void setUp() throws Exception {
+//		
+//		store = new TagStoreLogic();
+//	}
 
 //	@Test
 //	public void testInsertTag() {
@@ -35,13 +35,13 @@ public class TagTest {
 //		store.insertTag(tag);
 //		
 //	}
-
-	@Test
-	public void testDeleteTagById() {
-	boolean cheak = store.deleteTagById("2");
-		System.out.println(cheak);
-		
-	}
+//
+//	@Test
+//	public void testDeleteTagById() {
+//	boolean cheak = store.deleteTagById("2");
+//		System.out.println(cheak);
+//		
+//	}
 //
 //	@Test
 //	public void testSelectTagById() {

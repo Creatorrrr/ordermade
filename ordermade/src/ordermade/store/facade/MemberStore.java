@@ -5,9 +5,9 @@ import ordermade.domain.Member;
 public interface MemberStore {
 	public boolean insertMember(Member member);
 
-	public boolean updateMember(Member member);
+	public boolean updateMemberById(Member member);
 
-	public boolean deleteMember(String id);
+	public boolean deleteMemberById(String id);
 
-	public Member selectMemberBy(String id);
+	public Member selectMemberById(String id);
 }

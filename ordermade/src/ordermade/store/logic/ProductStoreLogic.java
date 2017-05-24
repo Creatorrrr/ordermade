@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Repository;
 
 import ordermade.domain.Category;
 import ordermade.domain.Product;
 import ordermade.store.facade.ProductStore;
 import ordermade.store.mapper.ProductMapper;
 
+@Repository
 public class ProductStoreLogic implements ProductStore {
 	private SqlSessionFactory factory;
 	
@@ -123,8 +125,8 @@ public class ProductStoreLogic implements ProductStore {
 		List<Product> productList = null;
 		HashMap<String, String> map = new HashMap<>();
 		map.put("category", category);
-		map.put("begin", begin);
-		map.put("end", end);
+		map.put("begin", begin);System.out.println(begin);
+		map.put("end", end);System.out.println(end);
 		try {
 			ProductMapper mapper = session.getMapper(ProductMapper.class);
 			productList = mapper.selectProductsByCategory(map);

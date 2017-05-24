@@ -4,14 +4,32 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="ordermade.store.mapper.CommentMapper">
-  
-  	<update id="insertComment" parameterType="Comment">
-  	</update>
   	
-  	<select id="selectAccountById" parameterType="String" resultMap="Account">
-  		SELECT MONEY
-  		FROM ACCOUNT
-  		WHERE MEMBER_ID = #{member.id}
+  	<insert id="insertComment" parameterType="Comment">
+  		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+  			select comment_seq.nextval FROM DUAL
+  		</selectKey>
+		INSERT INTO COMM(id, content, attach_id, member_id, request_id, time)
+		VALUES (#{id}, #{content}, #{attach.id}, #{member.id}, #{request.id}, #{time})
+  	</insert>
+  	
+  	<update id="updateCommentById" parameterType="Comment">
+  		UPDATE COMM
+  		SET content = #{content},
+  			time = #{time}
+  		WHERE member_id = #{member.id}
+  	</update>
+
+  	<delete id="deleteCommentById" parameterType="String">
+  		DELETE FROM COMM
+  		WHERE member_id = #{id}
+  	</delete>
+  	
+  	<!-- Not Yet -->
+  	<select id="selectCommentsByRequestId" parameterType="String" resultType="Comment">
+  		SELECT id, content, attach_id, member_id, request_id, time
+  		FROM COMM
+  		WHERE REQUEST_ID = #{request.id}
   	</select>
   
   </mapper>

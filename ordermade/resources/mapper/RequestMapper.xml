@@ -9,6 +9,7 @@
 		<result property="title" column="title" />
 		<result property="content" column="content" />
 		<result property="bound" column="bound" />
+		<result property="category" column="type" />
 		<result property="hopePrice" column="hope_price" jdbcType="NUMERIC" />
 		<result property="price" column="price" jdbcType="NUMERIC" />
 		<association property="maker" column="maker_id"
@@ -16,9 +17,6 @@
 			jdbcType="VARCHAR" />
 		<association property="consumer" column=" consumer_id"
 			select="store.mapper.MemberMapper.selectMemberById" javaType="Member"
-			jdbcType="VARCHAR" />
-		<association property="category" column="type"
-			select="store.mapper.CategoryMapper.selectAllCategory" javaType="Category"
 			jdbcType="VARCHAR" />
 		<collection property="comments" column="id"
 			select="store.mapper.CommentMapper.selectCommentsByRequestId"
@@ -32,4 +30,67 @@
 		SELECT id, title, maker_id, consumer_id, type, content, hope_price, price, bound
 		FROM request
 	</sql>
+
+	<insert id="insertRequest" parameterType="request">
+		INSERT INTO request(id, title, maker_id, consumer_id, type, content, hope_price, price, bound)
+		VALUES (#{id},#{title},#{maker.id},#{consumer.id},#{category},#{content},#{hopePrice},#{price},#{bound})
+	</insert>
+
+	<update id="updateReqeustById" parameterType="request">
+		UPDATE request
+		SET title = #{title}, type = #{category}, content = #{content}  <!--bound추가?  -->
+		WHERE id = #{id}
+	</update>
+
+	<delete id="deleteRequestById" parameterType="String">
+		DELETE FROM request
+		WHERE id = #{id}
+	</delete>
+
+	<select id="selectRequestById" parameterType="String" resultMap="requestMap">
+		<include refid="selectRequest"/>
+		WHERE id = #{id}
+	</select>
+	
+	<select id="selectRequestsByBound" parameterType="HashMap" resultMap="requestMap">
+		SELECT id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+		FROM (SELECT rownum, id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+		 FROM request WHERE bound = #{bound})
+		WHERE rownum BETWEEN #{begin} AND #{end}
+	</select>
+
+	<select id="selectRequestsByBoundAndTitle" parameterType="HashMap" resultMap="requestMap">
+		SELECT id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+		FROM (SELECT rownum, id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+		 FROM request WHERE bound = #{bound}, title LIKE '%${value}%')         <!-- title = #{title} -->
+		WHERE rownum BETWEEN #{begin} AND #{end} 
+	</select>
+	
+	<select id="selectRequestsByBoundAndContent" parameterType="HashMap" resultMap="requestMap">
+		SELECT id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+		FROM (SELECT rownum, id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+		 FROM request WHERE bound = #{bound}, content LIKE '%${value}%')        <!-- content = #{content} -->
+		WHERE rownum BETWEEN #{begin} AND #{end}
+	</select>	
+		
+	<select id="selectRequestsByConsumerId" parameterType="HashMap" resultMap="requestMap">
+		SELECT id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+		FROM (SELECT rownum, id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+		 FROM request WHERE consumer_id = #{consumer.id})       
+		WHERE rownum BETWEEN #{begin} AND #{end}
+	</select>
+			
+	<select id="selectRequestsByConsumerIdWithMaker" parameterType="HashMap" resultMap="requestMap">
+		SELECT id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+		FROM (SELECT rownum, id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+		 FROM request WHERE consumer_id = #{consumer.id})        
+		WHERE rownum BETWEEN #{begin} AND #{end}
+	</select>		
+	
+	<select id="selectRequestsByConsumerIdWithPayment" parameterType="HashMap" resultMap="requestMap">
+		SELECT id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+		FROM (SELECT rownum, id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+		 FROM request WHERE consumer_id = #{consumer.id})         
+		WHERE rownum BETWEEN #{begin} AND #{end}
+	</select>
 </mapper>

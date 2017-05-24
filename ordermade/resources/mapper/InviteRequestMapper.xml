@@ -7,8 +7,8 @@
 		<result property="id" column="id" />
 		<result property="message" column="message" />
 		<result property="form" column="form" />
-		<result property="requestTime" column="request_time" jdbcType="NUMERIC" />
-		<association property="member" column="member_id"
+		<result property="requestTime" column="request_time"/>    
+		<association property="maker" column="maker_id"
 			select="store.mapper.MemberMapper.selectMemberById" javaType="Member"
 			jdbcType="VARCHAR" />
 		<association property="request" column="request_id"
@@ -17,29 +17,35 @@
 	</resultMap>
 	
 	<sql id="selectInviteRequest">
-		SELECT id, message, member_id, request_time, request_id, form
+		SELECT id, message, maker_id, request_time, request_id, form
 		FROM invite_request
 	</sql>
 	
 	<insert id="insertInviteRequest" parameterType="inviteRequest">
-		INSERT INTO invite_reqeust(id, message, member_id, request_time, request_id, form)
-		VALUES (#{id},#{message},#{member.id},TO_DATE(sysdate,'yyyy/mm/dd hh24:mi:ss'),#{request.id},#{form})
+		INSERT INTO invite_request(id, message, maker_id, request_time, request_id, form)
+		VALUES (#{id},#{message},#{maker.id},TO_DATE(sysdate,'yyyy/mm/dd hh24:mi:ss'),#{request.id},#{form})
 	</insert>
 	
-	<delete id="deleteInviteRequestById" parameterType="id">
+	<delete id="deleteInviteRequestById" parameterType="String">
 		DELETE FROM invite_request
 		WHERE id = #{id}
 	</delete>
 	
-	<delete id="deleteInviteRequestsByRequestId" parameterType="requestId" >
+	<delete id="deleteInviteRequestsByRequestId" parameterType="String" >
 		DELETE FROM invite_request
-		WHERE reuquest_id = #{id}
+		WHERE request_id = #{request.id}
 	</delete>
 	
-	<select id="selectInviteRequestsByMakerId" parameterType="HashMap" resultMap="inviteRequestMap">
+	<!-- <select id="selectInviteRequestsByMakerId" parameterType="HashMap" resultMap="inviteRequestMap">
 		SELECT id, message, member_id, request_time, request_id, form
-		FROM (SELECT rownum, id, message, member_id, request_time, request_id, form FROM invite_request WHERE makerId = #{member.Id})
+		FROM (SELECT rownum, id, message, maker_id, request_time, request_id, form FROM invite_request WHERE maker_Id = #{maker.Id})
 		WHERE rownum BETWEEN #{begin} AND #{end}
 	</select>
+	
+	<select id="selectInviteRequestsByConsumerId" parameterType="HashMap" resultMap="inviteRequestMap">
+		SELECT id, message, member_id, request_time, request_id, form
+		FROM (SELECT rownum, id, message, member_id, request_time, request_id, form FROM invite_request WHERE consumerId = #{consumer.Id})
+		WHERE rownum BETWEEN #{begin} AND #{end}
+	</select> -->
 </mapper>
   
