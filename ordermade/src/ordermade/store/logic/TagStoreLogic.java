@@ -3,7 +3,6 @@ package ordermade.store.logic;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ordermade.domain.Tag;
@@ -48,13 +47,9 @@ public class TagStoreLogic implements TagStore {
 	}
 
 	@Override
-	public List<Tag> TagsFromGoogleVision(String path) {
-		TagMapper mapper = session.getMapper(TagMapper.class);
-		List<Tag> list = mapper.TagsFromGoogleVision(path);
-		session.commit();
-		session.close();
-		return list;
-
+	public List<Tag> retrieveTagsFromGoogleVision(String path) {
+		// google vision
+		return null;
 	}
 
 }
