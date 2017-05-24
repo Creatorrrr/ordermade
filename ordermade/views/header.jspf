@@ -1,0 +1,4 @@
+</head>
+<body>
+<%@ include file="_mainbar.jsp" %>
+<div class="container">
