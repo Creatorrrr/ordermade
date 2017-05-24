@@ -53,4 +53,11 @@ public class Portfolio {
 	public void setImage(String image) {
 		this.image = image;
 	}
+	@Override
+	public String toString() {
+		return "Portfolio [id=" + id + ", title=" + title + ", content=" + content + ", tags=" + tags + ", category="
+				+ category + ", maker=" + maker + ", image=" + image + "]";
+	}
+	
+	
 }
