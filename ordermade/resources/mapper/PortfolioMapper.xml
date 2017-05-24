@@ -9,11 +9,10 @@
   		<id property="id" column="id"/>
   		<result property="title" column="title"/>
   		<result property="content" column="content"/>
-  		<!-- <collection property="tags" column="id" ofType="Tag" select="ordermade.store.mapper.TagMapper.selectTagById" javaType="ArrayList" jdbcType="varchar" /> -->
   		<result property="category" column="type" />
-  		<!-- <association property="maker" column="maker_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="String" jdbcType="varchar"/> -->
   		<result property="image" column="image"/>
-
+  		<association property="maker" column="maker_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member" jdbcType="VARCHAR" />
+		<collection property="tags" column="id" ofType="Tag" select="ordermade.store.mapper.TagMapper.selectTagsByPortfolioId" javaType="ArrayList" jdbcType="VARCHAR"/>
   	</resultMap>
   
   
@@ -34,11 +33,11 @@
   		delete from portfolio where id=#{id}
   	</delete>
   
-  	<select id="selectPortfolioById" resultMap="portfolioMap">
+  	<select id="selectPortfolioById" parameterType="java.util.Map" resultMap="portfolioMap">
   		select id, title, type, content, maker_id, image from portfolio where id=#{id}
   	</select>
   
-  	<select id="selectPortfoliosByMakerId" resultMap="portfolioMap">
+  	<select id="selectPortfoliosByMakerId" parameterType="java.util.Map" resultMap="portfolioMap">
 		select * from (
 			select rownum limitNum, A.* from portfolio A where maker_id=#{makerId}
 			and rownum &lt;= (#{page}*10) order by A.id desc
@@ -47,14 +46,14 @@
   	</select>
   	
   
-  	<select id="selectPortfoliosByMakerIdAndTitle" resultMap="portfolioMap">
+  	<select id="selectPortfoliosByMakerIdAndTitle" parameterType="java.util.Map" resultMap="portfolioMap">
   		select * from (
 			select rownum limitNum, A.* from portfolio A where maker_id=#{makerId} and title like '%${title}%'
 			and rownum &lt;= (#{page}*10) order by A.id desc
 		) where limitNum > ((#{page}-1)*10)
   	</select>
   
-    <select id="selectPortfoliosByCategory" resultMap="portfolioMap">
+    <select id="selectPortfoliosByCategory" parameterType="java.util.Map" resultMap="portfolioMap">
 		select * from (
 			select rownum limitNum, A.* from portfolio A where type=#{category}
 			and rownum &lt;= (#{page}*10) order by A.id desc

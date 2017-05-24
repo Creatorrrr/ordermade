@@ -4,43 +4,50 @@ import java.util.List;
 
 import ordermade.domain.Portfolio;
 import ordermade.service.facade.PortfolioService;
+import ordermade.store.logic.PortfolioStoreLogic;
 
 public class PortfolioServiceLogic implements PortfolioService{
 
+	private PortfolioStoreLogic store;
+	
+	public PortfolioServiceLogic() {
+		store = new PortfolioStoreLogic();
+	}
+	
+	
 	@Override
 	public boolean registerPortfolio(Portfolio portfolio) {
-		// TODO Auto-generated method stub
-		return false;
+		return store.insertPortfolio(portfolio);
 	}
 
 	@Override
 	public boolean modifyPortfolio(Portfolio portfolio) {
-		// TODO Auto-generated method stub
-		return false;
+		return store.updatePortfolioById(portfolio);
 	}
 
 	@Override
 	public boolean removePortfolio(String id) {
-		// TODO Auto-generated method stub
-		return false;
+		return store.deletePortfolioById(id);
 	}
 
 	@Override
 	public Portfolio findPortfolioById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return store.selectPortfolioById(id);
 	}
 
 	@Override
 	public List<Portfolio> findPortfoliosByMakerId(String makerId, String page) {
-		// TODO Auto-generated method stub
-		return null;
+		return store.selectPortfoliosByMakerId(makerId, page);
 	}
 
 	@Override
 	public List<Portfolio> findPortfoliosByMakerIdAndTitle(String makerId, String title, String page) {
-		// TODO Auto-generated method stub
-		return null;
+		return store.selectPortfoliosByMakerIdAndTitle(makerId, title, page);
 	}
 
+	@Override
+	public List<Portfolio> findPortfoliosByCategory(String category, String page) {
+		return store.selectPortfoliosByCategory(category, page);
+	}
+	
 }

@@ -54,16 +54,18 @@ public class PortfolioStoreLogicTest {
 //		store.deletePortfolioById("9");
 //	}
 //
-//	@Test
-//	public void testSelectPortfolioById() {
-//		Portfolio p=store.selectPortfolioById("7");
+	@Test
+	public void testSelectPortfolioById() {
+		Portfolio p=store.selectPortfolioById("7");
+		System.out.println(p.toString());
 //		System.out.println(p.getId());
 //		System.out.println(p.getTitle());
 //		System.out.println(p.getCategory());
 //		System.out.println(p.getContent());
-//		//System.out.println(p.getMaker().getId());
+//		System.out.println(p.getMaker().getEmail());
+		System.out.println(p.getTags());
 //		System.out.println(p.getImage());
-//	}
+	}
 
 //	@Test
 //	public void testSelectPortfoliosByMakerId() {

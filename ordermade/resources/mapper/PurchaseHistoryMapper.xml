@@ -7,15 +7,16 @@
   	<resultMap type="PurchaseHistory" id="purchaseHistoryMap">
   	
   		<id property="id" column="id"/>
-  		<!-- <association property="maker" column="maker_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="String" jdbcType="varchar"/> -->
-  		<!-- <association property="consumer" column="consumer_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="String" jdbcType="varchar"/> -->
-  		<!-- <association property="request" column="request_id" select="ordermade.store.mapper.RequestMapper.selectRequestById" javaType="String" jdbcType="varchar"/> -->
-		<result property="orderDate" column="order_date"/>
   		<result property="invoiceNumber" column="invoice_number"/>
   		<result property="charge" column="charge"/>
   		<result property="deliveryStatus" column="delivery_status"/>
   		<result property="payment" column="payment"/>
+  		<result property="orderDate" column="order_date"/>
   		
+  		<association property="maker" column="maker_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="String" jdbcType="VARCHAR"/>
+  		<association property="consumer" column="consumer_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="String" jdbcType="VARCHAR"/>
+  		<association property="request" column="request_id" select="ordermade.store.mapper.RequestMapper.selectRequestById" javaType="String" jdbcType="VARCHAR"/>
+		
   	</resultMap>
   
   
@@ -31,7 +32,7 @@
   		update purchase_history set  consumer_id=#{consumer.id}, maker_id=#{maker.id}, request_id=#{request.id}, order_date=#{orderDate}, invoice_number=#{invoiceNumber}, charge=#{charge}, delivery_status=#{deliveryStatus}, payment=#{payment} where id=#{id}
   	</update>
   
-  	<select id="selectPurchaseHistoriesByConsumerId" resultMap="purchaseHistoryMap">
+  	<select id="selectPurchaseHistoriesByConsumerId" parameterType="java.util.Map" resultMap="purchaseHistoryMap">
   		select * from (
 			select rownum limitNum, A.* from purchase_history A where consumer_id=#{consumerId}
 			and rownum &lt;= (#{page}*10) order by A.id desc
@@ -39,21 +40,21 @@
   
   	</select>
   	
-  	<select id="selectPurchaseHistoriesByConsumerIdAndRequestTitle" resultMap="purchaseHistoryMap">
+  	<select id="selectPurchaseHistoriesByConsumerIdAndRequestTitle" parameterType="java.util.Map" resultMap="purchaseHistoryMap">
   		select * from (
   			select rownum limitNum, A.* from purchase_history A, request B  where A.consumer_id=#{consumerId} and B.title like '%${title}%' and A.request_id = B.id
 			and rownum &lt;= (#{page}*10) order by A.id desc
 		) where limitNum > ((#{page}-1)*10)
   	</select>
   	
-  	<select id="selectPurchaseHistoriesByMakerId" resultMap="purchaseHistoryMap">
+  	<select id="selectPurchaseHistoriesByMakerId" parameterType="java.util.Map" resultMap="purchaseHistoryMap">
   		select * from (
 			select rownum limitNum, A.* from purchase_history A where maker_id=#{makerId}
 			and rownum &lt;= (#{page}*10) order by A.id desc
 		) where limitNum > ((#{page}-1)*10)
   	</select>
   	
-  	<select id="selectPurchaseHistoriesByMakerIdAndRequestTitle" resultMap="purchaseHistoryMap">
+  	<select id="selectPurchaseHistoriesByMakerIdAndRequestTitle" parameterType="java.util.Map" resultMap="purchaseHistoryMap">
   		select * from (
 			select rownum limitNum, A.* from purchase_history A, request B  where A.maker_id=#{makerId} and B.title like '%${title}%' and A.request_id = B.id 
 			and rownum &lt;= (#{page}*10) order by A.id desc
