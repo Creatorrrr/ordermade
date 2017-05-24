@@ -2,18 +2,35 @@ package ordermade.service.logic;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
+import java.util.List;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+
+import ordermade.domain.Product;
+import ordermade.service.facade.ProductService;
+
+@WebAppConfiguration
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:WebContent/WEB-INF/dispatcher-servlet.xml")
 public class ProductServiceLogicTest {
+	
+	@Autowired
+	private ProductService pService;
 
 	@Test
 	public void testFindProductsByCategoryOrderByHitsForMain() {
-		fail("Not yet implemented");
+		System.out.println(pService.findProductsByCategoryOrderByHitsForMain("1", "2").size());
 	}
 
 	@Test
 	public void testFindProductsByCategoryOrderByIdForMain() {
-		fail("Not yet implemented");
+		System.out.println(pService.findProductsByCategoryOrderByIdForMain("1", "3").size());
 	}
 
 	@Test
@@ -23,42 +40,11 @@ public class ProductServiceLogicTest {
 
 	@Test
 	public void testFindProductsByCategoryAndTitle() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testFindProductsByCategoryAndMakerName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testFindProductsByMakerId() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testFindProductsByMakerIdAndTitle() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testFindProductsByCategory() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testFindReviewsByProductId() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testFindReviewsByTitleAndProductId() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testFindReviewsByConsumerIdAndProductId() {
-		fail("Not yet implemented");
+		List<Product> productList = pService.findProductsByCategoryAndTitle("1", "8", "2");
+		
+		for(Product p : productList) {
+			System.out.println(p.getId());
+		}
 	}
 
 }

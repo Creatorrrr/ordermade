@@ -56,7 +56,8 @@ public class ProductServiceLogic implements ProductService{
 
 	@Override
 	public List<Product> findProductsByCategoryAndImage(String category, String image, String page) {
-		// TODO Auto-generated method stub
+		
+		
 		return null;
 	}
 
