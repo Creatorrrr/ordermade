@@ -35,7 +35,7 @@ public class ReviewStoreLogic implements ReviewStore {
 	}
 
 	@Override
-	public boolean updateReview(Review review) {
+	public boolean updateReviewById(Review review) {
 		return false;
 	}
 
@@ -45,17 +45,17 @@ public class ReviewStoreLogic implements ReviewStore {
 	}
 
 	@Override
-	public List<Review> selectReviewsByProductId(String productId, String page) {
+	public List<Review> selectReviewsByProductId(String productId, String begin, String end) {
 		return null;
 	}
 
 	@Override
-	public List<Review> selectReviewsByTitleAndProductId(String title, String productId, String page) {
+	public List<Review> selectReviewsByTitleAndProductId(String title, String productId, String begin, String end) {
 		return null;
 	}
 
 	@Override
-	public List<Review> selectReviewsByConsumerIdAndProductId(String consumerId, String productId, String page) {
+	public List<Review> selectReviewsByConsumerIdAndProductId(String consumerId, String productId, String begin, String end) {
 		return null;
 	}
 
