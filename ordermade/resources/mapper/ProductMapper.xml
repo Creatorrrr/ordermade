@@ -179,4 +179,5 @@
 		SELECT type
 		FROM category
 	</select>
+	
   </mapper>

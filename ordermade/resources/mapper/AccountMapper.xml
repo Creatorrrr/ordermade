@@ -17,5 +17,4 @@
   		FROM ACCOUNT
   		WHERE MEMBER_ID = #{member.id}
   	</select> -->
-  
   </mapper>
