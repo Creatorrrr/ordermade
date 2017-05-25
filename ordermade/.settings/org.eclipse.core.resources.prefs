@@ -1,4 +1,7 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
 encoding//WebContent/views/product.jsp=UTF-8
+=======
+>>>>>>> refs/remotes/origin/Eom0525
 encoding//resources/sql/ordermade.sql=UTF-8
 encoding//test/ordermade/AccountStoreLogicTest.java=UTF-8
