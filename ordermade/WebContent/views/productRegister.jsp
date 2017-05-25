@@ -9,34 +9,13 @@
 	<div class="rounded">
 		<main class="container clear"> <!-- main body -->
 		<div class="sidebar one_third first">
-			<h6>마이페이지</h6>
-			<nav class="sdb_holder">
-				<ul>
-					<li><a href="#">내 정보수정</a></li>
-					<!-- <ul>
-						<li><a href="#">의자</a></li>
-						<li><a href="#">책상</a></li>
-					</ul>  -->
-					<li><a href="#">나의 프로필</a></li>
-					<li><a href="#">받은 의뢰서</a></li>
-					<li><a href="#">의뢰서 검색</a></li>
-					<li><a href="#">상품 관리</a></li>
-					<li><a href="#">포트폴리오 관리 </a></li>
-					<li><a href="#">거래 이력 </a></li>
-					<li><a href="#">참가요청내역 </a></li>
-					<li><a href="#">회원탈퇴 </a></li>
-				</ul>
-			</nav>
+			<%@ include file="myPageNav.jsp"%>
 		</div>
 
 		<div id="content" class="two_third">
 
-
-
 			<h1>상품 등록 페이지</h1>
 			<br>
-
-			<h1>상품 등록 페이지</h1>
 			<form action="${ctx }//register.do" method="post" name=""
 				onsubmit="return checkIt()">
 				<input name="" type="hidden" value="${categoryId }">
