@@ -104,7 +104,7 @@ public class InviteRequestStoreLogic implements InviteRequestStore {
 		SqlSession session = factory.openSession();
 		List<InviteRequest> list = null;
 
-		HashMap<String, String> map = new HashMap();
+		HashMap<String, String> map = new HashMap<>();
 		map.put("consumerId", consumerId);
 		map.put("begin", begin);
 		map.put("end", end);
