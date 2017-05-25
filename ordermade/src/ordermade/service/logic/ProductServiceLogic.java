@@ -7,12 +7,16 @@ import org.springframework.stereotype.Service;
 
 import ordermade.constants.Constants;
 import ordermade.domain.Category;
+import ordermade.domain.Portfolio;
 import ordermade.domain.Product;
 import ordermade.domain.Review;
+import ordermade.domain.Tag;
 import ordermade.service.facade.ProductService;
 import ordermade.store.facade.CategoryStore;
+import ordermade.store.facade.PortfolioStore;
 import ordermade.store.facade.ProductStore;
 import ordermade.store.facade.ReviewStore;
+import ordermade.store.facade.TagStore;
 
 @Service
 public class ProductServiceLogic implements ProductService{
@@ -23,6 +27,10 @@ public class ProductServiceLogic implements ProductService{
 	private ReviewStore rStore;
 	@Autowired
 	private CategoryStore cStore;
+	@Autowired
+	private PortfolioStore pfStore;
+	@Autowired
+	private TagStore tStore;
 
 	@Override
 	public boolean registerProduct(Product product) {
@@ -56,7 +64,12 @@ public class ProductServiceLogic implements ProductService{
 
 	@Override
 	public List<Product> findProductsByCategoryAndImage(String category, String image, String page) {
+		List<Tag> tagList = tStore.retrieveTagsFromGoogleVision(image);	// 현재 이미지의 특징을 추출함
+		List<Portfolio> portfolioList = pfStore.selectPortfoliosByCategory(category, page);	// 전달받은 카테고리에 해당하는 포트폴리오 불러옴
 		
+		
+		
+//		List<Product> productList = pStore.selectProductsByCategoryAndMakerId(category, makerId, getProductBegin(page), getProductEnd(page));
 		
 		return null;
 	}

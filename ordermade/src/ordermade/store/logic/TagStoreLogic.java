@@ -1,12 +1,12 @@
 package ordermade.store.logic;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
@@ -18,6 +18,10 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ordermade.constants.Constants;
 import ordermade.domain.Tag;
@@ -62,15 +66,29 @@ public class TagStoreLogic implements TagStore {
 
 	@Override
 	public List<Tag> retrieveTagsFromGoogleVision(String path) {
-		String labelJson = getJsonFromGoogleVision(Constants.GOOGLE_VISION_URL, path, "LABEL_DETECTION", 10);
-		System.out.println(labelJson);
+		List<Tag> tagList = new ArrayList<>();
+		
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode root = mapper.readTree(getJsonFromGoogleVision(Constants.GOOGLE_VISION_URL, path, "LABEL_DETECTION", 5));
+		    JsonNode labelNode = root.path("responses").get(0).path("labelAnnotations");
+		    
+		    for(JsonNode node : labelNode) {
+		    	Tag tag = new Tag();
+		    	tag.setKeyword(node.path("description").asText());
+		    	tag.setScore(node.path("score").asDouble());
+		    }
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-		return null;
+		return tagList;
 	}
 	
-	private String getJsonFromGoogleVision(String url, String filePath, String type, int maxResults) {
-		BufferedReader br = null;
-		StringBuilder strBuilder = new StringBuilder();
+	private InputStream getJsonFromGoogleVision(String url, String filePath, String type, int maxResults) {
+		InputStream is = null;
 		
 		try {
 			HttpClient httpClient = HttpClientBuilder.create().build();
@@ -82,27 +100,16 @@ public class TagStoreLogic implements TagStore {
 		    request.addHeader("content-type", "application/json");
 		    request.setEntity(params);
 		    HttpResponse response = httpClient.execute(request);
-		    
-		    String line;
-		    br = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-			while ((line = br.readLine()) != null) {
-				strBuilder.append(line);
-			}
+		    is = response.getEntity().getContent();
 		}catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(br != null) br.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		} 
 		
-		return strBuilder.toString();
+		return is;
 	}
 	
 	private String makeRequestJson(String filePath, String type, int maxResults) {
