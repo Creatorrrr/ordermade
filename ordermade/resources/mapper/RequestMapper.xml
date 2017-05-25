@@ -18,12 +18,12 @@
 		<association property="consumer" column=" consumer_id"
 			select="store.mapper.MemberMapper.selectMemberById" javaType="Member"
 			jdbcType="VARCHAR" /> 
-		<collection property="comments" column="id"
+		<!-- <collection property="comments" column="id"
 			select="store.mapper.CommentMapper.selectCommentsByRequestId"
-			javaType="ArrayList" jdbcType="VARCHAR" />
-		<collection property="attachs" column="id"
+			javaType="ArrayList" jdbcType="VARCHAR" /> -->
+		<!-- <collection property="attachs" column="id"
 			select="store.mapper.AttachMapper.selectAllAttachsByRequestId"
-			javaType="ArrayList" jdbcType="VARCHAR" /> 
+			javaType="ArrayList" jdbcType="VARCHAR" />  -->
 	</resultMap>
 
 	<sql id="selectRequest">

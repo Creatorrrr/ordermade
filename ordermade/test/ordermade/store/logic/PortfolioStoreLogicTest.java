@@ -56,13 +56,14 @@ public class PortfolioStoreLogicTest {
 //
 //	@Test
 //	public void testSelectPortfolioById() {
-//		Portfolio p=store.selectPortfolioById("7");
+//		Portfolio p=store.selectPortfolioById("1");
 //		System.out.println(p.getId());
 //		System.out.println(p.getTitle());
 //		System.out.println(p.getCategory());
 //		System.out.println(p.getContent());
-//		//System.out.println(p.getMaker().getId());
+//		System.out.println(p.getMaker().getId());
 //		System.out.println(p.getImage());
+//		System.out.println(p.toString());
 //	}
 
 //	@Test

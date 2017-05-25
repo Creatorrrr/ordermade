@@ -19,7 +19,7 @@
   	
   	<!-- 회원ID로 금액 불러오기 -->
   	<select id="selectAccountById" parameterType="String" resultMap="accountMap">
-  		SELECT MONEY
+  		SELECT MONEY, MEMBER_ID
   		FROM ACCOUNT
   		WHERE MEMBER_ID = #{member.id}
   	</select>

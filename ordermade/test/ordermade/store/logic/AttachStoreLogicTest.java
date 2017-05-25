@@ -49,28 +49,28 @@ public class AttachStoreLogicTest {
 //		assertFalse(!store.deleteAttachById(attach));
 //	}
 //
-//	@Test
-//	public void testSelectAllAttachsByRequestId() {
-//		String requestId = "id : 1";
-//		String page = "1";
-//		List<Attach> attachList = new ArrayList<>();
-//		attachList = store.selectAllAttachsByRequestId(requestId, page);
-//		for(Attach attach : attachList){
-//			System.out.println(attach.toString());
-//		}
-//		assertEquals(10, attachList.size());
-//	}
-//
 	@Test
-	public void testSelectAttachsByFileNameAndRequestId() {
-		String fileName = "fName : 1";
+	public void testSelectAllAttachsByRequestId() {
 		String requestId = "1";
 		String page = "1";
 		List<Attach> attachList = new ArrayList<>();
-		attachList = store.selectAttachsByFileNameAndRequestId(fileName, requestId, page);
+		attachList = store.selectAllAttachsByRequestId(requestId, page);
 		for(Attach attach : attachList){
 			System.out.println(attach.toString());
 		}
-		assertEquals(5, attachList.size());
+		assertEquals(10, attachList.size());
 	}
+//
+//	@Test
+//	public void testSelectAttachsByFileNameAndRequestId() {
+//		String fileName = "fName : 1";
+//		String requestId = "1";
+//		String page = "1";
+//		List<Attach> attachList = new ArrayList<>();
+//		attachList = store.selectAttachsByFileNameAndRequestId(fileName, requestId, page);
+//		for(Attach attach : attachList){
+//			System.out.println(attach.toString());
+//		}
+//		assertEquals(5, attachList.size());
+//	}
 }

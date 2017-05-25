@@ -42,6 +42,7 @@ public class RequestStoreLogicTest {
 //
 //		assertTrue(rStore.insertRequest(rs));
 //	}
+
 	
 //	@Test  //ok
 //	public void testUpdateReqeustById() {
@@ -72,11 +73,13 @@ public class RequestStoreLogicTest {
 //		assertEquals(true,rStore.deleteRequestById("test"));
 //	}
 	
-//	@Test		//ok
-//	public void testSelectRequestById() {
-//		
-//		Request request = rStore.selectRequestById("test");
-//		
+	@Test		//ok
+	public void testSelectRequestById() {
+		
+		Request request = rStore.selectRequestById("test");
+		
+		System.out.println(request.toString());
+		
 //		System.out.println("Id : " + request.getId());
 //		System.out.println("Category : " + request.getCategory());
 //		System.out.println("Content : " + request.getContent());
@@ -84,12 +87,12 @@ public class RequestStoreLogicTest {
 //		System.out.println("Hprice : " + request.getHopePrice());
 //		System.out.println("Price : " + request.getPrice());
 //		System.out.println("Title : " + request.getTitle());
-//	//	System.out.println("Mak : " + request.getMaker());
-//	//	System.out.println("Con : " + request.getConsumer());
-//		//System.out.println("Comments : " + request.getComments());
-//		//System.out.println("attachs : " + request.getAttachs());
-//		//assertEquals("test", request.getId());
-//	}
+//		System.out.println("Mak : " + request.getMaker());
+//		System.out.println("Con : " + request.getConsumer());
+//		System.out.println("Comments : " + request.getComments());
+//		System.out.println("attachs : " + request.getAttachs());
+		assertEquals("test", request.getId());
+	}
 
 //	@Test		//ok
 //	public void testSelectRequestsByBound() {

@@ -35,10 +35,11 @@ public class AccountStoreLogicTest {
 //		assertTrue(check);
 //	}
 
-//	@Test
-//	public void testSelectAccountById() {
-//		String id = "hjKing";
+	@Test
+	public void testSelectAccountById() {
+		String id = "jwUm";
+		System.out.println(store.selectAccountById(id).toString());
 //		assertEquals(10000, store.selectAccountById(id).getMoney());
-//	}
+	}
 
 }
