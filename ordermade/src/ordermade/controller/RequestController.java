@@ -12,20 +12,19 @@ import ordermade.domain.Member;
 import ordermade.domain.Request;
 import ordermade.service.facade.RequestService;
 
-@Controller
-@RequestMapping("request")
+//@Controller
+//@RequestMapping("request")
 public class RequestController {
-	
-	@Autowired
-	private RequestService requestService;
-	
-	
-	@RequestMapping(value="register", method=RequestMethod.GET)
-	public String showPostRegisterUI(String memberId, Model model) {
-		model.addAttribute("memberId", memberId);
-		return "RequestRegister";
-	}
-	
+//	@Autowired
+//	private RequestService requestService;
+//	
+//	
+//	@RequestMapping(value="register.do", method=RequestMethod.GET)
+//	public String showPostRegisterUI(String memberId, Model model) {
+//		model.addAttribute("memberId", memberId);
+//		return "RequestRegister";
+//	}
+//	
 //	@RequestMapping(value="register.do", method=RequestMethod.POST)
 //	public String registerRequest(Request request, Model model, HttpSession session){
 //		
@@ -56,26 +55,26 @@ public class RequestController {
 //	
 //		return "requestDetail";
 //	}
-	
-	@RequestMapping(value="detail", method=RequestMethod.GET)
-	public String showRequestDetailUI(String requestId,Model model){
-		
-		Request request = requestService.findRequestById(requestId);
-		
-		model.addAttribute("request",request);
-		
-		return "requestDetail";
-	}
-	
-	@RequestMapping(value="modify", method=RequestMethod.GET)
-	public String showEditRequestUI(String id, Model model, HttpSession session) {
-		Request request = requestService.findRequestById(id);
-		
-		model.addAttribute("request", request);
-		
-		return "requestModify";
-	}
-	
+//	
+//	@RequestMapping(value="detail.do", method=RequestMethod.GET)
+//	public String showRequestDetailUI(String requestId,Model model){
+//		
+//		Request request = requestService.findRequestById(requestId);
+//		
+//		model.addAttribute("request",request);
+//		
+//		return "requestDetail";
+//	}
+//	
+//	@RequestMapping(value="modify.do", method=RequestMethod.GET)
+//	public String showEditRequestUI(String id, Model model, HttpSession session) {
+//		Request request = requestService.findRequestById(id);
+//		
+//		model.addAttribute("request", request);
+//		
+//		return "requestModify";
+//	}
+//	
 //	@RequestMapping(value="modify.do", method=RequestMethod.POST)
 //	public String modifyRequestById(Request request, HttpSession session, Model model) {
 //		Request request = requestService.findRequestById(request);

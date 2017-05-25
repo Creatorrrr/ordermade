@@ -9,5 +9,7 @@ public interface TagMapper {
 
 	public int deleteTagById(String id);
 
-	public Tag selectTagsByPortfolioId(String id);
+	public List<Tag> selectTagsByPortfolioId(String portfolioId);
+
+	public List<Tag> retrieveTagsFromGoogleVision(String path);
 }

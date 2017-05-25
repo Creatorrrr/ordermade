@@ -2,6 +2,16 @@ package ordermade.domain;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.springframework.stereotype.Component;
+
+
+@XmlRootElement(name="portfolio")
+@XmlAccessorType(XmlAccessType.FIELD)
+@Component
 public class Portfolio {
 	private String id;
 	private String title;
