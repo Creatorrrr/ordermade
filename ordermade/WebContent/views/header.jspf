@@ -9,6 +9,7 @@
 	</c:when>
 	<c:otherwise>
 	<b>${loginId }</b>님!! 환영합니다.[<a href="${ctx }/member/logout.do">로그아웃</a>][<a href="${ctx }/member/removeMember.do">회원탈퇴</a>]
+	[<a href="${ctx }/member/modifyMember.do">회원 수정</a>]
 	</c:otherwise>
 	
 	</c:choose>
