@@ -100,12 +100,12 @@ public class PurchaseHistoryStoreLogicTest {
 //		}
 //	}
 
-	@Test
-	public void testSlelctPurchaseHistoriesByMakerIdAndRequestTitle() {
-		List<PurchaseHistory> list = store.selectPurchaseHistoriesByMakerIdAndRequestTitle("maker1","b", "1");
-		for(PurchaseHistory p : list){
-			System.out.println(p.toString());
-		}
-	}
+//	@Test
+//	public void testSlelctPurchaseHistoriesByMakerIdAndRequestTitle() {
+//		List<PurchaseHistory> list = store.selectPurchaseHistoriesByMakerIdAndRequestTitle("maker1","b", "1");
+//		for(PurchaseHistory p : list){
+//			System.out.println(p.toString());
+//		}
+//	}
 
 }

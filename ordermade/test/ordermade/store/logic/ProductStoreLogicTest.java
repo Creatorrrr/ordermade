@@ -59,29 +59,29 @@ public class ProductStoreLogicTest {
 //		pStore.deleteProductById("2");
 //	}
 //
-	@Test
-	public void testSelectProductById() {
-		Product product = pStore.selectProductById("6");
-
-		System.out.println("Id : " + product.getId());
-		System.out.println("Category : " + product.getCategory());
-		System.out.println("Content : " + product.getContent());
-		System.out.println("Hit : " + product.getHit());
-		System.out.println("Image : " + product.getImage());
-		System.out.println("Period : " + product.getPeriod());
-		System.out.println("Price : " + product.getPrice());
-		System.out.println("Title : " + product.getTitle());
-		System.out.println("Maker : " + product.getMaker().getImage());
-		System.out.println("Review : " + product.getReviews().get(0).getId());
-	}
-//
 //	@Test
-//	public void testSelectProductsByCategoryOrderByHitsForMain() {
-//		List<Product> productList = pStore.selectProductsByCategoryOrderByHitsForMain("1", "2");
-//		System.out.println(productList.size());
-//		assertEquals(2, productList.size());
-//		assertEquals("5", productList.get(1).getId());
+//	public void testSelectProductById() {
+//		Product product = pStore.selectProductById("6");
+//
+//		System.out.println("Id : " + product.getId());
+//		System.out.println("Category : " + product.getCategory());
+//		System.out.println("Content : " + product.getContent());
+//		System.out.println("Hit : " + product.getHit());
+//		System.out.println("Image : " + product.getImage());
+//		System.out.println("Period : " + product.getPeriod());
+//		System.out.println("Price : " + product.getPrice());
+//		System.out.println("Title : " + product.getTitle());
+//		System.out.println("Maker : " + product.getMaker().getImage());
+//		System.out.println("Review : " + product.getReviews().get(0).getId());
 //	}
+//
+	@Test
+	public void testSelectProductsByCategoryOrderByHitsForMain() {
+		List<Product> productList = pStore.selectProductsByCategoryOrderByHitsForMain("1", "2");
+		System.out.println(productList.size());
+		assertEquals(2, productList.size());
+		assertEquals("5", productList.get(1).getId());
+	}
 //
 //	@Test
 //	public void testSelectProductsByCategoryOrderByIdForMain() {
