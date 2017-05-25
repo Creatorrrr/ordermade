@@ -19,13 +19,13 @@ public class MemberController {
 	MemberService service;
 
 	@RequestMapping("/join")
-	public String showJoinForm() {
-		// join.jsp 화면으로 이동.
+	public String showRegisterUI() {
+		// 회원가입 join.jsp 화면으로 이동
 		return "join";
 	}
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String showJoinForm(Member member) {
+	public String registerMember(Member member) {
 		// 회원가입 **회원가입이 실패하면 join.jsp 화면으로 이동 **회원가입이 성공하면 login.jsp으로 이동
 		boolean registered = service.registerMember(member);
 		if (!registered) {
@@ -35,13 +35,13 @@ public class MemberController {
 	}
 
 	@RequestMapping("/login")
-	public String showLoginForm() {
-		// login.jsp 화면으로 이동.
+	public String showLoginUI() {
+		// 로그인 login.jsp화면으로 이동
 		return "login";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(Member member, HttpServletRequest req) {
+	public String loginMember(Member member, HttpServletRequest req) {
 		/*
 		 * 로그인 --아이디와 비밀 번호 일치할 경우 main서블릿으로 이동 --아이디와 비밀 번호 불일치할 경우 login.jsp으로
 		 * 이동
@@ -63,7 +63,7 @@ public class MemberController {
 	}
 
 	@RequestMapping("/logout")
-	public String logout(HttpServletRequest req) {
+	public String logoutMember(HttpServletRequest req) {
 		// 로그아웃시 메인 서블릿으로 이동
 		HttpSession session = req.getSession();
 		session.invalidate();
@@ -72,27 +72,35 @@ public class MemberController {
 		return "index2";
 	}
 
-	public ModelAndView modifyMemberById(Member memeber, HttpServletRequest req) {
-
+	@RequestMapping("/modifyMember")
+	public ModelAndView showEditMyPageUI(HttpServletRequest req) {
+		// 회원 정보를 불러와 register.jsp화면으로 이동
 		String id = (String) req.getSession().getAttribute("loginId");
 
 		Member member = service.findMemberById(id);
 
-		boolean result = service.modifyMemberById(member);
-		if (result) {
-			ModelAndView modelAndView = new ModelAndView("memberRegister");
-			Member updateMember = service.findMemberById(id);
-			modelAndView.addObject("updateMember",updateMember);
-			
-			return modelAndView;
-		}
-		
-		return null;
+		ModelAndView modelAndView = new ModelAndView("memberRegister");
+		modelAndView.addObject("Member", member);
+
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/modifyMember", method = RequestMethod.POST)
+	public ModelAndView modifyMemberById(Member member) {
+		// 회원 수정후 마이페이지로 이동한다.
+		service.modifyMemberById(member);
+
+		// 여기는 임의로 memberRegister.jsp로
+		// 보냄******************************************************************
+		ModelAndView modelAndView = new ModelAndView("memberRegister");
+		modelAndView.addObject("Member", member);
+
+		return modelAndView;
 	}
 
 	@RequestMapping("/removeMember")
 	public String removeMemberById(HttpServletRequest req) {
-
+		// 회원 탈퇴시 메인 화면으로 이동
 		String id = (String) req.getSession().getAttribute("loginId");
 
 		boolean result = service.removeMemberById(id);
@@ -100,7 +108,34 @@ public class MemberController {
 			HttpSession session = req.getSession();
 			session.invalidate();
 		}
-
+		// 여기는 임의로 index2.jsp로
+		// 보냄******************************************************************
 		return "index2";
 	}
+
+	@RequestMapping("/showMyPage")
+	public ModelAndView showMyPageUI(HttpServletRequest req) {
+		// 자신의 정보를 불러온다. 그 후 마이페이지화면으로 이동
+		String id = (String) req.getSession().getAttribute("loginId");
+
+		Member member = service.findMemberById(id);
+
+		// 여기는 임의로 memberRegister.jsp로
+		// 보냄******************************************************************
+		ModelAndView modelAndView = new ModelAndView("memberRegister");
+		modelAndView.addObject("member", member);
+
+		return modelAndView;
+	}
+
+	// Mobile용
+	public Member findMyMember(HttpServletRequest req) {
+
+		String id = (String) req.getSession().getAttribute("loginId");
+
+		Member member = service.findMemberById(id);
+
+		return member;
+	}
+
 }

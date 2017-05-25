@@ -23,10 +23,10 @@
 		(#{id},#{keyword},#{score},#{portfolio.id})
 
 	</insert>
-	<select id="selectTagById" parameterType="string" resultMap="TagMap">
+	<select id="selectTagsByPortfolioId" parameterType="string" resultMap="TagMap">
 		SELECT id,keyword,score,portfolio_id
 		FROM tag
-		WHERE id = #{id}
+		WHERE portfolio_id = #{portfolioId}
 	</select>
 	<delete id="deleteTagById" parameterType="string">
 		DELETE FROM tag

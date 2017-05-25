@@ -31,6 +31,12 @@
   	<update id="updatePurchaseHistoryById" parameterType="PurchaseHistory">
   		update purchase_history set  consumer_id=#{consumer.id}, maker_id=#{maker.id}, request_id=#{request.id}, order_date=#{orderDate}, invoice_number=#{invoiceNumber}, charge=#{charge}, delivery_status=#{deliveryStatus}, payment=#{payment} where id=#{id}
   	</update>
+  	
+  	<select id="selectPurchseHistoryById" parameterType="String" resultMap="purchaseHistoryMap">
+  		select id, consumer_id, maker_id, request_id, order_date, invoice_number, charge, delivery_status, payment
+  		from purchase_history
+  		where id = #{id}
+  	</select>
   
   	<select id="selectPurchaseHistoriesByConsumerId" parameterType="java.util.Map" resultMap="purchaseHistoryMap">
   		select * from (

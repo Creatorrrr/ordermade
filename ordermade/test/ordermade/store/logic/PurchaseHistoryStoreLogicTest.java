@@ -77,6 +77,15 @@ public class PurchaseHistoryStoreLogicTest {
 //	}
 
 //	@Test
+//	public void testSelectPurchaseHistoryById(){
+//		String id = "1";
+//		store.selectPurchseHistoryById(id);
+//		System.out.println(store.selectPurchseHistoryById(id).toString());
+//		assertNotNull(store.selectPurchseHistoryById(id));
+//		assertEquals("user1", store.selectPurchseHistoryById(id).getConsumer().getId());
+//	}
+	
+//	@Test
 //	public void testSelectPurchaseHistoriesByConsumerId() {
 //		List<PurchaseHistory> list = store.selectPurchaseHistoriesByConsumerId("user1", "1");
 //		for(PurchaseHistory p : list){

@@ -3,12 +3,14 @@ package ordermade.store.logic;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
 
 import ordermade.domain.PurchaseHistory;
 import ordermade.store.facade.PurchaseHistoryStore;
 import ordermade.store.mapper.PortfolioMapper;
 import ordermade.store.mapper.PurchaseHistoryMapper;
 
+@Repository
 public class PurchaseHistoryStoreLogic implements PurchaseHistoryStore {
 	
 	private SqlSession session;
@@ -30,6 +32,13 @@ public class PurchaseHistoryStoreLogic implements PurchaseHistoryStore {
 //		}
 	}
 
+	@Override
+	public PurchaseHistory selectPurchseHistoryById(String id) {
+		PurchaseHistoryMapper mapper = session.getMapper(PurchaseHistoryMapper.class);
+		PurchaseHistory purchaseHistory = mapper.selectPurchseHistoryById(id);
+		return purchaseHistory;
+	}
+	
 	@Override
 	public boolean updatePurchaseHistoryById(PurchaseHistory purchaseHistory) {
 		PurchaseHistoryMapper mapper = session.getMapper(PurchaseHistoryMapper.class);

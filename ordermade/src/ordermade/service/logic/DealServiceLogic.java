@@ -3,6 +3,7 @@ package ordermade.service.logic;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ordermade.domain.Account;
 import ordermade.domain.PurchaseHistory;
@@ -10,6 +11,7 @@ import ordermade.service.facade.DealService;
 import ordermade.store.facade.AccountStore;
 import ordermade.store.facade.PurchaseHistoryStore;
 
+@Service
 public class DealServiceLogic implements DealService{
 	
 	@Autowired
@@ -27,6 +29,12 @@ public class DealServiceLogic implements DealService{
 	public Account findAccountById(String id) {
 		return accountStore.selectAccountById(id);
 	}
+	
+	@Override
+	public PurchaseHistory findPurchseHistoryById(String id) {
+		return purchaseHistoryStore.selectPurchseHistoryById(id);
+	}
+
 
 	@Override
 	public boolean registerPurchaseHistory(PurchaseHistory purchaseHistory) {
@@ -60,4 +68,5 @@ public class DealServiceLogic implements DealService{
 		return purchaseHistoryStore.selectPurchaseHistoriesByMakerIdAndRequestTitle(makerId, requestTitle, page);
 	}
 
+	
 }
