@@ -4,12 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>포트폴리오 수정페이지</title>
+<title>포트폴리오 디테일 페이지</title>
 <%@ include file="/views/layout/common.jsp" %>
 
 </head>
 <body>
-수정페이지.
+디테일 페이지.
 
 <pre>
 ID: ${portfolio.id}
