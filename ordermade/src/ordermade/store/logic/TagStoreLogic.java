@@ -64,6 +64,7 @@ public class TagStoreLogic implements TagStore {
 	public List<Tag> retrieveTagsFromGoogleVision(String path) {
 		String labelJson = getJsonFromGoogleVision(Constants.GOOGLE_VISION_URL, path, "LABEL_DETECTION", 10);
 		System.out.println(labelJson);
+
 		return null;
 	}
 	

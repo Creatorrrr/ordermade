@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import ordermade.domain.Portfolio;
 import ordermade.store.facade.PortfolioStore;
 import ordermade.store.mapper.PortfolioMapper;
+
 @Repository
 public class PortfolioStoreLogic implements PortfolioStore {
 
