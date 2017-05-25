@@ -32,28 +32,28 @@ public class RequestController {
 		
 		String loginId=(String)session.getAttribute("loginId");
 		
-		String title;
-		String category;
-		String content;
-		int price;
-		int hopePrice;
-		String bound;
-		
-		Member member = new Member();
-		member.setMemberType(maker);
-		member.setMemberType(consumer);
-		
-		Request req = new Request();
-		req.setTitle(title);
-		req.setCategory(category);
-		req.setContent(content);
-		req.setPrice(price);
-		req.setHopePrice(hopePrice);
-		req.setBound(bound);
-		req.setMaker(member);
-		req.setConsumer(member);
-		
-		model.addAttribute("request",requestService.findRequestById(request.getId()));
+//		String title;
+//		String category;
+//		String content;
+//		int price;
+//		int hopePrice;
+//		String bound;
+//		
+//		Member member = new Member();
+//		member.setMemberType(maker);
+//		member.setMemberType(consumer);
+//		
+//		Request req = new Request();
+//		req.setTitle(title);
+//		req.setCategory(category);
+//		req.setContent(content);
+//		req.setPrice(price);
+//		req.setHopePrice(hopePrice);
+//		req.setBound(bound);
+//		req.setMaker(member);
+//		req.setConsumer(member);
+//		
+//		model.addAttribute("request",requestService.findRequestById(request.getId()));
 	
 		return "requestDetail";
 	}
@@ -79,15 +79,15 @@ public class RequestController {
 	
 	@RequestMapping(value="modify.do", method=RequestMethod.POST)
 	public String modifyRequestById(Request request, HttpSession session, Model model) {
-		Request request = requestService.findRequestById(request);
-		request.setTitle(title);
-		request.setContent(content);
-		
-		if(!requestService.modifyRequestById(request)) {
-			throw new RuntimeException("post modify failed");
-		}
-		
-		model.addAttribute("request", request);
+//		Request request = requestService.findRequestById(request);
+//		request.setTitle(title);
+//		request.setContent(content);
+//		
+//		if(!requestService.modifyRequestById(request)) {
+//			throw new RuntimeException("post modify failed");
+//		}
+//		
+//		model.addAttribute("request", request);
 		
 		return "requestDetail";
 	}

@@ -72,27 +72,20 @@ public class MemberController {
 		return "index2";
 	}
 
-	public ModelAndView modifyMemberById(Member memeber, HttpServletRequest req) {
+	@RequestMapping(value = "/modifyMember", method = RequestMethod.POST)
+	public ModelAndView modifyMemberById(Member memeber) {
 
-		String id = (String) req.getSession().getAttribute("loginId");
-
-		Member member = service.findMemberById(id);
-
-		boolean result = service.modifyMemberById(member);
-		if (result) {
-			ModelAndView modelAndView = new ModelAndView("memberRegister");
-			Member updateMember = service.findMemberById(id);
-			modelAndView.addObject("updateMember",updateMember);
-			
-			return modelAndView;
-		}
+		service.modifyMemberById(member);
 		
-		return null;
+		ModelAndView modelAndView = new ModelAndView("memberRegister");
+		modelAndView.addObject("Member", member);
+
+		return modelAndView;
 	}
 
 	@RequestMapping("/removeMember")
 	public String removeMemberById(HttpServletRequest req) {
-
+		// 회원 탈퇴시 메인 화면으로 이동
 		String id = (String) req.getSession().getAttribute("loginId");
 
 		boolean result = service.removeMemberById(id);
@@ -100,7 +93,8 @@ public class MemberController {
 			HttpSession session = req.getSession();
 			session.invalidate();
 		}
-
+		// 여기는 임의로 index2.jsp로
+		// 보냄******************************************************************
 		return "index2";
 	}
 }
