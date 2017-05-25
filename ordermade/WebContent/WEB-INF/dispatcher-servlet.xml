@@ -18,6 +18,10 @@
 		<property name="suffix" value=".jsp"/>
 	</bean>
 	
+	<context:component-scan base-package="controller" />
+	<context:component-scan base-package="service.logic" />
+	<context:component-scan base-package="store.logic" />
+	
 	<mvc:interceptors>
 		<bean class="ordermade.interceptor.CharacterEncodingInterceptor"/>
 	</mvc:interceptors>

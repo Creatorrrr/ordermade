@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import ordermade.domain.Member;
 import ordermade.service.facade.MemberService;
 import ordermade.store.facade.MemberStore;
-import ordermade.store.logic.MemberStoreLogic;
 
 @Service
 public class MemberServiceLogic implements MemberService{
