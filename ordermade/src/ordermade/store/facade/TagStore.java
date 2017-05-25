@@ -9,7 +9,7 @@ public interface TagStore {
 
 	public boolean deleteTagById(String id);
 
-	public List<Tag> selectTagsByPortfolioId(String portfolioId);
+	public Tag selectTagsByPortfolioId(String portfolioId);
 
 	public List<Tag> retrieveTagsFromGoogleVision(String path);
 }

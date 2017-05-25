@@ -52,9 +52,9 @@ public class TagStoreLogic implements TagStore {
 	}
 
 	@Override
-	public List<Tag> selectTagsByPortfolioId(String portfolioId) {
+	public Tag selectTagsByPortfolioId(String portfolioId) {
 		TagMapper mapper = session.getMapper(TagMapper.class);
-		List<Tag> list = mapper.selectTagsByPortfolioId(portfolioId);
+		Tag list = mapper.selectTagsByPortfolioId(portfolioId);
 		session.close();
 		return list;
 

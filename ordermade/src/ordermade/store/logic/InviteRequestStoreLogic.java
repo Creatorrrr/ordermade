@@ -5,11 +5,12 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Repository;
 
 import ordermade.domain.InviteRequest;
 import ordermade.store.facade.InviteRequestStore;
 import ordermade.store.mapper.InviteRequestMapper;
-
+@Repository
 public class InviteRequestStoreLogic implements InviteRequestStore {
 
 	private SqlSessionFactory factory;
@@ -104,7 +105,7 @@ public class InviteRequestStoreLogic implements InviteRequestStore {
 		SqlSession session = factory.openSession();
 		List<InviteRequest> list = null;
 
-		HashMap<String, String> map = new HashMap();
+		HashMap<String, String> map = new HashMap<>();
 		map.put("consumerId", consumerId);
 		map.put("begin", begin);
 		map.put("end", end);

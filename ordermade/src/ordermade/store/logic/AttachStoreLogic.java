@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
 
 import ordermade.domain.Attach;
 import ordermade.store.facade.AttachStore;
 import ordermade.store.mapper.AttachMapper;
-
+@Repository
 public class AttachStoreLogic implements AttachStore{
 	
 	private SqlSession session;

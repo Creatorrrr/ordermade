@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
 
 import ordermade.domain.Comment;
 import ordermade.store.facade.CommentStore;
 import ordermade.store.mapper.CommentMapper;
-
+@Repository
 public class CommentStoreLogic implements CommentStore{
 	
 	private SqlSession session;

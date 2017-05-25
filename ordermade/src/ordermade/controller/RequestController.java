@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import ordermade.domain.Member;
 import ordermade.domain.Request;
@@ -21,17 +20,17 @@ public class RequestController {
 	private RequestService requestService;
 	
 	
-	@RequestMapping(value="register.do", method=RequestMethod.GET)
+	@RequestMapping(value="register", method=RequestMethod.GET)
 	public String showPostRegisterUI(String memberId, Model model) {
 		model.addAttribute("memberId", memberId);
 		return "RequestRegister";
 	}
 	
-	@RequestMapping(value="register.do", method=RequestMethod.POST)
-	public String registerRequest(Request request, Model model, HttpSession session){
-		
-		String loginId=(String)session.getAttribute("loginId");
-		
+//	@RequestMapping(value="register.do", method=RequestMethod.POST)
+//	public String registerRequest(Request request, Model model, HttpSession session){
+//		
+//		String loginId=(String)session.getAttribute("loginId");
+//		
 //		String title;
 //		String category;
 //		String content;
@@ -54,11 +53,11 @@ public class RequestController {
 //		req.setConsumer(member);
 //		
 //		model.addAttribute("request",requestService.findRequestById(request.getId()));
+//	
+//		return "requestDetail";
+//	}
 	
-		return "requestDetail";
-	}
-	
-	@RequestMapping(value="detail.do", method=RequestMethod.GET)
+	@RequestMapping(value="detail", method=RequestMethod.GET)
 	public String showRequestDetailUI(String requestId,Model model){
 		
 		Request request = requestService.findRequestById(requestId);
@@ -68,7 +67,7 @@ public class RequestController {
 		return "requestDetail";
 	}
 	
-	@RequestMapping(value="modify.do", method=RequestMethod.GET)
+	@RequestMapping(value="modify", method=RequestMethod.GET)
 	public String showEditRequestUI(String id, Model model, HttpSession session) {
 		Request request = requestService.findRequestById(id);
 		
@@ -77,8 +76,8 @@ public class RequestController {
 		return "requestModify";
 	}
 	
-	@RequestMapping(value="modify.do", method=RequestMethod.POST)
-	public String modifyRequestById(Request request, HttpSession session, Model model) {
+//	@RequestMapping(value="modify.do", method=RequestMethod.POST)
+//	public String modifyRequestById(Request request, HttpSession session, Model model) {
 //		Request request = requestService.findRequestById(request);
 //		request.setTitle(title);
 //		request.setContent(content);
@@ -88,8 +87,8 @@ public class RequestController {
 //		}
 //		
 //		model.addAttribute("request", request);
-		
-		return "requestDetail";
-	}
+//		
+//		return "requestDetail";
+//	}
 
 }
