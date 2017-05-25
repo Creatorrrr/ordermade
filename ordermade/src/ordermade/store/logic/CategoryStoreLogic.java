@@ -3,11 +3,13 @@ package ordermade.store.logic;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
 
 import ordermade.domain.Category;
 import ordermade.store.facade.CategoryStore;
 import ordermade.store.mapper.CategoryMapper;
 
+@Repository
 public class CategoryStoreLogic implements CategoryStore {
 	
 	private SqlSession session;

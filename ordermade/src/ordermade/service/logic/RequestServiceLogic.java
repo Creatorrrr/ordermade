@@ -85,7 +85,7 @@ public class RequestServiceLogic implements RequestService{
 	}
 
 	@Override
-	public List<Request> findRequestsByConsumerIdWithMake(String consumerId, String page) {
+	public List<Request> findRequestsByConsumerIdWithMaker(String consumerId, String page) {
 		
 		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
 		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";

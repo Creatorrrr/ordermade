@@ -21,20 +21,20 @@ public class ReviewStoreLogicTest {
 		rStore = new ReviewStoreLogic();
 	}
 
-//	@Test
-//	public void testInsertReview() {
-//		Review review = new Review();
-//		Member consumer = new Member();
-//		consumer.setId("5");
-//		review.setConsumer(consumer);
-//		review.setContent("1");
-//		review.setGrade(3);
-//		Product product = new Product();
-//		product.setId("5");
-//		review.setProduct(product);
-//		review.setTitle("7");
-//		assertTrue(rStore.insertReview(review));
-//	}
+	@Test
+	public void testInsertReview() {
+		Review review = new Review();
+		Member consumer = new Member();
+		consumer.setId("5");
+		review.setConsumer(consumer);
+		review.setContent("1");
+		review.setGrade(3);
+		Product product = new Product();
+		product.setId("5");
+		review.setProduct(product);
+		review.setTitle("7");
+		assertTrue(rStore.insertReview(review));
+	}
 //
 //	@Test
 //	public void testUpdateReviewById() {
@@ -57,13 +57,13 @@ public class ReviewStoreLogicTest {
 //		assertTrue(rStore.deleteReviewById("7"));
 //	}
 //
-	@Test
-	public void testSelectReviewsByProductId() {
-		List<Review> reviewList = rStore.selectReviewsByProductId("6", "1", "5");
-		System.out.println(reviewList.size());
-		System.out.println(reviewList.get(0).getProduct().getCategory());
-		System.out.println(reviewList.get(1).getConsumer().getId());
-	}
+//	@Test
+//	public void testSelectReviewsByProductId() {
+//		List<Review> reviewList = rStore.selectReviewsByProductId("6", "1", "5");
+//		System.out.println(reviewList.size());
+//		System.out.println(reviewList.get(0).getProduct().getCategory());
+//		System.out.println(reviewList.get(1).getConsumer().getId());
+//	}
 //
 //	@Test
 //	public void testSelectReviewsByTitleAndProductId() {

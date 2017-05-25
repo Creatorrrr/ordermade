@@ -24,7 +24,7 @@ public interface RequestService {
 
 	public List<Request> findRequestByConsumerId(String consumerId, String page);
 
-	public List<Request> findRequestsByConsumerIdWithMake(String consumerId, String page);
+	public List<Request> findRequestsByConsumerIdWithMaker(String consumerId, String page);
 
 	public List<Request> findRequestByConsumerIdWithPayment(String inconsumerId, String page);
 

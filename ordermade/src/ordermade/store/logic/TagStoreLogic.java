@@ -1,10 +1,24 @@
 package ordermade.store.logic;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.google.cloud.vision.spi.v1.ImageAnnotatorClient;
+import com.google.cloud.vision.v1.AnnotateImageRequest;
+import com.google.cloud.vision.v1.AnnotateImageResponse;
+import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
+import com.google.cloud.vision.v1.EntityAnnotation;
+import com.google.cloud.vision.v1.Feature;
+import com.google.cloud.vision.v1.Image;
+import com.google.cloud.vision.v1.Feature.Type;
+import com.google.protobuf.ByteString;
 
 import ordermade.domain.Tag;
 import ordermade.store.facade.TagStore;
@@ -38,23 +52,54 @@ public class TagStoreLogic implements TagStore {
 	}
 
 	@Override
-	public Tag selectTagById(String id) {
+	public List<Tag> selectTagsByPortfolioId(String portfolioId) {
 		TagMapper mapper = session.getMapper(TagMapper.class);
-		Tag tag = mapper.selectTagById(id);
-		session.commit();
+		List<Tag> list = mapper.selectTagsByPortfolioId(portfolioId);
 		session.close();
-		return tag;
+		return list;
 
 	}
 
 	@Override
-	public List<Tag> TagsFromGoogleVision(String path) {
-		TagMapper mapper = session.getMapper(TagMapper.class);
-		List<Tag> list = mapper.TagsFromGoogleVision(path);
-		session.commit();
-		session.close();
-		return list;
-
+	public List<Tag> retrieveTagsFromGoogleVision(String path) {
+		try {
+			// Instantiates a client
+		    ImageAnnotatorClient vision = ImageAnnotatorClient.create();
+		
+		    // Reads the image file into memory
+		    Path filePath = Paths.get(path);
+		    byte[] data = Files.readAllBytes(filePath);
+		    ByteString imgBytes = ByteString.copyFrom(data);
+		
+		    // Builds the image annotation request
+		    List<AnnotateImageRequest> requests = new ArrayList<>();
+		    Image img = Image.newBuilder().setContent(imgBytes).build();
+		    Feature feat = Feature.newBuilder().setType(Type.LABEL_DETECTION).build();
+		    AnnotateImageRequest request = AnnotateImageRequest.newBuilder()
+		        .addFeatures(feat)
+		        .setImage(img)
+		        .build();
+		    requests.add(request);
+		
+		    // Performs label detection on the image file
+		    BatchAnnotateImagesResponse response = vision.batchAnnotateImages(requests);
+		    List<AnnotateImageResponse> responses = response.getResponsesList();
+		
+		    for (AnnotateImageResponse res : responses) {
+	    		if (res.hasError()) {
+	    			System.out.printf("Error: %s\n", res.getError().getMessage());
+	    			throw new RuntimeException("Vision ERR");
+		    	}
+				for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
+					annotation.getAllFields().forEach((k, v)->System.out.printf("%s : %s\n", k, v.toString()));
+				}
+		    }
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	    
+		return null;
 	}
 
 }

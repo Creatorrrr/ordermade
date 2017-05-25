@@ -4,17 +4,23 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="ordermade.store.mapper.AccountMapper">
+  	<resultMap type="Account" id="accountMap">
+  		<result property="money" column="money" />
+  		<association property="member" column="member_id"
+  			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
+  			jdbcType="VARCHAR"/>
+  	</resultMap>
   
-  	<!-- <update id="updateAccountById" parameterType="Account">
+  	<update id="updateAccountById" parameterType="Account">
   		UPDATE ACCOUNT
   		SET MONEY  = #{money}
   		WHERE MEMBER_ID = #{member.id}
   	</update>
   	
-  	회원ID로 금액 불러오기
-  	<select id="selectAccountById" parameterType="String" resultType="Account">
+  	<!-- 회원ID로 금액 불러오기 -->
+  	<select id="selectAccountById" parameterType="String" resultMap="accountMap">
   		SELECT MONEY
   		FROM ACCOUNT
   		WHERE MEMBER_ID = #{member.id}
-  	</select> -->
+  	</select>
   </mapper>

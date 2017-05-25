@@ -5,7 +5,6 @@ import java.sql.Date;
 public class Comment {
 	private String id;
 	private String content;
-	private Attach attach;
 	private Member member;
 	private Request request;
 	private Date time;
@@ -21,12 +20,6 @@ public class Comment {
 	}
 	public void setContent(String content) {
 		this.content = content;
-	}
-	public Attach getAttach() {
-		return attach;
-	}
-	public void setAttach(Attach attach) {
-		this.attach = attach;
 	}
 	public Member getMember() {
 		return member;
@@ -46,4 +39,10 @@ public class Comment {
 	public void setTime(Date time) {
 		this.time = time;
 	}
+	@Override
+	public String toString() {
+		return "Comment [id=" + id + ", content=" + content + ", member=" + member + ", request=" + request + ", time="
+				+ time + "]";
+	}
+	
 }

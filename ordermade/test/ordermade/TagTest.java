@@ -3,6 +3,9 @@ package ordermade;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,12 +15,13 @@ import ordermade.store.logic.TagStoreLogic;
 
 public class TagTest {
 
-//	private TagStoreLogic store;
-//	@Before
-//	public void setUp() throws Exception {
-//		
-//		store = new TagStoreLogic();
-//	}
+	private TagStoreLogic store;
+	
+	@Before
+	public void setUp() throws Exception {
+		
+		store = new TagStoreLogic();
+	}
 
 //	@Test
 //	public void testInsertTag() {
@@ -52,8 +56,8 @@ public class TagTest {
 //		
 //	}
 
-//	@Test
-//	public void testTagsFromGoogleVision() {
-//		
-//	}
+	@Test
+	public void testTagsFromGoogleVision() {
+		store.retrieveTagsFromGoogleVision("./WebContent/image/cat1.jpg");
+	}
 }

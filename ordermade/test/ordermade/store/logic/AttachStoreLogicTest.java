@@ -55,16 +55,22 @@ public class AttachStoreLogicTest {
 //		String page = "1";
 //		List<Attach> attachList = new ArrayList<>();
 //		attachList = store.selectAllAttachsByRequestId(requestId, page);
+//		for(Attach attach : attachList){
+//			System.out.println(attach.toString());
+//		}
 //		assertEquals(10, attachList.size());
 //	}
 //
-//	@Test
-//	public void testSelectAttachsByFileNameAndRequestId() {
-//		String fileName = "fName : 1";
-//		String requestId = "id : 1";
-//		String page = "1";
-//		List<Attach> attachList = new ArrayList<>();
-//		attachList = store.selectAttachsByFileNameAndRequestId(fileName, requestId, page);
-//		assertEquals(5, attachList.size());
-//	}
+	@Test
+	public void testSelectAttachsByFileNameAndRequestId() {
+		String fileName = "fName : 1";
+		String requestId = "1";
+		String page = "1";
+		List<Attach> attachList = new ArrayList<>();
+		attachList = store.selectAttachsByFileNameAndRequestId(fileName, requestId, page);
+		for(Attach attach : attachList){
+			System.out.println(attach.toString());
+		}
+		assertEquals(5, attachList.size());
+	}
 }
