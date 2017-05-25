@@ -11,6 +11,7 @@ public interface PurchaseHistoryMapper {
 
 	public boolean insertPurchaseHistory(PurchaseHistory purchaseHistory);
 	public boolean updatePurchaseHistoryById(PurchaseHistory purchaseHistory);
+	public PurchaseHistory selectPurchseHistoryById(String id);
 	public List<PurchaseHistory> selectPurchaseHistoriesByConsumerId(@Param("consumerId")String consumerId, @Param("page")String page);
 	public List<PurchaseHistory> selectPurchaseHistoriesByConsumerIdAndRequestTitle(@Param("consumerId")String consumerId, @Param("title")String requestTitle, @Param("page")String page);
 	public List<PurchaseHistory> selectPurchaseHistoriesByMakerId(@Param("makerId")String makerId, @Param("page")String page);

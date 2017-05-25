@@ -2,10 +2,13 @@ package ordermade.service.logic;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import ordermade.domain.Portfolio;
 import ordermade.service.facade.PortfolioService;
 import ordermade.store.logic.PortfolioStoreLogic;
 
+@Service
 public class PortfolioServiceLogic implements PortfolioService{
 
 	private PortfolioStoreLogic store;

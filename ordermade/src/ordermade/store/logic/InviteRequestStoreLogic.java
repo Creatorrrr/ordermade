@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Repository;
 
 import ordermade.domain.InviteRequest;
 import ordermade.store.facade.InviteRequestStore;
 import ordermade.store.mapper.InviteRequestMapper;
 
+@Repository
 public class InviteRequestStoreLogic implements InviteRequestStore {
 
 	private SqlSessionFactory factory;

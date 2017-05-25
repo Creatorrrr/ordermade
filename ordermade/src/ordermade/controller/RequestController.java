@@ -40,16 +40,17 @@ public class RequestController {
 		String bound;
 		
 		Member member = new Member();
-		member.setMemberType(maker);
-		member.setMemberType(consumer);
+		
+		member.setMemberType("maker");
+		member.setMemberType("consumer");
 		
 		Request req = new Request();
-		req.setTitle(title);
-		req.setCategory(category);
-		req.setContent(content);
-		req.setPrice(price);
-		req.setHopePrice(hopePrice);
-		req.setBound(bound);
+//		req.setTitle(title);
+//		req.setCategory(category);
+//		req.setContent(content);
+//		req.setPrice(price);
+//		req.setHopePrice(hopePrice);
+//		req.setBound(bound);
 		req.setMaker(member);
 		req.setConsumer(member);
 		
@@ -79,15 +80,15 @@ public class RequestController {
 	
 	@RequestMapping(value="modify.do", method=RequestMethod.POST)
 	public String modifyRequestById(Request request, HttpSession session, Model model) {
-		Request request = requestService.findRequestById(request);
-		request.setTitle(title);
-		request.setContent(content);
+		Request thisRequest = requestService.findRequestById(request.getId());
+//		request.setTitle(title);
+//		request.setContent(content);
 		
-		if(!requestService.modifyRequestById(request)) {
+		if(!requestService.modifyRequestById(thisRequest)) {
 			throw new RuntimeException("post modify failed");
 		}
 		
-		model.addAttribute("request", request);
+		model.addAttribute("request", thisRequest);
 		
 		return "requestDetail";
 	}
