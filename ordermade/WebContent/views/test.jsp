@@ -8,37 +8,39 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>TMPH00037</title>
 <link href="css/style.css" rel="stylesheet" type="text/css" />
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans'
+	rel='stylesheet' type='text/css'>
 </head>
 <body>
-<div class="wrapper">
-  <div class="top-strip ">
-    <div class="top-strip-cor1"></div>
-    <div class="top-strip-cor2"></div>
-    <div class="top-strip-cor3"></div>
-    <div class="top-strip-cor4"></div>
-    <div class="logo">
-      <h1>팝니다</h1>
-      <h2>lorem ipsum</h2>
-    </div>
-    <div class="search-panel">
-      <div class="search-panel-cor1"></div>
-      <div class="search-panel-cor2"></div>
-      <div class="search-box">
-        <input name="" type="text" class="search-box-input"  value="search here"/>
-        <div class="search-icon"></div>
-      </div>
-    </div>
-    <div class="clearing"></div>
-    
-    <div class="menu padTop b-top ">
-      <ul>
-        <li><a  href="index.html">home</a></li>
-        <li><a href="about.html" class="active">about</a></li>
-        <li><a href="services.html">services</a></li>
-        <li><a href="projects.html">projects</a></li>
-        <li><a href="#">blog</a></li>
-        <li><a href="contact.html">contact</a></li>
-      </ul>
-    </div>
-    </div>
+	<div class="wrapper">
+		<div class="top-strip ">
+			<div class="top-strip-cor1"></div>
+			<div class="top-strip-cor2"></div>
+			<div class="top-strip-cor3"></div>
+			<div class="top-strip-cor4"></div>
+			<div class="logo">
+				<h1>팝니다</h1>
+				<h2>lorem ipsum</h2>
+			</div>
+			<div class="search-panel">
+				<div class="search-panel-cor1"></div>
+				<div class="search-panel-cor2"></div>
+				<div class="search-box">
+					<input name="" type="text" class="search-box-input"
+						value="search here" />
+					<div class="search-icon"></div>
+				</div>
+			</div>
+			<div class="clearing"></div>
+
+			<div class="menu padTop b-top ">
+				<ul>
+					<li><a href="index.html">home</a></li>
+					<li><a href="about.html" class="active">about</a></li>
+					<li><a href="services.html">services</a></li>
+					<li><a href="projects.html">projects</a></li>
+					<li><a href="#">blog</a></li>
+					<li><a href="contact.html">contact</a></li>
+				</ul>
+			</div>
+		</div>
