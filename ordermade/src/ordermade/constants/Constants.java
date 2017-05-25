@@ -6,4 +6,6 @@ public class Constants {
 
 	public static final String ROOT = "C:/Users/kosta";
 	public static final int POST_ROW_SIZE = 20;
+	
+	public static final String GOOGLE_VISION_URL = "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyCATcj6V5nyNSrx7ql4jfhRKgOfQQelYaU";
 }

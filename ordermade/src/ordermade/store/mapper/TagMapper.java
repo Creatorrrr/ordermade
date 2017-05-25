@@ -9,5 +9,5 @@ public interface TagMapper {
 
 	public int deleteTagById(String id);
 
-	public Tag selectTagById(String id);
+	public List<Tag> selectTagsByPortfolioId(String portfolioId);
 }
