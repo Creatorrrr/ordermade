@@ -75,8 +75,8 @@ public class MemberTest {
 	//
 //	@Test
 //	public void testSelectMemberBy() {
-//		Member member = store.selectMemberBy("qq");
-//		
+//		Member member = store.selectMemberById("jwUm");
+//		System.out.println(member.toString());
 //		assertEquals("ee", member.getId());
 //	}
 
