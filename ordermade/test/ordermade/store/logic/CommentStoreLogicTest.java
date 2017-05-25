@@ -68,14 +68,17 @@ public class CommentStoreLogicTest {
 //		assertFalse(!store.deleteCommentById(id));
 //	}
 
-//	@Test
-//	public void testSelectCommentsByRequestId() {
-//		String requestId = "idn0";
-//		String page = "1";
-//		
-//		List<Comment> commentList = new ArrayList<>();
-//		commentList = store.selectCommentsByRequestId(requestId, page);
-//		assertEquals(10, commentList.size());
-//	}
+	@Test
+	public void testSelectCommentsByRequestId() {
+		String requestId = "1";
+		String page = "1";
+		
+		List<Comment> commentList = new ArrayList<>();
+		commentList = store.selectCommentsByRequestId(requestId, page);
+		for(Comment comment : commentList){
+			System.out.println(comment.toString());
+		}
+		assertEquals(10, commentList.size());
+	}
 
 }

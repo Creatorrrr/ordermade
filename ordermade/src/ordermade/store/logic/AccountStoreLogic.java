@@ -2,6 +2,7 @@ package ordermade.store.logic;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import ordermade.domain.Account;
@@ -9,6 +10,7 @@ import ordermade.store.facade.AccountStore;
 import ordermade.store.mapper.AccountMapper;
 
 @Repository
+@Component
 public class AccountStoreLogic implements AccountStore{
 	
 	private SqlSessionFactory factory;

@@ -16,4 +16,9 @@ public class Account {
 	public void setMoney(int money) {
 		this.money = money;
 	}
+	@Override
+	public String toString() {
+		return "Account [member=" + member + ", money=" + money + "]";
+	}
+	
 }
