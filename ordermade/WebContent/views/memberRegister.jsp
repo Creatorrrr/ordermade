@@ -13,7 +13,7 @@
 	<h3>회원가입</h3>
 
 	<br>
-	<form id="registerForm" action="${ctx }/member/join.do" method="post">
+	<form id="registerForm" action="${ctx }/member/join.do" method="post" enctype="multipart/form-data">
 		<table class="table">
 			<tr>
 				<th><label for="id">ID</label></th>
@@ -65,7 +65,7 @@
 			<tr>
 				<th><label>이미지 업로드</label></th>
 				<td><input id="image" name="image" class="form-control"
-					type="file" value="" placeholder="사진을 등록 하세요."></td>
+					type="file" placeholder="사진을 등록 하세요."></td>
 			</tr>
 		</table>
 		<br>

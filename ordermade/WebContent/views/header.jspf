@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
-
 <c:choose>
 	<c:when test="${loginId eq null }">
 		<a href="${ctx }/views/login.jsp">로그인</a>|<a href="${ctx }/views/memberRegister.jsp">회원 가입</a>
