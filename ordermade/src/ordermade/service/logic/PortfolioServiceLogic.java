@@ -2,6 +2,8 @@ package ordermade.service.logic;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import ordermade.domain.Portfolio;
@@ -11,6 +13,7 @@ import ordermade.store.logic.PortfolioStoreLogic;
 @Service
 public class PortfolioServiceLogic implements PortfolioService{
 
+	@Autowired
 	private PortfolioStoreLogic store;
 	
 	public PortfolioServiceLogic() {
