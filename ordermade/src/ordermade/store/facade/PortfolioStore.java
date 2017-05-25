@@ -2,8 +2,11 @@ package ordermade.store.facade;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import ordermade.domain.Portfolio;
 
+@Repository
 public interface PortfolioStore {
 
 	public boolean insertPortfolio(Portfolio portfolio);
