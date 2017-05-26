@@ -35,14 +35,13 @@
 					<tr>
 					<tr>
 						<th>표지 이미지</th>
-						<td><img alt="" src=""></td>
 						<td><input id="" name="" class="btn btn-success"
-							type="submit" value="찾아보기"></td>
+							type="file" value="찾아보기"></td>
 					<tr>
 					<tr>
 						<th>포트폴리오 내용 <span>*</span></th>
 						<td><textarea id="portfolioContent" name="portfolioContent"
-								class="form-control"cols="25" rows="10" ></textarea></td>
+								class="form-control"cols="50" rows="10" ></textarea></td>
 					</tr>
 				</table>
 				<div>
@@ -57,20 +56,7 @@
 	</div>
 </div>
 
-
-
-<div class="wrapper row5">
-	<div id="copyright" class="clear">
-		<p class="fl_left">
-			Copyright &copy; 2014 - All Rights Reserved - <a href="#">Domain
-				Name</a>
-		</p>
-		<p class="fl_right">
-			Template by <a target="_blank" href="http://www.os-templates.com/"
-				title="Free Website Templates">OS Templates</a>
-		</p>
-	</div>
-</div>
+<%@ include file="footer.jsp"%>
 
 <script type="text/javaScript">
 	function checkIt() {

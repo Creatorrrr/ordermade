@@ -23,8 +23,8 @@
 					</div>
 				</c:if>
 			</c:if>
-			<br>
-			<img class="imgr borderedbox" src="images/demo/slider/pp.jpg" alt="">
+			<br> <img class="imgr borderedbox"
+				src="images/demo/slider/pp.jpg" alt="">
 			<p>Aliquatjusto quisque nam consequat doloreet vest orna partur
 				scetur portortis nam. Metadipiscing eget facilis elit sagittis
 				felisi eger id justo maurisus convallicitur.</p>
@@ -105,13 +105,17 @@
 						<label for="email">비밀번호 <span>*</span></label> <input type="text"
 							name="email" id="email" value="" size="22">
 					</div>
+					<div class="one_third">
+						<label for="url">평점<span>*</span></label> <input type="text"
+							name="url" id="url" value="" size="22">
+					</div>
 					<div class="block clear">
 						<label for="comment">후기</label>
 						<textarea name="comment" id="comment" cols="25" rows="10"></textarea>
 					</div>
 					<div>
-						<input name="submit" type="submit" value="Submit Form">
-						&nbsp; <input name="reset" type="reset" value="Reset Form">
+						<input name="submit" type="submit" value="Submit">
+						&nbsp; <input name="reset" type="reset" value="Reset">
 					</div>
 				</form>
 			</div>
@@ -125,18 +129,7 @@
 	</div>
 </div>
 
-<div class="wrapper row5">
-	<div id="copyright" class="clear">
-		<p class="fl_left">
-			Copyright &copy; 2014 - All Rights Reserved - <a href="#">Domain
-				Name</a>
-		</p>
-		<p class="fl_right">
-			Template by <a target="_blank" href="http://www.os-templates.com/"
-				title="Free Website Templates">OS Templates</a>
-		</p>
-	</div>
-</div>
+<%@ include file="footer.jsp"%>
 <!-- JAVASCRIPTS -->
 <script src="../layout/scripts/jquery.min.js"></script>
 <script src="../layout/scripts/jquery.fitvids.min.js"></script>

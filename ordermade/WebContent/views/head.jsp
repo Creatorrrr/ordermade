@@ -20,8 +20,8 @@
 					<c:choose>
 						<c:when test="${loginId eq null }">
 							<ul>
-								<li><a id="loginBtn" href="#">Login</a></li>
-								<li><a href="#">Sign up</a></li>
+								<li><a id="loginBtn" href="${ctx }/views/login.jsp">Login</a></li>
+								<li><a href="${ctx }/views/memberRegister.jsp" class="btn btn-success">Sign up</a></li>
 							</ul>
 						</c:when>
 						<c:otherwise>
@@ -68,18 +68,15 @@
 		<div class="rounded">
 			<nav id="mainav" class="clear">
 				<ul class="clear">
-					<li class="active"><a href="${stx }mainhome.jsp">Home</a></li>
+					<li class="active"><a href="${ctx }/index.jsp">Home</a></li>
 					<li><a class="drop" href="#">Category</a>
 						<ul>
-							<li><a href="${stx }pages/gallery.html">Furniture</a></li>
-							<li><a href="${stx }pages/portfolio.html">Accessory</a></li>
-							<li><a href="${stx }pages/full-width.html">Kitchen</a></li>
-							<li><a href="${stx }pages/sidebar-left.html">Digital</a></li>
-							<li><a href="${stx }pages/sidebar-left-2.html">Clothing</a></li>
-							<li><a href="${stx }pages/sidebar-right.html">Sport</a></li>
-							<li><a href="${stx }pages/sidebar-right-2.html">SidebarRight
-									2</a></li>
-							<li><a href="${stx }pages/basic-grid.html">Basic Grid</a></li>
+							<li><a href="${ctx }/views/productList.jsp">Furniture</a></li>
+							<li><a href="${ctx }/pages/portfolio.html">Accessory</a></li>
+							<li><a href="${ctx }/pages/full-width.html">Kitchen</a></li>
+							<li><a href="${ctx }/pages/sidebar-left.html">Digital</a></li>
+							<li><a href="${ctx }/pages/sidebar-left-2.html">Clothing</a></li>
+							<li><a href="${ctx }/pages/sidebar-right.html">Sport</a></li>
 						</ul></li>
 
 					<!-- <li><a class="drop" href="#">Dropdown</a>

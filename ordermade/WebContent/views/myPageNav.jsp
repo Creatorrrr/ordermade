@@ -19,6 +19,19 @@
 		</c:if>
 		<li><a href="#">구매 이력 </a></li>
 		<li><a href="#">참가요청내역 </a></li>
-		<li><a href="#">회원탈퇴 </a></li>
+		<li><a onclick="deleteBtn();" class="btn btn-warning">회원탈퇴 </a></li>
 	</ul>
 </nav>
+
+
+<script type="text/javascript">
+
+	
+	function deleteBtn(){
+		var r = confirm("탈퇴하시면 로그인을 할수가 없습니다!");
+		if (r == true) {
+		   	location.href="${ctx }/member/delete.do";
+		}
+	}
+
+	</script>

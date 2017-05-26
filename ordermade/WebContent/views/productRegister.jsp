@@ -37,14 +37,13 @@
 					<tr>
 					<tr>
 						<th>상품 이미지</th>
-						<td><img alt="" src=""></td>
 						<td><input id="" name="" class="btn btn-success"
-							type="submit" value="찾아보기"></td>
+							type="file" value="찾아보기"></td>
 					<tr>
 					<tr>
 						<th>상품 내용</th>
 						<td><textarea id="productContent" name="productContent"
-								class="form-control" rows="7"></textarea>
+								class="form-control" rows="7" cols="50"></textarea>
 					</tr>
 				</table>
 				<div align="center">
@@ -60,20 +59,7 @@
 	</div>
 </div>
 
-
-
-<div class="wrapper row5">
-	<div id="copyright" class="clear">
-		<p class="fl_left">
-			Copyright &copy; 2014 - All Rights Reserved - <a href="#">Domain
-				Name</a>
-		</p>
-		<p class="fl_right">
-			Template by <a target="_blank" href="http://www.os-templates.com/"
-				title="Free Website Templates">OS Templates</a>
-		</p>
-	</div>
-</div>
+<%@ include file="footer.jsp"%>
 
 <script type="text/javaScript">
 	function checkIt() {

@@ -25,11 +25,11 @@ public class MemberController {
 	@Autowired
 	MemberService service;
 
-	// @RequestMapping("/join") // end
-	// public String showRegisterUI() {
-	// // 회원가입 join.jsp 화면으로 이동
-	// return "join";
-	// }
+	 @RequestMapping("/join") // end
+	 public String showRegisterUI() {
+	 // 회원가입 join.jsp 화면으로 이동
+	 return "join";
+	 }
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST) // end
 	public String registerMember(Member member, HttpServletRequest request) {
@@ -89,7 +89,7 @@ public class MemberController {
 	@RequestMapping("/login") // end
 	public String showLoginUI() {
 		// 로그인 login.jsp화면으로 이동
-		return "login";
+		return "index";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST) // end
@@ -108,7 +108,7 @@ public class MemberController {
 
 			// 여기는 임의로 index2.jsp로
 			// 보냄******************************************************************
-			return "index2";
+			return "index";
 		} else {
 			return "login";
 		}
@@ -121,7 +121,7 @@ public class MemberController {
 		session.invalidate();
 		// 여기는 임의로 index2.jsp로
 		// 보냄******************************************************************
-		return "index2";
+		return "index";
 	}
 
 	@RequestMapping("/modifyMember") // end
