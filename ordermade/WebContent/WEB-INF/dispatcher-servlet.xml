@@ -19,8 +19,6 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-
-
 	<mvc:interceptors>
 		<bean class="ordermade.interceptor.CharacterEncodingInterceptor" />
 	</mvc:interceptors>

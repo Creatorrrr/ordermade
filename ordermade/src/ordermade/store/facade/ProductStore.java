@@ -3,6 +3,7 @@ package ordermade.store.facade;
 import java.util.List;
 
 import ordermade.domain.Category;
+import ordermade.domain.Portfolio;
 import ordermade.domain.Product;
 
 public interface ProductStore {
@@ -16,6 +17,7 @@ public interface ProductStore {
 	public List<Product> selectProductsByCategoryAndTitle(String category, String title, String begin, String end);
 	public List<Product> selectProductsByCategoryAndMakerName(String category, String makerName, String begin, String end);
 	public List<Product> selectProductsByCategoryAndMakerId(String category, String makerId, String begin, String end);
+	public List<Product> selectProductsByCategoryAndMakerIdForImage(List<Portfolio> portfolios);
 	public List<Product> selectProductsByMakerId(String makerId, String begin, String end);
 	public List<Product> selectProductsByMakerIdAndTitle(String makerId, String title, String begin, String end);
 	public List<Category> selectAllCategory();

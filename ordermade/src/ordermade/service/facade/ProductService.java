@@ -19,7 +19,7 @@ public interface ProductService {
 
 	public List<Product> findProductsByCategoryOrderByIdForMain(String category, String page);
 
-	public List<Product> findProductsByCategoryAndImage(String category, String image, String page);
+	public List<Product> findProductsByImage(String image);
 
 	public List<Product> findProductsByCategoryAndTitle(String category, String title, String page);
 

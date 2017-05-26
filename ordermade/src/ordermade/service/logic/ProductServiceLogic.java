@@ -63,15 +63,11 @@ public class ProductServiceLogic implements ProductService{
 	}
 
 	@Override
-	public List<Product> findProductsByCategoryAndImage(String category, String image, String page) {
+	public List<Product> findProductsByImage(String image) {
 		List<Tag> tagList = tStore.retrieveTagsFromGoogleVision(image);	// 현재 이미지의 특징을 추출함
-		List<Portfolio> portfolioList = pfStore.selectPortfoliosByCategory(category, page);	// 전달받은 카테고리에 해당하는 포트폴리오 불러옴
-		
-		
-		
-//		List<Product> productList = pStore.selectProductsByCategoryAndMakerId(category, makerId, getProductBegin(page), getProductEnd(page));
-		
-		return null;
+		List<Portfolio> portfolioList = pfStore.selectPortfoliosByTags(tagList);	// 태그에 해당하는 포트폴리오 불러옴
+
+		return pStore.selectProductsByCategoryAndMakerIdForImage(portfolioList);
 	}
 
 	@Override

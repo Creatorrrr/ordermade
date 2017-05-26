@@ -2,6 +2,7 @@ package ordermade.store.logic;
 
 import org.apache.ibatis.executor.ExecutorException;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Repository;
 
 import ordermade.domain.Member;
@@ -10,11 +11,16 @@ import ordermade.store.mapper.MemberMapper;
 
 @Repository
 public class MemberStoreLogic implements MemberStore {
+	
+	private SqlSessionFactory factory;
+	
+	public MemberStoreLogic() {
+		factory = SqlSessionFactoryProvider.getSqlSessionFactory();
+	}
 
 	@Override
 	public boolean insertMember(Member member) {
-
-		SqlSession session = SqlSessionFactoryProvider.getSqlSessionFactory().openSession();
+		SqlSession session = factory.openSession();
 
 		boolean result = false;
 
@@ -34,8 +40,7 @@ public class MemberStoreLogic implements MemberStore {
 
 	@Override
 	public boolean updateMemberById(Member member) {
-
-		SqlSession session = SqlSessionFactoryProvider.getSqlSessionFactory().openSession();
+		SqlSession session = factory.openSession();
 
 		boolean result = false;
 		try {
@@ -54,8 +59,7 @@ public class MemberStoreLogic implements MemberStore {
 
 	@Override
 	public boolean deleteMemberById(String id) {
-
-		SqlSession session = SqlSessionFactoryProvider.getSqlSessionFactory().openSession();
+		SqlSession session = factory.openSession();
 
 		boolean result = false;
 		try {
@@ -73,7 +77,7 @@ public class MemberStoreLogic implements MemberStore {
 
 	@Override
 	public Member selectMemberById(String id) {
-		SqlSession session = SqlSessionFactoryProvider.getSqlSessionFactory().openSession();
+		SqlSession session = factory.openSession();
 
 		Member member = null;
 		try {

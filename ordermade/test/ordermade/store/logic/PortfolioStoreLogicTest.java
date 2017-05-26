@@ -2,6 +2,7 @@ package ordermade.store.logic;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.junit.Test;
 
 import ordermade.domain.Member;
 import ordermade.domain.Portfolio;
+import ordermade.domain.Tag;
 
 public class PortfolioStoreLogicTest {
 
@@ -97,4 +99,21 @@ public class PortfolioStoreLogicTest {
 //		}
 //	}
 
+	@Test
+	public void testSelectPortfoliosByTags() {
+		List<Tag> tags = new ArrayList<>();
+		Tag tag = new Tag();
+		tag.setKeyword("1");
+		tags.add(tag);
+		tag = new Tag();
+		tag.setKeyword("2");
+		tags.add(tag);
+		tag = new Tag();
+		tag.setKeyword("3");
+		tags.add(tag);
+		List<Portfolio> list = store.selectPortfoliosByTags(tags);
+		for(Portfolio p : list){
+			System.out.println(p.toString());
+		}
+	}
 }

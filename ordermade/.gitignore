@@ -1,2 +1,5 @@
 /target/
 /build/
+/bin/
+/WebContent/images/
+/.settings/
