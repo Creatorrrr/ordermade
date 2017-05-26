@@ -1,5 +1,14 @@
 package ordermade.domain;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.springframework.stereotype.Component;
+
+@XmlRootElement(name="attach")
+@XmlAccessorType(XmlAccessType.FIELD)
+@Component
 public class Attach {
 	private String id;
 	private String path;

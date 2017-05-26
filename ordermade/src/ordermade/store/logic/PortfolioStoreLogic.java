@@ -22,15 +22,15 @@ public class PortfolioStoreLogic implements PortfolioStore {
 	@Override
 	public boolean insertPortfolio(Portfolio portfolio) {
 		
-		try{
+//		try{
 			PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
 			boolean check = mapper.insertPortfolio(portfolio);
 			session.commit();
 			return check;
 		
-		} finally{
-			session.close();
-		}
+//		} finally{
+//			session.close();//주석을 풀면 같은행 여러번 입력이 불가합니다.
+//		}
 		
 	}
 
