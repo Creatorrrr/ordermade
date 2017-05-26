@@ -45,7 +45,7 @@
 		<header id="header" class="clear">
 			<div id="logo" class="fl_left">
 				<h1>
-					<a href="${stx }mainhome.jsp">팔아요</a>
+					<a href="${stx }index.jsp">팔아요</a>
 				</h1>
 				<p>1:1 매칭 서비스</p>
 			</div>
@@ -53,7 +53,7 @@
 				<form class="clear" method="post" action="#">
 					<fieldset>
 						<legend>Search:</legend>
-						<input input name="" class="search-box-input" type="text" value=""
+						<input name="" class="search-box-input" type="text" value=""
 							placeholder="Search Here" />
 						<button class="fa fa-search" type="submit" title="Search">
 							<em>Search</em>
