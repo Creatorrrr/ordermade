@@ -30,4 +30,8 @@ public class Tag {
 	public void setPortfolio(Portfolio portfolio) {
 		this.portfolio = portfolio;
 	}
+	@Override
+	public String toString() {
+		return "Tag [id=" + id + ", keyword=" + keyword + ", score=" + score + ", portfolio=" + portfolio + "]";
+	}
 }

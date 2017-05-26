@@ -25,14 +25,14 @@ public class PortfolioServiceLogic implements PortfolioService{
 	}
 	
 	@Override
-	public boolean registerPortfolio(Portfolio portfolio) {System.out.println("!");
+	public boolean registerPortfolio(Portfolio portfolio) {
 		boolean portfolioResult = store.insertPortfolio(portfolio);
 		
 		List<Tag> tagList = tStore.retrieveTagsFromGoogleVision(portfolio.getImage());
 		for(Tag t : tagList) {
 			t.setPortfolio(portfolio);
-			tStore.insertTag(t);System.out.println("@");
-		}System.out.println("#");
+			tStore.insertTag(t);
+		}
 		
 		return portfolioResult;
 	}

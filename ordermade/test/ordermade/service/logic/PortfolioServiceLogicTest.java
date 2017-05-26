@@ -22,12 +22,12 @@ public class PortfolioServiceLogicTest {
 	public void testRegisterPortfolio() {
 		Portfolio portfolio = new Portfolio();
 		Member maker = new Member();
-		portfolio.setCategory("1");
+		portfolio.setCategory("2");
 		portfolio.setContent("11");
-		maker.setId("1");
+		maker.setId("7");
 		portfolio.setMaker(maker);
 		portfolio.setTitle("11");
-		portfolio.setImage("./WebContent/images/cat1.jpg");
+		portfolio.setImage("./WebContent/images/phonecase6.jpg");
 		
 		pService.registerPortfolio(portfolio);
 	}

@@ -41,21 +41,35 @@ public class TagStoreLogic implements TagStore {
 	@Override
 	public boolean insertTag(Tag tag) {
 		SqlSession session = factory.openSession();
-		TagMapper mapper = session.getMapper(TagMapper.class);
-		int check = mapper.insertTag(tag);
-		session.close();
+		int check = 0;
+		try {
+			TagMapper mapper = session.getMapper(TagMapper.class);
+			if((check = mapper.insertTag(tag)) > 0) {
+				session.commit();
+			} else {
+				session.rollback();
+			}
+		} finally {
+			session.close();
+		}
 		return check > 0;
-
 	}
 
 	@Override
 	public boolean deleteTagById(String id) {
 		SqlSession session = factory.openSession();
-		TagMapper mapper = session.getMapper(TagMapper.class);
-		int check = mapper.deleteTagById(id);
-		session.close();
+		int check = 0;
+		try {
+			TagMapper mapper = session.getMapper(TagMapper.class);
+			if((check = mapper.deleteTagById(id)) > 0) {
+				session.commit();
+			} else {
+				session.rollback();
+			}
+		} finally {
+			session.close();
+		}
 		return check > 0;
-
 	}
 
 	@Override

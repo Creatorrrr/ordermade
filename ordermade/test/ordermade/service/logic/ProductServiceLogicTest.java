@@ -23,28 +23,31 @@ public class ProductServiceLogicTest {
 	@Autowired
 	private ProductService pService;
 
+//	@Test
+//	public void testFindProductsByCategoryOrderByHitsForMain() {
+//		System.out.println(pService.findProductsByCategoryOrderByHitsForMain("1", "2").size());
+//	}
+//
+//	@Test
+//	public void testFindProductsByCategoryOrderByIdForMain() {
+//		System.out.println(pService.findProductsByCategoryOrderByIdForMain("1", "3").size());
+//	}
+//
 	@Test
-	public void testFindProductsByCategoryOrderByHitsForMain() {
-		System.out.println(pService.findProductsByCategoryOrderByHitsForMain("1", "2").size());
-	}
-
-	@Test
-	public void testFindProductsByCategoryOrderByIdForMain() {
-		System.out.println(pService.findProductsByCategoryOrderByIdForMain("1", "3").size());
-	}
-
-	@Test
-	public void testFindProductsByCategoryAndImage() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testFindProductsByCategoryAndTitle() {
-		List<Product> productList = pService.findProductsByCategoryAndTitle("1", "8", "2");
-		
+	public void testFindProductsByImage() {
+		List<Product> productList = pService.findProductsByImage("./WebContent/images/cat9.jpg");
 		for(Product p : productList) {
-			System.out.println(p.getId());
+			System.out.println(p.toString());
 		}
 	}
+//
+//	@Test
+//	public void testFindProductsByCategoryAndTitle() {
+//		List<Product> productList = pService.findProductsByCategoryAndTitle("1", "8", "2");
+//		
+//		for(Product p : productList) {
+//			System.out.println(p.getId());
+//		}
+//	}
 
 }

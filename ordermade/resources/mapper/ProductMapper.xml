@@ -160,8 +160,8 @@
 	<select id="selectProductsByCategoryAndMakerIdForImage" parameterType="List" resultMap="productMap">
 		<include refid="selectProduct" />
 		FROM product
-		WHERE <foreach collection="list" item="portfolio" open="(" close=")" separator="OR">
-	            type = #{portfolio.category} AND maker_id = #{portfolio.maker.id}
+		WHERE <foreach collection="list" item="portfolio" separator="OR">
+	            (type = #{portfolio.category} AND maker_id = #{portfolio.maker.id})
 	        </foreach>
 	</select>
 	
