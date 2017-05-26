@@ -19,7 +19,7 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<mvc:interceptors>
+	<!-- <mvc:interceptors>
 		<bean class="ordermade.interceptor.CharacterEncodingInterceptor" />
-	</mvc:interceptors>
+	</mvc:interceptors> -->
 </beans>
