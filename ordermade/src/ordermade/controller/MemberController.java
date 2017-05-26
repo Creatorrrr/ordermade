@@ -25,11 +25,11 @@ public class MemberController {
 	@Autowired
 	MemberService service;
 
-	// @RequestMapping("/join") // end
-	// public String showRegisterUI() {
-	// // 회원가입 join.jsp 화면으로 이동
-	// return "join";
-	// }
+	@RequestMapping("/join") // end
+	public String showRegisterUI() {
+		// 회원가입 join.jsp 화면으로 이동
+		return "join";
+	}
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST) // end
 	public String registerMember(Member member, HttpServletRequest request) {
@@ -65,25 +65,24 @@ public class MemberController {
 			member.setAddress(address);
 			member.setIntroduce(introduce);
 			member.setMemberType(memberType);
-
-			if (memberType == "customer") {
+			if (memberType.equals("customer")) {
 				member.setLicenseNumber("null");
-			} else if (memberType == "buisnessman") {
+			} else if (memberType.equals("buisnessman")) {
 				member.setLicenseNumber(license);
 			}
 
 			member.setImage(image.getCanonicalPath());
 
-			boolean registered = service.registerMember(member);
-			if (!registered) {
-				return "join";
-			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return "login";
+		boolean registered = service.registerMember(member);
+		if (!registered) {
+			return "join";
+		} else {
+			return "login";
+		}
 	}
 
 	@RequestMapping("/login") // end
