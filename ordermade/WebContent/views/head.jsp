@@ -45,8 +45,10 @@
 		<header id="header" class="clear">
 			<div id="logo" class="fl_left">
 				<h1>
-					<a href="${stx }index.jsp">팔아요</a>
+					<a href="${ctx }/views/index.jsp"><img src="${ctx }/views/images/panda4.jpg" style="width:100px;height:100px"> 판다...</a>
 				</h1>
+				<p>다 판다...</p>
+				<p>없으면 만들어서 판다...</p>
 				<p>1:1 매칭 서비스</p>
 			</div>
 			<div class="fl_right">
