@@ -1,4 +1,4 @@
-package ordermade;
+package ordermade.store.logic;
 
 import static org.junit.Assert.*;
 
