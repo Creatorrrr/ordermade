@@ -30,7 +30,7 @@ public class PortfolioController {
 	
 	@RequestMapping(value="xml/register.do", method=RequestMethod.POST, produces="text/plain")
 	public @ResponseBody String registerPortfolio(Portfolio portfolio, HttpSession session){
-//		System.out.println("----------------"+portfolio.toString());
+		System.out.println("----------------"+portfolio.toString());
 //		System.out.println("----------------"+portfolio.getMaker().getId());
 		if(portfolio.getTitle()==null) return "error";
 		boolean check = service.registerPortfolio(portfolio);
