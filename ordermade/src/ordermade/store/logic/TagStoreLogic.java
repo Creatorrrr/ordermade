@@ -41,7 +41,6 @@ public class TagStoreLogic implements TagStore {
 	@Override
 	public boolean insertTag(Tag tag) {
 		SqlSession session = factory.openSession();
-		session = SqlSessionFactoryProvider.getSqlSessionFactory().openSession();
 		TagMapper mapper = session.getMapper(TagMapper.class);
 		int check = mapper.insertTag(tag);
 		session.close();
