@@ -2,6 +2,7 @@ package ordermade.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,7 +51,7 @@ public class ProductController {
 		MultipartRequest mr;
 		try {
 			mr = new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy());
-
+			
 			String title = mr.getParameter("title");
 			String category = mr.getParameter("category");
 			String content = mr.getParameter("content");

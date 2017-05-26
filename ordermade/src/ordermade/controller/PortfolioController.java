@@ -25,7 +25,6 @@ public class PortfolioController {
 	@Autowired
 	private PortfolioServiceLogic service;
 	
-	
 	//---------action -> xml
 	
 	@RequestMapping(value="xml/register.do", method=RequestMethod.POST, produces="text/plain")
@@ -55,8 +54,6 @@ public class PortfolioController {
 		boolean check = service.removePortfolio(id);
 		return check+"";
 	} //test http://localhost:8080/ordermade/portfolio/xml/remove.do?id=10
-	
-	
 	
 	
 	//----------web  -> html

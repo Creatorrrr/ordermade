@@ -68,7 +68,7 @@
 		<div class="rounded">
 			<nav id="mainav" class="clear">
 				<ul class="clear">
-					<li class="active"><a href="${ctx }/index.jsp">Home</a></li>
+					<li class="active"><a href="${ctx }/views/index.jsp">Home</a></li>
 					<li><a class="drop" href="#">Category</a>
 						<ul>
 							<li><a href="${ctx }/views/productList.jsp">Furniture</a></li>
