@@ -9,7 +9,7 @@
 	<ul>
 		<li><a href="#">내 정보수정</a></li>
 		<li><a href="#">나의 의뢰서</a></li>
-		<c:if test="${sessionScope.loginId ne null && # ne null}">
+		<c:if test="${sessionScope.loginId ne null && makerId ne null}">
 			<li><a href="#">나의 프로필</a></li>
 			<li><a href="#">받은 의뢰서</a></li>
 			<li><a href="#">의뢰서 검색</a></li>
@@ -22,4 +22,3 @@
 		<li><a href="#">회원탈퇴 </a></li>
 	</ul>
 </nav>
-
