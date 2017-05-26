@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import ordermade.domain.Portfolio;
+import ordermade.domain.Tag;
 
 public interface PortfolioMapper {
 
@@ -15,5 +16,5 @@ public interface PortfolioMapper {
 	public List<Portfolio> selectPortfoliosByMakerId(@Param("makerId")String makerId, @Param("page")String page);
 	public List<Portfolio> selectPortfoliosByMakerIdAndTitle(@Param("makerId")String makerId, @Param("title")String title, @Param("page")String page );
 	public List<Portfolio> selectPortfoliosByCategory(@Param("category")String category, @Param("page")String page);
-
+	public List<Portfolio> selectPortfoliosByTags(List<Tag> tags);
 }

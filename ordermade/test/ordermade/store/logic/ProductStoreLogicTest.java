@@ -1,14 +1,13 @@
 package ordermade.store.logic;
 
-import static org.junit.Assert.assertEquals;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import ordermade.domain.Category;
 import ordermade.domain.Member;
+import ordermade.domain.Portfolio;
 import ordermade.domain.Product;
 import ordermade.store.facade.ProductStore;
 
@@ -75,13 +74,13 @@ public class ProductStoreLogicTest {
 //		System.out.println("Review : " + product.getReviews().get(0).getId());
 //	}
 //
-	@Test
-	public void testSelectProductsByCategoryOrderByHitsForMain() {
-		List<Product> productList = pStore.selectProductsByCategoryOrderByHitsForMain("1", "2");
-		System.out.println(productList.size());
-		assertEquals(2, productList.size());
-		assertEquals("5", productList.get(1).getId());
-	}
+//	@Test
+//	public void testSelectProductsByCategoryOrderByHitsForMain() {
+//		List<Product> productList = pStore.selectProductsByCategoryOrderByHitsForMain("1", "2");
+//		System.out.println(productList.size());
+//		assertEquals(2, productList.size());
+//		assertEquals("5", productList.get(1).getId());
+//	}
 //
 //	@Test
 //	public void testSelectProductsByCategoryOrderByIdForMain() {
@@ -117,6 +116,37 @@ public class ProductStoreLogicTest {
 //		List<Product> productList = pStore.selectProductsByCategoryAndMakerId("1", "5", "1", "7");
 //		System.out.println(productList.size());
 //	}
+	
+	@Test
+	public void testSelectProductsByCategoryAndMakerIdForImage() {
+		List<Portfolio> portfolioList = new ArrayList<>();
+		
+		Portfolio pf = new Portfolio();
+		Member m = new Member();
+		pf.setCategory("1");
+		m.setId("6");
+		pf.setMaker(m);
+		portfolioList.add(pf);
+		
+		pf = new Portfolio();
+		m = new Member();
+		pf.setCategory("2");
+		m.setId("7");
+		pf.setMaker(m);
+		portfolioList.add(pf);
+		
+		pf = new Portfolio();
+		m = new Member();
+		pf.setCategory("3");
+		m.setId("6");
+		pf.setMaker(m);
+		portfolioList.add(pf);
+		
+		List<Product> productList = pStore.selectProductsByCategoryAndMakerIdForImage(portfolioList);
+		for(Product p : productList) {
+			System.out.println(p.toString());
+		}
+	}
 //
 //	@Test
 //	public void testSelectProductsByMakerId() {

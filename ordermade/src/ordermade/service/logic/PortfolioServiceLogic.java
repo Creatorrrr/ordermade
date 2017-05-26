@@ -3,27 +3,38 @@ package ordermade.service.logic;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 
 import ordermade.domain.Portfolio;
+import ordermade.domain.Tag;
 import ordermade.service.facade.PortfolioService;
+import ordermade.store.facade.PortfolioStore;
+import ordermade.store.facade.TagStore;
 import ordermade.store.logic.PortfolioStoreLogic;
 
 @Service
 public class PortfolioServiceLogic implements PortfolioService{
 
 	@Autowired
-	private PortfolioStoreLogic store;
+	private PortfolioStore store;
+	@Autowired
+	private TagStore tStore;
 	
 	public PortfolioServiceLogic() {
 		store = new PortfolioStoreLogic();
 	}
 	
-	
 	@Override
-	public boolean registerPortfolio(Portfolio portfolio) {
-		return store.insertPortfolio(portfolio);
+	public boolean registerPortfolio(Portfolio portfolio) {System.out.println("!");
+		boolean portfolioResult = store.insertPortfolio(portfolio);
+		
+		List<Tag> tagList = tStore.retrieveTagsFromGoogleVision(portfolio.getImage());
+		for(Tag t : tagList) {
+			t.setPortfolio(portfolio);
+			tStore.insertTag(t);System.out.println("@");
+		}System.out.println("#");
+		
+		return portfolioResult;
 	}
 
 	@Override

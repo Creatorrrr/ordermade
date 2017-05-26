@@ -157,6 +157,14 @@
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 	
+	<select id="selectProductsByCategoryAndMakerIdForImage" parameterType="List" resultMap="productMap">
+		<include refid="selectProduct" />
+		FROM product
+		WHERE <foreach collection="list" item="portfolio" open="(" close=")" separator="OR">
+	            type = #{portfolio.category} AND maker_id = #{portfolio.maker.id}
+	        </foreach>
+	</select>
+	
 	<select id="selectProductsByMakerId" parameterType="HashMap" resultMap="productMap">
 		<include refid="selectProduct" />
 		FROM (<include refid="selectProductWithRowNum" />

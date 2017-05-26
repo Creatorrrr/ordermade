@@ -17,6 +17,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -31,14 +32,16 @@ import ordermade.store.mapper.TagMapper;
 @Repository
 public class TagStoreLogic implements TagStore {
 	
-	private SqlSession session;
+	private SqlSessionFactory factory;
 	
 	public TagStoreLogic() {
-		 session = SqlSessionFactoryProvider.getSqlSessionFactory().openSession();
+		factory = SqlSessionFactoryProvider.getSqlSessionFactory();
 	}
 
 	@Override
 	public boolean insertTag(Tag tag) {
+		SqlSession session = factory.openSession();
+		session = SqlSessionFactoryProvider.getSqlSessionFactory().openSession();
 		TagMapper mapper = session.getMapper(TagMapper.class);
 		int check = mapper.insertTag(tag);
 		session.close();
@@ -48,6 +51,7 @@ public class TagStoreLogic implements TagStore {
 
 	@Override
 	public boolean deleteTagById(String id) {
+		SqlSession session = factory.openSession();
 		TagMapper mapper = session.getMapper(TagMapper.class);
 		int check = mapper.deleteTagById(id);
 		session.close();
@@ -57,6 +61,7 @@ public class TagStoreLogic implements TagStore {
 
 	@Override
 	public List<Tag> selectTagsByPortfolioId(String portfolioId) {
+		SqlSession session = factory.openSession();
 		TagMapper mapper = session.getMapper(TagMapper.class);
 		List<Tag> list = mapper.selectTagsByPortfolioId(portfolioId);
 		session.close();
@@ -67,7 +72,7 @@ public class TagStoreLogic implements TagStore {
 	@Override
 	public List<Tag> retrieveTagsFromGoogleVision(String path) {
 		List<Tag> tagList = new ArrayList<>();
-		
+
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode root = mapper.readTree(getJsonFromGoogleVision(Constants.GOOGLE_VISION_URL, path, "LABEL_DETECTION", 5));
@@ -77,6 +82,7 @@ public class TagStoreLogic implements TagStore {
 		    	Tag tag = new Tag();
 		    	tag.setKeyword(node.path("description").asText());
 		    	tag.setScore(node.path("score").asDouble());
+		    	tagList.add(tag);
 		    }
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
