@@ -105,7 +105,7 @@ public class MemberController {
 
 			HttpSession session = req.getSession();
 			session.setAttribute("loginId", member.getId());
-			return "index2";
+			return "index";
 			
 		} else {
 			return "member/login";
@@ -142,7 +142,7 @@ public class MemberController {
 
 		// 여기는 임의로 memberRegister.jsp로
 		// 보냄******************************************************************
-		ModelAndView modelAndView = new ModelAndView("member/memberModify");
+		ModelAndView modelAndView = new ModelAndView("member/makerMyPage");
 		modelAndView.addObject("member", member);
 
 		return modelAndView;
@@ -172,7 +172,7 @@ public class MemberController {
 
 		// 여기는 임의로 memberRegister.jsp로
 		// 보냄******************************************************************
-		ModelAndView modelAndView = new ModelAndView("views/index");
+		ModelAndView modelAndView = new ModelAndView("/index");
 		modelAndView.addObject("member", member);
 
 		return modelAndView;

@@ -96,7 +96,7 @@ public class DealController {
 	
 	// UI For WEB
 	
-	@RequestMapping(value="transaction.do", method=RequestMethod.POST)
+	@RequestMapping(value="transaction.do", method=RequestMethod.GET)
 	public ModelAndView showPurchaseHistoryUI(HttpSession session){
 		// session에서 회원객체 가져오기
 		Member memberCheck = (Member)session.getAttribute("loginUser");
@@ -107,7 +107,7 @@ public class DealController {
 			List<PurchaseHistory> purchaseList = new ArrayList<>();
 			purchaseList = dService.findpurchaseHistoriesByConsumerId(consumerId, page);
 			ModelAndView modelAndView = new ModelAndView("deal/transaction");
-			modelAndView.addObject("purchaseList", purchaseList);
+			modelAndView.addObject("/purchaseHistory/consumerPurchaseHistory", purchaseList);
 			return modelAndView;
 		}else if(memberCheck.getMemberType() == "maker"){
 			String makerId = memberCheck.getId();
@@ -115,7 +115,7 @@ public class DealController {
 			List<PurchaseHistory> purchaseList = new ArrayList<>();
 			purchaseList = dService.findpurchaseHistoriesByMakerId(makerId, page);
 			ModelAndView modelAndView = new ModelAndView("deal/transaction");
-			modelAndView.addObject("purchaseList", purchaseList);
+			modelAndView.addObject("/purchaseHistory/makerPurchaseHistory", purchaseList);
 			return modelAndView;
 		}
 		return null;

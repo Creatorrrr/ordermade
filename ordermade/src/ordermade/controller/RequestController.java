@@ -219,7 +219,7 @@ public class RequestController {
 	
 	@RequestMapping(value="request/ui/modify.do",method=RequestMethod.GET)
 	public ModelAndView showEditRequestUI(String requestId, HttpSession session){
-//		if(checkLogined(session)) return new ModelAndView("member/login");	// check logined
+		if(checkLogined(session)) return new ModelAndView("member/login");	// check logined
 		return new ModelAndView("request/modify")
 				.addObject("request", service.findRequestById(requestId));
 	}
@@ -237,7 +237,7 @@ public class RequestController {
 	
 	@RequestMapping(value="request/ui/makerInviteList.do",method=RequestMethod.GET)
 	public ModelAndView showMakerInviteRequestListUI(String page, HttpSession session){
-		return new ModelAndView("request/makerInviteList")
+		return new ModelAndView("/request/makerInviteList")
 				.addObject("inviteRequests", 
 						service.findInviteRequestsByMakerId(
 								(String)session.getAttribute("loginId"), 

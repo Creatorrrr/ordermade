@@ -20,13 +20,16 @@
 				<table class="table">
 					<tr>
 						<th>제작 항목</th>
-						<td><select name="type" id="type" class="form-control">
+						<td>
+							<select name="type" id="type" class="form-control">
 								<option value="id">가구</option>
 								<option value="id">의류</option>
 								<option value="id">악세사리</option>
 								<option value="id">디지털</option>
 								<option value="id">주방</option>
-								<option value="id">스포츠</option></td>
+								<option value="id">스포츠</option>
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<th>의뢰 제목</th>
@@ -58,7 +61,7 @@
 				<div align="center">
 					<input class="btn" type="reset" value="취소하기"
 						onclick="javascript:window.location='${ctx }/post/list.do?boardId=${boardId }'">
-					<input class="btn btn-success" type="submit" value="수정"">
+					<input class="btn btn-success" type="submit" value="수정">
 				</div>
 			</form>
 			<br>
