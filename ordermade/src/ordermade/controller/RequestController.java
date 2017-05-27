@@ -110,28 +110,29 @@ public class RequestController {
 	
 	//-- invite request
 	
-	@RequestMapping(value = "inviteRequest/xml/registerToMaker.do", method = RequestMethod.POST, produces = "text/plain")
+	@RequestMapping(value = "request/xml/registerInviteToMaker.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerInviteRequestToMaker(InviteRequest inviteRequest) {
 //		System.out.println(inviteRequest.toString());
-		if(inviteRequest.getId()==null) return "error";
+		if(inviteRequest.getMessage()==null) return "error";
 		boolean check = service.registerInviteRequest(inviteRequest);
 		return check+"";
-	}
+	}	//POST  http://localhost:8080/ordermade/request/xml/registerInviteToMaker.do
+		//{"message":"asdfaasf","maker.id":"maker2","form":"test","request.id":"7"}
 
 
-	@RequestMapping(value = "inviteRequest/xml/removeById.do", method = RequestMethod.GET, produces = "text/plain")
+	@RequestMapping(value = "request/xml/removeInviteById.do", method = RequestMethod.GET, produces = "text/plain")
 	public @ResponseBody String removeInviteRequestById(String id) {
 		if(id == null) return "error";
 		boolean check = service.removeInviteRequestById(id);
 		return check+"";
-	}
+	} 	//GET  http://localhost:8080/ordermade/request/xml/removeInviteById.do?id=13
 
-	@RequestMapping(value = "inviteRequest/xml/removeByRequestId.do", method = RequestMethod.GET, produces = "text/plain")
+	@RequestMapping(value = "request/xml/removeInviteByRequestId.do", method = RequestMethod.GET, produces = "text/plain")
 	public @ResponseBody String removeInviteRequestByRequestId(String requestId) {
 		if(requestId == null) return "error";
 		boolean check = service.removeInviteRequestByRequestId(requestId);
 		return check+"";
-	}
+	}	//GET  http://localhost:8080/ordermade/request/xml/removeInviteByRequestId.do?requestId=7
 
 
 	// --comment
@@ -142,7 +143,8 @@ public class RequestController {
 		if(comment.getId() == null) return "error";
 		boolean check = service.registerComment(comment);
 		return check+"";
-	}
+	}	//POST  http://localhost:8080/ordermade/comment/xml/register.do
+		//{"content":"cccccccccc","request.id":"7","member.id":"maker2"}
 
 	@RequestMapping(value = "comment/xml/modify.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyComment(Comment comment, HttpSession session) {
@@ -150,15 +152,16 @@ public class RequestController {
 		if(comment.getId() == null) return "error";
 		boolean check = service.modifyCommentById(comment);
 		return check+"";
-	}
+	}	//POST  http://localhost:8080/ordermade/comment/xml/modify.do
+		//{"id":"1","content":"dddd","request.id":"8","member.id":"user1"}
 
-	@RequestMapping(value = "comment/xml/remove.do", method = RequestMethod.POST, produces = "text/plain")
+	@RequestMapping(value = "comment/xml/remove.do", method = RequestMethod.GET, produces = "text/plain")
 	public @ResponseBody String removeCommentById(String id, HttpSession session) {
 		// String loginId=(String)session.getAttribute("loginId");
 		if(id == null) return "error";
-		boolean check = service.removeAttachById(id);
+		boolean check = service.removeCommentById(id);
 		return check+"";
-	}
+	}	//GET  http://localhost:8080/ordermade/comment/xml/remove.do?id=1
 
 	
 	
@@ -167,18 +170,19 @@ public class RequestController {
 	@RequestMapping(value = "attach/xml/register.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerAttach(Attach attach, HttpSession session) {
 		// String loginId=(String)session.getAttribute("loginId");
-		if(attach.getId() == null) return "error";
+		if(attach.getFileName() == null) return "error";
 		boolean check = service.registerAttach(attach);
 		return check+"";
-	}
+	}	//POST  http://localhost:8080/ordermade/attach/xml/register.do
+		//{"path":"path/dddd/","extension":"extension asjdfla sfkl","fileName":"aaa.jpg","request.id":"8"}
 
-	@RequestMapping(value = "attach/xml/remove.do", method = RequestMethod.POST, produces = "text/plain")
+	@RequestMapping(value = "attach/xml/remove.do", method = RequestMethod.GET, produces = "text/plain")
 	public @ResponseBody String removeAttachById(String id, HttpSession session) {
 		// String loginId=(String)session.getAttribute("loginId");
 		if(id == null) return "error";
-		boolean check = service.removeCommentById(id);
+		boolean check = service.removeAttachById(id);
 		return check+"";
-	}
+	}	//GET  http://localhost:8080/ordermade/attach/xml/remove.do?id=1
 
 	
 	
@@ -242,40 +246,30 @@ public class RequestController {
 	}
 	
 	@RequestMapping(value="request/ui/detail.do",method=RequestMethod.GET)
-	public ModelAndView showDetailRequestUI(String id, String page){
-		List<Request> list = null;
-		String consumerId = "user1";
-		String type = "consumer";
-		
-		if(type == "consumer"){
-			list = service.findRequestsByConsumerId(consumerId, "1");
-		}else{
-			list = service.findRequestsByConsumerIdWithMaker(consumerId, "1");
-		}
-		
-		ModelAndView modelAndView = new ModelAndView("request/detail");
-		modelAndView.addObject("request", list);
-		return modelAndView;
+	public ModelAndView showDetailRequestUI(String id){
+		return new ModelAndView("request/detail")
+				.addObject("request", service.findRequestById(id));
 	}
 	
-	@RequestMapping(value="request/ui/inviteList.do",method=RequestMethod.GET)
-	public ModelAndView showInviteRequestListUI(String id, String page){
-		List<InviteRequest> list = null;
-
-		String form = "consumer";
-		if(form == "consumer"){
-			list = service.findInviteRequestsByConsumerId("user1", form, "1");
-		}else{
-			list = service.findInviteRequestsByMakerId("maker1", form, "1");
-		}
-		
-		ModelAndView modelAndView = new ModelAndView("request/inviteList");
-		modelAndView.addObject("request", list);
-		return modelAndView;
+	@RequestMapping(value="request/ui/makerInviteList.do",method=RequestMethod.GET)
+	public ModelAndView showMakerInviteRequestListUI(String page, HttpSession session){
+		return new ModelAndView("request/makerInviteList")
+				.addObject("inviteRequests", 
+						service.findInviteRequestsByMakerId(
+								(String)session.getAttribute("loginId"), 
+								Constants.FORM_INVITE, 
+								page));
 	}
 	
-	
-	
+	@RequestMapping(value="request/ui/consumerInviteList.do",method=RequestMethod.GET)
+	public ModelAndView showConsumerInviteRequestListUI(String page, HttpSession session){
+		return new ModelAndView("request/consumerInviteList")
+				.addObject("inviteRequests", 
+						service.findInviteRequestsByConsumerId(
+								(String)session.getAttribute("loginId"), 
+								Constants.FORM_REQUEST, 
+								page));
+	}
 	
 	//==================mobile -> xml
 	

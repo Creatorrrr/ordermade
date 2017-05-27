@@ -29,13 +29,12 @@ public class InviteRequestStoreLogicTest {
 //		Request request = new Request();
 //		InviteRequest ir = new InviteRequest();
 //		
-//		member.setId("test");
+//		member.setId("maker1");
 //		request.setId("7");
 //		
-//		//ir.setId("test");
-//		ir.setMessage("test1");
+//		ir.setMessage("asdfa");
 //		ir.setForm("test");
-//		ir.setRequest(request);
+//		ir.setRequest( );
 //		ir.setMaker(member);
 //		
 //		assertTrue(irStore.insertInviteRequest(ir));
@@ -53,19 +52,22 @@ public class InviteRequestStoreLogicTest {
 //		assertEquals(true, a);
 //	}
 
-//	@Test		  //o
+//	@Test		  //ok
 //	public void testSelectInviteRequestsByMakerId(){
-//		List<InviteRequest> list = irStore.selectInviteRequestsByMakerId("test","2");
+//		List<InviteRequest> list = irStore.selectInviteRequestsByMakerId("maker1","test","1");
 //		System.out.println(list.size());
-//		//	assertEquals(1,list.get(0).getMaker().getId());
+//		for(InviteRequest ir : list ){
+//			System.out.println(ir.getId()+" "+ ir.getMessage());
+//		}
 //	}
 	
 //	@Test		 //request.consumerId  innerJoin
 //	public void testselectInviteRequestsByConsumerId(){
-//		List<InviteRequest> list = irStore.selectInviteRequestsByMakerId("test","1","2");
+//		List<InviteRequest> list = irStore.selectInviteRequestsByConsumerId("user1","test","1");
 //		System.out.println(list.size());
-//	//	assertNotNull(list);
-//	//	assertEquals("test",list.get(0).getMember().getId());
+//		for(InviteRequest ir : list ){
+//			System.out.println(ir.getId()+" "+ ir.getMessage());
+//		}
 //	}	
 	
 }
