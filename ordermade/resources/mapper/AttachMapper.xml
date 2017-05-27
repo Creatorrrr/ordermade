@@ -33,8 +33,8 @@
   		SELECT * FROM ( 
               SELECT rownum limitNum, A.* FROM ATTACH A  
               WHERE REQUEST_ID=#{requestId}  
-              and rownum &lt;= #{page}*10) 
-          WHERE limitNum > (#{page}-1)*10
+              and rownum &lt;= #{page}*${@ordermade.constants.Constants@ATTACH_ROW_SIZE}) 
+          WHERE limitNum > (#{page}-1)*${@ordermade.constants.Constants@ATTACH_ROW_SIZE}
   	</select>
   	
   	<!-- 의뢰서에 관한 첨부파일 이름으로 검색 -->
@@ -42,8 +42,8 @@
   		SELECT * FROM ( 
               SELECT rownum limitNum, A.* FROM ATTACH A  
               WHERE FILE_NAME=#{fileName} and REQUEST_ID=#{requestId}  
-              and rownum &lt;= #{page}*10) 
-          WHERE limitNum > (#{page}-1)*10
+              and rownum &lt;= #{page}*${@ordermade.constants.Constants@ATTACH_ROW_SIZE}) 
+          WHERE limitNum > (#{page}-1)*${@ordermade.constants.Constants@ATTACH_ROW_SIZE}
   	</select>
   
   </mapper>
