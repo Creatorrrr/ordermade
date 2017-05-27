@@ -10,7 +10,7 @@
 		<main class="container clear"> <!-- main body -->
 		<div class="sidebar one_third first">
 
-			<%@ include file="myPageNav.jsp"%>
+			<%@ include file="common/myPageNav.jsp"%>
 
 		</div>
 
@@ -77,7 +77,7 @@
 	</div>
 </div>
 
-<%@ include file="footer.jsp"%>
+<%@ include file="common/footer.jsp"%>
 <!-- JAVASCRIPTS -->
 <script src="../layout/scripts/jquery.min.js"></script>
 <script src="../layout/scripts/jquery.fitvids.min.js"></script>

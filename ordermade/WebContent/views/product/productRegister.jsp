@@ -16,14 +16,14 @@
 
 			<h1>상품 등록 페이지</h1>
 			<br>
-			<form action="${ctx }//register.do" method="post" name=""
+			<form action="${ctx }/product/register.do" method="post" name=""
 				onsubmit="return checkIt()">
-				<input name="" type="hidden" value="${categoryId }">
+				<input name="" type="hidden" value="${productId }">
 				<table class="table">
 					<tr>
 						<th>제작 항목</th>
 						<td><select id="type" class="form-control">
-								<c:forEach items=${categorys } var="category">
+								<c:forEach items="${category} var="category">
 									<option value="${category.type }">${category.type }</option>
 								</c:forEach>
 						</select></td>

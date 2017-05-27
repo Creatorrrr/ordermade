@@ -144,7 +144,7 @@ public class ProductController {
 		if (!pService.removeProductById(id)) {
 			return "";
 		} else {
-			return "";
+			return "/product/productList";
 		}
 	}
 

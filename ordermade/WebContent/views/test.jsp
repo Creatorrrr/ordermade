@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 
-<%@ include file="head.jsp"%>
+<%@ include file="common/head.jsp"%>
 
 <div class="wrapper row3">
 	<div class="rounded">
@@ -108,7 +108,7 @@
 </script>
 
 
-<%@ include file="footer.jsp"%>
+<%@ include file="common/footer.jsp"%>
 
 <!-- JAVASCRIPTS -->
 <script src="../layout/scripts/jquery.min.js"></script>

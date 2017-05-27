@@ -122,7 +122,7 @@
 		</div>
 		<!--/comment write  --> <!--side bar  -->
 		<div class="sidebar one_third">
-			<%@ include file="productNav.jsp"%>
+			<%@ include file="/views/common/productNav.jsp"%>
 		</div>
 		<div class="clear"></div>
 		</main>

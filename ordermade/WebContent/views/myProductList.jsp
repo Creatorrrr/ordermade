@@ -3,14 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 
-<%@ include file="head.jsp"%>
+<%@ include file="common/head.jsp"%>
 
 <div class="wrapper row3">
 	<div class="rounded">
 		<main class="container clear"> <!-- main body -->
 		<div class="sidebar one_third first">
 
-			<%@ include file="myPageNav.jsp"%>
+			<%@ include file="common/myPageNav.jsp"%>
 
 		</div>
 

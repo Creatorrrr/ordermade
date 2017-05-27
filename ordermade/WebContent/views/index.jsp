@@ -166,7 +166,7 @@
 		</footer>
 	</div>
 </div>
-<%@ include file="footer.jsp"%>
+<%@ include file="common/footer.jsp"%>
 <!-- JAVASCRIPTS -->
 <script src="layout/scripts/jquery.min.js"></script>
 <script src="layout/scripts/jquery.fitvids.min.js"></script>

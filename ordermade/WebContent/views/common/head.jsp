@@ -26,7 +26,7 @@
 						</c:when>
 						<c:otherwise>
 							<span class="glyphicon glyphicon-user"></span>
-							<b>${loginId}</b>님!! 환영합니다. [<a href="${ctx }/logout.do">로그아웃</a>]
+							<b>${loginId}</b>님 환영합니다. [<a href="${ctx }/logout.do">로그아웃</a>]
 							<ul>
 								<li><a href="${ctx}/member/detail.do">회원정보</a></li>
 

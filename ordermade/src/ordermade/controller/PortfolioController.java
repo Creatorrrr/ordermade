@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ordermade.domain.Member;
 import ordermade.domain.Portfolio;
 import ordermade.domain.Portfolios;
+import ordermade.service.facade.MemberService;
 import ordermade.service.facade.PortfolioService;
 import ordermade.service.logic.PortfolioServiceLogic;
 
@@ -24,8 +25,10 @@ import ordermade.service.logic.PortfolioServiceLogic;
 public class PortfolioController {
 
 	@Autowired
-	private PortfolioService service;
+	private PortfolioService pService;
 	
+	@Autowired
+	private MemberService mService;
 	//---------action -> xml
 	
 	@RequestMapping(value="xml/register.do", method=RequestMethod.POST, produces="text/plain")
@@ -33,7 +36,7 @@ public class PortfolioController {
 		System.out.println("----------------"+portfolio.toString());
 //		System.out.println("----------------"+portfolio.getMaker().getId());
 		if(portfolio.getTitle()==null) return "error";
-		boolean check = service.registerPortfolio(portfolio);
+		boolean check = pService.registerPortfolio(portfolio);
 		return check+"";
 	}  //test http://localhost:8080/ordermade/portfolio/xml/register.do
 	   //post {"title":"asdfadsf","maker.id":"user1\n","image":"asdf.jpg","content":"aaaaaaa","tags[0].id":"1","category":"aaa"}
@@ -43,7 +46,7 @@ public class PortfolioController {
 	@RequestMapping(value="xml/modify.do", method=RequestMethod.POST, produces="text/plain")
 	public @ResponseBody String modifyPortfolioById(Portfolio portfolio, HttpSession session){
 		if(portfolio.getId()==null) return "error";
-		boolean check = service.modifyPortfolio(portfolio);
+		boolean check = pService.modifyPortfolio(portfolio);
 		return check+"";
 	}  //test http://localhost:8080/ordermade/portfolio/xml/modify.do
 	   //{"title":"asdfadsf","maker.id":"user1\n","image":"asdf.jpg","content":"aaaaaaa","tags[0].id":"1","category":"aaa","id":"10"}
@@ -52,7 +55,7 @@ public class PortfolioController {
 	@RequestMapping(value="xml/remove.do", method=RequestMethod.GET, produces="text/plain")
 	public @ResponseBody String removePortfolioById(String id, HttpSession session){
 		if(id==null) return "error";
-		boolean check = service.removePortfolio(id);
+		boolean check = pService.removePortfolio(id);
 		return check+"";
 	} //test http://localhost:8080/ordermade/portfolio/xml/remove.do?id=10
 	
@@ -66,7 +69,7 @@ public class PortfolioController {
 	
 	@RequestMapping(value="ui/modify.do",method=RequestMethod.GET)
 	public ModelAndView showEditPortfolioUI(String id){
-		Portfolio portfolio = service.findPortfolioById(id);
+		Portfolio portfolio = pService.findPortfolioById(id);
 		ModelAndView modelAndView = new ModelAndView("portfolio/modify");
 		modelAndView.addObject("portfolio", portfolio);
 		return modelAndView;
@@ -74,7 +77,7 @@ public class PortfolioController {
 	
 	@RequestMapping(value="ui/detail.do",method=RequestMethod.GET)
 	public ModelAndView showDetailPortfolioUI(String id){
-		Portfolio portfolio = service.findPortfolioById(id);
+		Portfolio portfolio = pService.findPortfolioById(id);
 		ModelAndView modelAndView = new ModelAndView("portfolio/detail");
 		modelAndView.addObject("portfolio", portfolio);
 		return modelAndView;
@@ -84,7 +87,7 @@ public class PortfolioController {
 	public ModelAndView showSearchPortfolioUI(String type){
 		if(type==null) type = "aa";//
 		
-		List<Portfolio> list = service.findPortfoliosByCategory(type, "1");
+		List<Portfolio> list = pService.findPortfoliosByCategory(type, "1");
 		ModelAndView modelAndView = new ModelAndView("portfolio/search");
 		modelAndView.addObject("portfolios", list);
 		return modelAndView;
@@ -93,9 +96,11 @@ public class PortfolioController {
 	@RequestMapping(value="ui/mylist.do",method=RequestMethod.GET)
 	public ModelAndView showMyPortfolioListUI(HttpSession session){
 		//-------session으로 로그인 정보 갖고 오기.
+		String loginId=(String)session.getAttribute("loginId");
+		
 		String makerId = "user1";//
 		
-		List<Portfolio> list = service.findPortfoliosByMakerId(makerId, "1");
+		List<Portfolio> list = pService.findPortfoliosByMakerId(makerId, "1");
 		ModelAndView modelAndView = new ModelAndView("portfolio/mylist");
 		modelAndView.addObject("portfolios", list);
 		return modelAndView;
@@ -109,11 +114,13 @@ public class PortfolioController {
 	
 	@RequestMapping(value="xml/search.do", produces="application/xml")
 	public @ResponseBody Portfolios findMyPortfolios(String page, HttpSession session){
-		//-------session으로 로그인 정보 갖고 오기.
+		
+		String loginId=(String)session.getAttribute("loginId");
+		
 		String makerId = "user1";
 		
 		if(page == null) page = "1";
-		List<Portfolio> list = service.findPortfoliosByMakerId(makerId, page);
+		List<Portfolio> list = pService.findPortfoliosByMakerId(makerId, page);
 		Portfolios portfolios = new Portfolios();
 		portfolios.setPortfolios(list);
 		return portfolios;
@@ -123,10 +130,12 @@ public class PortfolioController {
 	@RequestMapping(value="xml/searchByTitle.do", produces="application/xml")
 	public @ResponseBody Portfolios findMyPortfoliosByTitle(String title, String page, HttpSession session){
 		//-------session으로 로그인 정보 갖고 오기.
+		String loginId=(String)session.getAttribute("loginId");
+		
 		String makerId = "user1";
 		
 		if(page == null) page = "1";
-		List<Portfolio> list = service.findPortfoliosByMakerIdAndTitle(makerId, title, page);
+		List<Portfolio> list = pService.findPortfoliosByMakerIdAndTitle(makerId, title, page);
 		Portfolios portfolios = new Portfolios();
 		portfolios.setPortfolios(list);
 		return portfolios;
@@ -136,7 +145,7 @@ public class PortfolioController {
 	@RequestMapping(value="xml/searchById.do", produces="application/xml")
 	public @ResponseBody Portfolio findPortfolioById(String id){
 		if(id==null) return null;
-		return service.findPortfolioById(id);
+		return pService.findPortfolioById(id);
 	} //test http://localhost:8080/ordermade/portfolio/xml/searchById.do?id=7
 	
 
