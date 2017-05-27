@@ -5,9 +5,10 @@ public class Constants {
 	public static final int REVIEW_ROW_SIZE = 5;
 	public static final int REQUEST_ROW_SIZE = 20;
 	public static final int INVITEREQUEST_ROW_SIZE = 20;
-	public static final int COMMENT_ROW_SIZE = 20;
-	public static final int ATTACH_ROW_SIZE = 20;
+	public static final int COMMENT_ROW_SIZE = 10;
+	public static final int ATTACH_ROW_SIZE = 10;
 	public static final int PORTFOLIO_ROW_SIZE = 10;
+	public static final int PURCHASEHISTORY_ROW_SIZE = 10;
 
 	public static final String ROOT = "C:/Users/kosta";
 	

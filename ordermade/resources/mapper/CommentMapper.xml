@@ -40,8 +40,8 @@
   		SELECT * FROM (
   			SELECT rownum limitNum, A.* FROM COMM A 
   			WHERE REQUEST_ID=#{requestId} 
-  			and rownum &lt;= #{page}*10)
-  		WHERE limitNum > (#{page}-1)*10
+  			and rownum &lt;= #{page}*${@ordermade.constants.Constants@COMMENT_ROW_SIZE})
+  		WHERE limitNum > (#{page}-1)*${@ordermade.constants.Constants@COMMENT_ROW_SIZE}
   	</select>
   
   </mapper>
