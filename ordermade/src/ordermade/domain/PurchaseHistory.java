@@ -2,6 +2,15 @@ package ordermade.domain;
 
 import java.sql.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.springframework.stereotype.Component;
+
+@XmlRootElement(name="purchasehistory")
+@XmlAccessorType(XmlAccessType.FIELD)
+@Component
 public class PurchaseHistory {
 	private String id;
 	private Member maker;
@@ -66,5 +75,11 @@ public class PurchaseHistory {
 	}
 	public void setPayment(String payment) {
 		this.payment = payment;
+	}
+	@Override
+	public String toString() {
+		return "PurchaseHistory [id=" + id + ", maker=" + maker + ", consumer=" + consumer + ", request=" + request
+				+ ", orderDate=" + orderDate + ", invoiceNumber=" + invoiceNumber + ", charge=" + charge
+				+ ", deliveryStatus=" + deliveryStatus + ", payment=" + payment + "]";
 	}
 }

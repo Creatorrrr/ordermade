@@ -12,7 +12,6 @@ import ordermade.store.facade.PurchaseHistoryStore;
 import ordermade.store.mapper.PurchaseHistoryMapper;
 
 @Repository
-@Component
 public class PurchaseHistoryStoreLogic implements PurchaseHistoryStore {
 	
 	private SqlSessionFactory factory;

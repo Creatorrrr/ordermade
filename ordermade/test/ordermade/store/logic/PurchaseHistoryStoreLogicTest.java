@@ -21,32 +21,32 @@ public class PurchaseHistoryStoreLogicTest {
 		store = new PurchaseHistoryStoreLogic();
 	}
 
-//	@Test
-//	public void testInsertPurchaseHistory() {
-//		for(int i=0; i<10; i++){
-//			PurchaseHistory p = new PurchaseHistory();
-//			Member user1= new Member();
-//			user1.setId("user1");
-//			Member maker1 = new Member();
-//			maker1.setId("maker1");
-//			p.setConsumer(user1);
-//			p.setMaker(maker1);
-//			p.setCharge(5);
-//			p.setDeliveryStatus("asdf"+i);
-//			p.setInvoiceNumber("3000"+i);
-//			
-//			java.util.Date date1=new java.util.Date();
-//			date1.getTime();
-//			Date date = new Date(date1.getTime());
-//			p.setOrderDate(date);
-//			
-//			p.setPayment(""+date1.getTime());
-//			Request r =  new Request();
-//			r.setId(""+i);
-//			p.setRequest(r);
-//			store.insertPurchaseHistory(p);
-//		}
-//	}
+	/*@Test
+	public void testInsertPurchaseHistory() {
+		for(int i=0; i<10; i++){
+			PurchaseHistory p = new PurchaseHistory();
+			Member user1= new Member();
+			user1.setId("user" + i);
+			Member maker1 = new Member();
+			maker1.setId("maker"+i);
+			p.setConsumer(user1);
+			p.setMaker(maker1);
+			p.setCharge(5);
+			p.setDeliveryStatus("stat"+i);
+			p.setInvoiceNumber("300"+i+"0");
+			
+			java.util.Date date1=new java.util.Date();
+			date1.getTime();
+			Date date = new Date(date1.getTime());
+			p.setOrderDate(date);
+			
+			p.setPayment("date"+ i);
+			Request r =  new Request();
+			r.setId(""+i);
+			p.setRequest(r);
+			store.insertPurchaseHistory(p);
+		}
+	}*/
 
 //	@Test
 //	public void testUpdatePurchaseHistoryById() {
