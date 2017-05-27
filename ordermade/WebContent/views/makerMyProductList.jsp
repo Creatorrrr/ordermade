@@ -19,6 +19,8 @@
 
 			<div class="fl_right">
 				<form class="clear" method="post" action="#">
+					<input type="hidden" name="boardId" value="${boardId }"
+						class="form-control">
 					<div>
 						<fieldset>
 							<select name="type" id="type" class="form-control">

@@ -4,6 +4,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 
 <%@ include file="head.jsp"%>
+
 <div class="wrapper row3">
 	<div class="rounded">
 		<main class="container clear">

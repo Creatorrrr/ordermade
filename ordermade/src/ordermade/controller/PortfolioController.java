@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ordermade.domain.Member;
 import ordermade.domain.Portfolio;
 import ordermade.domain.Portfolios;
+import ordermade.service.facade.PortfolioService;
 import ordermade.service.logic.PortfolioServiceLogic;
 
 @Controller
@@ -23,7 +24,7 @@ import ordermade.service.logic.PortfolioServiceLogic;
 public class PortfolioController {
 
 	@Autowired
-	private PortfolioServiceLogic service;
+	private PortfolioService service;
 	
 	//---------action -> xml
 	

@@ -1,3 +1,4 @@
+<%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -5,100 +6,110 @@
 
 <%@ include file="head.jsp"%>
 
+<div class="wrapper row3">
+	<div class="rounded">
+		<main class="container clear"> <!-- main body -->
+		<div class="group btmspace-30">
 
+			<!-- Middle Column -->
+			<div class="one_half">
 
-<!--comment write  -->
-			<div id="comments">
-				<h2>후기 작성</h2>
-				<form action="#" method="post">
-					<div class="one_third first">
-						<label for="name">제목 <span>*</span></label> <input type="text"
-							name="name" id="name" value="" size="22">
-					</div>
-					<div class="one_third">
-						<label for="email">비밀번호 <span>*</span></label> <input type="text"
-							name="email" id="email" value="" size="22">
-					</div>
-					<div class="block clear">
-						<label for="comment">후기</label>
-						<textarea name="comment" id="comment" cols="25" rows="10"></textarea>
-					</div>
-					<div>
-						<input name="submit" type="submit" value="Submit Form">
-						&nbsp; <input name="reset" type="reset" value="Reset Form">
-					</div>
-				</form>
+				<!-- 장르별 추천작, 장르를 select에서 선택하면 ajax로 controller 들러서 리스트 다시 뿌려줌 -->
+				<div class="navbar-form" id="recoResult">
+					<select id="recoGenre" class="form-control navbar-right">
+						<c:forEach items="${genreList }" var="genre">
+							<option value="${genre.category }">${genre.category}</option>
+						</c:forEach>
+					</select>
+					<h2>인기 상품</h2>
+				</div>
+
+				<ul class="nospace listing">
+					<li class="clear">
+						<div class="content" align="center">
+							<c:set var="box_list" value="${ recoLiteratures}" />
+							<%@ include file="mainBox.jsp"%>
+						</div>
+					</li>
+				</ul>
+
+				<div class="navbar-form">
+					<select id="recoGenre" class="form-control navbar-right">
+						<c:forEach items="${genreList }" var="genre">
+							<option value="${product.category }">${product.category}</option>
+						</c:forEach>
+					</select>
+					<h2>최신 상품</h2>
+				</div>
+
+				<ul class="nospace listing">
+					<li class="clear">
+						<div class="content" align="center" id="newResult">
+							<c:set var="box_list" value="${ recoLiteratures}" />
+							<%@ include file="mainBox.jsp"%>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<!-- / Middle Column -->
+		</div>
+
+		<div id="twitter" class="group btmspace-30">
+			<div class="one_quarter first center">
+				<a href="#"><i class="fa fa-twitter fa-3x"></i><br>Instruction</a>
+			</div>
+			<div class="three_quarter bold">
+				<p>
+					01. 상품페이지를 검색한 뒤 주문 제작 버튼을 누릅니다.<br /> 02. 의뢰서를 제작합니다.<br /> 03.
+					의뢰서를 등록면 제작자와 1:1 매칭이 이루어집니다.<br /> 04. 제작자와 대화를 통해 원하는 물건을 제작할 수
+					있습니다.<br />
+				</p>
 			</div>
 		</div>
-<!--/comment write  -->
 
-
-		<div class="sidebar one_third">
-			<%@ include file="productNav.jsp"%>
-		</div>
-		<div class="clear"></div>
 		</main>
 	</div>
 </div>
 
-<div class="wrapper row4">
-	<div class="rounded">
-		<footer id="footer" class="clear">
-			<div class="one_third first">
-				<figure class="center">
-					<img class="btmspace-15" src="../images/demo/worldmap.png" alt="">
-					<figcaption>
-						<a href="#">Find Us With Google Maps &raquo;</a>
-					</figcaption>
-				</figure>
-			</div>
-			<div class="one_third">
-				<address>
-					Long Educational Facility Name<br> Address Line 2<br>
-					Town/City<br> Postcode/Zip<br> <br> <i
-						class="fa fa-phone pright-10"></i> xxxx xxxx xxxxxx<br> <i
-						class="fa fa-envelope-o pright-10"></i> <a href="#">contact@domain.com</a>
-				</address>
-			</div>
-			<div class="one_third">
-				<p class="nospace btmspace-10">Stay Up to Date With What's
-					Happening</p>
-				<ul class="faico clear">
-					<li><a class="faicon-twitter" href="#"><i
-							class="fa fa-twitter"></i></a></li>
-					<li><a class="faicon-linkedin" href="#"><i
-							class="fa fa-linkedin"></i></a></li>
-					<li><a class="faicon-facebook" href="#"><i
-							class="fa fa-facebook"></i></a></li>
-					<li><a class="faicon-flickr" href="#"><i
-							class="fa fa-flickr"></i></a></li>
-					<li><a class="faicon-rss" href="#"><i class="fa fa-rss"></i></a></li>
-				</ul>
-				<form class="clear" method="post" action="#">
-					<fieldset>
-						<legend>Subscribe To Our Newsletter:</legend>
-						<input type="text" value="" placeholder="Enter Email Here&hellip;">
-						<button class="fa fa-sign-in" type="submit" title="Sign Up">
-							<em>Sign Up</em>
-						</button>
-					</fieldset>
-				</form>
-			</div>
-		</footer>
-	</div>
-</div>
-<div class="wrapper row5">
-	<div id="copyright" class="clear">
-		<p class="fl_left">
-			Copyright &copy; 2014 - All Rights Reserved - <a href="#">Domain
-				Name</a>
-		</p>
-		<p class="fl_right">
-			Template by <a target="_blank" href="http://www.os-templates.com/"
-				title="Free Website Templates">OS Templates</a>
-		</p>
-	</div>
-</div>
+
+<script>
+	/* 장르 선택할때마다 ajax로 갔다와서 장르별로 새로 뿌리기 */
+
+	$('#recoGenre').change(function() {
+		$.ajax({
+			url : "${ctx}/genreList.do",
+			data : {
+				type : "recoGenre",
+				genre : $("#recoGenre option:selected").val(),
+				from : "index"
+			},
+			type : "get",
+			dataType : "xml",
+			success : function(xml) {
+				secessFun(xml, "#recoResult");
+			}
+		});
+	});
+	$('#newGenre').change(function() {
+		$.ajax({
+			url : "${ctx}/genreList.do",
+			data : {
+				type : "newGenre",
+				genre : $("#newGenre option:selected").val(),
+				from : "main"
+			},
+			type : "get",
+			dataType : "xml",
+			success : function(xml) {
+				secessFun(xml, "#newResult");
+			}
+		});
+	});
+</script>
+
+
+<%@ include file="footer.jsp"%>
+
 <!-- JAVASCRIPTS -->
 <script src="../layout/scripts/jquery.min.js"></script>
 <script src="../layout/scripts/jquery.fitvids.min.js"></script>
