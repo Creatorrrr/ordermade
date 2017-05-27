@@ -287,7 +287,7 @@ public class RequestController {
 	
 	@RequestMapping(value="request/xml/searchById.do", produces="application/xml")
 	public @ResponseBody Request findRequestById(String id){
-		return null;
+		return rService.findRequestById(id);
 	}
 	
 }
