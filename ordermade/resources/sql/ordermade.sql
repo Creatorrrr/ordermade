@@ -104,7 +104,6 @@ CREATE TABLE portfolio (
 );
 
 CREATE TABLE tag (
-  id VARCHAR2(50) PRIMARY KEY,
   keyword VARCHAR2(200),
   score NUMBER,
   portfolio_id VARCHAR2(50)
