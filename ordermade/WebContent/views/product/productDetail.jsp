@@ -4,8 +4,25 @@
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 
 <%@ include file="/views/common/head.jsp"%>
+<html lang="ko">
+<head>
+
+<title>상품 상세페이지</title>
+<%@ include file="/views/common/head.jsp"%>
+
+<script type="text/javascript">
+
+var registContents = function () {
+	$.ajax({
+		url:"${pageContext.request.contextPath}/review/register.do"
+		,type:"post"
+		,data:{title:$("#title").val(),}
+	});
+}
 
 
+</script>
+</head>
 <div class="wrapper row3">
 	<div class="rounded">
 		<main class="container clear"> <!-- main body -->
@@ -96,26 +113,26 @@
 			<!--comment write  -->
 			<div id="comments">
 				<h2>후기 작성</h2>
-				<form action="#" method="post">
+				<form onsubmit="registContents(); return false;">
 					<div class="one_third first">
-						<label for="name">제목 <span>*</span></label> <input type="text"
-							name="name" id="name" value="" size="22">
+						<label for="title">제목 <span>*</span></label> <input type="text"
+							id="title" value="" size="22">
 					</div>
 					<div class="one_third">
-						<label for="email">비밀번호 <span>*</span></label> <input type="text"
-							name="email" id="email" value="" size="22">
+						<label for="password">비밀번호 <span>*</span></label> <input
+							type="text" id="cosumer.password" value="" size="22">
 					</div>
 					<div class="one_third">
-						<label for="url">평점<span>*</span></label> <input type="text"
-							name="url" id="url" value="" size="22">
+						<label for="grade">평점<span>*</span></label> <input type="text"
+							id="grade" value="" size="22">
 					</div>
 					<div class="block clear">
-						<label for="comment">후기</label>
-						<textarea name="comment" id="comment" cols="25" rows="10"></textarea>
+						<label for="content">후기</label>
+						<textarea id="content" placeholder="댓글쓰기" cols="25" rows="10"></textarea>
 					</div>
 					<div>
-						<input name="submit" type="submit" value="Submit">
-						&nbsp; <input name="reset" type="reset" value="Reset">
+						<input name="submit" type="submit" value="Submit"> &nbsp;
+						<input name="reset" type="reset" value="Reset">
 					</div>
 				</form>
 			</div>
@@ -131,8 +148,8 @@
 
 <%@ include file="/views/common/footer.jsp"%>
 <!-- JAVASCRIPTS -->
-<script src="../layout/scripts/jquery.min.js"></script>
-<script src="../layout/scripts/jquery.fitvids.min.js"></script>
-<script src="../layout/scripts/jquery.mobilemenu.js"></script>
+<script src="/layout/scripts/jquery.min.js"></script>
+<script src="/layout/scripts/jquery.fitvids.min.js"></script>
+<script src=/layout/scripts/jquery.mobilemenu.js"></script>
 </body>
 </html>
