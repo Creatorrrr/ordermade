@@ -68,31 +68,29 @@ public class RequestStoreLogicTest {
 	
 //	@Test  
 //	public void testDeleteRequestById() {
-//		
-//		Request rs = new Request();
 //		assertEquals(true,rStore.deleteRequestById("test"));
 //	}
 	
-	@Test		//ok
-	public void testSelectRequestById() {
-		
-		Request request = rStore.selectRequestById("test");
-		
-		System.out.println(request.toString());
-		
-//		System.out.println("Id : " + request.getId());
-//		System.out.println("Category : " + request.getCategory());
-//		System.out.println("Content : " + request.getContent());
-//		System.out.println("Bound : " + request.getBound());
-//		System.out.println("Hprice : " + request.getHopePrice());
-//		System.out.println("Price : " + request.getPrice());
-//		System.out.println("Title : " + request.getTitle());
-//		System.out.println("Mak : " + request.getMaker());
-//		System.out.println("Con : " + request.getConsumer());
-//		System.out.println("Comments : " + request.getComments());
-//		System.out.println("attachs : " + request.getAttachs());
-		assertEquals("test", request.getId());
-	}
+//	@Test		//ok
+//	public void testSelectRequestById() {
+//		
+//		Request request = rStore.selectRequestById("test");
+//		
+//		System.out.println(request.toString());
+//		
+////		System.out.println("Id : " + request.getId());
+////		System.out.println("Category : " + request.getCategory());
+////		System.out.println("Content : " + request.getContent());
+////		System.out.println("Bound : " + request.getBound());
+////		System.out.println("Hprice : " + request.getHopePrice());
+////		System.out.println("Price : " + request.getPrice());
+////		System.out.println("Title : " + request.getTitle());
+////		System.out.println("Mak : " + request.getMaker());
+////		System.out.println("Con : " + request.getConsumer());
+////		System.out.println("Comments : " + request.getComments());
+////		System.out.println("attachs : " + request.getAttachs());
+//		assertEquals("test", request.getId());
+//	}
 
 //	@Test		//ok
 //	public void testSelectRequestsByBound() {
