@@ -3,18 +3,15 @@ package ordermade.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.experimental.categories.Categories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import ordermade.domain.Categories;
 import ordermade.domain.Category;
 import ordermade.domain.Product;
-import ordermade.domain.Products;
-import ordermade.domain.PurchaseHistories;
-import ordermade.domain.PurchaseHistory;
 import ordermade.service.facade.ProductService;
 
 @Controller
@@ -42,8 +39,6 @@ public class MainController {
 	
 	@RequestMapping(value="xml/categoryList.do", produces="application/xml")
 	public Categories findAllCategories(){
-		List<Category> categories = pService.findAllCategory();
-	
-		return categories;
+		return new 	Categories(pService.findAllCategory());
 	}
 }
