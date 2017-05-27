@@ -25,15 +25,14 @@
   	</insert>
   	
   	<update id="updateCommentById" parameterType="Comment">
-  		UPDATE COMM
-  		SET content = #{content},
-  			time = #{time}
-  		WHERE member_id = #{member.id}
+  		UPDATE COMM 
+  		SET content = #{content}, member_id=#{member.id}, request_id=#{request.id}, time=TO_DATE(sysdate,'yyyy/mm/dd hh24:mi:ss')
+  		WHERE id = #{id}
   	</update>
 
   	<delete id="deleteCommentById" parameterType="String">
   		DELETE FROM COMM
-  		WHERE member_id = #{id}
+  		WHERE id = #{id}
   	</delete>
   	
   	<!-- 의뢰서에 관한 답변 10개씩 불러오기 -->
