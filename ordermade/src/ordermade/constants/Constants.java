@@ -19,5 +19,7 @@ public class Constants {
 	public static final String FORM_INVITE = "I";
 	public static final String PAYMENT_Y = "Y";
 	public static final String PAYMENT_N = "N";
+	public static final String CONSUMER = "C";
+	public static final String MAKER = "M";
 	
 }

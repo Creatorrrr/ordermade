@@ -242,36 +242,31 @@ public class RequestController {
 	}
 	
 	@RequestMapping(value="request/ui/detail.do",method=RequestMethod.GET)
-	public ModelAndView showDetailRequestUI(String id, String page){
-		List<Request> list = null;
-		String consumerId = "user1";
-		String type = "consumer";
-		
-		if(type == "consumer"){
-			list = service.findRequestsByConsumerId(consumerId, "1");
-		}else{
-			list = service.findRequestsByConsumerIdWithMaker(consumerId, "1");
-		}
-		
-		ModelAndView modelAndView = new ModelAndView("request/detail");
-		modelAndView.addObject("request", list);
-		return modelAndView;
+	public ModelAndView showDetailRequestUI(String id){
+		return new ModelAndView("request/detail")
+				.addObject("request", service.findRequestById(id));
 	}
 	
 	@RequestMapping(value="request/ui/inviteList.do",method=RequestMethod.GET)
-	public ModelAndView showInviteRequestListUI(String id, String page){
-		List<InviteRequest> list = null;
-
-		String form = "consumer";
-		if(form == "consumer"){
-			list = service.findInviteRequestsByConsumerId("user1", form, "1");
-		}else{
-			list = service.findInviteRequestsByMakerId("maker1", form, "1");
-		}
+	public ModelAndView showInviteRequestListUI(String page, HttpSession session){
+		String loginId = (String)session.getAttribute("loginId");
+		String memberType = (String)session.getAttribute("memberType");
 		
-		ModelAndView modelAndView = new ModelAndView("request/inviteList");
-		modelAndView.addObject("request", list);
-		return modelAndView;
+		if(memberType == Constants.MAKER) {
+			return new ModelAndView("request/inviteList")
+					.addObject("inviteRequests", 
+							service.findInviteRequestsByMakerId(
+									loginId, 
+									Constants.FORM_INVITE, 
+									page));
+		} else {
+			return new ModelAndView("request/inviteList")
+					.addObject("inviteRequests", 
+							service.findInviteRequestsByConsumerId(
+									loginId, 
+									Constants.FORM_REQUEST, 
+									page));
+		}
 	}
 	
 	
