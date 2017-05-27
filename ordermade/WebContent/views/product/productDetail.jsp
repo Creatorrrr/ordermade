@@ -11,16 +11,46 @@
 <%@ include file="/views/common/head.jsp"%>
 
 <script type="text/javascript">
-
-var registContents = function () {
-	$.ajax({
-		url:"${pageContext.request.contextPath}/review/register.do"
-		,type:"post"
-		,data:{title:$("#title").val(),}
-	});
-}
-
-
+	var registContents = function() {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/review/register.do",
+			type : "post",
+			data : {
+				title : $("#title").val(),
+				grade : $("#grade"),
+				content : $("#content")
+			},
+			success : displayContents,
+			error : errorCallback
+		});
+	};
+	var displayComment = function(resultData) {
+		var commentHtml = "";
+		$
+				.each(
+						resultData.comments,
+						function(index, comment) {alert("수행중 성공가 발생했습니다.");
+							commentHtml += '<table class="table" style="font-size:13px; padding:20px;">';
+							commentHtml += '<tr>';
+							commentHtml += '<td><strong>' + comment.authorName
+									+ '</strong></td>';
+							commentHtml += '<td class="text-right">'
+									+ comment.regDate;
+							commentHtml += '<a class="glyphicon glyphicon-trash" href="javascript:removeComment('
+									+ comment.commentId + ');"></a>';
+							commentHtml += '</td></tr>';
+							commentHtml += '<tr><td colspan="2">';
+							commentHtml += '<p class="txt">' + comment.comment
+									+ '</p>';
+							commentHtml += '</td></tr></table>';
+						});
+		$("#commenArea").empty();
+		$("#commenArea").append(commentHtml);
+		$("#comment").val("");
+	};
+	var errorCallback = function() {
+		alert("수행중 오류가 발생했습니다.");
+	}
 </script>
 </head>
 <div class="wrapper row3">
