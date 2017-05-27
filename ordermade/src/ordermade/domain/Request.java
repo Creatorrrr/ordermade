@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.stereotype.Component;
@@ -21,7 +22,9 @@ public class Request {
 	private String content;
 	private int hopePrice;
 	private int price;
+	@XmlElement(name="comment")
 	private List<Comment> comments;
+	@XmlElement(name="attach")
 	private List<Attach> attachs;
 	private String bound;
 	
@@ -91,12 +94,4 @@ public class Request {
 	public void setBound(String bound) {
 		this.bound = bound;
 	}
-	@Override
-	public String toString() {
-		return "Request [id=" + id + ", title=" + title + ", maker=" + maker + ", consumer=" + consumer + ", category="
-				+ category + ", content=" + content + ", hopePrice=" + hopePrice + ", price=" + price + ", comments="
-				+ comments + ", attachs=" + attachs + ", bound=" + bound + "]";
-	}
-	
-	
 }

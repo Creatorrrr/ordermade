@@ -1,6 +1,5 @@
 package ordermade.store.logic;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -81,19 +80,12 @@ public class InviteRequestStoreLogic implements InviteRequestStore {
 	}
 
 	@Override
-	public List<InviteRequest> selectInviteRequestsByMakerId(String makerId, String begin, String end) {
-
+	public List<InviteRequest> selectInviteRequestsByMakerId(String makerId, String form, String page) {
 		SqlSession session = factory.openSession();
 		List<InviteRequest> list = null;
-
-		HashMap<String, String> map = new HashMap();
-		map.put("makerId", makerId);
-		map.put("begin", begin);
-		map.put("end", end);
-
 		try {
 			InviteRequestMapper mapper = session.getMapper(InviteRequestMapper.class);
-			list = mapper.selectInviteRequestsByMakerId(map);
+			list = mapper.selectInviteRequestsByMakerId(makerId, form, page);
 		} finally {
 			session.close();
 		}
@@ -101,19 +93,12 @@ public class InviteRequestStoreLogic implements InviteRequestStore {
 	}
 
 	@Override
-	public List<InviteRequest> selectInviteRequestsByConsumerId(String consumerId, String begin, String end) {
-
+	public List<InviteRequest> selectInviteRequestsByConsumerId(String consumerId, String form, String page) {
 		SqlSession session = factory.openSession();
 		List<InviteRequest> list = null;
-
-		HashMap<String, String> map = new HashMap<>();
-		map.put("consumerId", consumerId);
-		map.put("begin", begin);
-		map.put("end", end);
-
 		try {
 			InviteRequestMapper mapper = session.getMapper(InviteRequestMapper.class);
-			list = mapper.selectInviteRequestsByConsumerId(map);
+			list = mapper.selectInviteRequestsByConsumerId(consumerId, form, page);
 		} finally {
 			session.close();
 		}

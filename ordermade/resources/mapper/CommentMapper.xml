@@ -37,7 +37,7 @@
   	</delete>
   	
   	<!-- 의뢰서에 관한 답변 10개씩 불러오기 -->
-  	<select id="selectCommentsByRequestId" resultType="Comment">
+  	<select id="selectCommentsByRequestId" resultMap="commentMap">
   		SELECT * FROM (
   			SELECT rownum limitNum, A.* FROM COMM A 
   			WHERE REQUEST_ID=#{requestId} 

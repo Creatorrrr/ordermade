@@ -9,22 +9,18 @@
 		<result property="form" column="form" />
 		<result property="requestTime" column="request_time"/>    
 		<association property="maker" column="maker_id"
-			select="store.mapper.MemberMapper.selectMemberById" javaType="Member"
+			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
 			jdbcType="VARCHAR" />
 		<association property="request" column="request_id"
-			select="store.mapper.RequestMapper.selectRequestById" javaType="Request"
+			select="ordermade.store.mapper.RequestMapper.selectRequestById" javaType="Request"
 			jdbcType="VARCHAR" />
 	</resultMap>
 	
-	<sql id="selectInviteRequest">
-		SELECT id, message, maker_id, request_time, request_id, form
-	</sql>
-	
-	<sql id="selectInviteRequestRownum">
-		SELECT rownum rnum, id, message, maker_id, request_time, request_id, form
-	</sql>
 	
 	<insert id="insertInviteRequest" parameterType="inviteRequest">
+		<selectKey resultType="String" keyProperty="id" order="BEFORE">
+  			select invite_request_seq.nextval from dual
+  		</selectKey>
 		INSERT INTO invite_request(id, message, maker_id, request_time, request_id, form)
 		VALUES (#{id},#{message},#{maker.id},TO_DATE(sysdate,'yyyy/mm/dd hh24:mi:ss'),#{request.id},#{form})
 	</insert>
@@ -38,21 +34,32 @@
 		DELETE FROM invite_request
 		WHERE request_id = #{request.id}
 	</delete>
+
+
+	
+		<sql id="selectInviteRequest">
+			SELECT id, message, maker_id, request_time, request_id, form
+		</sql>
+		
+		<sql id="selectInviteRequestRownum">
+			SELECT rownum rnum, id, message, maker_id, request_time, request_id, form
+		</sql>
+	
 	
 	 <select id="selectInviteRequestsByMakerId" parameterType="HashMap" resultMap="inviteRequestMap">
 		<include refid="selectInviteRequest"/>
 		FROM (<include refid="selectInviteRequestRownum"/>
 			 FROM invite_request 
-			 WHERE maker_Id = #{makerId})
-		WHERE rnum BETWEEN #{begin} AND #{end}
+			 WHERE maker_Id = #{makerId} AND form = #{form})
+		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE})
 	</select>
 	
 	<select id="selectInviteRequestsByConsumerId" parameterType="HashMap" resultMap="inviteRequestMap">
 		<include refid="selectInviteRequest"/>
 		FROM (SELECT rownum rnum, ir.id, ir.message, ir.maker_id, ir.request_time, ir.request_id, ir.form
-			 FROM invite_request ir INNER JOIN member m ON ir.consumer_id = m.id    <!--memberid? consumerid?  -->
-			 WHERE ir.consumerId = #{consumerId})
-		WHERE rnum BETWEEN #{begin} AND #{end}
+			 FROM invite_request ir INNER JOIN member m ON ir.consumer_id = m.id
+			 WHERE ir.consumerId = #{consumerId} AND ir.form = #{form})
+		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE})
 	</select> 
 </mapper>
   

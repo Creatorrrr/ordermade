@@ -23,7 +23,7 @@ import ordermade.service.facade.DealService;
 public class DealController {
 	
 	@Autowired
-	DealService dService;
+	private DealService dService;
 
 	// logic XML For WEB
 	

@@ -84,11 +84,4 @@ public class Member {
 		this.image = image;
 	}
 	
-	@Override
-	public String toString() {
-		return "Member [id=" + id + ", password=" + password + ", email=" + email + ", address=" + address
-				+ ", memberType=" + memberType + ", name=" + name + ", introduce=" + introduce + ", licenseNumber="
-				+ licenseNumber + ", image=" + image + "]";
-	}
-	
 }

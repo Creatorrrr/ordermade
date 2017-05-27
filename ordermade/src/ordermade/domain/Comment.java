@@ -2,11 +2,21 @@ package ordermade.domain;
 
 import java.sql.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.springframework.stereotype.Component;
+
+@XmlRootElement(name="comment")
+@XmlAccessorType(XmlAccessType.FIELD)
+@Component
 public class Comment {
 	private String id;
 	private String content;
 	private Member member;
-	private Request request;
+	@XmlTransient private Request request;
 	private Date time;
 	
 	public String getId() {
@@ -39,10 +49,4 @@ public class Comment {
 	public void setTime(Date time) {
 		this.time = time;
 	}
-	@Override
-	public String toString() {
-		return "Comment [id=" + id + ", content=" + content + ", member=" + member + ", request=" + request + ", time="
-				+ time + "]";
-	}
-	
 }

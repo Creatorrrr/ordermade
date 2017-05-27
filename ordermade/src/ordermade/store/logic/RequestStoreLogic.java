@@ -88,19 +88,20 @@ public class RequestStoreLogic implements RequestStore {
 		return request;
 	}
 
+	
+	
+	
+	
+	
+	
 	@Override
-	public List<Request> selectRequestsByBound(String bound, String begin, String end) {
+	public List<Request> selectRequestsByBound(String bound, String page) {
 		SqlSession session = factory.openSession();
 		List<Request> list = null;
 		
-		HashMap<String, String> map = new HashMap<>();
-		map.put("bound", bound);
-		map.put("begin", begin);
-		map.put("end", end);
-
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			list = mapper.selectRequestsByBound(map);
+			list = mapper.selectRequestsByBound(bound, page);
 		} finally {
 			session.close();
 		}
@@ -108,19 +109,14 @@ public class RequestStoreLogic implements RequestStore {
 	}
 
 	@Override
-	public List<Request> selectRequestsByBoundAndTitle(String bound, String title, String begin, String end) {
+	public List<Request> selectRequestsByBoundAndTitle(String bound, String title, String page) {
 		SqlSession session = factory.openSession();
 		List<Request> list = null;
 
-		HashMap<String, String> map = new HashMap<>();
-		map.put("bound", bound);
-		map.put("title", title);
-		map.put("begin", begin);
-		map.put("end", end);
-		
+
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			list = mapper.selectRequestsByBoundAndTitle(map);
+			list = mapper.selectRequestsByBoundAndTitle(bound, title, page);
 		} finally {
 			session.close();
 		}
@@ -128,19 +124,13 @@ public class RequestStoreLogic implements RequestStore {
 	}
 
 	@Override
-	public List<Request> selectRequestsByBoundAndContent(String bound, String content, String begin, String end) {
+	public List<Request> selectRequestsByBoundAndContent(String bound, String content, String page) {
 		SqlSession session = factory.openSession();
 		List<Request> list = null;
-		
-		HashMap<String, String> map = new HashMap<>();
-		map.put("bound", bound);
-		map.put("content", content);
-		map.put("begin", begin);
-		map.put("end", end);
 
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			list = mapper.selectRequestsByBoundAndContent(map);
+			list = mapper.selectRequestsByBoundAndContent(bound, content, page);
 		} finally {
 			session.close();
 		}
@@ -148,18 +138,13 @@ public class RequestStoreLogic implements RequestStore {
 	}
 
 	@Override
-	public List<Request> selectRequestsByConsumerId(String consumerId, String begin, String end) {
+	public List<Request> selectRequestsByConsumerId(String consumerId, String page) {
 		SqlSession session = factory.openSession();
 		List<Request> list = null;
-
-		HashMap<String, String> map = new HashMap<>();
-		map.put("consumerId", consumerId);
-		map.put("begin", begin);
-		map.put("end", end);
 		
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			list = mapper.selectRequestsByConsumerId(map);
+			list = mapper.selectRequestsByConsumerId(consumerId, page);
 		} finally {
 			session.close();
 		}
@@ -167,18 +152,13 @@ public class RequestStoreLogic implements RequestStore {
 	}
 
 	@Override
-	public List<Request> selectRequestsByConsumerIdWithMaker(String consumerId, String begin, String end) {
+	public List<Request> selectRequestsByConsumerIdWithMaker(String consumerId, String page) {
 		SqlSession session = factory.openSession();
 		List<Request> list = null;
-		
-		HashMap<String, String> map = new HashMap<>();
-		map.put("consumerId", consumerId);
-		map.put("begin", begin);
-		map.put("end", end);
 
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			list = mapper.selectRequestsByConsumerIdWithMaker(map);
+			list = mapper.selectRequestsByConsumerIdWithMaker(consumerId, page);
 		} finally {
 			session.close();
 		}
@@ -186,22 +166,19 @@ public class RequestStoreLogic implements RequestStore {
 	}
 
 	@Override
-	public List<Request> selectRequestsByConsumerIdWithPayment(String consumerId, String begin, String end) {
+	public List<Request> selectRequestsByConsumerIdWithPayment(String consumerId, String page) {
 		SqlSession session = factory.openSession();
 		List<Request> list = null;
 		
-		HashMap<String, String> map = new HashMap<>();
-		map.put("consumerId", consumerId);
-		map.put("begin", begin);
-		map.put("end", end);
-
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			list = mapper.selectRequestsByConsumerIdWithPayment(map);
+			list = mapper.selectRequestsByConsumerIdWithPayment(consumerId, page);
 		} finally {
 			session.close();
 		}
 		return list;
 	}
 
+
+	
 }

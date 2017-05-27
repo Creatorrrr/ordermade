@@ -22,6 +22,7 @@ import ordermade.service.facade.MemberService;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
+	
 	@Autowired
 	MemberService service;
 
@@ -88,7 +89,7 @@ public class MemberController {
 	@RequestMapping("/login") // end
 	public String showLoginUI() {
 		// 로그인 login.jsp화면으로 이동
-		return "index";
+		return "login";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST) // end
@@ -104,10 +105,8 @@ public class MemberController {
 
 			HttpSession session = req.getSession();
 			session.setAttribute("loginId", member.getId());
-
-			// 여기는 임의로 index2.jsp로
-			// 보냄******************************************************************
 			return "index";
+			
 		} else {
 			return "login";
 		}
@@ -143,7 +142,7 @@ public class MemberController {
 
 		// 여기는 임의로 memberRegister.jsp로
 		// 보냄******************************************************************
-		ModelAndView modelAndView = new ModelAndView("memberRegister");
+		ModelAndView modelAndView = new ModelAndView("memberModify");
 		modelAndView.addObject("member", member);
 
 		return modelAndView;

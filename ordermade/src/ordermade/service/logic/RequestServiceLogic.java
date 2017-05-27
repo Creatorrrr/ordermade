@@ -50,56 +50,32 @@ public class RequestServiceLogic implements RequestService{
 
 	@Override
 	public List<Request> findRequestByBound(String bound, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return rStore.selectRequestsByBound(bound, begin, end);
+		return rStore.selectRequestsByBound(bound, page);
 	}
 
 	@Override
 	public List<Request> findRequestByBoundAndTitle(String bound, String title, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return rStore.selectRequestsByBoundAndTitle(bound, title, begin, end);
+		return rStore.selectRequestsByBoundAndTitle(bound, title, page);
 	}
 
 	@Override
 	public List<Request> findRequestByBoundAndContent(String bound, String content, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return rStore.selectRequestsByBoundAndContent(bound, content, begin, end);
+		return rStore.selectRequestsByBoundAndContent(bound, content, page);
 	}
 
 	@Override
 	public List<Request> findRequestByConsumerId(String consumerId, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return rStore.selectRequestsByConsumerId(consumerId, begin, end);
+		return rStore.selectRequestsByConsumerId(consumerId, page);
 	}
 
 	@Override
 	public List<Request> findRequestsByConsumerIdWithMaker(String consumerId, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return rStore.selectRequestsByConsumerIdWithMaker(consumerId, begin, end);
+		return rStore.selectRequestsByConsumerIdWithMaker(consumerId, page);
 	}
 
 	@Override
-	public List<Request> findRequestByConsumerIdWithPayment(String consumerId, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return rStore.selectRequestsByConsumerIdWithPayment(consumerId, begin, end);
+	public List<Request> findRequestsByConsumerIdWithPayment(String consumerId, String page) {
+		return rStore.selectRequestsByConsumerIdWithPayment(consumerId, page);
 	}
 
 	@Override
@@ -118,21 +94,13 @@ public class RequestServiceLogic implements RequestService{
 	}
 
 	@Override
-	public List<InviteRequest> findInviteRequestsByMakerId(String makerId, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return irStore.selectInviteRequestsByMakerId(makerId, begin, end);
+	public List<InviteRequest> findInviteRequestsByMakerId(String makerId, String form, String page) {
+		return irStore.selectInviteRequestsByMakerId(makerId, form, page);
 	}
 
 	@Override
-	public List<InviteRequest> findInviteRequestsByConsumerId(String consumerId, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
-		return irStore.selectInviteRequestsByConsumerId(consumerId, begin, end);
+	public List<InviteRequest> findInviteRequestsByConsumerId(String consumerId, String form, String page) {
+		return irStore.selectInviteRequestsByConsumerId(consumerId, form, page);
 	}
 
 	@Override
@@ -152,10 +120,6 @@ public class RequestServiceLogic implements RequestService{
 
 	@Override
 	public List<Comment> findCommentsByRequestId(String requestId,String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
 		return cStore.selectCommentsByRequestId(requestId, page);
 	}
 
@@ -171,19 +135,11 @@ public class RequestServiceLogic implements RequestService{
 
 	@Override
 	public List<Attach> findAllAttachsByRequestId(String requestId, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
 		return aStore.selectAllAttachsByRequestId(requestId, page);
 	}
 
 	@Override
 	public List<Attach> findAttachsByFileNameAndRequestId(String fileName, String requestId, String page) {
-		
-		String begin = (Integer.parseInt(page) - 1) * Constants.POST_ROW_SIZE + 1 + "";
-		String end = Integer.parseInt(page) * Constants.POST_ROW_SIZE + "";
-		
 		return aStore.selectAttachsByFileNameAndRequestId(fileName, requestId, page);
 	}
 
