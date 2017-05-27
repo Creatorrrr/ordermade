@@ -218,31 +218,15 @@ public class RequestController {
 	}
 	
 	@RequestMapping(value="request/ui/modify.do",method=RequestMethod.GET)
-	public ModelAndView showEditRequestUI(String requestId,HttpSession session){
-		List<Request> list = null;
-		String consumerId = "user1";
-
-		Request request = service.findRequestById(requestId);
-		ModelAndView modelAndView = new ModelAndView("request/modify");
-		modelAndView.addObject("request", request);
-		return modelAndView;
+	public ModelAndView showEditRequestUI(String requestId, HttpSession session){
+//		if(checkLogined(session)) return new ModelAndView("member/login");	// check logined
+		return new ModelAndView("request/modify")
+				.addObject("request", service.findRequestById(requestId));
 	}
 	
 	@RequestMapping(value="request/ui/search.do",method=RequestMethod.GET)
-	public ModelAndView showSearchRequestUI(){
-		List<Request> list = null;
-		String consumerId = "user1";
-		String type = "consumer";
-		
-		if(type == "consumer"){
-			list = service.findRequestsByConsumerId(consumerId, "1");
-		}else{
-			list = service.findRequestsByConsumerIdWithMaker(consumerId, "1");
-		}
-		
-		ModelAndView modelAndView = new ModelAndView("request/search");
-		modelAndView.addObject("request", list);
-		return modelAndView;
+	public String showSearchRequestUI(){
+		return "request/makerRequestSearch";
 	}
 	
 	@RequestMapping(value="request/ui/detail.do",method=RequestMethod.GET)
@@ -337,5 +321,10 @@ public class RequestController {
 	@RequestMapping(value="request/xml/searchById.do", produces="application/xml")
 	public @ResponseBody Request findRequestById(String id){
 		return service.findRequestById(id);
+	}
+	
+	private boolean checkLogined(HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		return loginId == null || loginId.isEmpty();
 	}
 }

@@ -27,7 +27,7 @@
 									<select name="type" id="type" class="form-control">
 										<option value="id">제목</option>
 										<option value="name">내용</option>
-									</select> <input input name="search" class="search-box-input"
+									</select> <input name="search" class="search-box-input"
 										type="text" value="" placeholder="Search Here" />
 									<button class="fa fa-search" type="submit" title="Search">
 										<em>Search</em>

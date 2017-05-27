@@ -15,7 +15,7 @@
 		<association property="maker" column="maker_id"
 			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
 			jdbcType="VARCHAR" />
-		<association property="consumer" column=" consumer_id"
+		<association property="consumer" column="consumer_id"
 			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
 			jdbcType="VARCHAR" /> 
 		<collection property="comments" column="id"

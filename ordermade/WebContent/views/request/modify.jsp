@@ -14,7 +14,7 @@
 		<div id="content" class="two_third">
 			<h1>의뢰서 등록 페이지</h1>
 			<br>
-			<form action="${ctx }//register.do" method="post" name=""
+			<form action="${ctx }/request/xml/modify.do" method="post" name=""
 				onsubmit="return checkIt()">
 				<input name="" type="hidden" value="${categoryId }">
 				<table class="table">
@@ -30,13 +30,19 @@
 					</tr>
 					<tr>
 						<th>의뢰 제목</th>
-						<td><input id="requestTitle" name="productTitle"
-							class="form-control" type="text" value=""></td>
+						<td>
+							<input id="requestTitle" name="productTitle"
+							class="form-control" type="text" value="${request.title }">
+						</td>
 					<tr>
 					<tr>
 						<th>의뢰 상세 내용</th>
-						<td><textarea id="requestContent" name="productContent"
-								class="form-control" rows="7"></textarea>
+						<td>
+							<textarea id="requestContent" name="productContent"
+								class="form-control" rows="7">
+								${request.content }
+							</textarea>
+						</td>
 					</tr>
 					<tr>
 						<th>참고 이미지</th>
