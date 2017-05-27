@@ -249,7 +249,7 @@ public class RequestController {
 	
 	@RequestMapping(value="request/ui/makerInviteList.do",method=RequestMethod.GET)
 	public ModelAndView showMakerInviteRequestListUI(String page, HttpSession session){
-		return new ModelAndView("request/inviteList")
+		return new ModelAndView("request/makerInviteList")
 				.addObject("inviteRequests", 
 						service.findInviteRequestsByMakerId(
 								(String)session.getAttribute("loginId"), 
@@ -259,7 +259,7 @@ public class RequestController {
 	
 	@RequestMapping(value="request/ui/consumerInviteList.do",method=RequestMethod.GET)
 	public ModelAndView showConsumerInviteRequestListUI(String page, HttpSession session){
-		return new ModelAndView("request/inviteList")
+		return new ModelAndView("request/consumerInviteList")
 				.addObject("inviteRequests", 
 						service.findInviteRequestsByConsumerId(
 								(String)session.getAttribute("loginId"), 
