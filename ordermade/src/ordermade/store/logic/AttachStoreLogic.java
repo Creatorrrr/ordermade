@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Repository;
 
 import ordermade.domain.Attach;
@@ -13,15 +14,15 @@ import ordermade.store.mapper.AttachMapper;
 @Repository
 public class AttachStoreLogic implements AttachStore{
 	
-	private SqlSession session;
+	private SqlSessionFactory factory;
 	
 	public AttachStoreLogic() {
-		session = SqlSessionFactoryProvider.getSqlSessionFactory().openSession();
+		factory = SqlSessionFactoryProvider.getSqlSessionFactory();
 	}
 
 	@Override
 	public boolean insertAttach(Attach attach) {
-		
+		SqlSession session = factory.openSession();
 		boolean check = false;
 		
 		try {
@@ -37,6 +38,7 @@ public class AttachStoreLogic implements AttachStore{
 
 	@Override
 	public boolean deleteAttachById(String id) {
+		SqlSession session = factory.openSession();
 		boolean check = false;
 		try {
 			AttachMapper mapper = session.getMapper(AttachMapper.class);
@@ -50,6 +52,7 @@ public class AttachStoreLogic implements AttachStore{
 
 	@Override
 	public List<Attach> selectAllAttachsByRequestId(String requestId, String page) {
+		SqlSession session = factory.openSession();
 		List<Attach> attachList = new ArrayList<>();
 		try {
 			AttachMapper mapper = session.getMapper(AttachMapper.class);
@@ -62,6 +65,7 @@ public class AttachStoreLogic implements AttachStore{
 
 	@Override
 	public List<Attach> selectAttachsByFileNameAndRequestId(String fileName, String requestId, String page) {
+		SqlSession session = factory.openSession();
 		List<Attach> attachList = new ArrayList<>();
 		try {
 			AttachMapper mapper = session.getMapper(AttachMapper.class);
