@@ -247,30 +247,25 @@ public class RequestController {
 				.addObject("request", service.findRequestById(id));
 	}
 	
-	@RequestMapping(value="request/ui/inviteList.do",method=RequestMethod.GET)
-	public ModelAndView showInviteRequestListUI(String page, HttpSession session){
-		String loginId = (String)session.getAttribute("loginId");
-		String memberType = (String)session.getAttribute("memberType");
-		
-		if(memberType == Constants.MAKER) {
-			return new ModelAndView("request/inviteList")
-					.addObject("inviteRequests", 
-							service.findInviteRequestsByMakerId(
-									loginId, 
-									Constants.FORM_INVITE, 
-									page));
-		} else {
-			return new ModelAndView("request/inviteList")
-					.addObject("inviteRequests", 
-							service.findInviteRequestsByConsumerId(
-									loginId, 
-									Constants.FORM_REQUEST, 
-									page));
-		}
+	@RequestMapping(value="request/ui/makerInviteList.do",method=RequestMethod.GET)
+	public ModelAndView showMakerInviteRequestListUI(String page, HttpSession session){
+		return new ModelAndView("request/inviteList")
+				.addObject("inviteRequests", 
+						service.findInviteRequestsByMakerId(
+								(String)session.getAttribute("loginId"), 
+								Constants.FORM_INVITE, 
+								page));
 	}
 	
-	
-	
+	@RequestMapping(value="request/ui/consumerInviteList.do",method=RequestMethod.GET)
+	public ModelAndView showConsumerInviteRequestListUI(String page, HttpSession session){
+		return new ModelAndView("request/inviteList")
+				.addObject("inviteRequests", 
+						service.findInviteRequestsByConsumerId(
+								(String)session.getAttribute("loginId"), 
+								Constants.FORM_REQUEST, 
+								page));
+	}
 	
 	//==================mobile -> xml
 	
