@@ -92,7 +92,7 @@
 			 FROM request 
 			 WHERE consumer_id = #{consumerId} 
 			 ORDER BY id DESC)       
-		WHERE rnum BETWEEN #{begin} AND #{end}
+		WHERE rnum BETWEEN ((#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>
 			
 	<select id="selectRequestsByConsumerIdWithMaker" parameterType="HashMap" resultMap="requestMap">
@@ -100,15 +100,15 @@
 		FROM (<include refid="selectRequestRownum"/>
 		 	FROM request 
 		 	WHERE consumer_id = #{consumerId} AND maker_id IS NOT NULL)        
-		WHERE rnum BETWEEN #{begin} AND #{end}
+		WHERE rnum BETWEEN ((#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>		
 	
 	<select id="selectRequestsByConsumerIdWithPayment" parameterType="HashMap" resultMap="requestMap">
 		<include refid="selectRequest"/>
 		FROM (SELECT rownum rnum, r.id, r.title, r.maker_id, r.consumer_id, r.type, r.content, r.hope_price, r.price, r.bound
 		 	FROM request r INNER JOIN  purchase_history ph ON r.consumer_id = ph.consumer_id
-			WHERE r.consumer_id = #{consumerId})   
-		WHERE rnum BETWEEN #{begin} AND #{end}
+			WHERE r.consumer_id = #{consumerId} AND ph.payment = '${@ordermade.constants.Constants@PAYMENT_Y}') 
+		WHERE rnum BETWEEN ((#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>
 	
 </mapper>

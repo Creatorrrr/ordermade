@@ -195,21 +195,21 @@ public class RequestController {
 	@RequestMapping(value="request/xml/searchMyRequests.do", produces="application/xml")
 	public @ResponseBody Requests findMyRequests(String page, HttpSession session){
 		return new Requests(rService.findRequestByConsumerId(
-				(String)session.getAttribute("loginId"), 
+				/*(String)session.getAttribute("loginId")*/"5", 
 				page));
 	}
 
 	@RequestMapping(value="request/xml/searchMyRequestsWithMaker.do", produces="application/xml")
 	public @ResponseBody Requests findMyRequestsWithMaker(String page, HttpSession session){
 		return new Requests(rService.findRequestsByConsumerIdWithMaker(
-				(String)session.getAttribute("loginId"), 
+				/*(String)session.getAttribute("loginId")*/"5", 
 				page));
 	}
 	
 	@RequestMapping(value="request/xml/searchMyRequestsWithPayment.do", produces="application/xml")
 	public @ResponseBody Requests findMyRequestsWithPayment(String page, HttpSession session){
 		return new Requests(rService.findRequestsByConsumerIdWithPayment(
-				(String)session.getAttribute("loginId"), 
+				/*(String)session.getAttribute("loginId")*/"5", 
 				page));
 	}
 	
