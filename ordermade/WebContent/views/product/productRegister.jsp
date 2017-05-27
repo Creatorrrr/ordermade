@@ -23,8 +23,8 @@
 					<tr>
 						<th>제작 항목</th>
 						<td><select id="type" class="form-control">
-								<c:forEach items=${categorys } var="category">
-									<option value="${category.type }">${category.type }</option>
+								<c:forEach items="${categorys }" var="category">
+									<option value="${category.type }"></option>
 								</c:forEach>
 						</select></td>
 					</tr>
