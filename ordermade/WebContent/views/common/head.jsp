@@ -9,8 +9,14 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link href="${ctx }/views/layout/styles/layout.css" rel="stylesheet" type="text/css"
-	media="all">
+<link href="${ctx }/views/layout/styles/layout.css" rel="stylesheet"
+	type="text/css" media="all">
+<script src="${ctx }/views/js/jquery-2.1.3.js"></script>
+<script src="${ctx }/views/js/jquery.blockUI.js"></script>
+<script src="${ctx }/views/layout/scripts/jquery.min.js"></script>
+<script src="${ctx }/views/layout/scripts/jquery.fitvids.min.js"></script>
+<script src="${ctx }/views/layout/scripts/jquery.mobilemenu.js"></script>
+
 </head>
 <body id="top">
 	<div class="wrapper row0">
@@ -21,7 +27,8 @@
 						<c:when test="${loginId eq null }">
 							<ul>
 								<li><a id="loginBtn" href="${ctx }/views/login.jsp">Login</a></li>
-								<li><a href="${ctx }/views/memberRegister.jsp" class="btn btn-success">Sign up</a></li>
+								<li><a href="${ctx }/views/memberRegister.jsp"
+									class="btn btn-success">Sign up</a></li>
 							</ul>
 						</c:when>
 						<c:otherwise>
@@ -45,7 +52,9 @@
 		<header id="header" class="clear">
 			<div id="logo" class="fl_left">
 				<h1>
-					<a href="${ctx }/views/index.jsp"><img src="${ctx }/views/images/panda4.jpg" style="width:100px;height:100px"> 판다</a>
+					<a href="${ctx }/views/index.jsp"><img
+						src="${ctx }/views/images/panda4.jpg"
+						style="width: 100px; height: 100px"> 판다</a>
 				</h1>
 				<p>다 판다</p>
 				<p>없으면 만들어서 판다</p>

@@ -3,22 +3,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 
-<%@ include file="/views/common/head.jsp"%>
 <html lang="ko">
+<%@ include file="/views/common/head.jsp"%>
+
 <head>
 
 <title>상품 상세페이지</title>
-<%@ include file="/views/common/head.jsp"%>
 
 <script type="text/javascript">
 	var registContents = function() {
 		$.ajax({
-			url : "${pageContext.request.contextPath}/review/register.do",
+			url : "${ctx}/product/review/register.do",
 			type : "post",
 			data : {
 				title : $("#title").val(),
-				grade : $("#grade"),
-				content : $("#content")
+				grade : $("#grade").val(),
+				content : $("#content").val()
 			},
 			success : displayContents,
 			error : errorCallback
@@ -29,7 +29,8 @@
 		$
 				.each(
 						resultData.comments,
-						function(index, comment) {alert("수행중 성공가 발생했습니다.");
+						function(index, comment) {
+							alert("수행중 성공가 발생했습니다.");
 							commentHtml += '<table class="table" style="font-size:13px; padding:20px;">';
 							commentHtml += '<tr>';
 							commentHtml += '<td><strong>' + comment.authorName
@@ -70,8 +71,9 @@
 					</div>
 				</c:if>
 			</c:if>
-			<br> <img class="imgr borderedbox"
-				src="images/demo/slider/pp.jpg" alt="">
+			<br>
+			<!-- <img class="imgr borderedbox"
+				src="images/demo/slider/pp.jpg" alt=""> -->
 			<p>Aliquatjusto quisque nam consequat doloreet vest orna partur
 				scetur portortis nam. Metadipiscing eget facilis elit sagittis
 				felisi eger id justo maurisus convallicitur.</p>
@@ -178,8 +180,5 @@
 
 <%@ include file="/views/common/footer.jsp"%>
 <!-- JAVASCRIPTS -->
-<script src="/layout/scripts/jquery.min.js"></script>
-<script src="/layout/scripts/jquery.fitvids.min.js"></script>
-<script src=/layout/scripts/jquery.mobilemenu.js"></script>
 </body>
 </html>
