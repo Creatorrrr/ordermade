@@ -65,9 +65,12 @@ public class RequestController {
 	@RequestMapping(value = "request/xml/modifyBound.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyRequestBound(Request request, HttpSession session) {
 		// String loginId=(String)session.getAttribute("loginId");
-		System.out.println(request.toString());
 		if(request.getId()==null) return "error";
-		boolean check = service.modifyRequestById(request);
+		Request requestOK= service.findRequestById(request.getId());
+//		System.out.println(request.getBound());
+		System.out.println(requestOK.toString());
+		requestOK.setBound(request.getBound());
+		boolean check = service.modifyRequestById(requestOK);
 		return check+"";
 	}
 
@@ -101,6 +104,7 @@ public class RequestController {
 		// String loginId=(String)session.getAttribute("loginId");
 		if(request.getId() == null ) return "error";
 		Request requestOK= service.findRequestById(request.getId());
+		System.out.println(request.getPrice());
 		requestOK.setPrice(request.getPrice());
 		boolean check = service.modifyRequestById(requestOK);
 		return check+"";
@@ -197,6 +201,9 @@ public class RequestController {
 
 	@RequestMapping(value = "request/ui/register1_1.do", method = RequestMethod.GET)
 	public String showRegisterRequestUIForOneToOne() {
+		
+		//-----상품페이지에서 데이터를 받아와야 함.
+		
 		return "request/register1_1";
 	}	//GET http://localhost:8080/ordermade/request/ui/register1_1.do
 	

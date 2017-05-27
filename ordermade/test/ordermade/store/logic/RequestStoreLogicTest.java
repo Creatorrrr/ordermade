@@ -74,28 +74,28 @@ public class RequestStoreLogicTest {
 //	@Test		//ok
 //	public void testSelectRequestById() {
 //		
-//		Request request = rStore.selectRequestById("test");
+//		Request request = rStore.selectRequestById("1");
 //		
-//		System.out.println(request.toString());
+//		//System.out.println(request.toString());
 //		
-////		System.out.println("Id : " + request.getId());
-////		System.out.println("Category : " + request.getCategory());
-////		System.out.println("Content : " + request.getContent());
-////		System.out.println("Bound : " + request.getBound());
-////		System.out.println("Hprice : " + request.getHopePrice());
-////		System.out.println("Price : " + request.getPrice());
-////		System.out.println("Title : " + request.getTitle());
-////		System.out.println("Mak : " + request.getMaker());
-////		System.out.println("Con : " + request.getConsumer());
-////		System.out.println("Comments : " + request.getComments());
-////		System.out.println("attachs : " + request.getAttachs());
-//		assertEquals("test", request.getId());
+//		System.out.println("Id : " + request.getId());
+//		System.out.println("Category : " + request.getCategory());
+//		System.out.println("Content : " + request.getContent());
+//		System.out.println("Bound : " + request.getBound());
+//		System.out.println("Hprice : " + request.getHopePrice());
+//		System.out.println("Price : " + request.getPrice());
+//		System.out.println("Title : " + request.getTitle());
+//		System.out.println("Mak : " + request.getMaker());
+//		System.out.println("Con : " + request.getConsumer());
+//		System.out.println("Comments : " + request.getComments());
+//		System.out.println("attachs : " + request.getAttachs());
+//		//assertEquals("test", request.getId());
 //	}
 
 //	@Test		//ok
 //	public void testSelectRequestsByBound() {
 //		
-//		List<Request> list = rStore.selectRequestsByBound("1", "1", "2");
+//		List<Request> list = rStore.selectRequestsByBound("open", "1");
 //		
 //		System.out.println(list.size());
 //		assertEquals(1, list.size());
@@ -105,44 +105,41 @@ public class RequestStoreLogicTest {
 //	@Test 	//ok
 //	public void testSelectRequestsByBoundAndTitle() {
 //		
-//		List<Request> list = rStore.selectRequestsByBoundAndTitle("1","의뢰서", "1", "2");
+//		List<Request> list = rStore.selectRequestsByBoundAndTitle("open","aa", "1");
 //		System.out.println(list.size());
-//		assertEquals(1, list.size());
+//		//assertEquals(1, list.size());
 //
 //	}
 
 //	@Test		//ok
 //	public void testSelectRequestsByBoundAndContent() {
 //		
-//		List<Request> list = rStore.selectRequestsByBoundAndContent("1","012345", "1", "2");
+//		List<Request> list = rStore.selectRequestsByBoundAndContent("open","a", "1");
 //		System.out.println(list.size());
-//		assertEquals(1, list.size());
+//		//assertEquals(1, list.size());
 //	}
 	
 //	@Test 		//ok
 //	public void testSelectRequestsByConsumerId() {
 //		
-//		List<Request> list = rStore.selectRequestsByConsumerId("test", "1", "2");
+//		List<Request> list = rStore.selectRequestsByConsumerId("user1", "1");
 //		System.out.println(list.size());
-//		assertEquals(0, list.size());
+//		//assertEquals(0, list.size());
 //	}
 	
 //	@Test		//ok
 //	public void testSelectRequestsByConsumerIdWithMaker() {
 //		
-//		List<Request> list = rStore.selectRequestsByConsumerIdWithMaker("test", "1", "2");
-//	//	Request r = list.get(0);//list.get(0).
+//		List<Request> list = rStore.selectRequestsByConsumerIdWithMaker("user1", "1");
 //		System.out.println(list.size());
-//		//System.out.println("1111"+r.getMaker().getId());
-//		//System.out.println("aaaa"+r.getContent());
-//		assertEquals(0, list.size());
+//		//assertEquals(0, list.size());
 //	}
 
 //	@Test		//ok
 //	public void testSelectRequestsByConsumerIdWithPayment() {
 //		
-//		List<Request> list = rStore.selectRequestsByConsumerIdWithPayment("test", "1", "2");
+//		List<Request> list = rStore.selectRequestsByConsumerIdWithPayment("user1", "1");
 //		System.out.println(list.size());
-//		assertEquals(0, list.size());
+//		//assertEquals(0, list.size());
 //	}
 }

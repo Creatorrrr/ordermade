@@ -15,7 +15,7 @@
 		<association property="maker" column="maker_id"
 			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
 			jdbcType="VARCHAR" />
-		<association property="consumer" column=" consumer_id"
+		<association property="consumer" column="consumer_id"
 			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
 			jdbcType="VARCHAR" /> 
 		<collection property="comments" column="id"
@@ -48,13 +48,13 @@
 	</delete>
 
 
-	<sql id="selectRequest">
-		SELECT id, title, maker_id, consumer_id, type, content, hope_price, price, bound
-	</sql>
-
-	<sql id="selectRequestRownum">
-		SELECT rownum rnum, id, title, maker_id, consumer_id, type, content, hope_price, price, bound
-	</sql>
+		<sql id="selectRequest">
+			SELECT id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+		</sql>
+	
+		<sql id="selectRequestRownum">
+			SELECT rownum rnum, id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+		</sql>
 
 
 	<select id="selectRequestById" parameterType="String" resultMap="requestMap">
@@ -66,8 +66,8 @@
 	<select id="selectRequestsByBound" parameterType="HashMap" resultMap="requestMap">
 		select * from (
 			select rownum limitNum, A.* from request A where bound = #{bound}
-			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE}) order by A.id desc
-		) where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE})
+			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) order by A.id desc
+		) where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>
 
 	<select id="selectRequestsByBoundAndTitle" parameterType="HashMap" resultMap="requestMap">
@@ -75,7 +75,7 @@
 		FROM (<include refid="selectRequestRownum"/>
 		 	FROM request 
 		 	WHERE bound = #{bound} AND title LIKE '%${title}%')       
-		WHERE rnum BETWEEN #{begin} AND #{end} 
+		WHERE rnum BETWEEN (#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE} AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>
 	
 	<select id="selectRequestsByBoundAndContent" parameterType="HashMap" resultMap="requestMap">
@@ -83,7 +83,7 @@
 		FROM (<include refid="selectRequestRownum"/>
 			 FROM request 
 			 WHERE bound = #{bound} AND content LIKE '%${content}%')        <!-- '%${value}%' -->
-		WHERE rnum BETWEEN #{begin} AND #{end}
+		WHERE rnum BETWEEN (#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE} AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>	
 		
 	<select id="selectRequestsByConsumerId" parameterType="HashMap" resultMap="requestMap">
