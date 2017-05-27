@@ -2,17 +2,16 @@ package ordermade.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -22,12 +21,11 @@ import ordermade.domain.Member;
 import ordermade.domain.Product;
 import ordermade.domain.Products;
 import ordermade.domain.Review;
-import ordermade.domain.Reviews;
 import ordermade.service.facade.MemberService;
 import ordermade.service.facade.ProductService;
 
 @Controller
-@RequestMapping("product")
+@RequestMapping("/product")
 public class ProductController {
 
 	@Autowired
@@ -35,7 +33,7 @@ public class ProductController {
 	@Autowired
 	private MemberService Mservice;
 
-	@RequestMapping(value = "/product/register", method = RequestMethod.POST)
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String registerProduct(Product product, HttpServletRequest req) {
 		// 상품 등록후 상세 상품페이지로 이동
 
@@ -86,7 +84,7 @@ public class ProductController {
 
 	}
 
-	@RequestMapping(value = "/product/modify", method = RequestMethod.POST)
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String modifyProductById(Product product, HttpServletRequest req) {
 		// 상품 수정 후 상세 상품페이지로 이동
 
@@ -136,7 +134,7 @@ public class ProductController {
 		}
 	}
 
-	@RequestMapping("/product/remove")
+	@RequestMapping("/remove")
 	public String removeProductById(@RequestParam("productId") String id, HttpServletRequest req) {
 		// 상품페이지 삭제후 상품페이지 목록으로 이동
 		if (!Pservice.removeProductById(id)) {
@@ -183,92 +181,147 @@ public class ProductController {
 		} else {
 			return "false";
 		}
-		
+
 	}
 
-//	public String removeReviewById(String id, HttpServletRequest req) {
-//
-//	}
-//
-//	// ***********************************************************************************
-//	// Product start
-//	public Product findProductById(String id) {
-//
-//	}
-//
-//	public Products findMyProducts(String page, HttpServletRequest req) {
-//
-//	}
-//
-//	public Products findProductsByCategory(String page, String category) {
-//
-//	}
-//
-//	// main start
-//
-//	public Products findProductsByCategoryOrderByHitsForMain(String page, String hits) {
-//
-//	}
-//
-//	public Products findProductsByCategoryOrderByIdForMain(String page, String hits) {
-//
-//	}
-//
-//	// main end
-//
-//	public Products findProductsByCategoryAndImage(String category, String image, HttpServletRequest req) {
-//
-//	}
-//
-//	public Products findProductsByCategoryAndTitle(String page, String category, String title) {
-//
-//	}
-//
-//	public Products findProductsByCategoryAndMakerName(String page, String category, String makerName) {
-//
-//	}
-//
-//	public Products findProductsByMakerIdAndTitle(String page, String title, String makerId) {
-//
-//	}
+	@RequestMapping(value = "/review/remove", produces = "text/plain")
+	public @ResponseBody String removeReviewById(@RequestParam("productId") String id, HttpServletRequest req) {
+		// Ajax 리뷰 삭제후 화면유지
+		if (!Pservice.removeReviewById(id)) {
+			return "true";
+		} else {
+			return "false";
+		}
+	}
+
+	// ***********************************************************************************
+	// Product start
+
+	// main start
+	@RequestMapping(value = "/main/category/hit", produces = "text/plain")
+	public @ResponseBody Products findProductsByCategoryOrderByHitsForMain(String category, String page) {
+		// Ajax 메인화면에서 히트 상품 종류 나옴
+		List<Product> hitProducts = Pservice.findProductsByCategoryOrderByHitsForMain(category, page);
+
+		Products products = new Products();
+		products.setProducts(hitProducts);
+
+		return products;
+
+	}
+
+	@RequestMapping(value = "/main/category/id", produces = "text/plain")
+	public @ResponseBody Products findProductsByCategoryOrderByIdForMain(String category, String page) {
+		// Ajax 메인화면에서 히트 상품 종류 나옴
+		List<Product> idProducts = Pservice.findProductsByCategoryOrderByIdForMain(category, page);
+
+		Products products = new Products();
+		products.setProducts(idProducts);
+
+		return products;
+	}
+
+	// main end
+
+	@RequestMapping(value = "/ajax/product/id", produces = "text/plain")
+	public @ResponseBody Product findProductById(String productId) {
+		// Ajax 생산품 id 검색으로 생산품 출력
+		Product product = Pservice.findProductById(productId);
+
+		return product;
+	}
+
+	@RequestMapping(value = "/ajax/products", produces = "text/plain")
+	public @Re Products findMyProducts(String page, HttpServletRequest req) {
+		// Ajax 나의 생산품들 전체 출력
+		String makerId = (String) req.getSession().getAttribute("loginId");
+
+		List<Product> myProducts = Pservice.findProductsByMakerId(makerId, page);
+
+		Products products = new Products();
+		products.setProducts(myProducts);
+
+		return products;
+	}
+	//
+	// public Products findProductsByCategory(String page, String category) {
+	//
+	// }
+	//
+	// // main start
+	//
+	// public Products findProductsByCategoryOrderByHitsForMain(String page,
+	// String hits) {
+	//
+	// }
+	//
+	// public Products findProductsByCategoryOrderByIdForMain(String page,
+	// String hits) {
+	//
+	// }
+	//
+	// // main end
+	//
+	// public Products findProductsByCategoryAndImage(String category, String
+	// image, HttpServletRequest req) {
+	//
+	// }
+	//
+	// public Products findProductsByCategoryAndTitle(String page, String
+	// category, String title) {
+	//
+	// }
+	//
+	// public Products findProductsByCategoryAndMakerName(String page, String
+	// category, String makerName) {
+	//
+	// }
+	//
+	// public Products findProductsByMakerIdAndTitle(String page, String title,
+	// String makerId) {
+	//
+	// }
 
 	// Product end
 
 	// Review start
 
-//	public Reviews findReviewsByProductId(String page, String productId) {
-//
-//	}
-//
-//	public Reviews findReviewsByTitleAndProductId(String page, String productId, String title) {
-//
-//	}
-//
-//	public Reviews findReviewsByConsumerIdAndProductId(String page, String productId, String consumerId) {
-//
-//	}
+	// public Reviews findReviewsByProductId(String page, String productId) {
+	//
+	// }
+	//
+	// public Reviews findReviewsByTitleAndProductId(String page, String
+	// productId, String title) {
+	//
+	// }
+	//
+	// public Reviews findReviewsByConsumerIdAndProductId(String page, String
+	// productId, String consumerId) {
+	//
+	// }
 
 	// Review end
 	// ************************
 	// ui start
-//	public String showRegisterUI() {
-//
-//	}
-//
-//	public ModelAndView showEditProductUI(String id) {
-//
-//	}
-//
-//	public ModelAndView showMyProductListUI(String page, HttpServletRequest req) {
-//
-//	}
-//
-//	public ModelAndView showDetailProductUI(String id) {
-//
-//	}
-//
-//	public ModelAndView showSearchProductUI() {
-//
-//	}
+	// public String showRegisterUI() {
+	//
+	// }
+	//
+	// public ModelAndView showEditProductUI(String id) {
+	//
+	// }
+	//
+	// public ModelAndView showMyProductListUI(String page, HttpServletRequest
+	// req) {
+	//
+	// }
+	//
+	// public ModelAndView showDetailProductUI(String id) {
+	//
+	// }
+	//
+	// public ModelAndView showSearchProductUI() {
+	//
+	// }
 	// ui end
 }

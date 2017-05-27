@@ -8,7 +8,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.stereotype.Component;
-@XmlRootElement(name="products")
+
+@XmlRootElement(name = "products")
 @XmlAccessorType(XmlAccessType.FIELD)
 @Component
 public class Products {
