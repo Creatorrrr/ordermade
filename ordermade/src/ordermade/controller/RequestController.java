@@ -240,7 +240,7 @@ public class RequestController {
 			list = service.findRequestsByConsumerIdWithMaker(consumerId, "1");
 		}
 		
-		ModelAndView modelAndView = new ModelAndView("request/search");
+		ModelAndView modelAndView = new ModelAndView("/request/makerRequestSearch");
 		modelAndView.addObject("request", list);
 		return modelAndView;
 	}
@@ -253,7 +253,7 @@ public class RequestController {
 	
 	@RequestMapping(value="request/ui/makerInviteList.do",method=RequestMethod.GET)
 	public ModelAndView showMakerInviteRequestListUI(String page, HttpSession session){
-		return new ModelAndView("request/makerInviteList")
+		return new ModelAndView("/request/makerInviteList")
 				.addObject("inviteRequests", 
 						service.findInviteRequestsByMakerId(
 								(String)session.getAttribute("loginId"), 

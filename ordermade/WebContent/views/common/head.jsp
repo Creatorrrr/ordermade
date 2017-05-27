@@ -20,7 +20,7 @@
 					<c:choose>
 						<c:when test="${loginId eq null }">
 							<ul>
-								<li><a id="loginBtn" href="${ctx }/views/login.jsp">Login</a></li>
+								<li><a id="loginBtn" href="${ctx }/member/login.do">Login</a></li>
 								<li><a href="${ctx }/views/memberRegister.jsp" class="btn btn-success">Sign up</a></li>
 							</ul>
 						</c:when>
@@ -28,7 +28,7 @@
 							<span class="glyphicon glyphicon-user"></span>
 							<b>${loginId}</b>님 환영합니다. [<a href="${ctx }/logout.do">로그아웃</a>]
 							<ul>
-								<li><a href="${ctx}/member//modifyMember.do">회원정보</a></li>
+								<li><a href="${ctx}/member/modifyMember.do">회원정보</a></li>
 
 							</ul>
 						</c:otherwise>
@@ -73,24 +73,13 @@
 					<li class="active"><a href="${ctx }/views/index.jsp">Home</a></li>
 					<li><a class="drop" href="#">Category</a>
 						<ul>
-							<li><a href="${ctx }/views/productList.jsp">Furniture</a></li>
+							<li><a href="${ctx }/product/ajax/products/category.do">Furniture</a></li>
 							<li><a href="${ctx }/pages/portfolio.html">Accessory</a></li>
 							<li><a href="${ctx }/pages/full-width.html">Kitchen</a></li>
 							<li><a href="${ctx }/pages/sidebar-left.html">Digital</a></li>
 							<li><a href="${ctx }/pages/sidebar-left-2.html">Clothing</a></li>
 							<li><a href="${ctx }/pages/sidebar-right.html">Sport</a></li>
 						</ul></li>
-
-					<!-- <li><a class="drop" href="#">Dropdown</a>
-						<ul>
-							<li><a href="#">Level 2</a></li>
-							<li><a class="drop" href="#">Level 2 + Drop</a>
-								<ul>
-									<li><a href="#">Level 3</a></li>
-									<li><a href="#">Level 3</a></li>
-								</ul></li>
-						</ul>
-					</li> -->
 					<li><a href="#">Link Text</a></li>
 					<li><a href="#">Another Link Text</a></li>
 					<li><a href="#">This a very long link</a></li>
