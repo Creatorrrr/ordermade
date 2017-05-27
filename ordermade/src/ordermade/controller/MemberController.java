@@ -29,7 +29,7 @@ public class MemberController {
 	@RequestMapping("/join") // end
 	public String showRegisterUI() {
 		// 회원가입 join.jsp 화면으로 이동
-		return "join";
+		return "member/join";
 	}
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST) // end
@@ -80,16 +80,16 @@ public class MemberController {
 
 		boolean registered = service.registerMember(member);
 		if (!registered) {
-			return "join";
+			return "member/join";
 		} else {
-			return "login";
+			return "member/login";
 		}
 	}
 
 	@RequestMapping("/login") // end
 	public String showLoginUI() {
 		// 로그인 login.jsp화면으로 이동
-		return "login";
+		return "member/login";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST) // end
@@ -105,10 +105,10 @@ public class MemberController {
 
 			HttpSession session = req.getSession();
 			session.setAttribute("loginId", member.getId());
-			return "index";
+			return "index2";
 			
 		} else {
-			return "login";
+			return "member/login";
 		}
 	}
 
@@ -129,7 +129,7 @@ public class MemberController {
 
 		Member member = service.findMemberById(id);
 
-		ModelAndView modelAndView = new ModelAndView("memberModify");
+		ModelAndView modelAndView = new ModelAndView("member/memberModify");
 		modelAndView.addObject("member", member);
 
 		return modelAndView;
@@ -142,7 +142,7 @@ public class MemberController {
 
 		// 여기는 임의로 memberRegister.jsp로
 		// 보냄******************************************************************
-		ModelAndView modelAndView = new ModelAndView("memberModify");
+		ModelAndView modelAndView = new ModelAndView("member/memberModify");
 		modelAndView.addObject("member", member);
 
 		return modelAndView;
@@ -172,7 +172,7 @@ public class MemberController {
 
 		// 여기는 임의로 memberRegister.jsp로
 		// 보냄******************************************************************
-		ModelAndView modelAndView = new ModelAndView("memberRegister");
+		ModelAndView modelAndView = new ModelAndView("member/memberRegister");
 		modelAndView.addObject("member", member);
 
 		return modelAndView;

@@ -40,10 +40,10 @@ public class MainController {
 		return model;
 	}
 	
-	@RequestMapping(value="xml/categoryList.do", produces="application/xml")
-	public Categories findAllCategories(){
-		List<Category> categories = pService.findAllCategory();
-	
-		return categories;
-	}
+//	@RequestMapping(value="xml/categoryList.do", produces="application/xml")
+//	public Categories findAllCategories(){
+//		List<Category> categories = pService.findAllCategory();
+//	
+//		return categories;
+//	}
 }

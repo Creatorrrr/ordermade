@@ -16,15 +16,16 @@
 
 			<h1>상품 등록 페이지</h1>
 			<br>
-			<form action="${ctx }//register.do" method="post" name=""
-				onsubmit="return checkIt()">
-				<input name="" type="hidden" value="${categoryId }">
+			<form action="${ctx }/product/register.do" method="post"
+				enctype="multipart/form-data">
+				<%-- <form action="${ctx }//register.do" method="post" name=""
+				onsubmit="return checkIt()"> --%>
 				<table class="table">
 					<tr>
 						<th>제작 항목</th>
-						<td><select id="type" class="form-control">
+						<td><select id="type" name="category" class="form-control">
 								<c:forEach items="${categorys }" var="category">
-									<option value="${category.type }"></option>
+									<option value="${category.type }">${category.type }</option>
 								</c:forEach>
 						</select></td>
 					</tr>
@@ -35,16 +36,16 @@
 					<tr>
 					<tr>
 						<th>상품 이미지</th>
-						<td><input id="" name="" class="btn btn-success" type="file"
-							value="찾아보기"></td>
+						<td><input id="image" name="image" class="btn btn-success"
+							type="file" value="찾아보기"></td>
 					<tr>
 					<tr>
 						<th>금액</th>
-						<td><input id="productTitle" name="productTitle"
-							class="form-control" type="text" value=""></td>
+						<td><input id="price" name="price" class="form-control"
+							type="text" value=""></td>
 						<th>재작 기간</th>
-						<td><input id="productTitle" name="productTitle"
-							class="form-control" type="text" value=""></td>
+						<td><input id="period" name="period" class="form-control"
+							type="text" value=""></td>
 					<tr>
 					<tr>
 						<th>상품 내용</th>

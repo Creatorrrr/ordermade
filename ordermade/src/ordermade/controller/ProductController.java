@@ -52,10 +52,9 @@ public class ProductController {
 		MultipartRequest mr;
 		try {
 			mr = new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy());
-
-			String title = mr.getParameter("title");
+			String title = mr.getParameter("productTitle");
 			String category = mr.getParameter("category");
-			String content = mr.getParameter("content");
+			String content = mr.getParameter("productContent");
 
 			File image = mr.getFile("image");
 
@@ -64,8 +63,10 @@ public class ProductController {
 
 			Member maker = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 
+			int hit = 0;
 			product.setTitle(title);
 			product.setCategory(category);
+			System.out.println(category);
 			product.setContent(content);
 
 			product.setImage(image.getCanonicalPath());
@@ -75,15 +76,15 @@ public class ProductController {
 
 			product.setMaker(maker);
 
-			product.setHit(0);
+			product.setHit(hit);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		if (!pService.registerProduct(product)) {
-			return "";
+			return "product/productRegister";
 		} else {
-			return "detailProduct";
+			return "product/productDetail";
 		}
 
 	}
