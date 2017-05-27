@@ -6,7 +6,6 @@
 
 <mapper namespace="ordermade.store.mapper.TagMapper">
 	<resultMap type="ordermade.domain.Tag" id="TagMap">
-		<id column="id" property="id" />
 		<result column="keyword" property="keyword" />
 		<result column="score" property="score" />
 		<association column="portfolioid" property="portfolio"
@@ -15,16 +14,13 @@
 	</resultMap>
 
 	<insert id="insertTag" parameterType="Tag">
-		<selectKey keyProperty="id" resultType="string" order="BEFORE">
-			select tag_seq.nextval from dual
-		</selectKey>
-		INSERT INTO tag(id,keyword,score,portfolio_id)
+		INSERT INTO tag(keyword,score,portfolio_id)
 		VALUES
-		(#{id},#{keyword},#{score},#{portfolio.id})
+		(#{keyword},#{score},#{portfolio.id})
 
 	</insert>
 	<select id="selectTagsByPortfolioId" parameterType="string" resultMap="TagMap">
-		SELECT id,keyword,score,portfolio_id
+		SELECT keyword,score,portfolio_id
 		FROM tag
 		WHERE portfolio_id = #{portfolioId}
 	</select>
