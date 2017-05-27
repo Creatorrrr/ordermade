@@ -3,13 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 
-<%@ include file="head.jsp"%>
+<%@ include file="/views/common/head.jsp"%>
 
 <div class="wrapper row3">
 	<div class="rounded">
 		<main class="container clear"> <!-- main body -->
 		<div class="sidebar one_third first">
-			<%@ include file="myPageNav.jsp"%>
+			<%@ include file="/views/common/myPageNav.jsp"%>
 		</div>
 
 		<div id="content" class="two_third">
@@ -22,13 +22,11 @@
 				<table class="table">
 					<tr>
 						<th>제작 항목</th>
-						<td><select name="type" id="type" class="form-control">
-								<option value="id">가구</option>
-								<option value="id">의류</option>
-								<option value="id">악세사리</option>
-								<option value="id">디지털</option>
-								<option value="id">주방</option>
-								<option value="id">스포츠</option></td>
+						<td><select id="type" class="form-control">
+								<c:forEach items=${categorys } var="category">
+									<option value="${category.type }">${category.type }</option>
+								</c:forEach>
+						</select></td>
 					</tr>
 					<tr>
 						<th>상품명</th>
@@ -37,8 +35,16 @@
 					<tr>
 					<tr>
 						<th>상품 이미지</th>
-						<td><input id="" name="" class="btn btn-success"
-							type="file" value="찾아보기"></td>
+						<td><input id="" name="" class="btn btn-success" type="file"
+							value="찾아보기"></td>
+					<tr>
+					<tr>
+						<th>금액</th>
+						<td><input id="productTitle" name="productTitle"
+							class="form-control" type="text" value=""></td>
+						<th>재작 기간</th>
+						<td><input id="productTitle" name="productTitle"
+							class="form-control" type="text" value=""></td>
 					<tr>
 					<tr>
 						<th>상품 내용</th>
@@ -59,7 +65,7 @@
 	</div>
 </div>
 
-<%@ include file="footer.jsp"%>
+<%@ include file="/views/common/footer.jsp"%>
 
 <script type="text/javaScript">
 	function checkIt() {

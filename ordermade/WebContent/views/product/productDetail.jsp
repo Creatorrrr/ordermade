@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 
-<%@ include file="head.jsp"%>
+<%@ include file="/views/common/head.jsp"%>
 
 
 <div class="wrapper row3">
@@ -129,7 +129,7 @@
 	</div>
 </div>
 
-<%@ include file="footer.jsp"%>
+<%@ include file="/views/common/footer.jsp"%>
 <!-- JAVASCRIPTS -->
 <script src="../layout/scripts/jquery.min.js"></script>
 <script src="../layout/scripts/jquery.fitvids.min.js"></script>

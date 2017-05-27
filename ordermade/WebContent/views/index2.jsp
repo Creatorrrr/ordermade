@@ -3,7 +3,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 <title>내꺼</title>
 
-<%@ include file="head.jsp" %>
+<%@ include file="/views/common/header.jspf" %>
 
 <h1>이 밑에서 버튼 만들어서 기능구현 테스트 해주세요~</h1>
 <a href="${ctx }/views/memberRegister.jsp">회원가입</a><br>

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 
-<%@ include file="head.jsp"%>
+<%@ include file="/views/common/head.jsp"%>
 
 <div class="wrapper row3">
 	<div class="rounded">
@@ -57,7 +57,6 @@
 					<%-- <c:forEach items="${ box_list }" var="literature"> --%>
 					<div class="content" align="center">
 						<table class="table">
-
 							<tr>
 								<div class="imgl borderedbox">
 									<img src="${ctx }/views/images/img1.jpg" />
@@ -65,12 +64,11 @@
 							</tr>
 							<tr class="nospace btmspace-15">
 								<td>상품 이름</td>
-								<td><a class="literature" href="${ctx}/#/#.do?#=${asf }">${asf  }
-										rkrkrk</a></td>
+								<td><a class="literature" href="${ctx}/product/detail.do?productId=${product.id }">${product.title }</a></td>
 							</tr>
 							<tr class="nospace btmspace-15">
 								<td>가격</td>
-								<td class="creatorId">${asf}10000000원</td>
+								<td class="creatorId">${product.price}원</td>
 							</tr>
 						</table>
 					</div> <%-- </c:forEach> --%>
@@ -83,20 +81,7 @@
 
 
 
-<div class="wrapper row5">
-	<div id="copyright" class="clear">
-		<!-- ################################################################################################ -->
-		<p class="fl_left">
-			Copyright &copy; 2014 - All Rights Reserved - <a href="#">Domain
-				Name</a>
-		</p>
-		<p class="fl_right">
-			Template by <a target="_blank" href="http://www.os-templates.com/"
-				title="Free Website Templates">OS Templates</a>
-		</p>
-		<!-- ################################################################################################ -->
-	</div>
-</div>
+<%@ include file="/views/common/footer.jsp"%>
 <!-- JAVASCRIPTS -->
 <script src="../layout/scripts/jquery.min.js"></script>
 <script src="../layout/scripts/jquery.fitvids.min.js"></script>

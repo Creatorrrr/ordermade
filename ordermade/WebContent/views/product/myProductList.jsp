@@ -3,22 +3,49 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 
-<%@ include file="head.jsp"%>
+<%@ include file="/views/common/head.jsp"%>
 
 <div class="wrapper row3">
 	<div class="rounded">
 		<main class="container clear"> <!-- main body -->
 		<div class="sidebar one_third first">
 
-			<%@ include file="myPageNav.jsp"%>
+			<%@ include file="/views/common/myPageNav.jsp"%>
 
 		</div>
 
 		<div id="content" class="two_third">
+			<h1>나의 상품페이지</h1>
 
+			<div class="fl_right">
+				<form class="clear" method="post" action="#">
+					<div>
+						<fieldset>
+							<select name="type" id="type" class="form-control">
+								<option value="id">제목</option>
+								<option value="name">내용</option>
+							</select> <input input name="search" class="search-box-input" type="text"
+								value="" placeholder="Search Here" />
+							<button class="fa fa-search" type="submit" title="Search">
+								<em>Search</em>
+							</button>
+						</fieldset>
+					</div>
+				</form>
+
+				<form class="clear" method="post" action="#">
+					<div>
+						<fieldset>
+							<input name="submit" type="submit" value="등록">
+						</fieldset>
+					</div>
+				</form>
+
+			</div>
+			</br>
 			<ul class="nospace listing">
 				<li class="clear">
-
+					<%-- <c:forEach items="${ box_list }" var="literature"> --%>
 					<div class="content" align="center">
 						<table class="table">
 							<tr>
@@ -27,61 +54,24 @@
 								</div>
 							</tr>
 							<tr class="nospace btmspace-15">
-							<tr>
-								<p>의뢰 명 : ${title}</p>
+								<td>상품 이름</td>
+								<td><a class="literature" href="${ctx}/#/#.do?#=${asf }">${asf  }
+										rkrkrk</a></td>
 							</tr>
-							<tr>
-								<p>의뢰자 : ${id }</p>
+							<tr class="nospace btmspace-15">
+								<td>가격</td>
+								<td class="creatorId">${asf}10000000원</td>
 							</tr>
-							<tr>
-								<p>의뢰 내용 : ${contents }</p>
-							</tr>
-							<tr>
-								<p>제작 항목 : ${hope_price }</p>
-							</tr>
-							<tr>
-								<p>희망 가격 : ${hope_price }</p>
-							</tr>
-							</tr>
-							<br>
-
 						</table>
-						<div>
-							<tr>
-								<h3>최신 포트폴리오</h3>
-							</tr>
-							<tr>
-								<p>내용나와야 함@@@</p>
-							</tr>
-						</div>
-
-						<br>
-
-						<div>
-							<tr>
-								<h3>추가 요구 사항</h3>
-							</tr>
-							<tr>
-							<td><textarea rows="10" cols="80"></textarea>
-							</tr>
-							<tr>
-							<td><input class="" name="" type="button" value="등록">
-							<input class="" name="" type="reset" value="취소"></td>
-							</tr>
-						</div>
-						
-						<div>
-							<p>제작기간 : 일</p>
-							<p>결제금액 (배송비 포함): 원</p> 
-							<input class=""  type="button" name="" value="결제">
-						</div>
-					</div>
+					</div> <%-- </c:forEach> --%>
 				</li>
 			</ul>
 		</div>
 		</main>
 	</div>
 </div>
+
+
 
 <div class="wrapper row5">
 	<div id="copyright" class="clear">
