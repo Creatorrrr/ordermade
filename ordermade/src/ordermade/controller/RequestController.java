@@ -85,20 +85,59 @@ public class RequestController {
 		if (!rService.registerRequest(request)) {
 			return "";
 		} else {
-			return "detailProduct";
+			return "productDetail";
 		}
 	}
 	
 
 	@RequestMapping(value="request/xml/modify.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String modifyRequestById(Request request, HttpSession session){
+	public @ResponseBody String modifyRequestById(Request request, HttpServletRequest req){
 		//String loginId=(String)session.getAttribute("loginId");
-		return null;
+		
+		String imgPath = Constants.IMAGE_PATH;
+		
+		File dir = new File(imgPath);
+		if(!dir.exists()){
+			dir.mkdirs();
+		}
+		MultipartRequest mr;
+		try {
+			mr = new MultipartRequest(req, imgPath, 5*1024*1024, "UTF-8", new DefaultFileRenamePolicy());
+			
+			String title = mr.getParameter("title");
+			String category = mr.getParameter("category");
+			String content = mr.getParameter("content");
+			int hopePrice = Integer.parseInt(mr.getParameter("hopePrice"));
+			int price = Integer.parseInt(mr.getParameter("price"));
+			String bound = mr.getParameter("bound");
+			
+			Member consumer = mService.findMemberById((String)req.getSession().getAttribute("loginId"));
+			Member maker = mService.findMemberById((String)req.getSession().getAttribute("loginId"));
+			
+			request.setTitle(title);
+			request.setCategory(category);
+			request.setContent(content);
+			request.setHopePrice(hopePrice);
+			request.setPrice(price);
+			request.setBound(bound);
+			request.setConsumer(consumer);
+			request.setMaker(maker);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if(!rService.registerRequest(request)){
+			return "";
+		}else{
+			return "consumerRequestDetail";
+		}
 	}
 	
 	@RequestMapping(value="request/xml/remove.do", method=RequestMethod.POST, produces="text/plain")
 	public @ResponseBody String removeRequestById(String id, HttpSession session){
 		//String loginId=(String)session.getAttribute("loginId");
+		
+		
 		return null;
 	}
 	
