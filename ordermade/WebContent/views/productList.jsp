@@ -57,7 +57,6 @@
 					<%-- <c:forEach items="${ box_list }" var="literature"> --%>
 					<div class="content" align="center">
 						<table class="table">
-
 							<tr>
 								<div class="imgl borderedbox">
 									<img src="${ctx }/views/images/img1.jpg" />
@@ -65,12 +64,11 @@
 							</tr>
 							<tr class="nospace btmspace-15">
 								<td>상품 이름</td>
-								<td><a class="literature" href="${ctx}/#/#.do?#=${asf }">${asf  }
-										rkrkrk</a></td>
+								<td><a class="literature" href="${ctx}/product/detail.do?productId=${product.id }">${product.title }</a></td>
 							</tr>
 							<tr class="nospace btmspace-15">
 								<td>가격</td>
-								<td class="creatorId">${asf}10000000원</td>
+								<td class="creatorId">${product.price}원</td>
 							</tr>
 						</table>
 					</div> <%-- </c:forEach> --%>
