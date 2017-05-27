@@ -112,6 +112,8 @@ public class DealController {
 	
 	// XML for Mobile
 	
+	
+	// 
 	@RequestMapping(value="xml/purchaseConsumerList.do", produces="application/xml")
 	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesForConsumer(String page, HttpSession session){
 		// session에서 회원ID 가져오기
