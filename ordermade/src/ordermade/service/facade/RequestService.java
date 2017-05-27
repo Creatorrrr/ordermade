@@ -12,10 +12,10 @@ public interface RequestService {
 	public boolean modifyRequestById(Request request);
 	public boolean removeRequestById(String id);
 	public Request findRequestById(String id);
-	public List<Request> findRequestByBound(String bound, String page);
-	public List<Request> findRequestByBoundAndTitle(String bound, String title, String page);
-	public List<Request> findRequestByBoundAndContent(String bound, String content, String page);
-	public List<Request> findRequestByConsumerId(String consumerId, String page);
+	public List<Request> findRequestsByBound(String bound, String page);
+	public List<Request> findRequestsByBoundAndTitle(String bound, String title, String page);
+	public List<Request> findRequestsByBoundAndContent(String bound, String content, String page);
+	public List<Request> findRequestsByConsumerId(String consumerId, String page);
 	public List<Request> findRequestsByConsumerIdWithMaker(String consumerId, String page);
 	public List<Request> findRequestsByConsumerIdWithPayment(String consumerId, String page);
 	public boolean registerInviteRequest(InviteRequest inviteRequest);

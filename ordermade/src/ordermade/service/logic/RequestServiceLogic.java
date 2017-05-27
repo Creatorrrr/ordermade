@@ -49,22 +49,22 @@ public class RequestServiceLogic implements RequestService{
 	}
 
 	@Override
-	public List<Request> findRequestByBound(String bound, String page) {
+	public List<Request> findRequestsByBound(String bound, String page) {
 		return rStore.selectRequestsByBound(bound, page);
 	}
 
 	@Override
-	public List<Request> findRequestByBoundAndTitle(String bound, String title, String page) {
+	public List<Request> findRequestsByBoundAndTitle(String bound, String title, String page) {
 		return rStore.selectRequestsByBoundAndTitle(bound, title, page);
 	}
 
 	@Override
-	public List<Request> findRequestByBoundAndContent(String bound, String content, String page) {
+	public List<Request> findRequestsByBoundAndContent(String bound, String content, String page) {
 		return rStore.selectRequestsByBoundAndContent(bound, content, page);
 	}
 
 	@Override
-	public List<Request> findRequestByConsumerId(String consumerId, String page) {
+	public List<Request> findRequestsByConsumerId(String consumerId, String page) {
 		return rStore.selectRequestsByConsumerId(consumerId, page);
 	}
 
