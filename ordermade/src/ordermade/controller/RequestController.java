@@ -2,14 +2,12 @@ package ordermade.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,10 +20,10 @@ import ordermade.constants.Constants;
 import ordermade.domain.Attach;
 import ordermade.domain.Attachs;
 import ordermade.domain.Comment;
+import ordermade.domain.Comments;
 import ordermade.domain.InviteRequest;
+import ordermade.domain.InviteRequests;
 import ordermade.domain.Member;
-import ordermade.domain.Portfolio;
-import ordermade.domain.Portfolios;
 import ordermade.domain.Request;
 import ordermade.domain.Requests;
 import ordermade.service.facade.MemberService;
@@ -244,45 +242,57 @@ public class RequestController {
 	
 	@RequestMapping(value="request/xml/searchMyRequests.do", produces="application/xml")
 	public @ResponseBody Requests findMyRequests(String page, HttpSession session){
-		return null;
+		return new Requests(rService.findRequestByConsumerId(
+				(String)session.getAttribute("loginId"), 
+				page));
 	}
 
 	@RequestMapping(value="request/xml/searchMyRequestsWithMaker.do", produces="application/xml")
 	public @ResponseBody Requests findMyRequestsWithMaker(String page, HttpSession session){
-		return null;
+		return new Requests(rService.findRequestsByConsumerIdWithMaker(
+				(String)session.getAttribute("loginId"), 
+				page));
 	}
 	
-	@RequestMapping(value="request/xml/searchMyRequestsForPayment.do", produces="application/xml")
-	public @ResponseBody Requests findMyRequestsForPayment(String page, HttpSession session){
-		return null;
+	@RequestMapping(value="request/xml/searchMyRequestsWithPayment.do", produces="application/xml")
+	public @ResponseBody Requests findMyRequestsWithPayment(String page, HttpSession session){
+		return new Requests(rService.findRequestsByConsumerIdWithPayment(
+				(String)session.getAttribute("loginId"), 
+				page));
 	}
 
 	
 	
-	@RequestMapping(value="request/xml/searchInvitesWithMaker.do", produces="application/xml")
-	public @ResponseBody Requests findInviteRequestsWithMaker(String page, HttpSession session){
-		return null;
+	@RequestMapping(value="request/xml/searchMyInviteRequestsForMaker.do", produces="application/xml")
+	public @ResponseBody InviteRequests findMyInviteRequestsForMaker(String page, HttpSession session){
+		return new InviteRequests(rService.findInviteRequestsByMakerId(
+				/*(String)session.getAttribute("loginId")*/"5",
+				Constants.FORM_INVITE,
+				page));
 	}
 	
-	@RequestMapping(value="request/xml/searchInvitesWithConsumer.do", produces="application/xml")
-	public @ResponseBody Requests findInviteRequestsWithConsumer(String page, HttpSession session){
-		return null;
+	@RequestMapping(value="request/xml/searchMyInviteRequestsForConsumer.do", produces="application/xml")
+	public @ResponseBody InviteRequests findMyInviteRequestsForConsumer(String page, HttpSession session){
+		return new InviteRequests(rService.findInviteRequestsByConsumerId(
+				/*(String)session.getAttribute("loginId")*/"5",
+				Constants.FORM_REQUEST,
+				page));
 	}
 	
 	
 	@RequestMapping(value="comment/xml/searchRequestId.do", produces="application/xml")
-	public @ResponseBody Requests findCommentsByRequestId(String requestId, HttpSession session){
-		return null;
+	public @ResponseBody Comments findCommentsByRequestId(String requestId, String page){
+		return new Comments(rService.findCommentsByRequestId(requestId, page));
 	}
 	
 	@RequestMapping(value="attach/xml/searchByRequestId.do", produces="application/xml")
 	public @ResponseBody Attachs findAttachsByRequestId(String requestId, String page){
-		return null;
+		return new Attachs(rService.findAllAttachsByRequestId(requestId, page));
 	}
 	
 	@RequestMapping(value="attach/xml/searchByRequestIdAndFileName.do", produces="application/xml")
 	public @ResponseBody Attachs findAttachsByRequestIdAndFileName(String requestId, String fileName, String page){
-		return null;
+		return new Attachs(rService.findAttachsByFileNameAndRequestId(fileName, requestId, page));
 	}
 	
 	@RequestMapping(value="request/xml/searchById.do", produces="application/xml")

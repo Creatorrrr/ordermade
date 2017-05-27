@@ -81,13 +81,14 @@ public class InviteRequestStoreLogic implements InviteRequestStore {
 	}
 
 	@Override
-	public List<InviteRequest> selectInviteRequestsByMakerId(String makerId, String begin, String end) {
+	public List<InviteRequest> selectInviteRequestsByMakerId(String makerId, String form, String begin, String end) {
 
 		SqlSession session = factory.openSession();
 		List<InviteRequest> list = null;
 
-		HashMap<String, String> map = new HashMap();
+		HashMap<String, String> map = new HashMap<>();
 		map.put("makerId", makerId);
+		map.put("form", form);
 		map.put("begin", begin);
 		map.put("end", end);
 
@@ -101,13 +102,14 @@ public class InviteRequestStoreLogic implements InviteRequestStore {
 	}
 
 	@Override
-	public List<InviteRequest> selectInviteRequestsByConsumerId(String consumerId, String begin, String end) {
+	public List<InviteRequest> selectInviteRequestsByConsumerId(String consumerId, String form, String begin, String end) {
 
 		SqlSession session = factory.openSession();
 		List<InviteRequest> list = null;
 
 		HashMap<String, String> map = new HashMap<>();
 		map.put("consumerId", consumerId);
+		map.put("form", form);
 		map.put("begin", begin);
 		map.put("end", end);
 

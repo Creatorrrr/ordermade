@@ -60,12 +60,12 @@ public class InviteRequestStoreLogicTest {
 //		//	assertEquals(1,list.get(0).getMaker().getId());
 //	}
 	
-	@Test		 //request.consumerId  innerJoin
-	public void testselectInviteRequestsByConsumerId(){
-		List<InviteRequest> list = irStore.selectInviteRequestsByMakerId("test","1","2");
-		System.out.println(list.size());
-	//	assertNotNull(list);
-	//	assertEquals("test",list.get(0).getMember().getId());
-	}	
+//	@Test		 //request.consumerId  innerJoin
+//	public void testselectInviteRequestsByConsumerId(){
+//		List<InviteRequest> list = irStore.selectInviteRequestsByMakerId("test","1","2");
+//		System.out.println(list.size());
+//	//	assertNotNull(list);
+//	//	assertEquals("test",list.get(0).getMember().getId());
+//	}	
 	
 }

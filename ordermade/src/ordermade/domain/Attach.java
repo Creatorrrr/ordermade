@@ -3,6 +3,7 @@ package ordermade.domain;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,7 @@ public class Attach {
 	private String path;
 	private String fileName;
 	private String extension;
-	private Request request;
+	@XmlTransient private Request request;
 	
 	public String getId() {
 		return id;
@@ -45,10 +46,5 @@ public class Attach {
 	}
 	public void setRequest(Request request) {
 		this.request = request;
-	}
-	@Override
-	public String toString() {
-		return "Attach [id=" + id + ", path=" + path + ", fileName=" + fileName + ", extension=" + extension
-				+ ", request=" + request + "]";
 	}
 }

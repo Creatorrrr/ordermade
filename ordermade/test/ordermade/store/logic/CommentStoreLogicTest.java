@@ -76,7 +76,8 @@ public class CommentStoreLogicTest {
 		List<Comment> commentList = new ArrayList<>();
 		commentList = store.selectCommentsByRequestId(requestId, page);
 		for(Comment comment : commentList){
-			System.out.println(comment.toString());
+			System.out.println("Comment : " + comment.getMember().getId());
+			System.out.println("Request : " + comment.getRequest().getId());
 		}
 		assertEquals(10, commentList.size());
 	}

@@ -26,7 +26,7 @@ public interface RequestService {
 
 	public List<Request> findRequestsByConsumerIdWithMaker(String consumerId, String page);
 
-	public List<Request> findRequestByConsumerIdWithPayment(String inconsumerId, String page);
+	public List<Request> findRequestsByConsumerIdWithPayment(String consumerId, String page);
 
 	public boolean registerInviteRequest(InviteRequest inviteRequest);
 
@@ -34,9 +34,9 @@ public interface RequestService {
 
 	public boolean removeInviteRequestByRequestId(String requestId);
 
-	public List<InviteRequest> findInviteRequestsByMakerId(String makerId, String page);
+	public List<InviteRequest> findInviteRequestsByMakerId(String makerId, String form, String page);
 
-	public List<InviteRequest> findInviteRequestsByConsumerId(String consumerId, String page);
+	public List<InviteRequest> findInviteRequestsByConsumerId(String consumerId, String form, String page);
 
 	public boolean registerComment(Comment comment);
 

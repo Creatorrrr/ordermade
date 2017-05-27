@@ -9,10 +9,10 @@
 		<result property="form" column="form" />
 		<result property="requestTime" column="request_time"/>    
 		<association property="maker" column="maker_id"
-			select="store.mapper.MemberMapper.selectMemberById" javaType="Member"
+			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
 			jdbcType="VARCHAR" />
 		<association property="request" column="request_id"
-			select="store.mapper.RequestMapper.selectRequestById" javaType="Request"
+			select="ordermade.store.mapper.RequestMapper.selectRequestById" javaType="Request"
 			jdbcType="VARCHAR" />
 	</resultMap>
 	
@@ -43,15 +43,15 @@
 		<include refid="selectInviteRequest"/>
 		FROM (<include refid="selectInviteRequestRownum"/>
 			 FROM invite_request 
-			 WHERE maker_Id = #{makerId})
+			 WHERE maker_Id = #{makerId} AND form = #{form})
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 	
 	<select id="selectInviteRequestsByConsumerId" parameterType="HashMap" resultMap="inviteRequestMap">
 		<include refid="selectInviteRequest"/>
 		FROM (SELECT rownum rnum, ir.id, ir.message, ir.maker_id, ir.request_time, ir.request_id, ir.form
-			 FROM invite_request ir INNER JOIN member m ON ir.consumer_id = m.id    <!--memberid? consumerid?  -->
-			 WHERE ir.consumerId = #{consumerId})
+			 FROM invite_request ir INNER JOIN request r ON ir.request_id = r.id
+			 WHERE r.consumer_id = #{consumerId} AND ir.form = #{form})
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select> 
 </mapper>

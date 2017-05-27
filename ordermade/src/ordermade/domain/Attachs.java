@@ -16,8 +16,13 @@ public class Attachs {
 	
 	@XmlElement(name="attach")
 	private List<Attach> attachs;
-
 	
+	public Attachs() {}
+	
+	public Attachs(List<Attach> attachs) {
+		this.attachs = attachs;
+	}
+
 	public List<Attach> getAttachs() {
 		return attachs;
 	}

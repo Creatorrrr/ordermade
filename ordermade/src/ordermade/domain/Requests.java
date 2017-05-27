@@ -17,7 +17,12 @@ public class Requests {
 	@XmlElement(name="request")
 	private List<Request> requests;
 
+	public Requests() {}
 	
+	public Requests(List<Request> requests) {
+		this.requests = requests;
+	}
+
 	public List<Request> getRequests() {
 		return requests;
 	}
