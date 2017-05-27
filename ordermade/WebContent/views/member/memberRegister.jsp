@@ -41,7 +41,12 @@
 					minlength : "비밀번호는 5자 이상이여야 합니다.",
 					equalTo : "비밀번호가 일치하지 않습니다."
 				},
-				email : "이메일을 입력해주세요."
+				email : {
+					required : "이메일을 입력해주세요."
+				},
+				memberType : {
+					required : "회원 종류를 선택해 주세요."
+				}
 			}
 		});
 
@@ -53,7 +58,7 @@
 		<main class="container clear">
 		<h3>회원가입</h3>
 		<br>
-		<form id="registerForm" action="${ctx }/member/join.do" method="post"
+		<form id="registerForm" action="${ctx }/main/main.do" method="post"
 			enctype="multipart/form-data">
 			<table class="table">
 				<tr>
@@ -94,9 +99,9 @@
 				</tr>
 				<tr>
 					<th><label>고객/사업자</label></th>
-					<td><input type="radio" name="memberType" value="customer"
-						checked="checked">고객</input> <input type="radio" name="memberType"
-						value="buisnessman">사업자</input></td>
+					<td><input type="radio" name="memberType" id="memberType"
+						value="customer" checked="checked">고객</input> <input type="radio"
+						id="memberType" name="memberType" value="buisnessman">사업자</input></td>
 				</tr>
 				<tr>
 					<th><label for="license">사업 번호</label></th>

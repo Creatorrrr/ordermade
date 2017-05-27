@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 
-<%@ include file="head.jsp"%>
+<%@ include file="/views/common/head.jsp"%>
 
 <!--Main Image-->
 <div class="wrapper">
@@ -11,23 +11,23 @@
 		<div id="slide-wrapper" class="rounded clear">
 			<figure id="slide-1">
 				<a class="view" href="#"><img
-					src="${stx }images/demo/slider/pp.jpg" alt=""></a>
+					src="${ctx }/views/images/demo/slider/pp.jpg" alt=""></a>
 			</figure>
 			<figure id="slide-2">
 				<a class="view" href="#"><img
-					src="${stx }images/demo/slider/2.png" alt=""></a>
+					src="${ctx }/views/images/demo/slider/2.png" alt=""></a>
 			</figure>
 			<figure id="slide-3">
 				<a class="view" href="#"><img
-					src="${stx }images/demo/slider/3.png" alt=""></a>
+					src="${ctx }/views/images/demo/slider/3.png" alt=""></a>
 			</figure>
 			<figure id="slide-4">
 				<a class="view" href="#"><img
-					src="${stx }images/demo/slider/4.png" alt=""></a>
+					src="${ctx }/views/images/demo/slider/4.png" alt=""></a>
 			</figure>
 			<figure id="slide-5">
 				<a class="view" href="#"><img
-					src="${stx }images/demo/slider/5.png" alt=""></a>
+					src="${ctx }/views/images/demo/slider/5.png" alt=""></a>
 			</figure>
 			<ul id="slide-tabs">
 				<li><a href="${stx }#slide-1">A</a></li>

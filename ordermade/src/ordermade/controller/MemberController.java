@@ -160,7 +160,7 @@ public class MemberController {
 		}
 		// 여기는 임의로 index2.jsp로
 		// 보냄******************************************************************
-		return "index2";
+		return "index";
 	}
 
 	@RequestMapping("/showMyPage")
@@ -172,7 +172,7 @@ public class MemberController {
 
 		// 여기는 임의로 memberRegister.jsp로
 		// 보냄******************************************************************
-		ModelAndView modelAndView = new ModelAndView("member/memberRegister");
+		ModelAndView modelAndView = new ModelAndView("views/index");
 		modelAndView.addObject("member", member);
 
 		return modelAndView;
