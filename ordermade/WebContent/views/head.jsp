@@ -26,9 +26,9 @@
 						</c:when>
 						<c:otherwise>
 							<span class="glyphicon glyphicon-user"></span>
-							<b>${loginId}</b>님!! 환영합니다. [<a href="${ctx }/logout.do">로그아웃</a>]
+							<b>${loginId}</b>님 환영합니다. [<a href="${ctx }/logout.do">로그아웃</a>]
 							<ul>
-								<li><a href="${ctx}/member/detail.do">회원정보</a></li>
+								<li><a href="${ctx}/member/modifyMember.do">회원정보</a></li>
 
 							</ul>
 						</c:otherwise>
@@ -45,10 +45,10 @@
 		<header id="header" class="clear">
 			<div id="logo" class="fl_left">
 				<h1>
-					<a href="${ctx }/views/index.jsp"><img src="${ctx }/views/images/panda4.jpg" style="width:100px;height:100px"> 판다...</a>
+					<a href="${ctx }/views/index.jsp"><img src="${ctx }/views/images/panda4.jpg" style="width:100px;height:100px"> 판다</a>
 				</h1>
-				<p>다 판다...</p>
-				<p>없으면 만들어서 판다...</p>
+				<p>다 판다</p>
+				<p>없으면 만들어서 판다</p>
 				<p>1:1 매칭 서비스</p>
 			</div>
 			<div class="fl_right">

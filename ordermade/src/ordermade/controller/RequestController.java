@@ -31,42 +31,42 @@ import ordermade.service.facade.RequestService;
 
 @Controller
 @RequestMapping("request")
-public class RequestController {	
-	
+public class RequestController {
+
 	@Autowired
 	private RequestService rService;
 	@Autowired
 	private MemberService mService;
-	
-	//===================action -> xml
-	
-	//--request
-	
-	@RequestMapping(value="request/xml/register.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String registerRequest(Request request, HttpServletRequest req){
-		//String loginId=(String)session.getAttribute("loginId");
-		
+
+	// ===================action -> xml
+
+	// --request
+
+	@RequestMapping(value = "request/xml/register.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String registerRequest(Request request, HttpServletRequest req) {
+		// String loginId=(String)session.getAttribute("loginId");
+
 		String imgPath = Constants.IMAGE_PATH;
-		
+
 		File dir = new File(imgPath);
-		if(!dir.exists()){
+		if (!dir.exists()) {
 			dir.mkdirs();
 		}
 		MultipartRequest mr;
-		
+
 		try {
-			mr=new MultipartRequest(req, imgPath,5*1024*1024,"UTF-8", new DefaultFileRenamePolicy());
-			
+			mr = new MultipartRequest(req, imgPath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy());
+
 			String title = mr.getParameter("title");
 			String category = mr.getParameter("category");
 			String content = mr.getParameter("content");
 			int hopePrice = Integer.parseInt(mr.getParameter("hopePrice"));
 			int price = Integer.parseInt(mr.getParameter("price"));
 			String bound = mr.getParameter("bound");
-			
-			Member consumer = mService.findMemberById((String)req.getSession().getAttribute("loginId"));
-			Member maker = mService.findMemberById((String)req.getSession().getAttribute("loginId"));
-			
+
+			Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
+			Member maker = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
+
 			request.setTitle(title);
 			request.setCategory(category);
 			request.setContent(content);
@@ -75,7 +75,7 @@ public class RequestController {
 			request.setBound(bound);
 			request.setConsumer(consumer);
 			request.setMaker(maker);
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -83,115 +83,146 @@ public class RequestController {
 		if (!rService.registerRequest(request)) {
 			return "";
 		} else {
-			return "detailProduct";
+			return "productDetail";
 		}
 	}
-	
 
-	@RequestMapping(value="request/xml/modify.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String modifyRequestById(Request request, HttpSession session){
-		//String loginId=(String)session.getAttribute("loginId");
-		return null;
-	}
-	
-	@RequestMapping(value="request/xml/remove.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String removeRequestById(String id, HttpSession session){
-		//String loginId=(String)session.getAttribute("loginId");
-		return null;
-	}
-	
-	@RequestMapping(value="request/xml/modifyBound.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String modifyRequestBound(Request request, HttpSession session){
-		//String loginId=(String)session.getAttribute("loginId");
-		return null;
-	}
-	
-	@RequestMapping(value="request/xml/modifyMaker.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String modifyRequestMaker(String maker_id, HttpSession session){
-		//String loginId=(String)session.getAttribute("loginId");
-		return null;
-	}
-	
-	@RequestMapping(value="request/xml/removeMaker.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String removeRequestMaker(String maker_id, HttpSession session){
-		//String loginId=(String)session.getAttribute("loginId");
-		return null;
-	}
-	
-	@RequestMapping(value="request/xml/registerInviteToMaker.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String registerInviteRequestToMaker(InviteRequest inviteRequest){
-		return null;
-	}
-	
-	@RequestMapping(value="request/xml/registerInviteToConsumer.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String registerInviteRequestToConsumer(InviteRequest inviteRequest){
-		return null;
-	}
-	
-	
-	@RequestMapping(value="request/xml/removeInvite.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String removeInviteRequestById(String id){
-		return null;
-	}
-	
-	
-	@RequestMapping(value="request/xml/modifyPaymentValue.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String modifyPaymentValue(Request request, HttpSession session){
-		//String loginId=(String)session.getAttribute("loginId");
-		return null;
-	}
-	
-	
-	//--comment
-	
-	
-	@RequestMapping(value="comment/xml/register.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String registerComment(Comment comment, HttpSession session){
-		//String loginId=(String)session.getAttribute("loginId");
-		return null;
-	}
-	
-	
-	@RequestMapping(value="comment/xml/modify.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String modifyComment(Comment comment, HttpSession session){
-		//String loginId=(String)session.getAttribute("loginId");
-		return null;
-	}
-	
-	
-	@RequestMapping(value="comment/xml/remove.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String removeCommentById(String id, HttpSession session){
-		//String loginId=(String)session.getAttribute("loginId");
-		return null;
-	}
-	
-	//--attach
-	
-	@RequestMapping(value="attach/xml/register.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String registerAttach(Attach attach, HttpSession session){
-		//String loginId=(String)session.getAttribute("loginId");
-		return null;
-	}
-	
-	@RequestMapping(value="attach/xml/remove.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String removeAttachById(String id, HttpSession session){
-		//String loginId=(String)session.getAttribute("loginId");
-		return null;
-	}
-	
+	@RequestMapping(value = "request/xml/modify.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String modifyRequestById(Request request, HttpServletRequest req) {
+		// String loginId=(String)session.getAttribute("loginId");
 
+		String imgPath = Constants.IMAGE_PATH;
 
-	
-	//==================web -> html
-	
-	
-	@RequestMapping(value="request/ui/register.do",method=RequestMethod.GET)
-	public String showRegisterRequestUI(){
+		File dir = new File(imgPath);
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		MultipartRequest mr;
+		try {
+			mr = new MultipartRequest(req, imgPath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy());
+
+			String title = mr.getParameter("title");
+			String category = mr.getParameter("category");
+			String content = mr.getParameter("content");
+			int hopePrice = Integer.parseInt(mr.getParameter("hopePrice"));
+			int price = Integer.parseInt(mr.getParameter("price"));
+			String bound = mr.getParameter("bound");
+
+			Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
+			Member maker = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
+
+			request.setTitle(title);
+			request.setCategory(category);
+			request.setContent(content);
+			request.setHopePrice(hopePrice);
+			request.setPrice(price);
+			request.setBound(bound);
+			request.setConsumer(consumer);
+			request.setMaker(maker);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (!rService.registerRequest(request)) {
+			return "";
+		} else {
+			return "consumerRequestDetail";
+		}
+	}
+
+	@RequestMapping(value = "request/xml/remove.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String removeRequestById(String id, HttpSession session) {
+		// String loginId=(String)session.getAttribute("loginId");
+		if (rService.removeRequestById(id)) {
+			return "consumerMyRequestList";
+		} else {
+			return "consumerRequestDetail";
+		}
+	}
+
+	@RequestMapping(value = "request/xml/modifyBound.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String modifyRequestBound(Request request, HttpSession session) {
+		// String loginId=(String)session.getAttribute("loginId");
+		return null;
+	}
+
+	@RequestMapping(value = "request/xml/modifyMaker.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String modifyRequestMaker(String maker_id, HttpSession session) {
+		// String loginId=(String)session.getAttribute("loginId");
+		return null;
+	}
+
+	@RequestMapping(value = "request/xml/removeMaker.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String removeRequestMaker(String maker_id, HttpSession session) {
+		// String loginId=(String)session.getAttribute("loginId");
+		
+		return null;
+	}
+
+	@RequestMapping(value = "request/xml/registerInviteToMaker.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String registerInviteRequestToMaker(InviteRequest inviteRequest) {
+		return null;
+	}
+
+	@RequestMapping(value = "request/xml/registerInviteToConsumer.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String registerInviteRequestToConsumer(InviteRequest inviteRequest) {
+		return null;
+	}
+
+	@RequestMapping(value = "request/xml/removeInvite.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String removeInviteRequestById(String id) {
+		return null;
+	}
+
+	@RequestMapping(value = "request/xml/modifyPaymentValue.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String modifyPaymentValue(Request request, HttpSession session) {
+		// String loginId=(String)session.getAttribute("loginId");
+		return null;
+	}
+
+	// --comment
+
+	@RequestMapping(value = "comment/xml/register.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String registerComment(Comment comment, HttpSession session) {
+		// String loginId=(String)session.getAttribute("loginId");
+		return null;
+	}
+
+	@RequestMapping(value = "comment/xml/modify.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String modifyComment(Comment comment, HttpSession session) {
+		// String loginId=(String)session.getAttribute("loginId");
+		return null;
+	}
+
+	@RequestMapping(value = "comment/xml/remove.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String removeCommentById(String id, HttpSession session) {
+		// String loginId=(String)session.getAttribute("loginId");
+		return null;
+	}
+
+	// --attach
+
+	@RequestMapping(value = "attach/xml/register.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String registerAttach(Attach attach, HttpSession session) {
+		// String loginId=(String)session.getAttribute("loginId");
+		return null;
+	}
+
+	@RequestMapping(value = "attach/xml/remove.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String removeAttachById(String id, HttpSession session) {
+		// String loginId=(String)session.getAttribute("loginId");
+		return null;
+	}
+
+	// ==================web -> html
+
+	@RequestMapping(value = "request/ui/register.do", method = RequestMethod.GET)
+	public String showRegisterRequestUI() {
 		return "request/register";
 	}
-	
-	@RequestMapping(value="request/ui/register1_1.do",method=RequestMethod.GET)
-	public String showRegisterRequestUIForOneToOne(){
+
+	@RequestMapping(value = "request/ui/register1_1.do", method = RequestMethod.GET)
+	public String showRegisterRequestUIForOneToOne() {
 		return "request/register1_1";
 	}
 	
@@ -260,8 +291,6 @@ public class RequestController {
 				(String)session.getAttribute("loginId"), 
 				page));
 	}
-
-	
 	
 	@RequestMapping(value="request/xml/searchMyInviteRequestsForMaker.do", produces="application/xml")
 	public @ResponseBody InviteRequests findMyInviteRequestsForMaker(String page, HttpSession session){
@@ -278,7 +307,6 @@ public class RequestController {
 				Constants.FORM_REQUEST,
 				page));
 	}
-	
 	
 	@RequestMapping(value="comment/xml/searchRequestId.do", produces="application/xml")
 	public @ResponseBody Comments findCommentsByRequestId(String requestId, String page){
@@ -299,5 +327,5 @@ public class RequestController {
 	public @ResponseBody Request findRequestById(String id){
 		return rService.findRequestById(id);
 	}
-	
+
 }
