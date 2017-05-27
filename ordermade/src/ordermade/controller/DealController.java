@@ -27,6 +27,8 @@ public class DealController {
 
 	// logic XML For WEB
 	
+	// http://localhost:8080/ordermade/deal/account/consumerMoney.do
+	// data : {"maker.id":"admin1\n","consumer.id":"consuser1\n","request.id":"1","invoiceNumber":"02255215","deliveryStatus":"yes","payment":"C" }
 	@RequestMapping(value="account/consumerMoney.do", method=RequestMethod.POST, produces="text/plain")
 	public @ResponseBody String consumerMoneyToAccount(PurchaseHistory purchaseHistory, HttpSession session){
 		
@@ -42,6 +44,7 @@ public class DealController {
 		
 //		if(checkPurchase == true){
 			Account account = dService.findAccountById("jwUm");
+			System.out.println(purchaseHistory.getRequest().getPrice());
 			account.setMoney(purchaseHistory.getRequest().getPrice());
 			checkAccount = dService.modifyAccountById(account);
 //		}
@@ -49,24 +52,32 @@ public class DealController {
 		
 	}
 	
+	// http://localhost:8080/ordermade/deal/account/makerMoney.do
+	// data : {"maker.id":"admin1\n","consumer.id":"consuser1\n","request.id":"1","invoiceNumber":"02255215","deliveryStatus":"yes","payment":"C" }
 	@RequestMapping(value="account/makerMoney.do", method=RequestMethod.POST)
 	public String sendMoneyToMakerAccount(PurchaseHistory purchaseHistory, HttpSession session){
 		
 		System.out.println("----------test 성공-----------");
-		Account account = new Account();
+		System.out.println("------data : "+purchaseHistory.toString());
+		
 		// session에서 회원ID 가져오기
 //		String memberId = (String)session.getAttribute("loginUser");
-		account = dService.findAccountById("jwUm");
-		
-		boolean checkAccount = false;
 		boolean checkPurchase = false;
+		boolean checkAccount = false;
 		
-		checkAccount = dService.modifyAccountById(account);
-		if(checkAccount == true){
-			checkPurchase = dService.modifyAccountById(account);
-		}
-		return Boolean.toString(checkPurchase);
+		checkPurchase = dService.registerPurchaseHistory(purchaseHistory);
+		
+//		if(checkPurchase == true){
+			Account account = dService.findAccountById("jwUm");
+			System.out.println(purchaseHistory.getRequest().getPrice());
+			account.setMoney(purchaseHistory.getRequest().getPrice());
+			checkAccount = dService.modifyAccountById(account);
+//		}
+		return checkAccount+"";
 	}
+	
+	// Not Yet
+	// http://localhost:8080/ordermade/deal/purchaseHistory/delivery.do
 	
 	@RequestMapping(value="purchaseHistory/delivery.do", method=RequestMethod.POST)
 	public String registerInvoiceNumberToPurchaseHistory(String invoiceNumber, String id, HttpSession session){
@@ -113,8 +124,8 @@ public class DealController {
 	// XML for Mobile
 	
 	
-	// 
-	@RequestMapping(value="xml/purchaseConsumerList.do", produces="application/xml")
+	// http://localhost:8080/ordermade/deal/xml/searchPurchaseConsumerList.do
+	@RequestMapping(value="xml/searchPurchaseConsumerList.do", produces="application/xml")
 	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesForConsumer(String page, HttpSession session){
 		// session에서 회원ID 가져오기
 //		String consumerId = (String)session.getAttribute("loginUser");
@@ -126,10 +137,11 @@ public class DealController {
 		return purchaseHistories;
 	}
 	
-	@RequestMapping(value="xml/purchaseConsumerTitleList.do", produces="application/xml")
+	// http://localhost:8080/ordermade/deal/xml/searchPurchaseConsumerTitleList.do
+	@RequestMapping(value="xml/searchPurchaseConsumerTitleList.do", produces="application/xml")
 	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesByRequestTitleForConsumer(String requestTitle, String consumerId, HttpSession session){
-		requestTitle = "";
-		consumerId = "";
+		requestTitle = "의뢰 :0";
+		consumerId = "user1";
 		String page = "1";
 		List<PurchaseHistory> purchaseConsumerTitleList = dService.findpurchaseHistoriesByConsumerIdAndRequestTitle(consumerId, requestTitle, page);
 		PurchaseHistories purchaseHistories = new PurchaseHistories();
@@ -137,7 +149,8 @@ public class DealController {
 		return purchaseHistories;
 	}
 	
-	@RequestMapping(value="xml/purchaseMakerList.do", produces="application/xml")
+	// http://localhost:8080/ordermade/deal/xml/searchPurchaseMakerList.do
+	@RequestMapping(value="xml/searchPurchaseMakerList.do", produces="application/xml")
 	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesForMaker(String makerId, HttpSession session){
 		makerId = "";
 		String page = "1";
@@ -147,7 +160,8 @@ public class DealController {
 		return purchaseHistories;
 	}
 	
-	@RequestMapping(value="xml/searchByRequestTitle.do", produces="application/xml")
+	// http://localhost:8080/ordermade/deal/xml/searchMakerListByRequestTitle.do
+	@RequestMapping(value="xml/searchPurchaseMakerListByRequestTitle.do", produces="application/xml")
 	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesByRequestTitleForMaker(String requestTitle, String makerId, HttpSession session){
 		makerId="";
 		requestTitle = "";

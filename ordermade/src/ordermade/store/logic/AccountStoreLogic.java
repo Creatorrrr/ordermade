@@ -10,7 +10,6 @@ import ordermade.store.facade.AccountStore;
 import ordermade.store.mapper.AccountMapper;
 
 @Repository
-@Component
 public class AccountStoreLogic implements AccountStore{
 	
 	private SqlSessionFactory factory;
