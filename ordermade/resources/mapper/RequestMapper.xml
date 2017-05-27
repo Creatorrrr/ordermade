@@ -110,5 +110,4 @@
 			WHERE r.consumer_id = #{consumerId} AND ph.payment = '${@ordermade.constants.Constants@PAYMENT_Y}') 
 		WHERE rnum BETWEEN ((#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>
-	
 </mapper>

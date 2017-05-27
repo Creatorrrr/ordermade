@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ordermade.domain.Categories;
@@ -21,13 +22,13 @@ public class MainController {
 	@Autowired
 	private ProductService pService;
 
-	@RequestMapping(value = "/main", method = RequestMethod.POST)
+	@RequestMapping(value = "/main.do", method = RequestMethod.POST)
 	public ModelAndView showMainUI(String id){
 		
 		List<Product> hitList = pService.findProductsByCategoryOrderByHitsForMain(id, "1");
 		List<Product> OrderList = pService.findProductsByCategoryOrderByIdForMain(id, "1");
 		
-		ModelAndView model = new ModelAndView("index");
+		ModelAndView model = new ModelAndView("index2");
 		model.addObject("products", hitList);
 		model.addObject("products", OrderList);
 
@@ -38,7 +39,7 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="xml/categoryList.do", produces="application/xml")
-	public Categories findAllCategories(){
-		return new 	Categories(pService.findAllCategory());
+	public @ResponseBody Categories findAllCategories(){
+		return new Categories(pService.findAllCategory());
 	}
 }
