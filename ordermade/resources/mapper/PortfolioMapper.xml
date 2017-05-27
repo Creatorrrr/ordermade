@@ -40,8 +40,8 @@
   	<select id="selectPortfoliosByMakerId" parameterType="java.util.Map" resultMap="portfolioMap">
 		select * from (
 			select rownum limitNum, A.* from portfolio A where maker_id=#{makerId}
-			and rownum &lt;= (#{page}*10) order by A.id desc
-		) where limitNum > ((#{page}-1)*10)
+			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE}) order by A.id desc
+		) where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE})
 
   	</select>
   	
@@ -49,15 +49,15 @@
   	<select id="selectPortfoliosByMakerIdAndTitle" parameterType="java.util.Map" resultMap="portfolioMap">
   		select * from (
 			select rownum limitNum, A.* from portfolio A where maker_id=#{makerId} and title like '%${title}%'
-			and rownum &lt;= (#{page}*10) order by A.id desc
-		) where limitNum > ((#{page}-1)*10)
+			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE}) order by A.id desc
+		) where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE})
   	</select>
   
     <select id="selectPortfoliosByCategory" parameterType="java.util.Map" resultMap="portfolioMap">
 		select * from (
 			select rownum limitNum, A.* from portfolio A where type=#{category}
-			and rownum &lt;= (#{page}*10) order by A.id desc
-		) where limitNum > ((#{page}-1)*10)
+			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE}) order by A.id desc
+		) where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE})
   	</select>
   	
   	<select id="selectPortfoliosByTags" parameterType="List" resultMap="portfolioMap">

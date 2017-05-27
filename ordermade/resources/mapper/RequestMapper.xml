@@ -26,22 +26,19 @@
 			javaType="ArrayList" jdbcType="VARCHAR" />  -->
 	</resultMap>
 
-	<sql id="selectRequest">
-		SELECT id, title, maker_id, consumer_id, type, content, hope_price, price, bound
-	</sql>
 
-	<sql id="selectRequestRownum">
-		SELECT rownum rnum, id, title, maker_id, consumer_id, type, content, hope_price, price, bound
-	</sql>
 	
 	<insert id="insertRequest" parameterType="request">
+	  	<selectKey resultType="String" keyProperty="id" order="BEFORE">
+  			select request_seq.nextval from dual
+  		</selectKey>
 		INSERT INTO request(id, title, maker_id, consumer_id, type, content, hope_price, price, bound)
 		VALUES (#{id},#{title},#{maker.id},#{consumer.id},#{category},#{content},#{hopePrice},#{price},#{bound})
 	</insert>
 
 	<update id="updateReqeustById" parameterType="request">
 		UPDATE request
-		SET title = #{title}, type = #{category}, content = #{content}  <!--bound추가?  -->
+		SET title = #{title}, maker_id=#{maker.id}, consumer_id=#{consumer.id}, type = #{category}, content = #{content}, hope_price=#{hopePrice}, price=#{hopePrice}, bound=#{bound} 
 		WHERE id = #{id}
 	</update>
 
@@ -50,6 +47,16 @@
 		WHERE id = #{id}
 	</delete>
 
+
+	<sql id="selectRequest">
+		SELECT id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+	</sql>
+
+	<sql id="selectRequestRownum">
+		SELECT rownum rnum, id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+	</sql>
+
+
 	<select id="selectRequestById" parameterType="String" resultMap="requestMap">
 		<include refid="selectRequest"/>
 		FROM request
@@ -57,11 +64,10 @@
 	</select>
 	
 	<select id="selectRequestsByBound" parameterType="HashMap" resultMap="requestMap">
-		<include refid="selectRequest"/>
-		FROM (<include refid="selectRequestRownum"/>
-		 	FROM request 
-		 	WHERE bound = #{bound})
-		WHERE rnum BETWEEN #{begin} AND #{end}
+		select * from (
+			select rownum limitNum, A.* from request A where bound = #{bound}
+			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE}) order by A.id desc
+		) where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE})
 	</select>
 
 	<select id="selectRequestsByBoundAndTitle" parameterType="HashMap" resultMap="requestMap">

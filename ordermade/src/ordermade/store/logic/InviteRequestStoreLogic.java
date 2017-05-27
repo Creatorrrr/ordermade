@@ -81,19 +81,14 @@ public class InviteRequestStoreLogic implements InviteRequestStore {
 	}
 
 	@Override
-	public List<InviteRequest> selectInviteRequestsByMakerId(String makerId, String begin, String end) {
+	public List<InviteRequest> selectInviteRequestsByMakerId(String makerId, String page) {
 
 		SqlSession session = factory.openSession();
 		List<InviteRequest> list = null;
 
-		HashMap<String, String> map = new HashMap();
-		map.put("makerId", makerId);
-		map.put("begin", begin);
-		map.put("end", end);
-
 		try {
 			InviteRequestMapper mapper = session.getMapper(InviteRequestMapper.class);
-			list = mapper.selectInviteRequestsByMakerId(map);
+			list = mapper.selectInviteRequestsByMakerId(makerId, page);
 		} finally {
 			session.close();
 		}
@@ -101,19 +96,14 @@ public class InviteRequestStoreLogic implements InviteRequestStore {
 	}
 
 	@Override
-	public List<InviteRequest> selectInviteRequestsByConsumerId(String consumerId, String begin, String end) {
+	public List<InviteRequest> selectInviteRequestsByConsumerId(String consumerId, String page) {
 
 		SqlSession session = factory.openSession();
 		List<InviteRequest> list = null;
 
-		HashMap<String, String> map = new HashMap<>();
-		map.put("consumerId", consumerId);
-		map.put("begin", begin);
-		map.put("end", end);
-
 		try {
 			InviteRequestMapper mapper = session.getMapper(InviteRequestMapper.class);
-			list = mapper.selectInviteRequestsByConsumerId(map);
+			list = mapper.selectInviteRequestsByConsumerId(consumerId, page);
 		} finally {
 			session.close();
 		}
