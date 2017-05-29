@@ -34,7 +34,7 @@
                    <thead>
                    <tr>
                        <td class="" style="text-align: center">번호</td>
-                       <td class="" style="text-align: center">제작'자</td>
+                       <td class="" style="text-align: center">제작자</td>
                        <td class="" style="text-align: center">메시지</td>
                        <td class="" style="text-align: center">요청시간</td>
                        <td class="" style="text-align: center">참가요청</td>
