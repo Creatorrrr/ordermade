@@ -40,8 +40,8 @@
 
 			 <table class="">
                    <colgroup>
-                       <col width="200"/>
-                       <col width="200"/>
+                       <col width="110"/>
+                       <col width="250"/>
                        <col width="200"/>
                        <col width="300"/>
                    </colgroup>

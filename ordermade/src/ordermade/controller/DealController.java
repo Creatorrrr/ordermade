@@ -99,20 +99,20 @@ public class DealController {
 	// UI For WEB
 	
 	// http://localhost:8080/ordermade/deal/transaction.do
-	@RequestMapping(value="transaction.do", method=RequestMethod.POST)
+	@RequestMapping(value="transaction.do", method=RequestMethod.GET)
 	public ModelAndView showPurchaseHistoryUI(String page, HttpSession session){
 		// session에서 회원객체 가져오기
-		String memberType = (String)session.getAttribute("memberType");
+		String memberType = "C"/*(String)session.getAttribute("memberType")*/;
 		page = "1";
-		String consumerId = (String)session.getAttribute("loginId");
+		String consumerId = "user1"/*(String)session.getAttribute("loginId")*/;
 		
-		if(memberType == "consumer"){
+		if(memberType == "C"){
 			List<PurchaseHistory> purchaseList = new ArrayList<>();
 			purchaseList = dService.findpurchaseHistoriesByConsumerId(consumerId, page);
 			ModelAndView modelAndView = new ModelAndView("purchaseHistory/consumerPurchaseHistory");
 			modelAndView.addObject("purchaseList", purchaseList);
 			return modelAndView;
-		}else if(memberType == "maker"){
+		}else if(memberType == "M"){
 			String makerId = "";
 			List<PurchaseHistory> purchaseList = new ArrayList<>();
 			purchaseList = dService.findpurchaseHistoriesByMakerId(makerId, page);

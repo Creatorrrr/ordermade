@@ -16,9 +16,10 @@
 			<li><a href="#">상품 관리</a></li>
 			<li><a href="#">포트폴리오 관리 </a></li>
 			<li><a href="#">거래 이력 </a></li>
+			<li><a href="request/ui/makerInviteList.do">참가요청 내역 </a></li>
 		</c:if>
-		<li><a href="#">구매 이력 </a></li>
-		<li><a href="#">참가요청내역 </a></li>
+		<li><a href="${ctx }/deal/transaction.do">구매 이력 </a></li>
+		<li><a href="${ctx }/request/ui/consumerInviteList.do">참가요청내역 </a></li>
 		<li><a onclick="deleteBtn();" class="btn btn-warning">회원탈퇴 </a></li>
 	</ul>
 </nav>
