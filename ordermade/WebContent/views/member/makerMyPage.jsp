@@ -36,6 +36,7 @@
 						<tr>
 							<td>
 								<ul id="pfslider">
+									<!-- images from ajax (sample under) -->
 									<li><img src="${ctx }/member/image.do?img=phonecase4.jpg"></li>
 									<li><img src="${ctx }/member/image.do?img=phonecase9.jpg"></li>
 								</ul>
@@ -51,6 +52,7 @@
 						<tr>
 							<td>
 								<ul id="productslider">
+									<!-- images from ajax (sample under) -->
 									<li><img src="${ctx }/member/image.do?img=phonecase4.jpg"></li>
 									<li><img src="${ctx }/member/image.do?img=phonecase9.jpg"></li>
 								</ul>
@@ -77,91 +79,113 @@
 <link href="${ctx }/views/css/jquery.bxslider.css" rel="stylesheet" />
 
 <script type="text/javascript">
-$( function () {
-    var pfSlider = $( '#pfslider' ).bxSlider( {
-        mode: 'horizontal',// 가로 방향 수평 슬라이드
-        speed: 500,        // 이동 속도를 설정
-        pager: false,      // 현재 위치 페이징 표시 여부 설정
-        moveSlides: 1,     // 슬라이드 이동시 개수
-        slideWidth: 200,   // 슬라이드 너비
-        minSlides: 4,      // 최소 노출 개수
-        maxSlides: 4,      // 최대 노출 개수
-        slideMargin: 5,    // 슬라이드간의 간격
-        auto: true,        // 자동 실행 여부
-        autoHover: true,   // 마우스 호버시 정지 여부
-        controls: false    // 이전 다음 버튼 노출 여부
-    } );
-
-   //이전 버튼을 클릭하면 이전 슬라이드로 전환
-    $( '#prevPfBtn' ).on( 'click', function () {
-    	pfSlider.goToPrevSlide();  //이전 슬라이드 배너로 이동
-        return false;              //<a>에 링크 차단
-    } );
-
-   //다음 버튼을 클릭하면 다음 슬라이드로 전환
-    $( '#nextPfBtn' ).on( 'click', function () {
-    	pfSlider.goToNextSlide();  //다음 슬라이드 배너로 이동
-        return false;
-    } );
-   
-    var productSlider = $( '#productslider' ).bxSlider( {
-        mode: 'horizontal',// 가로 방향 수평 슬라이드
-        speed: 500,        // 이동 속도를 설정
-        pager: false,      // 현재 위치 페이징 표시 여부 설정
-        moveSlides: 1,     // 슬라이드 이동시 개수
-        slideWidth: 200,   // 슬라이드 너비
-        minSlides: 4,      // 최소 노출 개수
-        maxSlides: 4,      // 최대 노출 개수
-        slideMargin: 5,    // 슬라이드간의 간격
-        auto: true,        // 자동 실행 여부
-        autoHover: true,   // 마우스 호버시 정지 여부
-        controls: false    // 이전 다음 버튼 노출 여부
-    } );
-
-   //이전 버튼을 클릭하면 이전 슬라이드로 전환
-    $( '#prevProductBtn' ).on( 'click', function () {
-    	productSlider.goToPrevSlide();  //이전 슬라이드 배너로 이동
-        return false;              //<a>에 링크 차단
-    } );
-
-   //다음 버튼을 클릭하면 다음 슬라이드로 전환
-    $( '#nextProductBtn' ).on( 'click', function () {
-    	productSlider.goToNextSlide();  //다음 슬라이드 배너로 이동
-        return false;
-    } );
-} );
-
+// append portfolio and product on startup
 $(document).ready(function() {
-	getPortfolio(1);
+//	getPortfolios(1); *****************************************************************
+//	getProducts(1); *****************************************************************
 });
 
-$("input[name='search']").click(
-});
-
-var getPortfolio = function() {
+// get portfolios with xml
+var getPortfolios = function(page) {
 	$.ajax({
-		url : "${ctx}/litStorage/search.do",
-		data : {type : $("#type option:selected").val(),
-				keyword : $("input[name='keyword']").val()},
-		type : "post",
+		url : "${ctx}/portfolio/xml/search.do?page=" + page,
+		type : "get",
 		dataType : "xml",
 		success : function(xml) {
-				var xmlData = $(xml).find("litStorage");
+				var xmlData = $(xml).find("portfolio");
 				var listLength = xmlData.length;
-				$("#result").empty();			
+				$("#pfslider").empty();
 				if (listLength) {
 					var contentStr = "";
 					$(xmlData).each(function() {
-						contentStr += "<div class='litStorageBox'><table border='1'><tr><td>이름</td><td><a href='${ctx}/litStorage/profile.do?id="+ $(this).find("id").text() + "'>"+ $(this).find("name:first").text()
-								+ "</a></td></tr><tr><td>소개</td><td>"+ $(this).find("introduce").text() + "</td></tr><tr>"
-								+"<td>생성자 : </td><td>"+ $(this).find("creator").find("id").text()
-								+ "</td></tr></table></div>";
+						contentStr += "<li>";
+						contentStr += "<img src='${ctx }/member/image.do?img=" + $(this).find('portfolio>image') + "'>";
+						contentStr += "</li>";
 					});
-					$("#result").append(contentStr);
+					$("#pfslider").append(contentStr);
 				}
 			}
 		});
 	};
+
+// get products with xml
+var getProducts = function(page) {
+	$.ajax({
+		url : "${ctx}/product/ajax/products/makerid.do?page=" + page,
+		type : "get",
+		dataType : "xml",
+		success : function(xml) {
+				var xmlData = $(xml).find("product");
+				var listLength = xmlData.length;
+				$("#productslider").empty();
+				if (listLength) {
+					var contentStr = "";
+					$(xmlData).each(function() {
+						contentStr += "<li>";
+						contentStr += "<img src='${ctx }/member/image.do?img=" + $(this).find('product>image') + "'>";
+						contentStr += "</li>";
+					});
+					$("#productslider").append(contentStr);
+				}
+			}
+		});
+	};
+
+// portfolio slider setting
+var pfSlider = $( '#pfslider' ).bxSlider( {
+    mode: 'horizontal',// 가로 방향 수평 슬라이드
+    speed: 500,        // 이동 속도를 설정
+    pager: false,      // 현재 위치 페이징 표시 여부 설정
+    moveSlides: 1,     // 슬라이드 이동시 개수
+    slideWidth: 200,   // 슬라이드 너비
+    minSlides: 4,      // 최소 노출 개수
+    maxSlides: 4,      // 최대 노출 개수
+    slideMargin: 5,    // 슬라이드간의 간격
+    auto: true,        // 자동 실행 여부
+    autoHover: true,   // 마우스 호버시 정지 여부
+    controls: false,   // 이전 다음 버튼 노출 여부
+    captions: true     // 캡션 노출 여부
+} );
+
+//이전 버튼을 클릭하면 이전 슬라이드로 전환
+$( '#prevPfBtn' ).on( 'click', function () {
+	pfSlider.goToPrevSlide();  //이전 슬라이드 배너로 이동
+    return false;              //<a>에 링크 차단
+} );
+
+//다음 버튼을 클릭하면 다음 슬라이드로 전환
+$( '#nextPfBtn' ).on( 'click', function () {
+	pfSlider.goToNextSlide();  //다음 슬라이드 배너로 이동
+    return false;
+} );
+ 
+// portfolio slider setting
+var productSlider = $( '#productslider' ).bxSlider( {
+    mode: 'horizontal',// 가로 방향 수평 슬라이드
+    speed: 500,        // 이동 속도를 설정
+    pager: false,      // 현재 위치 페이징 표시 여부 설정
+    moveSlides: 1,     // 슬라이드 이동시 개수
+    slideWidth: 200,   // 슬라이드 너비
+    minSlides: 4,      // 최소 노출 개수
+    maxSlides: 4,      // 최대 노출 개수
+    slideMargin: 5,    // 슬라이드간의 간격
+    auto: true,        // 자동 실행 여부
+    autoHover: true,   // 마우스 호버시 정지 여부
+    controls: false,   // 이전 다음 버튼 노출 여부
+    captions: true     // 캡션 노출 여부
+} );
+
+//이전 버튼을 클릭하면 이전 슬라이드로 전환
+$( '#prevProductBtn' ).on( 'click', function () {
+	productSlider.goToPrevSlide();  //이전 슬라이드 배너로 이동
+    return false;              //<a>에 링크 차단
+} );
+
+//다음 버튼을 클릭하면 다음 슬라이드로 전환
+$( '#nextProductBtn' ).on( 'click', function () {
+	productSlider.goToNextSlide();  //다음 슬라이드 배너로 이동
+    return false;
+} );
 </script>
 
 </body>

@@ -332,7 +332,7 @@ public class RequestController {
 	@RequestMapping(value="request/xml/searchMyInviteRequestsForMaker.do", produces="application/xml")
 	public @ResponseBody InviteRequests findMyInviteRequestsForMaker(String page, HttpSession session){
 		return new InviteRequests(service.findInviteRequestsByMakerId(
-				/*(String)session.getAttribute("loginId")*/"5",
+				(String)session.getAttribute("loginId"),
 				Constants.FORM_INVITE,
 				page));
 	}
@@ -340,7 +340,7 @@ public class RequestController {
 	@RequestMapping(value="request/xml/searchMyInviteRequestsForConsumer.do", produces="application/xml")
 	public @ResponseBody InviteRequests findMyInviteRequestsForConsumer(String page, HttpSession session){
 		return new InviteRequests(service.findInviteRequestsByConsumerId(
-				/*(String)session.getAttribute("loginId")*/"5",
+				(String)session.getAttribute("loginId"),
 				Constants.FORM_REQUEST,
 				page));
 	}
