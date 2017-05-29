@@ -22,7 +22,7 @@ import ordermade.service.facade.MemberService;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
-	
+
 	@Autowired
 	MemberService service;
 
@@ -105,8 +105,8 @@ public class MemberController {
 
 			HttpSession session = req.getSession();
 			session.setAttribute("loginId", member.getId());
-			return "index";
-			
+			return "redirect:/product/register.do";
+
 		} else {
 			return "member/login";
 		}
@@ -160,7 +160,7 @@ public class MemberController {
 		}
 		// 여기는 임의로 index2.jsp로
 		// 보냄******************************************************************
-		return "index";
+		return "${pageContext.request.contextPath}/index";
 	}
 
 	@RequestMapping("/showMyPage")

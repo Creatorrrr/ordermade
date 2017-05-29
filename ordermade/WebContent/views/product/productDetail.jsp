@@ -52,7 +52,7 @@
 	};
 	var errorCallback = function() {
 		alert("수행중 오류가 발생했습니다.");
-	};
+	}
 	/* 	}); */
 </script>
 </head>
