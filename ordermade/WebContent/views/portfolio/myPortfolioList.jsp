@@ -59,9 +59,10 @@
 						</div>
 					</c:if>
 				</c:if>
-
 			</div>
-			</br>
+			
+			<br>
+			
 			<ul class="nospace listing">
 				<li class="clear">
 					<%-- <c:forEach items="${ portfolios }" var="portfolio"> --%>

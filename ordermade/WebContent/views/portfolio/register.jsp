@@ -42,7 +42,7 @@
 					<tr>
 						<th>포트폴리오 내용 <span>*</span></th>
 						<td><textarea id="portfolioContent" name="portfolioContent"
-								class="form-control" cols="50" rows="10"></textarea></td>
+								class="form-control" cols="35" rows="10"></textarea></td>
 					</tr>
 				</table>
 				<div>
