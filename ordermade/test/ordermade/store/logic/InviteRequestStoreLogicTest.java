@@ -22,23 +22,23 @@ public class InviteRequestStoreLogicTest {
 		irStore = new InviteRequestStoreLogic();
 	}
 
-//	@Test		//ok
-//	public void testInsertInviteRequest() {
-//
-//		Member member = new Member();
-//		Request request = new Request();
-//		InviteRequest ir = new InviteRequest();
-//		
-//		member.setId("maker1");
-//		request.setId("7");
-//		
-//		ir.setMessage("asdfa");
-//		ir.setForm("test");
-//		ir.setRequest( );
-//		ir.setMaker(member);
-//		
-//		assertTrue(irStore.insertInviteRequest(ir));
-//	}
+	/*@Test		//ok
+	public void testInsertInviteRequest() {
+
+		Member member = new Member();
+		Request request = new Request();
+		InviteRequest ir = new InviteRequest();
+		
+		member.setId("user1");
+		request.setId("1");
+		
+		ir.setMessage("제 요청을 받아주세요");
+		ir.setForm("I");
+		ir.setRequest(request);
+		ir.setMaker(member);
+		
+		assertTrue(irStore.insertInviteRequest(ir));
+	}*/
 	
 //	@Test         //ok
 //	public void deleteInviteRequestById() {

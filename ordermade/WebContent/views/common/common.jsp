@@ -14,5 +14,3 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="${pageContext.request.contextPath}/views/js/jquery-2.1.3.js"></script>
 <script src="${pageContext.request.contextPath}/views/js/jquery.blockUI.js"></script>
-
-
