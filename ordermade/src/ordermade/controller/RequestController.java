@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -60,7 +61,7 @@ public class RequestController {
 		if(id==null) return "error";
 		boolean check = service.removeRequestById(id);
 		return check+"";
-	}	//get http://localhost:8080/ordermade/request/xml/remove.do?id=5
+	}	//GET http://localhost:8080/ordermade/request/xml/remove.do?id=5
 
 	@RequestMapping(value = "request/xml/modifyBound.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyRequestBound(Request request, HttpSession session) {
@@ -68,15 +69,23 @@ public class RequestController {
 		if(request.getId()==null) return "error";
 		Request requestOK= service.findRequestById(request.getId());
 //		System.out.println(request.getBound());
-		System.out.println(requestOK.toString());
+		if(requestOK.getMaker()== null){		//DB member.id null-> fix	
+			Member maker = new Member();
+			maker.setId("");
+			requestOK.setMaker(maker);
+		}
+		//System.out.println(requestOK.toString());
 		requestOK.setBound(request.getBound());
 		boolean check = service.modifyRequestById(requestOK);
 		return check+"";
-	}
+	}	//POST  http://localhost:8080/ordermade/request/xml/modifyBound.do
+		//{"id":"1","bound":"open"}
+	
 
 	@RequestMapping(value = "request/xml/modifyMakerId.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyMakerIdToRequest(String requestId, String makerId, HttpSession session) {
 		// String loginId=(String)session.getAttribute("loginId");
+		System.out.println(requestId);
 		if(requestId == null) return "error";
 		Request request= service.findRequestById(requestId);
 		Member maker = new Member();
@@ -84,7 +93,8 @@ public class RequestController {
 		request.setMaker(maker);
 		boolean check = service.modifyRequestById(request);
 		return check+"";
-	}
+	}	//POST  http://localhost:8080/ordermade/request/xml/modifyMakerId.do
+		//{"requestId":"1","makerId":"maker1"}
 
 	@RequestMapping(value = "request/xml/removeMakerId.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String removeMakerIdToRequest(String requestId, HttpSession session) {
@@ -96,19 +106,28 @@ public class RequestController {
 		request.setMaker(maker);
 		boolean check = service.modifyRequestById(request);
 		return check+"";
-	}
+	}	//POST  http://localhost:8080/ordermade/request/xml/removeMakerId.do
+		//{"requestId":"1"}
 	
 	
 	@RequestMapping(value = "request/xml/modifyPaymentValue.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyPaymentValue(Request request, HttpSession session) {
 		// String loginId=(String)session.getAttribute("loginId");
+		//System.out.println(request.getId());
 		if(request.getId() == null ) return "error";
 		Request requestOK= service.findRequestById(request.getId());
-		System.out.println(request.getPrice());
+		//System.out.println(request.getPrice());
+		if(requestOK.getMaker()== null){		//DB member.id null-> fix	
+			Member maker = new Member();
+			maker.setId("");
+			requestOK.setMaker(maker);
+		}
 		requestOK.setPrice(request.getPrice());
+		System.out.println(requestOK.toString());
 		boolean check = service.modifyRequestById(requestOK);
 		return check+"";
-	}
+	}	//POST  http://localhost:8080/ordermade/request/xml/modifyPaymentValue.do
+		//{"id":"2","price":"30000"}
 	
 	
 	
@@ -225,15 +244,31 @@ public class RequestController {
 	}
 	
 	@RequestMapping(value="request/ui/modify.do",method=RequestMethod.GET)
-	public ModelAndView showEditRequestUI(String requestId, HttpSession session){
-		if(checkLogined(session)) return new ModelAndView("member/login");	// check logined
-		return new ModelAndView("request/modify")
-				.addObject("request", service.findRequestById(requestId));
+	public ModelAndView showEditRequestUI(String requestId,HttpSession session){
+		List<Request> list = null;
+		String consumerId = "user1";
+
+		Request request = service.findRequestById(requestId);
+		ModelAndView modelAndView = new ModelAndView("request/modify");
+		modelAndView.addObject("request", request);
+		return modelAndView;
 	}
 	
 	@RequestMapping(value="request/ui/search.do",method=RequestMethod.GET)
-	public String showSearchRequestUI(){
-		return "request/makerRequestSearch";
+	public ModelAndView showSearchRequestUI(){
+		List<Request> list = null;
+		String consumerId = "user1";
+		String type = "consumer";
+		
+		if(type == "consumer"){
+			list = service.findRequestsByConsumerId(consumerId, "1");
+		}else{
+			list = service.findRequestsByConsumerIdWithMaker(consumerId, "1");
+		}
+		
+		ModelAndView modelAndView = new ModelAndView("request/search");
+		modelAndView.addObject("request", list);
+		return modelAndView;
 	}
 	
 	@RequestMapping(value="request/ui/detail.do",method=RequestMethod.GET)
@@ -244,7 +279,7 @@ public class RequestController {
 	
 	@RequestMapping(value="request/ui/makerInviteList.do",method=RequestMethod.GET)
 	public ModelAndView showMakerInviteRequestListUI(String page, HttpSession session){
-		return new ModelAndView("/request/makerInviteList")
+		return new ModelAndView("request/makerInviteList")
 				.addObject("inviteRequests", 
 						service.findInviteRequestsByMakerId(
 								(String)session.getAttribute("loginId"), 
@@ -328,10 +363,5 @@ public class RequestController {
 	@RequestMapping(value="request/xml/searchById.do", produces="application/xml")
 	public @ResponseBody Request findRequestById(String id){
 		return service.findRequestById(id);
-	}
-	
-	private boolean checkLogined(HttpSession session) {
-		String loginId = (String)session.getAttribute("loginId");
-		return loginId == null || loginId.isEmpty();
 	}
 }
