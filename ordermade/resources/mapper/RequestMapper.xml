@@ -38,7 +38,7 @@
 
 	<update id="updateReqeustById" parameterType="request">
 		UPDATE request
-		SET title = #{title}, maker_id=#{maker.id}, consumer_id=#{consumer.id}, type = #{category}, content = #{content}, hope_price=#{hopePrice}, price=#{hopePrice}, bound=#{bound} 
+		SET title = #{title}, maker_id=#{maker.id}, consumer_id=#{consumer.id}, type = #{category}, content = #{content}, hope_price=#{hopePrice}, price=#{price}, bound=#{bound} 
 		WHERE id = #{id}
 	</update>
 
