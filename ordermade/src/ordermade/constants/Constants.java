@@ -23,4 +23,8 @@ public class Constants {
 	public static final String CONSUMER = "C";
 	public static final String MAKER = "M";
 	
+	public static final String PORTFOLIO_TITLE = "portfolioTitle";
+	public static final String PORTFOLIO_CONTENT = "portfolioContent";
+	
+	
 }

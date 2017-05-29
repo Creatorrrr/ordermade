@@ -18,35 +18,44 @@
 			<h1>나의 포트폴리오</h1>
 
 			<div class="fl_right">
-				<form class="clear" method="post" action="#">
-					<input type="hidden" name="boardId" value="${boardId }"
-						class="form-control">
+				<form method="portfolio" action="${ctx}/portfolio/ui/search.do">
+				<%-- 	<input type="hidden" name="boardId" value="${boardId }"
+						class="form-control"> --%>
 					<div>
-						<fieldset>
-							<select name="type" id="type" class="form-control">
-								<option value="id">제목</option>
-								<option value="name">내용</option>
+						<!-- <fieldset> -->
+							<select name="selectPortfolio">
+								<option value="title">제목</option>
+								<option value="content">내용</option>
 							</select> <input input name="search" class="search-box-input" type="text"
-								value="" placeholder="Search Here" />
-							<button class="fa fa-search" type="submit" title="Search">
+								placeholder="Search Here" />
+							<button class="fa fa-search" type="submit" title="검색" >
 								<em>Search</em>
 							</button>
-						</fieldset>
+				<!-- 		</fieldset> -->
 					</div>
 				</form>
 
-				<!-- <form class="clear" method="post" action="#">
+				<%-- 	<form class="clear" method="post"
+					action="${ctx }/portfolio/ui/register.do">
 					<div>
 						<fieldset>
 							<input name="submit" type="submit" value="등록">
 						</fieldset>
 					</div>
-				</form> -->
+				</form> --%>
+
+				<div style="float: right;">
+					<%-- <c:if test="${sessionScope.loginId ne null && boardId ne null}"> --%>
+					<a class="btn btn-sm btn-success"
+						href="${ctx}/portfolio/ui/register.do">포트폴리오 등록</a>
+					<%-- </c:if> --%>
+				</div>
+
 				<c:if test="${sessionScope.loginId ne null}">
-					<c:if test="${product.writer.id eq sessionScope.loginId}">
+					<c:if test="${product.maker eq sessionScope.loginId}">
 						<div align="center">
-							<input class="btn btn-success" type="button" value="등록"
-								onclick="javascript:window.location='${ctx}/portfolio/register.do?portfolioId=${portfolioId}'">
+							<input class="btn btn-success" type="button" value="포트폴리오 등록"
+								onclick="javascript:window.location='${ctx}/portfolio/ui/register.do?portfolioId=${portfolio.Id}'">
 						</div>
 					</c:if>
 				</c:if>
@@ -55,7 +64,7 @@
 			</br>
 			<ul class="nospace listing">
 				<li class="clear">
-					<%-- <c:forEach items="${ box_list }" var="literature"> --%>
+					<%-- <c:forEach items="${ portfolios }" var="portfolio"> --%>
 					<div class="content" align="center">
 						<table class="table">
 							<tr>
@@ -65,8 +74,9 @@
 							</tr>
 							<tr class="nospace btmspace-15">
 								<td>포트폴리오 제목</td>
-								<td><a class="literature" href="${ctx}/#/#.do?#=${asf }">${asf  }
-										rkrkrk</a></td>
+								<td><a class="portfolio"
+									href="${ctx}/portfolio/ui/detail.do?porfolioId=${porfolio.id }">${portfolio.title }
+										test</a></td>
 							</tr>
 						</table>
 					</div> <%-- </c:forEach> --%>
