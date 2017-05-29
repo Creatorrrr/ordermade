@@ -9,8 +9,10 @@ public class Constants {
 	public static final int ATTACH_ROW_SIZE = 10;
 	public static final int PORTFOLIO_ROW_SIZE = 10;
 	public static final int PURCHASEHISTORY_ROW_SIZE = 10;
-
-	public static final String ROOT = "./WebContent";
+	
+	// 본인 이클립스 경로의 WebContent 폴더에 생성됨
+	// ex) C:\kosta_14\down\eclipse-jee-neon-2-win32-x86_64\eclipse\WebContent
+	public static final String ROOT = "./WebContent";	
 	
 	public static final String IMAGE_PATH = ROOT +"/img/";
 	

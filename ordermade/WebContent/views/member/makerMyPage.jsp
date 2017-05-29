@@ -39,15 +39,15 @@
 								<td>
 									<div style="display:inline-block">
 										<img src="${ctx }/views/images/bul_prev.png" />
-										<img style="width:70%" src="${ctx }/member/image.do?img=${member.image }">
+										<img style="width:60%" src="${ctx }/member/image.do?img=${member.image }">
 										<img src="${ctx }/views/images/bul_next.png" />
 									</div>
 								</td>
 							</tr>
-					</table>
+						</table>
+					</div>
 
-
-					<div>
+					<%-- <div>
 						<tr>
 							<h3>최신 상품</h3>
 						</tr>
@@ -56,16 +56,16 @@
 						</tr>
 						<tr>
 							<div class="imgl borderedbox">
-								<%-- <c:forEach items="${ box_list }" var="literature"> --%>
+								<c:forEach items="${ box_list }" var="literature">
 								<img src="${ctx }/views/images/img1.jpg" />
-								<%-- </c:forEach> --%>
+								</c:forEach>
 							</div>
 						</tr>
-					<tr class="nospace btmspace-15">
-					<tr>
-						<img src="${ctx }/views/images/bul_next.png" />
-					</tr>
-		</div>
+						<tr class="nospace btmspace-15">
+						<tr>
+							<img src="${ctx }/views/images/bul_next.png" />
+						</tr>
+					</div> --%>
 	</div>
 	</li>
 	</ul>

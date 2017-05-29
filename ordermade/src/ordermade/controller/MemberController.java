@@ -113,6 +113,8 @@ public class MemberController {
 
 	@RequestMapping("/modifyMember.do") // end
 	public ModelAndView showEditMyPageUI(HttpSession session) {
+		if(checkLogined(session)) return new ModelAndView("member/login");	// check logined
+		
 		// 회원 정보를 불러와 memberModify.jsp화면으로 이동
 		return new ModelAndView("member/memberModify")
 				.addObject("member", 
@@ -120,7 +122,9 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/modifyMember.do", method = RequestMethod.POST) // end
-	public String modifyMemberById(Member member) {
+	public String modifyMemberById(Member member, HttpSession session) {
+		if(checkLogined(session)) return "member/login";	// check logined
+		
 		// 회원 수정후 마이페이지로 이동한다.
 		if(service.modifyMemberById(member)) {
 			return "redirect:/member/myPage.do";
@@ -131,6 +135,8 @@ public class MemberController {
 
 	@RequestMapping("/removeMember.do") // end
 	public String removeMemberById(HttpSession session) {
+		if(checkLogined(session)) return "member/login";	// check logined
+		
 		// 회원 탈퇴시 메인 화면으로 이동
 		if (service.removeMemberById((String)session.getAttribute("loginId"))) {
 			session.invalidate();
@@ -142,6 +148,8 @@ public class MemberController {
 
 	@RequestMapping("/myPage.do")
 	public ModelAndView showMyPageUI(HttpSession session) {
+		if(checkLogined(session)) return new ModelAndView("member/login");	// check logined
+		
 		// 자신의 정보를 불러온다. 그 후 마이페이지화면으로 이동
 		String memberType = (String)session.getAttribute("memberType");
 
@@ -186,4 +194,8 @@ public class MemberController {
 		}
 	}
 
+	private boolean checkLogined(HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		return loginId == null || loginId.isEmpty();
+	}
 }
