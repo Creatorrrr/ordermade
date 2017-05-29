@@ -30,7 +30,7 @@
 	function deleteBtn(){
 		var r = confirm("탈퇴하시면 로그인을 할수가 없습니다!");
 		if (r == true) {
-		   	location.href="${ctx }/member/delete.do";
+		   	location.href="${ctx }/member/removeMember.do";
 		}
 	}
 

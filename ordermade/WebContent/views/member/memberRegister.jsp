@@ -58,7 +58,7 @@
 		<main class="container clear">
 		<h3>회원가입</h3>
 		<br>
-		<form id="registerForm" action="${ctx }/main/main.do" method="post"
+		<form id="registerForm" action="${ctx }/member/join.do" method="post"
 			enctype="multipart/form-data">
 			<table class="table">
 				<tr>
@@ -94,14 +94,20 @@
 				</tr>
 				<tr>
 					<th><label for="introduce">소개글</label></th>
-					<td><textarea rows="10" cols="75" id="introduce"
-							name="introduce" class="form-control" placeholder="소개"></textarea></td>
+					<td>
+						<textarea rows="10" cols="75" id="introduce"
+							name="introduce" class="form-control" placeholder="소개"></textarea>
+					</td>
 				</tr>
 				<tr>
 					<th><label>고객/사업자</label></th>
-					<td><input type="radio" name="memberType" id="memberType"
-						value="customer" checked="checked">고객</input> <input type="radio"
-						id="memberType" name="memberType" value="buisnessman">사업자</input></td>
+					<td>
+						<input type="radio" name="memberType" id="memberTypeC" value="C" 
+							checked="checked">
+						<label for="memberTypeC">고객</label>
+						<input type="radio" name="memberType" id="memberTypeM" value="M">
+						<label for="memberTypeM">사업자</label>
+					</td>
 				</tr>
 				<tr>
 					<th><label for="license">사업 번호</label></th>

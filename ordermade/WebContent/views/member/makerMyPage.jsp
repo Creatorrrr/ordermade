@@ -9,72 +9,42 @@
 	<div class="rounded">
 		<main class="container clear"> <!-- main body -->
 		<div class="sidebar one_third first">
-
 			<%@ include file="/views/common/myPageNav.jsp"%>
-
 		</div>
-
 		<div id="content" class="two_third">
-
 			<ul class="nospace listing">
 				<li class="clear">
-
 					<div class="content" align="center">
+						<div class="imgl borderedbox">
+							<img src="${ctx }/member/image.do?img=${member.image}" />
+						</div>
 						<table class="table">
-							<tr>
-								<div class="imgl borderedbox">
-									<img src="${ctx }/views/images/img1.jpg" />
-								</div>
-							</tr>
 							<tr class="nospace btmspace-15">
 							<tr>
-								<p>아이디 : ${id}</p>
+								<td><p>아이디 : ${member.id}</p></td>
 							</tr>
 							<tr>
-								<p>가입일자 : ${date }</p>
+								<td><p>이메일 : ${member.email }</p></td>
 							</tr>
 							<tr>
-								<p>이메일 : ${email }</p>
+								<td><p>주소 : ${member.address }</p></td>
 							</tr>
 							<tr>
-								<p>주소 : ${address }</p>
+								<td><p>사업자번호 : ${member.licenseNumber}</p></td>
 							</tr>
+							<tr><td><h3>제작자 소개</h3></td></tr>
+							<tr><td><p>${member.introduce }</p></td></tr>
+							<tr><td><h3>최신 포트폴리오</h3></td></tr>
 							<tr>
-								<p>사업자번호 : ${license }</p>
+								<td>
+									<div style="display:inline-block">
+										<img src="${ctx }/views/images/bul_prev.png" />
+										<img style="width:70%" src="${ctx }/member/image.do?img=${member.image }">
+										<img src="${ctx }/views/images/bul_next.png" />
+									</div>
+								</td>
 							</tr>
-							</tr>
-
-							<tr>
-							<tr>
-								<h3>제작자 소개</h3>
-							</tr>
-							</tr>
-							<tr>
-								<p>내용나와야 함@@@</p>
-							</tr>
-							<br>
-						</table>
-						<div>
-							<tr>
-								<h3>최신 포트폴리오</h3>
-							</tr>
-
-						<tr class="nospace btmspace-15">
-							<td><img src="${ctx }/views/images/bul_prev.png" /></td>
-						</tr>
-						<tr>
-							<%-- <c:forEach items="${ box_list }" var="literature"> --%>
-							<div class="imgl borderedbox">
-								<img src="${ctx }/views/images/img1.jpg" />
-							</div>
-							<%-- </c:forEach> --%>
-						</tr>
-						<tr class="nospace btmspace-15">
-						<tr>
-							<img src="${ctx }/views/images/bul_next.png" />
-						</tr>
-						<br> <br>
-					</div>
+					</table>
 
 
 					<div>
