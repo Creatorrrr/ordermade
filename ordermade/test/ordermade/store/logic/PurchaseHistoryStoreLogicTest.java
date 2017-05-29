@@ -93,13 +93,13 @@ public class PurchaseHistoryStoreLogicTest {
 //		}
 //	}
 
-//	@Test
-//	public void testSelectPurchaseHistoriesByConsumerIdAndRequestTitle() {
-//		List<PurchaseHistory> list = store.selectPurchaseHistoriesByConsumerIdAndRequestTitle("user1","b", "1");
-//		for(PurchaseHistory p : list){
-//			System.out.println(p.toString());
-//		}
-//	}
+	@Test
+	public void testSelectPurchaseHistoriesByConsumerIdAndRequestTitle() {
+		List<PurchaseHistory> list = store.selectPurchaseHistoriesByConsumerIdAndRequestTitle("user1","가구", "1");
+		for(PurchaseHistory p : list){
+			System.out.println(p.toString());
+		}
+	}
 	
 //	@Test
 //	public void testSelectPurchaseHistoriesByMakerId() {

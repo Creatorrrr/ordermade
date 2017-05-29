@@ -109,15 +109,15 @@ public class DealController {
 		if(memberType == "consumer"){
 			List<PurchaseHistory> purchaseList = new ArrayList<>();
 			purchaseList = dService.findpurchaseHistoriesByConsumerId(consumerId, page);
-			ModelAndView modelAndView = new ModelAndView("deal/transaction");
-			modelAndView.addObject("/purchaseHistory/consumerPurchaseHistory", purchaseList);
+			ModelAndView modelAndView = new ModelAndView("purchaseHistory/consumerPurchaseHistory");
+			modelAndView.addObject("purchaseList", purchaseList);
 			return modelAndView;
 		}else if(memberType == "maker"){
 			String makerId = "";
 			List<PurchaseHistory> purchaseList = new ArrayList<>();
 			purchaseList = dService.findpurchaseHistoriesByMakerId(makerId, page);
-			ModelAndView modelAndView = new ModelAndView("deal/transaction");
-			modelAndView.addObject("/purchaseHistory/makerPurchaseHistory", purchaseList);
+			ModelAndView modelAndView = new ModelAndView("purchaseHistory/makerPurchaseHistory");
+			modelAndView.addObject("purchaseList", purchaseList);
 			return modelAndView;
 		}
 		return null;
@@ -140,11 +140,10 @@ public class DealController {
 	}
 	
 	// http://localhost:8080/ordermade/deal/xml/searchPurchaseConsumerTitleList.do
-	@RequestMapping(value="xml/searchPurchaseConsumerTitleList.do", produces="application/xml")
-	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesByRequestTitleForConsumer(String requestTitle, String consumerId, HttpSession session){
-		requestTitle = "의뢰 :0";
+	@RequestMapping(value="xml/searchPurchaseConsumerTitleList.do", method=RequestMethod.POST, produces="application/xml")
+	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesByRequestTitleForConsumer(String requestTitle, String consumerId, String page, HttpSession session){
 		consumerId = "user1";
-		String page = "1";
+		page = "1";
 		List<PurchaseHistory> purchaseConsumerTitleList = dService.findpurchaseHistoriesByConsumerIdAndRequestTitle(consumerId, requestTitle, page);
 		PurchaseHistories purchaseHistories = new PurchaseHistories();
 		purchaseHistories.setPurchaseList(purchaseConsumerTitleList);
@@ -164,10 +163,10 @@ public class DealController {
 	
 	// http://localhost:8080/ordermade/deal/xml/searchMakerListByRequestTitle.do
 	@RequestMapping(value="xml/searchPurchaseMakerListByRequestTitle.do", produces="application/xml")
-	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesByRequestTitleForMaker(String requestTitle, String makerId, HttpSession session){
+	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesByRequestTitleForMaker(String requestTitle, String makerId, String page, HttpSession session){
 		makerId="";
 		requestTitle = "";
-		String page = "1";
+		page = "1";
 		List<PurchaseHistory> purchaseMakerTitleList = dService.findpurchaseHistoriesByMakerIdAndRequestTitle(makerId, requestTitle, page);
 		PurchaseHistories purchaseHistories = new PurchaseHistories();
 		purchaseHistories.setPurchaseList(purchaseMakerTitleList);
