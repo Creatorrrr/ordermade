@@ -2,6 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
+
+<!-- TEST ========================================================================================== -->
+<!-- http://localhost:8080/ordermade/views/purchaseHistory/consumerPurchaseHistory.jsp -->
+<!-- http://localhost:8080/ordermade/deal/transaction.do -->
+
 <!-- Header ========================================================================================== -->
 <%@ include file="/views/common/head.jsp"%>
 
@@ -57,7 +62,9 @@
                        <c:forEach var="purchaseHistory" items="${purchaseList}"
                                   varStatus="sts">
                         <tr>
-                            <td class="text-center"><img src=${ctx }/views/images/img-10.jpg></td>
+                            <td class="text-center">
+                            	<img src=${ctx }/views/images/img-10.jpg>
+                            </td>
                             <td style="text-align: center">
 								상품명 : ${purchaseHistory.request.title }<br>
 								아이디 : ${purchaseHistory.consumer.id }<br>
@@ -67,8 +74,8 @@
                             	${purchaseHistory.orderDate}
                             </td>
                             <td class="text-center" style="text-align: center">
-                            		${purchaseHistory.deliveryStatus}<br>
-                            		<a href="" class="">구매확정</a>
+                           		${purchaseHistory.deliveryStatus}<br>
+                           		<a href="" class="">구매확정</a>
                             </td>
                         </tr>
                        </c:forEach>

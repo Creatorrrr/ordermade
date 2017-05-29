@@ -277,14 +277,15 @@ public class RequestController {
 				.addObject("request", service.findRequestById(id));
 	}
 	
+	// 170529 Complete
 	@RequestMapping(value="request/ui/makerInviteList.do",method=RequestMethod.GET)
 	public ModelAndView showMakerInviteRequestListUI(String page, HttpSession session){
 		return new ModelAndView("request/makerInviteList")
 				.addObject("inviteRequests", 
 						service.findInviteRequestsByMakerId(
-								(String)session.getAttribute("loginId"), 
+								/*(String)session.getAttribute("loginId")*/"user1", 
 								Constants.FORM_INVITE, 
-								page));
+								/*page*/"1"));
 	}
 	
 	@RequestMapping(value="request/ui/consumerInviteList.do",method=RequestMethod.GET)
@@ -292,9 +293,9 @@ public class RequestController {
 		return new ModelAndView("request/consumerInviteList")
 				.addObject("inviteRequests", 
 						service.findInviteRequestsByConsumerId(
-								(String)session.getAttribute("loginId"), 
+								/*(String)session.getAttribute("loginId")*/"jwmm", 
 								Constants.FORM_REQUEST, 
-								page));
+								/*page*/"1"));
 	}
 	
 	//==================mobile -> xml

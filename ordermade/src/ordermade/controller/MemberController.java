@@ -167,6 +167,7 @@ public class MemberController {
 	}
 
 	// Mobile용
+	// http://localhost:8080/ordermade/member/xml/myPage.do
 	@RequestMapping(value="/xml/myPage.do", produces="application/xml")
 	public @ResponseBody Member findMyMember(HttpSession session) {
 		return service.findMemberById((String)session.getAttribute("loginId"));
