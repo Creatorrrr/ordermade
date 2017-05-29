@@ -8,38 +8,38 @@
 <div class="wrapper row3">
 	<div class="rounded">
 		<main class="container clear"> <!-- main body -->
-		<div class="sidebar one_third first">
-
-			<%@ include file="/views/common/myPageNav.jsp"%>
-
-		</div>
-
-		<div id="content" class="two_third">
-			<h1>참가요청내역</h1>
-			<div class="">
-				<table>
-					<tr>
-						<td>번호</td>
-						<td>소비자</td>
-						<td>메시지</td>
-						<td>요청시간</td>
-						<td>참가요청</td>
-					</tr>
-
-					<%-- <c:forEach items="${ }" var=""> --%>
-					<tr>
-						<td><p>1</p></td>
-						<td><p>1</p></td>
-						<td><p>1</p></td>
-						<td><p>1</p></td>
-						<td><input type="button" value="수락"><input
-							type="button" value="거절"></td>
-					</tr>
-					<%-- </c:forEach> --%>
-
-				</table>
+			<div class="sidebar one_third first">
+	
+				<%@ include file="/views/common/myPageNav.jsp"%>
+	
 			</div>
-		</div>
+	
+			<div id="content" class="two_third">
+				<h1>참가요청내역</h1>
+				<div class="">
+					<table>
+						<tr>
+							<td>번호</td>
+							<td>소비자</td>
+							<td>메시지</td>
+							<td>요청시간</td>
+							<td>참가요청</td>
+						</tr>
+						<c:forEach items="${inviteRequests}" var="inviteRequest">
+							<tr>
+								<td><p>${inviteRequest.id}</p></td>
+								<td><p>${inviteRequest.request.consumer.id}</p></td>
+								<td><p>${inviteRequest.message}</p></td>
+								<td><p>${inviteRequest.requestTime}</p></td>
+								<td>
+									<input type="button" value="수락">
+									<input type="button" value="거절">
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
+			</div>
 		</main>
 	</div>
 </div>

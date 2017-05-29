@@ -25,18 +25,18 @@
 						<td>요청시간</td>
 						<td>참가요청</td>
 					</tr>
-
-					<%-- <c:forEach items="${ }" var=""> --%>
-					<tr>
-						<td><p>1</p></td>
-						<td><p>1</p></td>
-						<td><p>1</p></td>
-						<td><p>1</p></td>
-						<td><input type="button" value="수락"><input
-							type="button" value="거절"></td>
-					</tr>
-					<%-- </c:forEach> --%>
-
+					<c:forEach items="${inviteRequests}" var="inviteRequest">
+						<tr>
+							<td><p>${inviteRequest.id}</p></td>
+							<td><p>${inviteRequest.maker.id}</p></td>
+							<td><p>${inviteRequest.message}</p></td>
+							<td><p>${inviteRequest.requestTime}</p></td>
+							<td>
+								<input type="button" value="수락">
+								<input type="button" value="거절">
+							</td>
+						</tr>
+					</c:forEach>
 				</table>
 			</div>
 		</div>
