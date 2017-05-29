@@ -8,43 +8,36 @@
 <div class="wrapper row3">
 	<div class="rounded">
 		<main class="container clear"> <!-- main body -->
-		<div class="sidebar one_third first">
-
-			<%@ include file="/views/common/myPageNav.jsp"%>
-
-		</div>
-
-		<div id="content" class="two_third">
-
-			<ul class="nospace listing">
-				<li class="clear">
-
-					<div class="content" align="center">
-						<table class="table">
-							<tr>
-								<div class="imgl borderedbox">
-									<img src="${ctx }/views/images/img1.jpg" />
-								</div>
-							</tr>
-							<tr class="nospace btmspace-15">
-							<tr>
-								<p>아이디 : ${id}</p>
-							</tr>
-							<tr>
-								<p>가입일자 : ${date }</p>
-							</tr>
-							<tr>
-								<p>이메일 : ${email }</p>
-							</tr>
-							<tr>
-								<p>주소 : ${address }</p>
-							</tr>
-							</tr>
-						</table>
-					</div>
-				</li>
-			</ul>
-		</div>
+			<div class="sidebar one_third first">
+				<%@ include file="/views/common/myPageNav.jsp"%>
+			</div>
+	
+			<div id="content" class="two_third">
+				<ul class="nospace listing">
+					<li class="clear">
+						<div class="content" align="center">
+							<div class="imgl borderedbox">
+								<img src="${ctx }/member/image.do?img=${member.image}">
+							</div>
+							<table class="table">
+								<tr class="nospace btmspace-15">
+								<tr>
+									<td>아이디 : ${member.id}</td>
+								</tr>
+								<tr>
+									<td>이메일 : ${member.email }</td>
+								</tr>
+								<tr>
+									<td>주소 : ${member.address }</td>
+								</tr>
+								<tr>
+									<td>회원 종류 : ${member.memberType }</td>
+								</tr>
+							</table>
+						</div>
+					</li>
+				</ul>
+			</div>
 		</main>
 	</div>
 </div>

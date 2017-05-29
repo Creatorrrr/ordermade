@@ -4,8 +4,6 @@
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html>
-<head>
-<title>1:1 매칭 프로그램</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -16,8 +14,6 @@
 <script src="${ctx }/views/layout/scripts/jquery.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.fitvids.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.mobilemenu.js"></script>
-
-</head>
 <body id="top">
 	<div class="wrapper row0">
 		<div id="topbar" class="clear">
@@ -26,16 +22,16 @@
 					<c:choose>
 						<c:when test="${loginId eq null }">
 							<ul>
-								<li><a id="loginBtn" href="${ctx }/views/login.jsp">Login</a></li>
-								<li><a href="${ctx }/views/memberRegister.jsp"
+								<li><a id="loginBtn" href="${ctx }/member/login.do">Login</a></li>
+								<li><a href="${ctx }/member/join.do"
 									class="btn btn-success">Sign up</a></li>
 							</ul>
 						</c:when>
 						<c:otherwise>
 							<span class="glyphicon glyphicon-user"></span>
-							<b>${loginId}</b>님 환영합니다. [<a href="${ctx }/logout.do">로그아웃</a>]
+							<b>${loginId}</b>님 환영합니다. [<a href="${ctx }/member/logout.do">로그아웃</a>]
 							<ul>
-								<li><a href="${ctx}/member/modifyMember.do">회원정보</a></li>
+								<li><a href="${ctx}/member/myPage.do">회원정보</a></li>
 
 							</ul>
 						</c:otherwise>
@@ -52,9 +48,7 @@
 		<header id="header" class="clear">
 			<div id="logo" class="fl_left">
 				<h1>
-					<a href="${ctx }/views/index.jsp"><img
-						src="${ctx }/views/images/panda4.jpg"
-						style="width: 100px; height: 100px"> 판다</a>
+					<a href="${ctx }/views/index.jsp"><img src="${ctx }/views/images/panda4.jpg" style="width:100px;height:100px"> 판다</a>
 				</h1>
 				<p>다 판다</p>
 				<p>없으면 만들어서 판다</p>
@@ -79,16 +73,27 @@
 		<div class="rounded">
 			<nav id="mainav" class="clear">
 				<ul class="clear">
-					<li class="active"><a href="${ctx }/views/index.jsp">Home</a></li>
-					<li><a class="drop" href="#">Category</a>
+					<li class=""><a href="${ctx }/views/index.jsp">Main</a></li>
+					<li><a class="drop" href="#">상품 목록</a>
 						<ul>
-							<li><a href="${ctx }/product/ajax/products/category.do">Furniture</a></li>
+							<li><a href="${ctx }/views/productList.jsp">Furniture</a></li>
 							<li><a href="${ctx }/pages/portfolio.html">Accessory</a></li>
 							<li><a href="${ctx }/pages/full-width.html">Kitchen</a></li>
 							<li><a href="${ctx }/pages/sidebar-left.html">Digital</a></li>
 							<li><a href="${ctx }/pages/sidebar-left-2.html">Clothing</a></li>
 							<li><a href="${ctx }/pages/sidebar-right.html">Sport</a></li>
 						</ul></li>
+
+					<!-- <li><a class="drop" href="#">Dropdown</a>
+						<ul>
+							<li><a href="#">Level 2</a></li>
+							<li><a class="drop" href="#">Level 2 + Drop</a>
+								<ul>
+									<li><a href="#">Level 3</a></li>
+									<li><a href="#">Level 3</a></li>
+								</ul></li>
+						</ul>
+					</li> -->
 					<li><a href="#">Link Text</a></li>
 					<li><a href="#">Another Link Text</a></li>
 					<li><a href="#">This a very long link</a></li>

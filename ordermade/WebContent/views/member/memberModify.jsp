@@ -16,8 +16,7 @@
 			<h3>회원 정보 수정</h3>
 
 			<br>
-			<form id="registerForm" action="${ctx }/member/showMyPage.do"
-				method="post">
+			<form id="registerForm" action="${ctx }/member/modifyMember.do" method="post">
 				<table class="table">
 					<tr>
 						<th><label for="id">ID</label></th>
@@ -51,9 +50,15 @@
 					</tr>
 					<tr>
 						<th><label>고객/사업자</label></th>
-						<td><input type="radio" name="memberType" value="customer"
-							checked="checked">고객</input> <input type="radio"
-							name="memberType" value="buisnessman">사업자</input></td>
+						<td>
+							<input type="radio" name="memberType" id="memberTypeC" value="C" 
+							<c:if test="${member.memberType eq 'C'}">checked="checked"</c:if>>
+							<label for="memberTypeC">고객</label>
+							<input type="radio" name="memberType" id="memberTypeM" value="M"
+							<c:if test="${member.memberType eq 'M'}">checked="checked"</c:if>>
+							<label for="memberTypeM">사업자</label>
+						</td>
+						
 					</tr>
 					<tr>
 						<th><label for="license">사업 번호</label></th>

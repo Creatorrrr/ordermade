@@ -1,5 +1,14 @@
 package ordermade.domain;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.springframework.stereotype.Component;
+
+@XmlRootElement(name="member")
+@XmlAccessorType(XmlAccessType.FIELD)
+@Component
 public class Member {
 	private String id;
 	private String password;
@@ -10,7 +19,6 @@ public class Member {
 	private String introduce;
 	private String licenseNumber;
 	private String image;
-//	private MultipartFile image;
 
 	public String getId() {
 		return id;

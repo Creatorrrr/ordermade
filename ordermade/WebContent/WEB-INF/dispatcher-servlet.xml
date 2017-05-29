@@ -19,6 +19,9 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
+	<bean id="jacksonMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+
 	<mvc:interceptors>
 		<bean class="ordermade.interceptor.CharacterEncodingInterceptor" />
 	</mvc:interceptors>
