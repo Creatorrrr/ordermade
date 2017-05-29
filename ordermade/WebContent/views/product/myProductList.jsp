@@ -35,13 +35,12 @@
 					</div>
 				</form>
 
-				<form class="clear" method="post" action="#">
-					<div>
-						<fieldset>
-							<input name="submit" type="submit" value="등록">
-						</fieldset>
-					</div>
-				</form>
+				<div style="float: right;">
+					<%-- <c:if test="${sessionScope.loginId ne null && boardId ne null}"> --%>
+					<a class="btn btn-sm btn-success"
+						href="${ctx}/product/register.do">상품 등록</a>
+					<%-- </c:if> --%>
+				</div>
 
 			</div>
 			</br>

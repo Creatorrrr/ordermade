@@ -17,17 +17,15 @@
 			<br>
 			<form action="${ctx }/portfolio/xml/register.do" method="post"
 				name="pRegister" onsubmit="return checkIt()">
-				<input name="portfolioId" type="hidden" value="${portfolioId }">
+				<%-- <input name="portfolioId" type="hidden" value="${portfolioId }"> --%>
 				<table class="table">
 					<tr>
 						<th>제작 항목 <span>*</span></th>
-						<td><select name="type" id="type" class="form-control">
-								<option value="id">가구</option>
-								<option value="id">의류</option>
-								<option value="id">악세사리</option>
-								<option value="id">디지털</option>
-								<option value="id">주방</option>
-								<option value="id">스포츠</option></td>
+						<td><select id="type" name="category" class="form-control">
+								<c:forEach items="${categorys }" var="category">
+									<option value="${category.type }">${category.type }</option>
+								</c:forEach>
+						</select></td>
 					</tr>
 					<tr>
 						<th>포트폴리오 명 <span>*</span></th>
@@ -36,7 +34,7 @@
 					<tr>
 					<tr>
 						<th>표지 이미지</th>
-						<td><input id="portfolioImg" name="portfolioImg"
+						<td><input id="portfolioImage" name="portfolioImage"
 							class="btn btn-success" type="file" value="찾아보기"></td>
 					<tr>
 					<tr>
@@ -75,10 +73,7 @@
 	</div>
 </div>
 
-
-
 <%@ include file="/views/common/footer.jsp"%>
-
 
 <!-- JAVASCRIPTS -->
 <script src="../layout/scripts/jquery.min.js"></script>

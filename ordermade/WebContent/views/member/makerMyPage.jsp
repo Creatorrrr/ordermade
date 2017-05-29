@@ -14,7 +14,16 @@
 		<div id="content" class="two_third">
 			<ul class="nospace listing">
 				<li class="clear">
-					<div class="content" align="center">
+					<div class="content" align="left">
+						<h1>${member.id }님의정보</h1>
+
+						<div style="float: right;">
+							<%-- <c:if test="${sessionScope.loginId ne null && boardId ne null}"> --%>
+							<a class="btn btn-sm btn-success"
+								href="${ctx}/member/modifyMember.do">회원정보 수정</a>
+							<%-- </c:if> --%>
+						</div>
+						
 						<div class="imgl borderedbox">
 							<img src="${ctx }/member/image.do?img=${member.image}" />
 						</div>
@@ -32,22 +41,30 @@
 							<tr>
 								<td><p>사업자번호 : ${member.licenseNumber}</p></td>
 							</tr>
-							<tr><td><h3>제작자 소개</h3></td></tr>
-							<tr><td><p>${member.introduce }</p></td></tr>
-							<tr><td><h3>최신 포트폴리오</h3></td></tr>
+
+							<tr>
+								<td></br>
+								</br>
+								<h3>제작자 소개</h3></td>
+							</tr>
+							<tr>
+								<td><p>${member.introduce }</p></td>
+							</tr>
+							<tr>
+								<td><h3>최신 포트폴리오</h3></td>
+							</tr>
 							<tr>
 								<td>
-									<div style="display:inline-block">
-										<img src="${ctx }/views/images/bul_prev.png" />
-										<img style="width:60%" src="${ctx }/member/image.do?img=${member.image }">
-										<img src="${ctx }/views/images/bul_next.png" />
+									<div style="display: inline-block">
+										<img src="${ctx }/views/images/bul_prev.png" /> <img
+											style="width: 60%"
+											src="${ctx }/member/image.do?img=${member.image }"> <img
+											src="${ctx }/views/images/bul_next.png" />
 									</div>
 								</td>
 							</tr>
 						</table>
-					</div>
-
-					<%-- <div>
+					</div> <%-- <div>
 						<tr>
 							<h3>최신 상품</h3>
 						</tr>
@@ -66,11 +83,11 @@
 							<img src="${ctx }/views/images/bul_next.png" />
 						</tr>
 					</div> --%>
+		</div>
+		</li>
+		</ul>
 	</div>
-	</li>
-	</ul>
-</div>
-</main>
+	</main>
 </div>
 </div>
 

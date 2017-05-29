@@ -19,19 +19,15 @@
 
 			<div class="fl_right">
 				<form method="portfolio" action="${ctx}/portfolio/ui/search.do">
-				<%-- 	<input type="hidden" name="boardId" value="${boardId }"
-						class="form-control"> --%>
 					<div>
-						<!-- <fieldset> -->
-							<select name="selectPortfolio">
-								<option value="title">제목</option>
-								<option value="content">내용</option>
-							</select> <input input name="search" class="search-box-input" type="text"
-								placeholder="Search Here" />
-							<button class="fa fa-search" type="submit" title="검색" >
-								<em>Search</em>
-							</button>
-				<!-- 		</fieldset> -->
+						<select name="selectPortfolio">
+							<option value="title">제목</option>
+							<option value="content">내용</option>
+						</select> <input name="search" class="search-box-input" type="text"
+							placeholder="Search Here" />
+						<button class="fa fa-search" type="submit" title="검색">
+							<em>Search</em>
+						</button>
 					</div>
 				</form>
 
@@ -60,9 +56,9 @@
 					</c:if>
 				</c:if>
 			</div>
-			
+
 			<br>
-			
+
 			<ul class="nospace listing">
 				<li class="clear">
 					<%-- <c:forEach items="${ portfolios }" var="portfolio"> --%>

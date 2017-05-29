@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,11 +20,13 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import ordermade.constants.Constants;
+import ordermade.domain.Category;
 import ordermade.domain.Member;
 import ordermade.domain.Portfolio;
 import ordermade.domain.Portfolios;
 import ordermade.service.facade.MemberService;
 import ordermade.service.facade.PortfolioService;
+import ordermade.service.facade.ProductService;
 
 @Controller
 @RequestMapping("portfolio")
@@ -35,6 +38,8 @@ public class PortfolioController {
 	@Autowired
 	private MemberService mService;
 	//---------action -> xml
+	@Autowired
+	private ProductService pdService;
 	
 	@RequestMapping(value="xml/register.do", method=RequestMethod.POST, produces="text/plain")
 	public @ResponseBody String registerPortfolio(Portfolio portfolio, HttpServletRequest req){
@@ -47,23 +52,24 @@ public class PortfolioController {
 			dir.mkdirs();
 		}
 
-		MultipartRequest mr;
-		
 		try {
-			mr = new MultipartRequest(req, imagePath, 5*1024*1024, "UTF-8", new DefaultFileRenamePolicy());
+			MultipartRequest mr = new MultipartRequest(req, imagePath, 5*1024*1024, "UTF-8", new DefaultFileRenamePolicy());
 			
 			String title = mr.getParameter("portfolioTitle");
 			String content = mr.getParameter("portfolioContent");
 			String category = mr.getParameter("category");
-			File image = mr.getFile("image");
+			//File image = mr.getFile("portfolioImage");
 			
 			Member maker = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 			
 			portfolio.setTitle(title);
 			portfolio.setContent(content);
 			portfolio.setCategory(category);
-			portfolio.setImage(image.getCanonicalPath());
+			//portfolio.setImage(image.getCanonicalPath());
 			portfolio.setMaker(maker);
+			
+			//portfolio.setTitle(mr.getParameter("title"));
+			portfolio.setImage(mr.getFile("portfolioImage").getName());
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -106,10 +112,10 @@ public class PortfolioController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if(!pService.modifyPortfolio(portfolio)){
-			return "/portfolio/detail";
+		if(pService.modifyPortfolio(portfolio)){
+			return "redierct:/portfolio/detail";
 		}else {
-			return "/portfolio/detail";
+			throw new RuntimeException("Modify portfolio failed");
 		}
 	}  //test http://localhost:8080/ordermade/portfolio/xml/modify.do
 	   //{"title":"asdfadsf","maker.id":"user1\n","image":"asdf.jpg","content":"aaaaaaa","tags[0].id":"1","category":"aaa","id":"10"}
@@ -129,7 +135,17 @@ public class PortfolioController {
 	//----------web  -> html
 	
 	@RequestMapping(value="ui/register.do",method=RequestMethod.GET)
-	public String showRegisterPortfolioUI(){
+	public String showRegisterPortfolioUI(String portfolioId,Model model){
+		
+		
+		List<Category> categorys = pdService.findAllCategory();
+		model.addAttribute("categorys", categorys);
+		
+//		Portfolio portfolio = pService.findPortfolioById(portfolioId);
+//		portfolio.setId(portfolioId);
+//		model.addAttribute("portfolioId",portfolio.getId());
+	
+		model.addAttribute("portfolioId",portfolioId);
 		return "portfolio/register";
 	} //test http://localhost:8080/ordermade/portfolio/ui/register.do
 	
@@ -154,7 +170,6 @@ public class PortfolioController {
 	@RequestMapping(value="ui/search.do",method=RequestMethod.GET)
 	public ModelAndView showSearchPortfolioUI(String type){
 		//if(type==null) type = "aa";//
-		
 		List<Portfolio> portfolios = pService.findPortfoliosByCategory(type, "1");
 		
 		ModelAndView modelAndView = new ModelAndView("portfolio/search");
@@ -168,11 +183,10 @@ public class PortfolioController {
 		String makerId=(String)session.getAttribute("loginId");
 
 		List<Portfolio> portfolios = pService.findPortfoliosByMakerId(makerId, "1");
-		ModelAndView modelAndView = new ModelAndView("portfolio/mylist");
+		ModelAndView modelAndView = new ModelAndView("/portfolio/myPortfolioList");
 		modelAndView.addObject("portfolios", portfolios);
 		return modelAndView;
-	} //test http://localhost:8080/ordermade/portfolio/ui/mylist.do
-	
+	} 
 	
 	//----------mobile ->xml
 	

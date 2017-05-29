@@ -55,7 +55,6 @@
 						<%-- <c:forEach items="${ box_list }" var="literature"> --%>
 						<div class="content" align="center">
 							<table class="table">
-
 								<tr>
 									<div class="imgl borderedbox">
 										<img src="${ctx }/views/images/img1.jpg" />
@@ -73,31 +72,32 @@
 							</table>
 						</div> <%-- </c:forEach> --%>
 					</li>
-
-					<h2>최신 상품</h2>
-					<ul class="nospace listing">
-						<li class="clear">
-							<%-- <c:forEach items="${ box_list }" var="literature"> --%>
-							<div class="content" align="center">
-								<table class="table">
-									<tr>
-										<div class="imgl borderedbox">
-											<img src="${ctx }/views/images/img1.jpg" />
-										</div>
-									</tr>
-									<tr class="nospace btmspace-15">
-										<td>상품 이름</td>
-										<td><a class="literature" href="${ctx}/#/#.do?#=${asf }">${asf  }
-												rkrkrk</a></td>
-									</tr>
-									<tr class="nospace btmspace-15">
-										<td>가격</td>
-										<td class="creatorId">${asf}10000000원</td>
-									</tr>
-								</table>
-							</div> <%-- </c:forEach> --%>
-						</li>
-					</ul>
+				</ul>
+				
+				<h2>최신 상품</h2>
+				<ul class="nospace listing">
+					<li class="clear">
+						<%-- <c:forEach items="${ box_list }" var="literature"> --%>
+						<div class="content" align="center">
+							<table class="table">
+								<tr>
+									<div class="imgl borderedbox">
+										<img src="${ctx }/views/images/img1.jpg" />
+									</div>
+								</tr>
+								<tr class="nospace btmspace-15">
+									<td>상품 이름</td>
+									<td><a class="literature" href="${ctx}/#/#.do?#=${asf }">${asf  }
+											rkrkrk</a></td>
+								</tr>
+								<tr class="nospace btmspace-15">
+									<td>가격</td>
+									<td class="creatorId">${asf}10000000원</td>
+								</tr>
+							</table>
+						</div> <%-- </c:forEach> --%>
+					</li>
+				</ul>
 			</div>
 			<!-- / Middle Column -->
 		</div>
@@ -114,11 +114,10 @@
 				</p>
 			</div>
 		</div>
-		<!-- Instruction END --> <!-- / main body -->
-		<div class="clear" />
 		</main>
 	</div>
 </div>
+
 <div class="wrapper row4">
 	<div class="rounded">
 		<footer id="footer" class="clear">
@@ -166,6 +165,7 @@
 		</footer>
 	</div>
 </div>
+
 <%@ include file="common/footer.jsp"%>
 <!-- JAVASCRIPTS -->
 <script src="layout/scripts/jquery.min.js"></script>
