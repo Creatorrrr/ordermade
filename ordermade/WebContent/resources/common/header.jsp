@@ -8,15 +8,16 @@
 					<c:choose>
 						<c:when test="${loginId eq null }">
 							<ul>
-								<li><a id="loginBtn" href="${ctx }/views/login.jsp">Login</a></li>
-								<li><a href="${ctx }/views/memberRegister.jsp" class="btn btn-success">Sign up</a></li>
+								<li><a id="loginBtn" href="${ctx }/member/login.do">Login</a></li>
+								<li><a href="${ctx }/member/join.do"
+									class="btn btn-success">Sign up</a></li>
 							</ul>
 						</c:when>
 						<c:otherwise>
 							<span class="glyphicon glyphicon-user"></span>
-							<b>${loginId}</b>님 환영합니다. [<a href="${ctx }/logout.do">로그아웃</a>]
+							<b>${loginId}</b>님 환영합니다. [<a href="${ctx }/member/logout.do">로그아웃</a>]
 							<ul>
-								<li><a href="${ctx}/member//modifyMember.do">회원정보</a></li>
+								<li><a href="${ctx}/member/myPage.do">회원정보</a></li>
 
 							</ul>
 						</c:otherwise>
@@ -28,8 +29,6 @@
 			</nav>
 		</div>
 	</div>
-
-
 
 	<div class="wrapper row1">
 		<header id="header" class="clear">
@@ -45,7 +44,7 @@
 				<form class="clear" method="post" action="#">
 					<fieldset>
 						<legend>Search:</legend>
-						<input input name="" class="search-box-input" type="text" value=""
+						<input name="" class="search-box-input" type="text" value=""
 							placeholder="Search Here" />
 						<button class="fa fa-search" type="submit" title="Search">
 							<em>Search</em>
@@ -54,17 +53,14 @@
 				</form>
 			</div>
 		</header>
+
 	</div>
-	
-	
-	
-	
 	<div class="wrapper row2">
 		<div class="rounded">
 			<nav id="mainav" class="clear">
 				<ul class="clear">
-					<li class="active"><a href="${ctx }/views/index.jsp">Home</a></li>
-					<li><a class="drop" href="#">Category</a>
+					<li class=""><a href="${ctx }/views/index.jsp">Main</a></li>
+					<li><a class="drop" href="#">상품 목록</a>
 						<ul>
 							<li><a href="${ctx }/views/productList.jsp">Furniture</a></li>
 							<li><a href="${ctx }/pages/portfolio.html">Accessory</a></li>
@@ -92,4 +88,3 @@
 			</nav>
 		</div>
 	</div>
-
