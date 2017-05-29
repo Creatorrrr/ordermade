@@ -4,8 +4,6 @@
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html>
-<head>
-<title>1:1 매칭 프로그램</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -17,7 +15,6 @@
 <script src="${ctx }/views/layout/scripts/jquery.fitvids.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.mobilemenu.js"></script>
 
-</head>
 <body id="top">
 	<div class="wrapper row0">
 		<div id="topbar" class="clear">
