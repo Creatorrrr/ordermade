@@ -92,10 +92,10 @@
 							</li>
 						</c:forEach> --%>
 						
-				<!-- <li><a href="#">Link Text</a></li>
-					<li><a href="#">Another Link Text</a></li>
-					<li><a href="#">This a very long link</a></li>
-					<li><a href="#">This is the last</a></li> -->
+				<li><a href="#">포트폴리오 목록</a></li>
+					<li><a href="#">의뢰 목록</a></li>
+					<li><a href="#">요청 목록</a></li>
+					<li><a href="#">거래 목록</a></li>
 				</ul>
 			</nav>
 		</div>
