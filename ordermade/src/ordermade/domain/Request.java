@@ -28,6 +28,12 @@ public class Request {
 	private List<Attach> attachs;
 	private String bound;
 	
+	@Override
+	public String toString() {
+		return "Request [id=" + id + ", title=" + title + ", maker=" + maker + ", consumer=" + consumer + ", category="
+				+ category + ", content=" + content + ", hopePrice=" + hopePrice + ", price=" + price + ", comments="
+				+ comments + ", attachs=" + attachs + ", bound=" + bound + "]";
+	}
 	public String getId() {
 		return id;
 	}

@@ -15,8 +15,9 @@
 		<div id="content" class="two_third">
 			<h1>포트폴리오 등록 페이지</h1>
 			<br>
-			<form action="#" method="post" name="" onsubmit="return checkIt()">
-				<input name="" type="hidden" value="${categoryId }">
+			<form action="${ctx }/portfolio/xml/modify.do" method="post" name=""
+				onsubmit="return checkIt()">
+				<input name="" type="hidden" value="${portfolioId }">
 				<table class="table">
 					<tr>
 						<th>제작 항목 <span>*</span></th>
@@ -35,13 +36,13 @@
 					<tr>
 					<tr>
 						<th>표지 이미지</th>
-						<td><input id="" name="" class="btn btn-success"
-							type="file" value="찾아보기"></td>
+						<td><input id="" name="" class="btn btn-success" type="file"
+							value="찾아보기"></td>
 					<tr>
 					<tr>
 						<th>포트폴리오 내용 <span>*</span></th>
 						<td><textarea id="portfolioContent" name="portfolioContent"
-								class="form-control"cols="50" rows="10" ></textarea></td>
+								class="form-control" cols="50" rows="10"></textarea></td>
 					</tr>
 				</table>
 				<div>
@@ -51,6 +52,24 @@
 			</form>
 			<br>
 
+			<script type="text/javaScript">
+				function checkIt() {
+
+					var pregister = document.pregister;
+
+					if (!pregister.portfolioTitle.value) {
+						alert("제목을 입력하세요");
+						return false;
+					}
+
+					if (!pregister.portfolioContent.value) {
+						alert("내용을 입력하세요");
+						return false;
+					}
+					return true;
+				}
+			</script>
+
 		</div>
 		</main>
 	</div>
@@ -58,23 +77,8 @@
 
 <%@ include file="/views/common/footer.jsp"%>
 
-<script type="text/javaScript">
-	function checkIt() {
 
-		var pregister = document.pregister;
 
-		if (!pregister.portfolioTitle.value) {
-			alert("제목을 입력하세요");
-			return false;
-		}
-
-		if (!pregister.portfolioContent.value) {
-			alert("내용을 입력하세요");
-			return false;
-		}
-		return true;
-	}
-</script>
 <!-- JAVASCRIPTS -->
 <script src="../layout/scripts/jquery.min.js"></script>
 <script src="../layout/scripts/jquery.fitvids.min.js"></script>

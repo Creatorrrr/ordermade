@@ -41,30 +41,30 @@
   	<select id="selectPurchaseHistoriesByConsumerId" parameterType="java.util.Map" resultMap="purchaseHistoryMap">
   		select * from (
 			select rownum limitNum, A.* from purchase_history A where consumer_id=#{consumerId}
-			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) order by A.id desc
-		) where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
+			and rownum &lt;= (#{page}*10) order by A.id desc
+		) where limitNum > ((#{page}-1)*10)
   
   	</select>
   	
   	<select id="selectPurchaseHistoriesByConsumerIdAndRequestTitle" parameterType="java.util.Map" resultMap="purchaseHistoryMap">
   		select * from (
   			select rownum limitNum, A.* from purchase_history A, request B  where A.consumer_id=#{consumerId} and B.title like '%${title}%' and A.request_id = B.id
-			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) order by A.id desc
-		) where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
+			and rownum &lt;= (#{page}*10) order by A.id desc
+		) where limitNum > ((#{page}-1)*10)
   	</select>
   	
   	<select id="selectPurchaseHistoriesByMakerId" parameterType="java.util.Map" resultMap="purchaseHistoryMap">
   		select * from (
 			select rownum limitNum, A.* from purchase_history A where maker_id=#{makerId}
-			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) order by A.id desc
-		) where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
+			and rownum &lt;= (#{page}*10) order by A.id desc
+		) where limitNum > ((#{page}-1)*10)
   	</select>
   	
   	<select id="selectPurchaseHistoriesByMakerIdAndRequestTitle" parameterType="java.util.Map" resultMap="purchaseHistoryMap">
   		select * from (
 			select rownum limitNum, A.* from purchase_history A, request B  where A.maker_id=#{makerId} and B.title like '%${title}%' and A.request_id = B.id 
-			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) order by A.id desc
-		) where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
+			and rownum &lt;= (#{page}*10) order by A.id desc
+		) where limitNum > ((#{page}-1)*10)
   	</select>
   	
   

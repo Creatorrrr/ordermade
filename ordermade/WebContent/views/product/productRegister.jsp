@@ -17,12 +17,11 @@
 			<h1>상품 등록 페이지</h1>
 			<br>
 			<form action="${ctx }/product/register.do" method="post"
+				name="pRegister" onsubmit="return checkIt()"
 				enctype="multipart/form-data">
-				<%-- <form action="${ctx }//register.do" method="post" name=""
-				onsubmit="return checkIt()"> --%>
 				<table class="table">
 					<tr>
-						<th>제작 항목</th>
+						<th>제작 항목 <span>*</span></th>
 						<td><select id="type" name="category" class="form-control">
 								<c:forEach items="${categorys }" var="category">
 									<option value="${category.type }">${category.type }</option>
@@ -30,7 +29,7 @@
 						</select></td>
 					</tr>
 					<tr>
-						<th>상품명</th>
+						<th>상품명 <span>*</span></th>
 						<td><input id="productTitle" name="productTitle"
 							class="form-control" type="text" value=""></td>
 					<tr>
@@ -40,15 +39,17 @@
 							type="file" value="찾아보기"></td>
 					<tr>
 					<tr>
-						<th>금액</th>
+						<th>금액 <span>*</span></th>
 						<td><input id="price" name="price" class="form-control"
 							type="text" value=""></td>
-						<th>재작 기간</th>
+					</tr>
+					<tr>
+						<th>제작 기간</th>
 						<td><input id="period" name="period" class="form-control"
 							type="text" value=""></td>
+					</tr>
 					<tr>
-					<tr>
-						<th>상품 내용</th>
+						<th>상품 내용 <span>*</span></th>
 						<td><textarea id="productContent" name="productContent"
 								class="form-control" rows="7" cols="50"></textarea>
 					</tr>
@@ -71,15 +72,25 @@
 <script type="text/javaScript">
 	function checkIt() {
 
-		var pregister = document.pregister;
+		var pRegister = document.pRegister;
 
-		if (!pregister.productTitle.value) {
+		if (!pRegister.productTitle.value) {
 			alert("제목을 입력하세요");
 			return false;
 		}
 
-		if (!pregister.productContent.value) {
+		if (!pRegister.productContent.value) {
 			alert("내용을 입력하세요");
+			return false;
+		}
+		
+		if(!pRegister.price.value){
+			alert("금액을 입력하세요");
+			return false;
+		}
+		
+		if(!pRegister.period.value){
+			alert("기간을 입력하세요");
 			return false;
 		}
 		return true;

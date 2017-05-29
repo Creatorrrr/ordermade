@@ -9,36 +9,38 @@
 	<div class="rounded">
 		<main class="container clear"> <!-- main body -->
 		<div class="sidebar one_third first">
-
 			<%@ include file="/views/common/myPageNav.jsp"%>
-
 		</div>
 
 		<div id="content" class="two_third">
-
 			<ul class="nospace listing">
 				<li class="clear">
+					<h1>{member.id}님의 정보</h1>
 
-					<div class="content" align="center">
+					<div style="float: right;">
+						<%-- <c:if test="${sessionScope.loginId ne null && boardId ne null}"> --%>
+						<a class="btn btn-sm btn-success"
+							href="${ctx}/portfolio/ui/register.do">회원정보 수정</a>
+						<%-- </c:if> --%>
+					</div>
+					
+					<div class="content" align="left">
+						<div class="imgl borderedbox">
+							<img src="${ctx }/member/image.do?img=${member.image}">
+						</div>
 						<table class="table">
-							<tr>
-								<div class="imgl borderedbox">
-									<img src="${ctx }/views/images/img1.jpg" />
-								</div>
-							</tr>
 							<tr class="nospace btmspace-15">
 							<tr>
-								<p>아이디 : ${id}</p>
+								<td>아이디 : ${member.id}</td>
 							</tr>
 							<tr>
-								<p>가입일자 : ${date }</p>
+								<td>이메일 : ${member.email }</td>
 							</tr>
 							<tr>
-								<p>이메일 : ${email }</p>
+								<td>주소 : ${member.address }</td>
 							</tr>
 							<tr>
-								<p>주소 : ${address }</p>
-							</tr>
+								<td>회원 종류 : ${member.memberType }</td>
 							</tr>
 						</table>
 					</div>
@@ -50,9 +52,6 @@
 </div>
 
 <%@ include file="/views/common/footer.jsp"%>
-<!-- JAVASCRIPTS -->
-<script src="../layout/scripts/jquery.min.js"></script>
-<script src="../layout/scripts/jquery.fitvids.min.js"></script>
-<script src="../layout/scripts/jquery.mobilemenu.js"></script>
+
 </body>
 </html>

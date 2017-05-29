@@ -14,7 +14,6 @@
 <script src="${ctx }/views/layout/scripts/jquery.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.fitvids.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.mobilemenu.js"></script>
-
 <body id="top">
 	<div class="wrapper row0">
 		<div id="topbar" class="clear">
@@ -23,8 +22,8 @@
 					<c:choose>
 						<c:when test="${loginId eq null }">
 							<ul>
-								<li><a id="loginBtn" href="${ctx }/views/member/login.jsp">Login</a></li>
-								<li><a href="${ctx }/views/member/memberRegister.jsp"
+								<li><a id="loginBtn" href="${ctx }/member/login.do">Login</a></li>
+								<li><a href="${ctx }/member/join.do"
 									class="btn btn-success">Sign up</a></li>
 							</ul>
 						</c:when>
@@ -32,14 +31,11 @@
 							<span class="glyphicon glyphicon-user"></span>
 							<b>${loginId}</b>님 환영합니다. [<a href="${ctx }/member/logout.do">로그아웃</a>]
 							<ul>
-								<li><a href="${ctx}/member/modifyMember.do">회원정보</a></li>
+								<li><a href="${ctx}/member/myPage.do">회원정보</a></li>
 
 							</ul>
 						</c:otherwise>
 					</c:choose>
-					<!-- <li><a href="#">Home</a></li>
-					<li><a href="#">Login</a></li>
-					<li><a href="#">Sign up</a></li> -->
 				</ul>
 			</nav>
 		</div>
@@ -57,6 +53,7 @@
 				<p>없으면 만들어서 판다</p>
 				<p>1:1 매칭 서비스</p>
 			</div>
+
 			<div class="fl_right">
 				<form class="clear" method="post" action="#">
 					<fieldset>
@@ -69,27 +66,36 @@
 					</fieldset>
 				</form>
 			</div>
-		</header>
 
+		</header>
 	</div>
+
 	<div class="wrapper row2">
 		<div class="rounded">
 			<nav id="mainav" class="clear">
 				<ul class="clear">
-					<li class="active"><a href="${ctx }/views/index.jsp">Home</a></li>
-					<li><a class="drop" href="#">Category</a>
-						<ul>
-							<li><a href="${ctx }/product/ajax/products/category.do">Furniture</a></li>
+					<li class=""><a href="${ctx }/views/index.jsp">Main</a></li>
+					<li><a class="drop" href="#">category</a> 
+					<ul>
+							<li><a href="${ctx }/views/productList.jsp">Furniture</a></li>
 							<li><a href="${ctx }/pages/portfolio.html">Accessory</a></li>
 							<li><a href="${ctx }/pages/full-width.html">Kitchen</a></li>
 							<li><a href="${ctx }/pages/sidebar-left.html">Digital</a></li>
 							<li><a href="${ctx }/pages/sidebar-left-2.html">Clothing</a></li>
 							<li><a href="${ctx }/pages/sidebar-right.html">Sport</a></li>
-						</ul></li>
-					<li><a href="#">Link Text</a></li>
+					</ul>
+					</li>
+						
+						<%-- <c:forEach items="${products }" var="product">
+							<li><a class="btn btn-sm btn-success"
+								href="${ctx}/product//ajax/product/productid?productId=${product.id}">${product.title }</a>
+							</li>
+						</c:forEach> --%>
+						
+				<!-- <li><a href="#">Link Text</a></li>
 					<li><a href="#">Another Link Text</a></li>
 					<li><a href="#">This a very long link</a></li>
-					<li><a href="#">This is the last</a></li>
+					<li><a href="#">This is the last</a></li> -->
 				</ul>
 			</nav>
 		</div>

@@ -60,26 +60,27 @@ public class ProductController {
 
 			int price = Integer.parseInt(mr.getParameter("price"));
 			int period = Integer.parseInt(mr.getParameter("period"));
-
+			int hit = 0;
+			
 			Member maker = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 
-			int hit = 0;
 			product.setTitle(title);
 			product.setCategory(category);
 			product.setContent(content);
-
 			product.setImage(image.getCanonicalPath());
-
 			product.setPrice(price);
 			product.setPeriod(period);
-
 			product.setMaker(maker);
-
 			product.setHit(hit);
+			
+//			List<Product> productList =  pService.findProductsByCategory(category, "1");
+//			ModelAndView mv = new ModelAndView("");
+//			mv.addObject("produts", productList);
+			//Model model = model.addAttribute("produts",productList);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		if (!pService.registerProduct(product)) {
 			return "product/productRegister";
 		} else {

@@ -19,15 +19,19 @@ import ordermade.domain.Comments;
 import ordermade.domain.InviteRequest;
 import ordermade.domain.InviteRequests;
 import ordermade.domain.Member;
+import ordermade.domain.Product;
 import ordermade.domain.Request;
 import ordermade.domain.Requests;
+import ordermade.service.facade.ProductService;
 import ordermade.service.facade.RequestService;
+import ordermade.service.logic.ProductServiceLogic;
 
 @Controller
 public class RequestController {
 
 	@Autowired
 	private RequestService service;
+	
 
 	// ===================action -> xml
 
@@ -36,8 +40,19 @@ public class RequestController {
 	@RequestMapping(value = "request/xml/register.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerRequest(Request request, HttpSession session) {
 		// String loginId=(String)session.getAttribute("loginId");
-		System.out.println(request.toString());
+		
 		if(request.getTitle()==null) return "error";
+		if(request.getMaker()== null){		//DB member.id null-> fix	
+			Member maker = new Member();
+			maker.setId("");
+			request.setMaker(maker);
+		}
+		
+		Member consumer = new Member();
+		consumer.setId("user1");
+		request.setConsumer(consumer);
+		request.setBound("N");//비공개
+		System.out.println(request.toString());
 		boolean check = service.registerRequest(request);
 		return check+"";
 	}	//post http://localhost:8080/ordermade/request/xml/register.do
@@ -60,7 +75,7 @@ public class RequestController {
 		if(id==null) return "error";
 		boolean check = service.removeRequestById(id);
 		return check+"";
-	}	//get http://localhost:8080/ordermade/request/xml/remove.do?id=5
+	}	//GET http://localhost:8080/ordermade/request/xml/remove.do?id=5
 
 	@RequestMapping(value = "request/xml/modifyBound.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyRequestBound(Request request, HttpSession session) {
@@ -68,15 +83,23 @@ public class RequestController {
 		if(request.getId()==null) return "error";
 		Request requestOK= service.findRequestById(request.getId());
 //		System.out.println(request.getBound());
-		System.out.println(requestOK.toString());
+		if(requestOK.getMaker()== null){		//DB member.id null-> fix	
+			Member maker = new Member();
+			maker.setId("");
+			requestOK.setMaker(maker);
+		}
+		//System.out.println(requestOK.toString());
 		requestOK.setBound(request.getBound());
 		boolean check = service.modifyRequestById(requestOK);
 		return check+"";
-	}
+	}	//POST  http://localhost:8080/ordermade/request/xml/modifyBound.do
+		//{"id":"1","bound":"open"}
+	
 
 	@RequestMapping(value = "request/xml/modifyMakerId.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyMakerIdToRequest(String requestId, String makerId, HttpSession session) {
 		// String loginId=(String)session.getAttribute("loginId");
+		System.out.println(requestId);
 		if(requestId == null) return "error";
 		Request request= service.findRequestById(requestId);
 		Member maker = new Member();
@@ -84,7 +107,8 @@ public class RequestController {
 		request.setMaker(maker);
 		boolean check = service.modifyRequestById(request);
 		return check+"";
-	}
+	}	//POST  http://localhost:8080/ordermade/request/xml/modifyMakerId.do
+		//{"requestId":"1","makerId":"maker1"}
 
 	@RequestMapping(value = "request/xml/removeMakerId.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String removeMakerIdToRequest(String requestId, HttpSession session) {
@@ -96,19 +120,28 @@ public class RequestController {
 		request.setMaker(maker);
 		boolean check = service.modifyRequestById(request);
 		return check+"";
-	}
+	}	//POST  http://localhost:8080/ordermade/request/xml/removeMakerId.do
+		//{"requestId":"1"}
 	
 	
 	@RequestMapping(value = "request/xml/modifyPaymentValue.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyPaymentValue(Request request, HttpSession session) {
 		// String loginId=(String)session.getAttribute("loginId");
+		//System.out.println(request.getId());
 		if(request.getId() == null ) return "error";
 		Request requestOK= service.findRequestById(request.getId());
-		System.out.println(request.getPrice());
+		//System.out.println(request.getPrice());
+		if(requestOK.getMaker()== null){		//DB member.id null-> fix	
+			Member maker = new Member();
+			maker.setId("");
+			requestOK.setMaker(maker);
+		}
 		requestOK.setPrice(request.getPrice());
+		System.out.println(requestOK.toString());
 		boolean check = service.modifyRequestById(requestOK);
 		return check+"";
-	}
+	}	//POST  http://localhost:8080/ordermade/request/xml/modifyPaymentValue.do
+		//{"id":"2","price":"30000"}
 	
 	
 	
@@ -194,18 +227,17 @@ public class RequestController {
 	
 	// ==================web -> html
 
-	@RequestMapping(value = "request/ui/register.do", method = RequestMethod.GET)
-	public String showRegisterRequestUI() {
-		return "request/register";
-	}	//GET http://localhost:8080/ordermade/request/ui/register.do
 
-	@RequestMapping(value = "request/ui/register1_1.do", method = RequestMethod.GET)
-	public String showRegisterRequestUIForOneToOne() {
-		
+	@RequestMapping(value = "request/ui/register.do", method = RequestMethod.GET)
+	public ModelAndView showRegisterRequestUIForOneToOne(String makerId, String productId) {
+		if(makerId==null) return new ModelAndView("request/register");
 		//-----상품페이지에서 데이터를 받아와야 함.
-		
-		return "request/register1_1";
-	}	//GET http://localhost:8080/ordermade/request/ui/register1_1.do
+		ModelAndView modelAndView = new ModelAndView("request/register1_1");
+		modelAndView.addObject("productId", productId);
+		modelAndView.addObject("makerId", makerId);
+		return modelAndView;
+	}	//GET http://localhost:8080/ordermade/request/ui/register.do
+		//GET http://localhost:8080/ordermade/request/ui/register.do?makerId=maker1&productId=1
 	
 	@RequestMapping(value="request/ui/myPage.do",method=RequestMethod.GET)
 	public ModelAndView showMyRequestUI(){
@@ -237,19 +269,25 @@ public class RequestController {
 	}
 	
 	@RequestMapping(value="request/ui/detail.do",method=RequestMethod.GET)
-	public ModelAndView showDetailRequestUI(String id){
-		return new ModelAndView("request/detail")
-				.addObject("request", service.findRequestById(id));
+	public ModelAndView showDetailRequestUI(String id, HttpSession session){
+		if(((String)session.getAttribute("memberType")).equals(Constants.MAKER)) {
+			return new ModelAndView("request/makerRequestDetail")
+					.addObject("request", service.findRequestById(id));
+		} else {
+			return new ModelAndView("request/consumerRequestDetail")
+					.addObject("request", service.findRequestById(id));
+		}
 	}
 	
+	// 170529 Complete
 	@RequestMapping(value="request/ui/makerInviteList.do",method=RequestMethod.GET)
 	public ModelAndView showMakerInviteRequestListUI(String page, HttpSession session){
-		return new ModelAndView("/request/makerInviteList")
+		return new ModelAndView("request/makerInviteList")
 				.addObject("inviteRequests", 
 						service.findInviteRequestsByMakerId(
-								(String)session.getAttribute("loginId"), 
+								/*(String)session.getAttribute("loginId")*/"user1", 
 								Constants.FORM_INVITE, 
-								page));
+								/*page*/"1"));
 	}
 	
 	@RequestMapping(value="request/ui/consumerInviteList.do",method=RequestMethod.GET)
@@ -257,9 +295,9 @@ public class RequestController {
 		return new ModelAndView("request/consumerInviteList")
 				.addObject("inviteRequests", 
 						service.findInviteRequestsByConsumerId(
-								(String)session.getAttribute("loginId"), 
+								/*(String)session.getAttribute("loginId")*/"jwmm", 
 								Constants.FORM_REQUEST, 
-								page));
+								/*page*/"1"));
 	}
 	
 	//==================mobile -> xml
@@ -297,7 +335,7 @@ public class RequestController {
 	@RequestMapping(value="request/xml/searchMyInviteRequestsForMaker.do", produces="application/xml")
 	public @ResponseBody InviteRequests findMyInviteRequestsForMaker(String page, HttpSession session){
 		return new InviteRequests(service.findInviteRequestsByMakerId(
-				/*(String)session.getAttribute("loginId")*/"5",
+				(String)session.getAttribute("loginId"),
 				Constants.FORM_INVITE,
 				page));
 	}
@@ -305,7 +343,7 @@ public class RequestController {
 	@RequestMapping(value="request/xml/searchMyInviteRequestsForConsumer.do", produces="application/xml")
 	public @ResponseBody InviteRequests findMyInviteRequestsForConsumer(String page, HttpSession session){
 		return new InviteRequests(service.findInviteRequestsByConsumerId(
-				/*(String)session.getAttribute("loginId")*/"5",
+				(String)session.getAttribute("loginId"),
 				Constants.FORM_REQUEST,
 				page));
 	}
