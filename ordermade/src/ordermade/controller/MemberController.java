@@ -31,7 +31,7 @@ import ordermade.service.facade.MemberService;
 public class MemberController {
 	
 	@Autowired
-	MemberService service;
+	private MemberService service;
 
 	@RequestMapping("/join.do") // end
 	public String showRegisterUI() {

@@ -30,11 +30,11 @@
 					src="${ctx }/views/images/demo/slider/5.png" alt=""></a>
 			</figure>
 			<ul id="slide-tabs">
-				<li><a href="${stx }#slide-1">A</a></li>
-				<li><a href="${stx }#slide-2">B</a></li>
-				<li><a href="${stx }#slide-3">C</a></li>
-				<li><a href="${stx }#slide-4">D</a></li>
-				<li><a href="${stx }#slide-5">E</a></li>
+				<li><a href="${ctx }#slide-1">A</a></li>
+				<li><a href="${ctx }#slide-2">B</a></li>
+				<li><a href="${ctx }#slide-3">C</a></li>
+				<li><a href="${ctx }#slide-4">D</a></li>
+				<li><a href="${ctx }#slide-5">E</a></li>
 			</ul>
 		</div>
 	</div>

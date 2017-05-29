@@ -36,9 +36,6 @@
 							</ul>
 						</c:otherwise>
 					</c:choose>
-					<!-- <li><a href="#">Home</a></li>
-					<li><a href="#">Login</a></li>
-					<li><a href="#">Sign up</a></li> -->
 				</ul>
 			</nav>
 		</div>
