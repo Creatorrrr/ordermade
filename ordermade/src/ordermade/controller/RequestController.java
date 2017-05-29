@@ -20,15 +20,19 @@ import ordermade.domain.Comments;
 import ordermade.domain.InviteRequest;
 import ordermade.domain.InviteRequests;
 import ordermade.domain.Member;
+import ordermade.domain.Product;
 import ordermade.domain.Request;
 import ordermade.domain.Requests;
+import ordermade.service.facade.ProductService;
 import ordermade.service.facade.RequestService;
+import ordermade.service.logic.ProductServiceLogic;
 
 @Controller
 public class RequestController {
 
 	@Autowired
 	private RequestService service;
+	
 
 	// ===================action -> xml
 
@@ -37,8 +41,19 @@ public class RequestController {
 	@RequestMapping(value = "request/xml/register.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerRequest(Request request, HttpSession session) {
 		// String loginId=(String)session.getAttribute("loginId");
-		System.out.println(request.toString());
+		
 		if(request.getTitle()==null) return "error";
+		if(request.getMaker()== null){		//DB member.id null-> fix	
+			Member maker = new Member();
+			maker.setId("");
+			request.setMaker(maker);
+		}
+		
+		Member consumer = new Member();
+		consumer.setId("user1");
+		request.setConsumer(consumer);
+		request.setBound("N");//비공개
+		System.out.println(request.toString());
 		boolean check = service.registerRequest(request);
 		return check+"";
 	}	//post http://localhost:8080/ordermade/request/xml/register.do
@@ -213,18 +228,17 @@ public class RequestController {
 	
 	// ==================web -> html
 
-	@RequestMapping(value = "request/ui/register.do", method = RequestMethod.GET)
-	public String showRegisterRequestUI() {
-		return "request/register";
-	}	//GET http://localhost:8080/ordermade/request/ui/register.do
 
-	@RequestMapping(value = "request/ui/register1_1.do", method = RequestMethod.GET)
-	public String showRegisterRequestUIForOneToOne() {
-		
+	@RequestMapping(value = "request/ui/register.do", method = RequestMethod.GET)
+	public ModelAndView showRegisterRequestUIForOneToOne(String makerId, String productId) {
+		if(makerId==null) return new ModelAndView("request/register");
 		//-----상품페이지에서 데이터를 받아와야 함.
-		
-		return "request/register1_1";
-	}	//GET http://localhost:8080/ordermade/request/ui/register1_1.do
+		ModelAndView modelAndView = new ModelAndView("request/register1_1");
+		modelAndView.addObject("productId", productId);
+		modelAndView.addObject("makerId", makerId);
+		return modelAndView;
+	}	//GET http://localhost:8080/ordermade/request/ui/register.do
+		//GET http://localhost:8080/ordermade/request/ui/register.do?makerId=maker1&productId=1
 	
 	@RequestMapping(value="request/ui/myPage.do",method=RequestMethod.GET)
 	public ModelAndView showMyRequestUI(){
