@@ -145,8 +145,9 @@ public class ProductController {
 		}
 	}
 
-	@RequestMapping(value = "/review/register", method = RequestMethod.POST, produces = "text/plain")
-	public @ResponseBody String registerReview(Review review, HttpServletRequest req) {
+	@RequestMapping(value = "/review/register.do", method = RequestMethod.POST, produces = "text/plain")
+	@ResponseBody
+	public String registerReview(Review review, HttpServletRequest req) {
 		// Ajax 리뷰 등록후 화면유지
 		Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 		review.setConsumer(consumer);
