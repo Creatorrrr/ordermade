@@ -36,8 +36,8 @@
 					<tr>
 					<tr>
 						<th>표지 이미지</th>
-						<td><input id="portfolioImg" name="portfolioImg" class="btn btn-success" type="file"
-							value="찾아보기"></td>
+						<td><input id="portfolioImg" name="portfolioImg"
+							class="btn btn-success" type="file" value="찾아보기"></td>
 					<tr>
 					<tr>
 						<th>포트폴리오 내용 <span>*</span></th>
