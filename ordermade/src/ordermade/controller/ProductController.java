@@ -38,7 +38,7 @@ public class ProductController {
 	private MemberService mService;
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String registerProduct(Product product, HttpServletRequest req) {
+	public String registerProduct(Model model, Product product, HttpServletRequest req) {
 		// 상품 등록후 상세 상품페이지로 이동
 
 		String imagePath = Constants.IMAGE_PATH;
@@ -66,7 +66,6 @@ public class ProductController {
 
 			product.setTitle(title);
 			product.setCategory(category);
-			System.out.println(category);
 			product.setContent(content);
 			product.setImage(image.getCanonicalPath());
 			product.setPrice(price);
@@ -85,7 +84,7 @@ public class ProductController {
 		if (!pService.registerProduct(product)) {
 			return "product/productRegister";
 		} else {
-			return "product/productDetail";
+			return "product/productDetailTest";
 		}
 
 	}
@@ -150,24 +149,24 @@ public class ProductController {
 		}
 	}
 
-	@RequestMapping(value = "/review/register.do", method = RequestMethod.POST, produces = "text/plain")
-	@ResponseBody
-	public String registerReview(Review review, HttpServletRequest req) {
+	@RequestMapping(value = "/review/register", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody Product registerReview(Review review, HttpServletRequest req) {
 		// Ajax 리뷰 등록후 화면유지
+		System.out.println("-----------------" + review.getProduct().getId());
+		System.out.println(review.getTitle());
+		System.out.println(review.getGrade());
+		System.out.println(review.getContent());
+
 		Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 		review.setConsumer(consumer);
-		review.setGrade(0);
 
-		String productId = req.getParameter("productId");
-		Product product = new Product();
+		if (!pService.registerReview(review)) {
 
-		product.setId(productId);
-		review.setProduct(product);
+			Product product = pService.findProductById(review.getProduct().getId());
 
-		if (!pService.registerProduct(product)) {
-			return "true";
+			return product;
 		} else {
-			return "false";
+			return null;
 		}
 	}
 
