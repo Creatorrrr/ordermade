@@ -74,6 +74,11 @@ public class ProductController {
 			product.setMaker(maker);
 			product.setHit(hit);
 			
+//			List<Product> productList =  pService.findProductsByCategory(category, "1");
+//			ModelAndView mv = new ModelAndView("");
+//			mv.addObject("produts", productList);
+			//Model model = model.addAttribute("produts",productList);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

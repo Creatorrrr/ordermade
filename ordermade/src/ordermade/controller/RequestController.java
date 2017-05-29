@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -244,37 +243,26 @@ public class RequestController {
 	}
 	
 	@RequestMapping(value="request/ui/modify.do",method=RequestMethod.GET)
-	public ModelAndView showEditRequestUI(String requestId,HttpSession session){
-		List<Request> list = null;
-		String consumerId = "user1";
-
-		Request request = service.findRequestById(requestId);
-		ModelAndView modelAndView = new ModelAndView("request/modify");
-		modelAndView.addObject("request", request);
-		return modelAndView;
+	public ModelAndView showEditRequestUI(String requestId, HttpSession session){
+		if(checkLogined(session)) return new ModelAndView("member/login");	// check logined
+		return new ModelAndView("request/modify")
+				.addObject("request", service.findRequestById(requestId));
 	}
 	
 	@RequestMapping(value="request/ui/search.do",method=RequestMethod.GET)
-	public ModelAndView showSearchRequestUI(){
-		List<Request> list = null;
-		String consumerId = "user1";
-		String type = "consumer";
-		
-		if(type == "consumer"){
-			list = service.findRequestsByConsumerId(consumerId, "1");
-		}else{
-			list = service.findRequestsByConsumerIdWithMaker(consumerId, "1");
-		}
-		
-		ModelAndView modelAndView = new ModelAndView("request/search");
-		modelAndView.addObject("request", list);
-		return modelAndView;
+	public String showSearchRequestUI(){
+		return "request/makerRequestSearch";
 	}
 	
 	@RequestMapping(value="request/ui/detail.do",method=RequestMethod.GET)
-	public ModelAndView showDetailRequestUI(String id){
-		return new ModelAndView("request/detail")
-				.addObject("request", service.findRequestById(id));
+	public ModelAndView showDetailRequestUI(String id, HttpSession session){
+		if(((String)session.getAttribute("memberType")).equals(Constants.MAKER)) {
+			return new ModelAndView("request/makerRequestDetail")
+					.addObject("request", service.findRequestById(id));
+		} else {
+			return new ModelAndView("request/consumerRequestDetail")
+					.addObject("request", service.findRequestById(id));
+		}
 	}
 	
 	@RequestMapping(value="request/ui/makerInviteList.do",method=RequestMethod.GET)
@@ -363,5 +351,10 @@ public class RequestController {
 	@RequestMapping(value="request/xml/searchById.do", produces="application/xml")
 	public @ResponseBody Request findRequestById(String id){
 		return service.findRequestById(id);
+	}
+	
+	private boolean checkLogined(HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		return loginId == null || loginId.isEmpty();
 	}
 }

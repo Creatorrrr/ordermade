@@ -15,22 +15,23 @@
 		<collection property="tags" column="id" ofType="Tag" select="ordermade.store.mapper.TagMapper.selectTagsByPortfolioId" javaType="ArrayList" jdbcType="VARCHAR"/>
   	</resultMap>
   
-  
-  	<insert id="insertPortfolio">
+  	<insert id="insertPortfolio" parameterType="Portfolio">
   		<selectKey resultType="String" keyProperty="id" order="BEFORE">
-  			select portfolio_seq.nextval from dual
+  			SELECT portfolio_seq.NEXTVAL FROM dual
   		</selectKey>
-  		insert into portfolio(id, title, type, content, maker_id, image) 
-  		values(#{id}, #{title}, #{category} , #{content}, #{maker.id}, #{image})
+  		INSERT INTO portfolio(id, title, type, content, maker_id, image) 
+  		values(#{id}, #{title}, #{category}, #{content}, #{maker.id}, #{image})
   	</insert>
   
-  	<update id="updatePortfolioById">
-  		update portfolio set title=#{title}, type=#{category}, content=#{content}, maker_id=#{maker.id}, image=#{image} where id=#{id}
+  	<update id="updatePortfolioById" parameterType="Portfolio">
+  		update portfolio 
+  		set title=#{title}, type=#{category}, content=#{content}, maker_id=#{maker.id}, image=#{image}
+  		where id=#{id}
   	</update>
   
-  
   	<delete id="deletePortfolioById" parameterType="string">
-  		delete from portfolio where id=#{id}
+  		delete from portfolio 
+  		where id=#{id}
   	</delete>
   
   	<select id="selectPortfolioById" parameterType="java.util.Map" resultMap="portfolioMap">
