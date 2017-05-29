@@ -42,7 +42,7 @@ public class MemberController {
 	@RequestMapping(value = "/join.do", method = RequestMethod.POST) // end
 	public String registerMember(HttpServletRequest request) {
 		// 회원가입 **회원가입이 실패하면 memberRegister.jsp 화면으로 이동 **회원가입이 성공하면 login.jsp으로 이동
-		String imagePath = Constants.MEMBER_IMAGE_PATH;
+		String imagePath = Constants.IMAGE_PATH;
 
 		File dir = new File(imagePath);
 		if (!dir.exists()) {
@@ -166,7 +166,7 @@ public class MemberController {
 	
 	@RequestMapping("/image.do")
 	public void getMemberImage(String img, HttpServletResponse resp) {
-		File image = new File(Constants.MEMBER_IMAGE_PATH + img);
+		File image = new File(Constants.IMAGE_PATH + img);
 
 		if(!image.exists()) {
 			throw new RuntimeException("No member image");

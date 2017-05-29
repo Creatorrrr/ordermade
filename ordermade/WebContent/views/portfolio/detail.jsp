@@ -15,10 +15,10 @@
 		</div>
 
 		<div id="content" class="two_third">
-			<h1>나의 포트폴리오 - 제목나올 수 있도록</h1>
+			<h1>나의 포트폴리오 - ${portfolio.title }</h1>
 			<div>
-				<p>제작항목 :</p>
-				<p>등록일자 :</p>
+				<p>제작항목 : ${portfolio.category }</p>
+				<p>등록일자 : </p>
 			</div>
 			
 			<c:if test="${sessionScope.loginId ne null}">
@@ -26,17 +26,17 @@
 					<!--본인이 작성한 글만 수정 삭제 가능하도록   -->
 					<div align="center">
 						<input class="btn btn-warning" type="button" value="삭제"
-							onclick="javascript:window.location='${ctx }/portfolio/delete.do?portfolioId=${portfolio.id}'">
+							onclick="javascript:window.location='${ctx }/portfolio/xml/remove.do?portfolioId=${portfolio.id}'">
 						<input class="btn btn-success" type="button" value="수정"
-							onclick="javascript:window.location='${ctx}/portfolio/modify.do?portfolioId=${portfolio.id }'">
+							onclick="javascript:window.location='${ctx}/portfolio/ui/modify.do?portfolioId=${portfolio.id }'">
 					</div>
 				</c:if>
 			</c:if>
 			
 			<br> 
-			<%-- <c:forEach items="${ box_list }" var="literature"> --%>
+			<%-- <c:forEach items="${ portfolios }" var="portfolio"> --%>
 			<img class="imgr borderedbox"
-				src="images/demo/slider/pp.jpg" alt="">
+				src="/images/img8.jpg" alt="">
 			<br>
 			<%--  </c:forEach>--%>
 			<p>Aliquatjusto quisque nam consequat doloreet vest orna partur
