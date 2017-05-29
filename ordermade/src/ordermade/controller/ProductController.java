@@ -83,6 +83,7 @@ public class ProductController {
 		if (!pService.registerProduct(product)) {
 			return "product/productRegister";
 		} else {
+			model.addAttribute("product", product);
 			return "product/productDetailTest";
 		}
 

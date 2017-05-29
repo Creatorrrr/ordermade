@@ -19,7 +19,7 @@
 				title : $("#title").val(),
 				grade : $("#grade").val(),
 				content : $("#content").val(),
-				productId : $("#productId").val()
+				product : $("#productId").val()
 			},
 			success : displayComment,
 			error : errorCallback
@@ -58,7 +58,7 @@
 </head>
 <body>
 	<form onsubmit="registContents(); return false;">
-		<input type="hidden" id="productId" name="productId"
+		${product.id } <input type="hidden" id="productId" name="product.id"
 			value="${product.id }">
 		<div>
 			<label for="title">제목 <span>*</span></label> <input type="text"
@@ -80,10 +80,10 @@
 	</form>
 	<div>
 		<c:forEach items="">
-		
-		
-		
-		
+
+
+
+
 		</c:forEach>
 	</div>
 </body>
