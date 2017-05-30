@@ -82,8 +82,8 @@
 </body>
 <script type="text/javascript">	
 $(document).ready(function() {
-	searchRequest.getRequestsByBound(1);
-	//searchRequest.getRequestsByBoundAndTitle(1,1);	// test
+	//searchRequest.getRequestsByBound(1);
+	searchRequest.getRequestsByBoundAndTitle(1,1);	// test
 	//searchRequest.getRequestsByBoundAndContent(1,2);	// test
 });
 
@@ -99,29 +99,8 @@ var searchRequest = {
 					$("#requestSearchResult").empty();
 					if (listLength) {
 						var contentStr = "";
-						$(xmlData).each(function() {
-							contentStr += "<div class='requestBox'>";
-							contentStr += 	"<table class='request_table'>";
-							contentStr += 		"<tr>";
-							contentStr += 			"<td>의뢰명 : </td>";
-							contentStr += 			"<td>" + $(this).find("request>title").text() + "</td>";
-							contentStr += 		"</tr>";
-							contentStr += 		"<tr>";
-							contentStr += 			"<td>의뢰자 : </td>";
-							contentStr += 			"<td>" + $(this).find("request>consumer>id").text() + "</td>";
-							contentStr += 		"</tr>";
-							contentStr += 		"<tr>";
-							contentStr += 			"<td>제작항목 : </td>";
-							contentStr += 			"<td>" + $(this).find("request>category").text() + "</td>";
-							contentStr += 		"</tr>";
-							contentStr += 		"<tr>";
-							contentStr += 			"<td>희망 가격 : </td>";
-							contentStr += 			"<td>" + $(this).find("request>hopePrice").text() + "</td>";
-							contentStr += 		"</tr>";
-							contentStr += 	"</table>";
-							contentStr += 	"<input name='' type='button' value='참가'>";
-							contentStr += "</div>";
-						});
+						$(xmlData).each(searchRequest.makeContent(contentStr, this));
+						console.log(contentStr);
 						$("#requestSearchResult").append(contentStr);
 					}
 				}
@@ -162,6 +141,7 @@ var searchRequest = {
 							contentStr += 	"<input name='' type='button' value='참가'>";
 							contentStr += "</div>";
 						});
+						console.log(contentStr);
 						$("#requestSearchResult").append(contentStr);
 					}
 				}
@@ -206,7 +186,31 @@ var searchRequest = {
 					}
 				}
 			});
-		}
+		},
+	
+	makeContent : function(content, xml) {
+		content += "<div class='requestBox'>";
+		content += 	"<table class='request_table'>";
+		content += 		"<tr>";
+		content += 			"<td>의뢰명 : </td>";
+		content += 			"<td>" + $(xml).find("request>title").text() + "</td>";
+		content += 		"</tr>";
+		content += 		"<tr>";
+		content += 			"<td>의뢰자 : </td>";
+		content += 			"<td>" + $(xml).find("request>consumer>id").text() + "</td>";
+		content += 		"</tr>";
+		content += 		"<tr>";
+		content += 			"<td>제작항목 : </td>";
+		content += 			"<td>" + $(xml).find("request>category").text() + "</td>";
+		content += 		"</tr>";
+		content += 		"<tr>";
+		content += 			"<td>희망 가격 : </td>";
+		content += 			"<td>" + $(xml).find("request>hopePrice").text() + "</td>";
+		content += 		"</tr>";
+		content += 	"</table>";
+		content += 	"<input name='' type='button' value='참가'>";
+		content += "</div>";
+	}
 };
 </script>
 </html>
