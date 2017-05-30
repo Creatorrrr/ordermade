@@ -40,8 +40,8 @@ public class RequestController {
 	@RequestMapping(value = "request/xml/register.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerRequest(Request request, HttpSession session) {
 		// String loginId=(String)session.getAttribute("loginId");
-		
 		if(request.getTitle()==null) return "error";
+		//System.out.println(request.getMaker().getId());
 		if(request.getMaker()== null){		//DB member.id null-> fix	
 			Member maker = new Member();
 			maker.setId("");
@@ -229,12 +229,13 @@ public class RequestController {
 
 
 	@RequestMapping(value = "request/ui/register.do", method = RequestMethod.GET)
-	public ModelAndView showRegisterRequestUIForOneToOne(String makerId, String productId) {
+	public ModelAndView showRegisterRequestUIForOneToOne(String makerId, String productId, String categoryId) {
 		if(makerId==null) return new ModelAndView("request/register");
 		//-----상품페이지에서 데이터를 받아와야 함.
 		ModelAndView modelAndView = new ModelAndView("request/register1_1");
 		modelAndView.addObject("productId", productId);
 		modelAndView.addObject("makerId", makerId);
+		modelAndView.addObject("categoryId", categoryId);		
 		return modelAndView;
 	}	//GET http://localhost:8080/ordermade/request/ui/register.do
 		//GET http://localhost:8080/ordermade/request/ui/register.do?makerId=maker1&productId=1
