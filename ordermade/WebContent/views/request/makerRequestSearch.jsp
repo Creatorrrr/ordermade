@@ -16,6 +16,9 @@
 		float:right;
 		margin:5px;
 	}
+	.requestBox table {
+		color:black;
+	}
 </style>
 
 <div class="wrapper row3">
@@ -27,24 +30,22 @@
 			<div id="content" class="two_third">
 				<div class="content" align="center">
 					<h1 align="left">의뢰서 검색</h1>
-					<form class="clear" method="post" action="#" style="float:right">
-						<fieldset>
-							<select name="type" id="type" class="form-control" style="display:inline-block">
-								<option value="id">제목</option>
-								<option value="name">내용</option>
-							</select>
-							<input name="requestSearchKeyword" class="search-box-input"
-								type="text" value="" placeholder="Search Here" style="display:inline-block"/>
-							<button id="requestSearchBtn" class="fa fa-search" type="submit" title="Search">
-								<em>Search</em>
-							</button>
-						</fieldset>
-					</form>
+					<div style="float:right">
+						<select id="requestSearchType" class="form-control" style="display:inline-block">
+							<option value="title">제목</option>
+							<option value="content">내용</option>
+						</select>
+						<input id="requestSearchKeyword" name="requestSearchKeyword" class="search-box-input"
+							type="text" value="" placeholder="Search Here" style="display:inline-block"/>
+						<button id="requestSearchBtn" class="fa fa-search" title="Search">
+							<em>Search</em>
+						</button>
+					</div>
 				</div> <%-- <c:forEach items="${ box_list }" var="literature"> --%>
 				
 				<div align="left">
-					<button>모든 의뢰서</button>
-					<button>내가 보낸 의뢰서</button>
+					<button id="allRequests">모든 의뢰서</button>
+					<button id="askedRequests">내가 보낸 의뢰서</button>
 				</div>
 				
 				<div id="requestSearchResult">
@@ -82,9 +83,29 @@
 </body>
 <script type="text/javascript">	
 $(document).ready(function() {
-	//searchRequest.getRequestsByBound(1);
-	searchRequest.getRequestsByBoundAndTitle(1,1);	// test
+	searchRequest.getRequestsByBound(1);
+	//searchRequest.getRequestsByBoundAndTitle(1,1);	// test
 	//searchRequest.getRequestsByBoundAndContent(1,2);	// test
+});
+
+// 모든 의뢰서를 클릭하면 모든 의뢰서 목록을 가져온다.
+$("#allRequests").click(function() {
+	searchRequest.getRequestsByBound(1);
+});
+
+// 내가 보낸 의뢰서를 클릭하면 내가 보낸 의뢰서 목록을 가져온다.
+$("#askedRequests").click(function() {
+	searchRequest.getMyInviteRequestsForMaker(1);
+});
+
+// 검색을 클릭하면 검색된 의뢰서 목록을 가져온다.
+$("#requestSearchBtn").click(function() {
+	var type = $("#requestSearchType option:selected").val();
+	if(type === "title") {
+		searchRequest.getRequestsByBoundAndTitle(1, $("#requestSearchKeyword").val());
+	} else if(type === "content") {
+		searchRequest.getRequestsByBoundAndContent(1, $("#requestSearchKeyword").val());
+	}
 });
 
 var searchRequest = {
@@ -99,8 +120,9 @@ var searchRequest = {
 					$("#requestSearchResult").empty();
 					if (listLength) {
 						var contentStr = "";
-						$(xmlData).each(searchRequest.makeContent(contentStr, this));
-						console.log(contentStr);
+						$(xmlData).each(function(){
+							contentStr += searchRequest.makeContent(this);
+						});
 						$("#requestSearchResult").append(contentStr);
 					}
 				}
@@ -119,29 +141,8 @@ var searchRequest = {
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function() {
-							contentStr += "<div class='requestBox'>";
-							contentStr += 	"<table class='request_table'>";
-							contentStr += 		"<tr>";
-							contentStr += 			"<td>의뢰명 : </td>";
-							contentStr += 			"<td>" + $(this).find("request>title").text() + "</td>";
-							contentStr += 		"</tr>";
-							contentStr += 		"<tr>";
-							contentStr += 			"<td>의뢰자 : </td>";
-							contentStr += 			"<td>" + $(this).find("request>consumer>id").text() + "</td>";
-							contentStr += 		"</tr>";
-							contentStr += 		"<tr>";
-							contentStr += 			"<td>제작항목 : </td>";
-							contentStr += 			"<td>" + $(this).find("request>category").text() + "</td>";
-							contentStr += 		"</tr>";
-							contentStr += 		"<tr>";
-							contentStr += 			"<td>희망 가격 : </td>";
-							contentStr += 			"<td>" + $(this).find("request>hopePrice").text() + "</td>";
-							contentStr += 		"</tr>";
-							contentStr += 	"</table>";
-							contentStr += 	"<input name='' type='button' value='참가'>";
-							contentStr += "</div>";
+							contentStr += searchRequest.makeContent(this);
 						});
-						console.log(contentStr);
 						$("#requestSearchResult").append(contentStr);
 					}
 				}
@@ -160,40 +161,42 @@ var searchRequest = {
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function() {
-							contentStr += "<div class='requestBox'>";
-							contentStr += 	"<table class='request_table'>";
-							contentStr += 		"<tr>";
-							contentStr += 			"<td>의뢰명 : </td>";
-							contentStr += 			"<td>" + $(this).find("request>title").text() + "</td>";
-							contentStr += 		"</tr>";
-							contentStr += 		"<tr>";
-							contentStr += 			"<td>의뢰자 : </td>";
-							contentStr += 			"<td>" + $(this).find("request>consumer>id").text() + "</td>";
-							contentStr += 		"</tr>";
-							contentStr += 		"<tr>";
-							contentStr += 			"<td>제작항목 : </td>";
-							contentStr += 			"<td>" + $(this).find("request>category").text() + "</td>";
-							contentStr += 		"</tr>";
-							contentStr += 		"<tr>";
-							contentStr += 			"<td>희망 가격 : </td>";
-							contentStr += 			"<td>" + $(this).find("request>hopePrice").text() + "</td>";
-							contentStr += 		"</tr>";
-							contentStr += 	"</table>";
-							contentStr += 	"<input name='' type='button' value='참가'>";
-							contentStr += "</div>";
+							contentStr += searchRequest.makeContent(this);
 						});
 						$("#requestSearchResult").append(contentStr);
 					}
 				}
 			});
 		},
+		
+		getMyInviteRequestsForMaker : function(page) {
+			$.ajax({
+				url : "${ctx}/request/xml/searchMyInviteRequestsForMaker.do?page=" + page,
+				type : "get",
+				dataType : "xml",
+				success : function(xml) {
+						var xmlData = $(xml).find("inviterequest>request");
+						var listLength = xmlData.length;
+						$("#requestSearchResult").empty();
+						if (listLength) {
+							var contentStr = "";
+							$(xmlData).each(function() {
+								contentStr += searchRequest.makeContentForAsked(this);
+							});
+							$("#requestSearchResult").append(contentStr);
+						}
+					}
+				});
+			},
 	
-	makeContent : function(content, xml) {
+	makeContent : function(xml) {
+		var content = "";
+		
 		content += "<div class='requestBox'>";
 		content += 	"<table class='request_table'>";
 		content += 		"<tr>";
 		content += 			"<td>의뢰명 : </td>";
-		content += 			"<td>" + $(xml).find("request>title").text() + "</td>";
+		content += 			"<td><p>" + $(xml).find("request>title").text() + "</p></td>";
 		content += 		"</tr>";
 		content += 		"<tr>";
 		content += 			"<td>의뢰자 : </td>";
@@ -210,6 +213,36 @@ var searchRequest = {
 		content += 	"</table>";
 		content += 	"<input name='' type='button' value='참가'>";
 		content += "</div>";
+
+		return content;
+	},
+			
+	makeContentForAsked : function(xml) {
+		var content = "";
+		
+		content += "<div class='requestBox'>";
+		content += 	"<table class='request_table'>";
+		content += 		"<tr>";
+		content += 			"<td>의뢰명 : </td>";
+		content += 			"<td><p>" + $(xml).find("request>title").text() + "</p></td>";
+		content += 		"</tr>";
+		content += 		"<tr>";
+		content += 			"<td>의뢰자 : </td>";
+		content += 			"<td>" + $(xml).find("request>consumer>id").text() + "</td>";
+		content += 		"</tr>";
+		content += 		"<tr>";
+		content += 			"<td>제작항목 : </td>";
+		content += 			"<td>" + $(xml).find("request>category").text() + "</td>";
+		content += 		"</tr>";
+		content += 		"<tr>";
+		content += 			"<td>희망 가격 : </td>";
+		content += 			"<td>" + $(xml).find("request>hopePrice").text() + "</td>";
+		content += 		"</tr>";
+		content += 	"</table>";
+		content += 	"<input type='button' value='진행중' disabled>";
+		content += "</div>";
+
+		return content;
 	}
 };
 </script>
