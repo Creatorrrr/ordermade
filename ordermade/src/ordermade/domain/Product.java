@@ -1,12 +1,18 @@
 package ordermade.domain;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class Product implements Serializable {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
-	private static final long serialVersionUID = 4686985772505435278L;
-	
+import org.springframework.stereotype.Component;
+
+@XmlRootElement(name = "product")
+@XmlAccessorType(XmlAccessType.FIELD)
+@Component
+public class Product {
+
 	private String id;
 	private String title;
 	private Member maker;
