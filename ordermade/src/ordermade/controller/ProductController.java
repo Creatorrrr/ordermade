@@ -86,7 +86,7 @@ public class ProductController {
 			return "product/productRegister";
 		} else {
 			model.addAttribute("product", product);
-			return "product/productDetailTest";
+			return "product/productDetail";
 		}
 
 	}
