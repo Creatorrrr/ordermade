@@ -20,33 +20,35 @@
 		</div>
 
 		<div id="content" class="two_third">
-			<h1>나의 포트폴리오 - ${portfolio.title }</h1>
+			<h1>나의 포트폴리오 -${portfolio.title }</h1>
+
+			<c:if test="${sessionScope.loginId ne null }">
+				<%-- <c:if test="${portfolio.makerId eq sessionScope.loginId}"> --%>
+				<!--본인이 작성한 글만 수정 삭제 가능하도록   -->
+				<div align="center">
+					<input class="btn btn-warning" type="button" value="삭제"
+						onclick="javascript:window.location='${ctx }/portfolio/xml/remove.do?portfolioId=${portfolio.id}'">
+					<input class="btn btn-success" type="button" value="수정"
+						onclick="javascript:window.location='${ctx}/portfolio/ui/modify.do?portfolioId=${portfolio.id }'">
+				</div>
+				<%-- 	</c:if> --%>
+			</c:if>
+
 			<div>
 				<p>제작항목 : ${portfolio.category }</p>
-				<p>등록일자 : </p>
+				<p>등록일자 :</p>
 			</div>
-			
-			<c:if test="${sessionScope.loginId ne null}">
-				<c:if test="${product.writer.id eq sessionScope.loginId}">
-					<!--본인이 작성한 글만 수정 삭제 가능하도록   -->
-					<div align="center">
-						<input class="btn btn-warning" type="button" value="삭제"
-							onclick="javascript:window.location='${ctx }/portfolio/xml/remove.do?portfolioId=${portfolio.id}'">
-						<input class="btn btn-success" type="button" value="수정"
-							onclick="javascript:window.location='${ctx}/portfolio/ui/modify.do?portfolioId=${portfolio.id }'">
-					</div>
-				</c:if>
-			</c:if>
-			
-			<br> 
+
+			<br>
 			<%-- <c:forEach items="${ portfolios }" var="portfolio"> --%>
 			<img class="imgr borderedbox"
-				src="/images/img8.jpg" alt="">
+				src="${ctx }/portfolio/image.do?img=${portfolio.image}" alt="">
 			<br>
 			<%--  </c:forEach>--%>
-			<p>Aliquatjusto quisque nam consequat doloreet vest orna partur
-				scetur portortis nam. Metadipiscing eget facilis elit sagittis
-				felisi eger id justo maurisus convallicitur.</p>
+			<div>
+			<p>포트폴리오 내용 : <br></p>
+			<p>${portfolio.content }</p>
+			</div>
 			<br>
 		</div>
 		</main>
