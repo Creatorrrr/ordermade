@@ -2,15 +2,17 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
-
 <!-- TEST ========================================================================================== -->
 <!-- http://localhost:8080/ordermade/views/request/makerInviteList.jsp -->
 <!-- http://localhost:8080/ordermade/request/ui/makerInviteList.do -->
-
+<!DOCTYPE html>
+<html lang="ko">
 <!-- Header ========================================================================================== -->
+<head>
 <%@ include file="/views/common/head.jsp"%>
-
+</head>
 <!-- Main Body ========================================================================================== -->
+<body>
 <div class="wrapper row3">
 	<div class="rounded">
 		<main class="container clear"> <!-- main body -->
@@ -60,38 +62,12 @@
 	                           		${inviteRequest.requestTime}<br>
 	                            </td>
 	                            <td style="text-align: center">
-	                            	<a href="" class="">수락</a><a href="" class="">거절</a>
+	                            	<input type="button" value="수락"><span><input type="button" value="거절"></span>
 	                            </td>
 	                        </tr>
 	                       </c:forEach>
 	                   </tbody>
 	               </table>
-			</div>
-	
-			<div id="content" class="two_third">
-				<h1>참가요청내역</h1>
-				<div class="">
-					<table>
-						<tr>
-							<td>번호</td>
-							<td>소비자</td>
-							<td>메시지</td>
-							<td>요청시간</td>
-							<td>참가요청</td>
-						</tr>
-						<c:forEach items="${inviteRequests}" var="inviteRequest">
-							<tr>
-								<td><p>${inviteRequest.id}</p></td>
-								<td><p>${inviteRequest.request.consumer.id}</p></td>
-								<td><p>${inviteRequest.message}</p></td>
-								<td><p>${inviteRequest.requestTime}</p></td>
-								<td>
-									<input type="button" value="수락">
-									<input type="button" value="거절">
-								</td>
-							</tr>
-						</c:forEach>
-					</table>
 				</div>
 			</div>
 		</main>

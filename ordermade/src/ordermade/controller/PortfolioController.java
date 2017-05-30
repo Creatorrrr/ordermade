@@ -172,7 +172,7 @@ public class PortfolioController {
 		//if(type==null) type = "aa";//
 		List<Portfolio> portfolios = pService.findPortfoliosByCategory(type, "1");
 		
-		ModelAndView modelAndView = new ModelAndView("portfolio/search");
+		ModelAndView modelAndView = new ModelAndView("portfolio/portfolio");
 		modelAndView.addObject("portfolios", portfolios);
 		return modelAndView;
 	} //test http://localhost:8080/ordermade/portfolio/ui/search.do?type=aa

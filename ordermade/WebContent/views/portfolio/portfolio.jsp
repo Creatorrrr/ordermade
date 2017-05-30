@@ -17,22 +17,18 @@
 			<h6>Category</h6>
 			<nav class="sdb_holder">
 				<ul>
-					<li><a href="#">Furniture</a></li>
-					<!-- <ul>
-						<li><a href="#">의자</a></li>
-						<li><a href="#">책상</a></li>
-					</ul>  -->
-					<li><a href="#">Accessory</a></li>
-					<li><a href="#">Kitchen</a></li>
-					<li><a href="#">Digital</a></li>
-					<li><a href="#">Clothing</a></li>
-					<li><a href="#">Sport </a></li>
+					<li><a href="${ctx }/portfolio/ui/search.do?type=aa">Furniture</a></li>
+					<li><a href="${ctx }/portfolio/ui/search.do?type=Accessory">Accessory</a></li>
+					<li><a href="${ctx }/portfolio/ui/search.do?type=Kitchen">Kitchen</a></li>
+					<li><a href="${ctx }/portfolio/ui/search.do?type=Digital">Digital</a></li>
+					<li><a href="${ctx }/portfolio/ui/search.do?type=Clothing">Clothing</a></li>
+					<li><a href="${ctx }/portfolio/ui/search.do?type=Sport">Sport</a></li>
 				</ul>
 			</nav>
 		</div>
 
 		<div id="content" class="two_third">
-			<h1>상품페이지</h1>
+			<h1>포트폴리오 페이지</h1>
 
 			<div class="fl_right">
 				<form class="clear" method="post" action="#">

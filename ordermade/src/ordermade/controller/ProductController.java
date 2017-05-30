@@ -249,7 +249,7 @@ public class ProductController {
 
 		return products;
 	}
-
+	// test : http://localhost:8080/ordermade/ajax/products/category.do
 	@RequestMapping(value = "/ajax/products/category", produces = "text/plain")
 	public @ResponseBody Products findProductsByCategory(String page, String category) {
 		// Ajax 한 종류 생산품검색으로 생산품들 출력
@@ -346,7 +346,7 @@ public class ProductController {
 	// ************************
 	// ui start
 
-	@RequestMapping("/register")
+	@RequestMapping("/register.do")
 	public String showRegisterProductUI(Model model) {
 		// 상품 등록 페이지 productRegister.jsp로 이동
 		List<Category> categorys = pService.findAllCategory();
@@ -355,7 +355,7 @@ public class ProductController {
 		return "product/productRegister";
 	}
 
-	@RequestMapping("/modify")
+	@RequestMapping("/modify.do")
 	public ModelAndView showEditProductUI(String id) {
 		// 상품 수정 페이지로 이동
 
@@ -366,7 +366,7 @@ public class ProductController {
 		return mv;
 	}
 
-	@RequestMapping("/myProducts")
+	@RequestMapping("/myProducts.do")
 	public ModelAndView showMyProductListUI(String page, HttpServletRequest req) {
 		// GET 나의 생산품들 출력
 
@@ -374,13 +374,13 @@ public class ProductController {
 
 		List<Product> products = pService.findProductsByMakerId(makerId, page);
 
-		ModelAndView mv = new ModelAndView("");
+		ModelAndView mv = new ModelAndView("product/myProductList");
 		mv.addObject("products", products);
 
 		return mv;
 	}
 
-	@RequestMapping("/detailProduct")
+	@RequestMapping("/detailProduct.do")
 	public ModelAndView showDetailProductUI(String id) {
 		// GET 상품 상세정보 출력후 상품 상세 페이지로 이동
 
