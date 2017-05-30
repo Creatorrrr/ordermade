@@ -73,8 +73,9 @@
 			<nav id="mainav" class="clear">
 				<ul class="clear">
 					<li class=""><a href="${ctx }/views/index.jsp">Main</a></li>
-					<li class=""><a href="${ctx }/views/product/product.jsp">Product</a> 
-					<%-- <ul>
+					<li class=""><a href="${ctx }/product/register.do">상품등록</a></li>
+					<li><a class="drop" href="#">category</a> 
+					<ul>
 							<li><a href="${ctx }/views/productList.jsp">Furniture</a></li>
 							<li><a href="${ctx }/pages/portfolio.html">Accessory</a></li>
 							<li><a href="${ctx }/pages/full-width.html">Kitchen</a></li>

@@ -61,7 +61,7 @@ public class ProductController {
 			int price = Integer.parseInt(mr.getParameter("price"));
 			int period = Integer.parseInt(mr.getParameter("period"));
 			int hit = 0;
-			
+
 			Member maker = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 
 			product.setTitle(title);
@@ -72,18 +72,20 @@ public class ProductController {
 			product.setPeriod(period);
 			product.setMaker(maker);
 			product.setHit(hit);
-			
-//			List<Product> productList =  pService.findProductsByCategory(category, "1");
-//			ModelAndView mv = new ModelAndView("");
-//			mv.addObject("produts", productList);
-			//Model model = model.addAttribute("produts",productList);
-			
+
+			// List<Product> productList =
+			// pService.findProductsByCategory(category, "1");
+			// ModelAndView mv = new ModelAndView("");
+			// mv.addObject("produts", productList);
+			// Model model = model.addAttribute("produts",productList);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		if (!pService.registerProduct(product)) {
 			return "product/productRegister";
 		} else {
+			model.addAttribute("product", product);
 			return "product/productDetailTest";
 		}
 
@@ -149,25 +151,14 @@ public class ProductController {
 		}
 	}
 
-	@RequestMapping(value = "/review/register", method = RequestMethod.POST, produces = "text/plain")
-	public @ResponseBody Product registerReview(Review review, HttpServletRequest req) {
-		// Ajax 리뷰 등록후 화면유지
-		System.out.println("-----------------" + review.getProduct().getId());
-		System.out.println(review.getTitle());
-		System.out.println(review.getGrade());
-		System.out.println(review.getContent());
+	@RequestMapping(value = "/review/register.do")
 
+	public @ResponseBody String registerReview(Review review, HttpServletRequest req) {
+		// Ajax 리뷰 등록후 화면유지
 		Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 		review.setConsumer(consumer);
-
-		if (!pService.registerReview(review)) {
-
-			Product product = pService.findProductById(review.getProduct().getId());
-
-			return product;
-		} else {
-			return null;
-		}
+		boolean check = pService.registerReview(review);
+		return check + "";
 	}
 
 	@RequestMapping(value = "/review/modify", method = RequestMethod.POST, produces = "text/plain")
