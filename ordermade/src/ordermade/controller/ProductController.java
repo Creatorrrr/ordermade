@@ -89,7 +89,7 @@ public class ProductController {
 		} else {
 			System.out.println("참");
 			model.addAttribute("product", product);
-			return "product/productDetailTest";
+			return "product/productDetail";
 		}
 
 	}

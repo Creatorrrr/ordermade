@@ -49,7 +49,7 @@ public class PortfolioController {
 
 	@RequestMapping(value = "xml/register.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerPortfolio(Portfolio portfolio, HttpServletRequest req) {
-
+		
 		String imagePath = Constants.IMAGE_PATH;
 
 		File dir = new File(imagePath);
@@ -66,10 +66,9 @@ public class PortfolioController {
 			String content = mr.getParameter("content");
 			String category = mr.getParameter("category");
 			// File image = mr.getFile("portfolioImage");
-			String makerId = mr.getParameter("makerId");
 
-			Member maker = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
-			maker.setId(makerId);
+			Member maker = new Member();
+			maker.setId((String) req.getSession().getAttribute("loginId"));
 
 			portfolio.setTitle(title);
 			portfolio.setContent(content);
@@ -79,7 +78,7 @@ public class PortfolioController {
 
 			// portfolio.setTitle(mr.getParameter("title"));
 			portfolio.setImage(mr.getFile("image").getName());
-
+			System.out.println("makerId:" + maker);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -174,7 +173,7 @@ public class PortfolioController {
 		// portfolio.setId(portfolioId);
 		// model.addAttribute("portfolioId",portfolio.getId());
 		// model.addAttribute("portfolioId",portfolioId);
-
+		System.out.println("@@@@@@@@@@@@@@@@@@makerId:" + makerId);
 		model.addAttribute("makerId", makerId);
 		return "portfolio/register";
 
@@ -212,11 +211,19 @@ public class PortfolioController {
 	public ModelAndView showMyPortfolioListUI(HttpSession session) { // String
 																		// page
 		// -------session으로 로그인 정보 갖고 오기.
-		String makerId = (String) session.getAttribute("loginId");
 
+		String makerId = (String) session.getAttribute("loginId");
 		List<Portfolio> portfolios = pService.findPortfoliosByMakerId(makerId, "1");
 		ModelAndView modelAndView = new ModelAndView("/portfolio/myPortfolioList");
+
+// test
+//		Member maker = new Member();
+//		maker.setId((String) session.getAttribute("loginId"));
+		
 		modelAndView.addObject("portfolios", portfolios);
+		modelAndView.addObject("makerId", makerId);
+		
+		System.out.println("######### makerId - " + makerId );       //여기까진 makerId 도착
 		return modelAndView;
 	}
 

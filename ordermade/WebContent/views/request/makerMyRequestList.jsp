@@ -18,7 +18,7 @@
 
 			<ul class="nospace listing">
 				<li class="clear">
-
+			<%-- 		<%@ include file="/views/request/makerRequestSearch.jsp"%> --%>
 					<div class="content" align="center">
 						<h1 align="left">받은 의뢰서</h1>
 						<table class="table">
