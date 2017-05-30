@@ -14,19 +14,21 @@ ${box2 }
 	
 			<h1>의뢰서 등록 페이지</h1>
 			<br>
-			<form action="${ctx }/request/xml/register.do" method="post"  onsubmit="return checkIt()">
-				<input name="" type="hidden" value="${categoryId }">
+			<form action="${ctx }/request/xml/register.do" method="post" id="form1" name="form1" onsubmit="return checkIt()">
+				<input name="category" type="hidden" value="${categoryId }">
+
 				<table class="table">
 					<tr>
+						<th>제작자</th>
+						<td>
+							${makerId }
+							<input id="maker" name="maker.id" class="form-control" type="hidden" value="${makerId }" >
+						</td>
+					<tr>
+					<tr>
 						<th>제작 항목</th>
-						<td><select name="category" id="category" class="form-control">
-								<option value="id" selected="selected">가구</option>
-								<option value="id">의류</option>
-								<option value="id">악세사리</option>
-								<option value="id">디지털</option>
-								<option value="id">주방</option>
-								<option value="id">스포츠</option>
-							</select>
+						<td><div id="category"></div>
+						
 						</td>
 					</tr>
 					<tr>
@@ -53,76 +55,97 @@ ${box2 }
 	<script type="text/javaScript">
 	
 
-
+		//html구조가 모두 인클루드 된후 실행
 		$(document).ready(function() {
-			/* ajax로 작품 다른거 검색하기*/
+			
+			//상품번호 의뢰 내용에 넣기 (출처)
+			var productId= '${productId }';
+			if(productId != ''){
+				$("#contentText").html("[상품번호: ${productId }]\n");
+			}
+			
+			
+			//DB에서 카테고리 리스트 불러오기  
+			$.ajax({
+				url : "${ctx}/main/xml/categoryList.do",
+				type : "post",
+				dataType : "xml",
+				success : function(xml) {
+					var categoryId = "${categoryId}";
+					//console.log(xml);
+					var rs= '<select name="category" id="category" class="form-control">';
+					var list = $(xml).find("category > type");
+					console.log(list.size());
+					list.each(function(){
+						rs+='<option value="' + $(this).text() + '" ';
+						if(categoryId == $(this).text()){
+							rs+='selected="selected"';
+						}
+						rs+='>'+$(this).text()+'</option>';
+						//console.log($(this).text());
+					});
+					rs+='</select>';
+					//console.log(rs);
+					$("#category").html(rs);
+					
+				},
+				error: function(xml){
+					$("#category").html('<select name="category" id="category" class="form-control">'
+											+'<option value="가구" selected="selected">가구</option>'
+											+'<option value="의류">의류</option>'
+											+'<option value="악세사리">악세사리</option>'
+											+'<option value="디지털">디지털</option>'
+											+'<option value="주방">주방</option>'
+											+'<option value="스포츠">스포츠</option>'
+										+'</select>');
+				}
+			});
+			
+			
+			//저장버튼 구현
 			$("#btn").click(function() {
 				console.log("----------");
-				
-				$.ajax({
-					url : "${ctx}/request/xml/register.do",
-					data : {
-						category : $("#category option:selected").text(),
-						title : $("#title").val(),
-						content : $("#contentText").val(),
-						hopePrice : $("#hopePrice").val()
-							
-					},
-					type : "post",
-					dataType : "text",
-					success : function(data) {
-						if(data=="true"){
-							location.href="${ctx}/request/ui/detail.do";
+				if(checkIt()){
+					$.ajax({
+						url : "${ctx}/request/xml/register.do",
+						type : "post",
+						data : $('#form1').serialize(),
+						dataType : "text",
+						success : function(data) {
+							if(data=="true"){
+								location.href="${ctx}/request/ui/detail.do";//성공시 페이지 전환
+							}
+						},
+						error: function(xml){
+							console.log("실패 메세지:\n"+xml.responseText);
 						}
-						//secessFun(xml,"#result");
-					},
-					error: function(xml){
-						console.log(xml.responseText);
-					}
-					
-				});
+						
+					});
+				}
 			});
+			
+			
+			
+			//필수 입력값 체크 
+			function checkIt() {
+				if (!title.value) {
+					alert("제목을 입력하세요");
+					return false;
+				}else if (!contentText.value) {
+					alert("내용을 입력하세요");
+					return false;
+				}else if(!hopePrice.value){
+					alert("희망금액을 입력하세요");
+					return false;
+				}
+				return true;
+			}
 
 		});
-/* 	
-		function secessFun(xml,resultId){
-			var xmlData = $(xml).find("literature");
-			var listLength = xmlData.length;
-			$(resultId).empty();			
-			if (listLength) {
-				var one = $("#litTemplate > .literatureBox").first();
-				$(resultId).html('');
-				$(xmlData).each(function() {
-					var rs = one.clone();
-					rs.find('img').attr('src', $(this).find('imagePath').text());
-					rs.find('.literature').attr('href', '${ctx}/episode/list.do?literatureId=' + $(this).find("literature>id").text());
-					rs.find('.literature').text( $(this).find("name:first").text());
-					rs.find('.creatorId').html($(this).find("creator").find("id").text());
-					rs.find('.genre').html($(this).find("genre").text());
-					rs.find('.introduce').html($(this).find("introduce").text());
-					rs.find('.hits').html($(this).find("hits").text());
-					$(resultId).append(rs);
-				});
-				
-			}else{
-				$(resultId).html('<div class="alert alert-dismissible alert-info"><a href="${ctx}/" type="button" class="close" data-dismiss="alert">&times;</a><strong>Heads up!</strong>검색하신 작품이 없습니다.</div>');
-			}
-		} */
+
 		
 	
-	
-		function checkIt() {
-			var pregister = document.pregister;
-			if (!pregister.requestTitle.value) {
-				alert("제목을 입력하세요");
-				return false;
-			}
-			if (!pregister.requestContent.value) {
-				alert("내용을 입력하세요");
-				return false;
-			}
-			return true;
-		}
+
 	</script>
 
 
