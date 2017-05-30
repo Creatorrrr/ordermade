@@ -3,8 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 
+<!DOCTYPE html>
+<html lang="ko">
+<!-- bxSlider CSS file -->
+<link href="${ctx }/views/css/jquery.bxslider.css" rel="stylesheet" />
+<!-- Header ========================================================================================== -->
+<head>
 <%@ include file="/views/common/head.jsp"%>
-
+</head>
+<title>의뢰서</title>
+<!-- Main Body ========================================================================================== -->
+<body>
 <div class="wrapper row3">
 	<div class="rounded">
 		<main class="container clear"> <!-- main body -->
@@ -17,7 +26,7 @@
 					<div class="imgl borderedbox">
 						<img src="${ctx }/views/images/img1.jpg" />
 					</div>
-					<table class="table">
+					<table class="table" style="color:black">
 						<tr>
 							<td><p>의뢰 명 : ${request.title}</p></td>
 						</tr>
@@ -34,22 +43,31 @@
 							<td><p>희망 가격 : ${request.hopePrice }</p></td>
 						</tr>
 					</table>
-					<table class="table">
-						<tr><td><h3>대화 기록<button onclick="" style="float: right;">파일함</button></h3></td></tr>
+					<table class="table" style="color:black">
+						<tr><td><h3>대화 기록<button style="float: right;">파일함</button></h3></td></tr>
 						<tr>
 							<td>
-								<ul id="commentslider">
+								<ul id="commentList">
 									<c:forEach items="${request.comments }" var="comment">
-										<li><p>${comment.member.memberType } : ${comment.content }</p></li>
+										<li>
+											<p style="display:inline-block">${comment.member.memberType } : ${comment.content }</p>
+											<c:if test="${comment.member.id eq sessionScope.loginId}">
+												<button>수정</button>
+												<button onclick="searchComment.removeComment(${comment.id});">삭제</button>
+											</c:if>
+										</li>
 									</c:forEach>
 								</ul>
-					            <%-- <a href="#" id="prevCommentBtn">
-					                <img src="${ctx }/views/images/bul_prev.png" alt="이전">
-					            </a>
-					            <a href="#" id="nextCommentBtn">
-					                <img src="${ctx }/views/images/bul_next.png" alt="다음">
-					            </a> --%>
 				            </td>
+						</tr>
+						<tr><td><h3>추가 요구 사항</h3></td></tr>
+						<tr>
+							<td>
+								<textarea id="commentContent" rows="5" style="width:100%"></textarea>
+								<div style="float:right">
+									<button id="commentRegister">코멘트 등록</button>
+								</div>
+							</td>
 						</tr>
 					</table>
 					<div>
@@ -76,64 +94,74 @@
 
 <!-- bxSlider JavaScript file -->
 <script src="${ctx }/views/js/jquery.bxslider.min.js"></script>
-<!-- bxSlider CSS file -->
-<link href="${ctx }/views/css/jquery.bxslider.css" rel="stylesheet" />
 
 <script type="text/javascript">
-$(document).ready(function() {
-//	getPortfolios(1); *****************************************************************
+$("#commentRegister").click(function() {
+	searchComment.registerComment();
+	$("#commentContent").val("");
+});
+
+$("#commentRemove").click(function() {
+	searchComment.removeComment();
+	$("#commentContent").val("");
 });
 
 // get portfolios with xml
-var getPortfolios = function(page) {
-	$.ajax({
-		url : "${ctx}/portfolio/xml/search.do?page=" + page,
-		type : "get",
-		dataType : "xml",
-		success : function(xml) {
-				var xmlData = $(xml).find("portfolio");
-				var listLength = xmlData.length;
-				$("#pfslider").empty();
-				if (listLength) {
-					var contentStr = "";
-					$(xmlData).each(function() {
-						contentStr += "<li>";
-						contentStr += "<img src='${ctx }/member/image.do?img=" + $(this).find('portfolio>image') + "'>";
-						contentStr += "</li>";
-					});
-					$("#pfslider").append(contentStr);
-				}
+var searchComment = {
+	registerComment : function() {
+		$.ajax({
+			url : "${ctx }/comment/xml/register.do",
+			data : {'request.id' : "${request.id}",
+					content : $("#commentContent").val()},
+			type : "post",
+			dataType : "text",
+			success : function(text) {
+					if(text === "true") {
+						searchComment.getCommentsByRequestId("${request.id}", 1);
+					}
 			}
 		});
-	};
+	},
 	
-/* 	// portfolio slider setting
-	var pfSlider = $( '#commentslider' ).bxSlider( {
-	    mode: 'vertical',// 가로 방향 수평 슬라이드
-	    speed: 500,         // 이동 속도를 설정
-	    pager: true,       // 현재 위치 페이징 표시 여부 설정
-	    moveSlides: 5,      // 슬라이드 이동시 개수
-	    minSlides: 5,      // 최소 노출 개수
-	    maxSlides: 5,      // 최대 노출 개수
-	    adaptiveHeight: true, // 높이 자동 조절
-	    auto: false,        // 자동 실행 여부
-	    controls: false,    // 이전 다음 버튼 노출 여부
-	    responsive: true,	// 리사이즈 허용
-	    touchEnabled: true,	// 터치 허용
-	    infiniteLoop: false	// 무한루프 해제
-	} );
-
-	//이전 버튼을 클릭하면 이전 슬라이드로 전환
-	$( '#prevCommentBtn' ).on( 'click', function () {
-		pfSlider.goToPrevSlide();  //이전 슬라이드 배너로 이동
-	    return false;              //<a>에 링크 차단
-	} );
-
-	//다음 버튼을 클릭하면 다음 슬라이드로 전환
-	$( '#nextCommentBtn' ).on( 'click', function () {
-		pfSlider.goToNextSlide();  //다음 슬라이드 배너로 이동
-	    return false;
-	} ); */
+	removeComment : function(id) {
+		$.ajax({
+			url : "${ctx }/comment/xml/remove.do?id=" + id,
+			type : "get",
+			dataType : "text",
+			success : function(text) {
+					if(text === "true") {
+						searchComment.getCommentsByRequestId("${request.id}", 1);
+					}
+			}
+		});
+	},
+	
+	getCommentsByRequestId : function(requestId, page) {
+		$.ajax({
+			url : "${ctx}/comment/xml/searchRequestId.do?requestId=" + requestId + "&page=" + page,
+			type : "get",
+			dataType : "xml",
+			success : function(xml) {
+					var xmlData = $(xml).find("comment");
+					var listLength = xmlData.length;
+					$("#commentList").empty();
+					if (listLength) {
+						var contentStr = "";
+						$(xmlData).each(function() {
+							contentStr += "<li>";
+							contentStr += "<p style='display:inline-block'>" + $(this).find("comment>member>memberType").text() + " : " + $(this).find("comment>content").text() + "</p>"
+							if($(this).find("comment>member>id").text() === "${sessionScope.loginId}") {
+								contentStr += "<button class='commentModify'>수정</button>"
+								contentStr += "<button onclick='searchComment.removeComment(" + $(this).find("comment>id").text() + ");'>삭제</button>";
+							}
+							contentStr += "</li>";
+						});
+						$("#commentList").append(contentStr);
+					}
+			}
+		});
+	}
+};
 </script>
 
 </body>

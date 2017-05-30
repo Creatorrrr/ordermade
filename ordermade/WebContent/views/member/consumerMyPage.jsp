@@ -8,6 +8,7 @@
 <head>
 <%@ include file="/views/common/head.jsp"%>
 </head>
+<title>My Page</title>
 <!-- Main Body ========================================================================================== -->
 <body>
 <div class="wrapper row3">

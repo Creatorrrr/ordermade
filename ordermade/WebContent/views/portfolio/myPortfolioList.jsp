@@ -7,6 +7,7 @@
 <head>
 <%@ include file="/views/common/head.jsp"%>
 </head>
+<title>나의 포트폴리오</title>
 <body>
 	<div class="wrapper row3">
 		<div class="rounded">
@@ -49,11 +50,12 @@
 								href="${ctx}/portfolio/ui/register.do">등록</a>
 						</c:if>
 					</div>
+					
 					<!-- /test -->
 					
 					
 					<%-- 	<c:if test="${sessionScope.loginId ne null}">
-				<c:if test="${portfolio.maker.id eq sessionScope.loginId}"> 
+				<c:if test="${portfolio.maker.id eq sessionScope.loginId}">
 						<div align="center">
 							<input class="btn btn-success" type="button" value=" 등록"
 								onclick="javascript:window.location='${ctx}/portfolio/ui/register.do?portfolioId=${portfolio.Id}'">

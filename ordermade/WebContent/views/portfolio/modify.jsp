@@ -8,6 +8,7 @@
 <head>
 <%@ include file="/views/common/head.jsp"%>
 </head>
+<title>포트폴리오 수정 페이지</title>
 <!-- Main Body ========================================================================================== -->
 <body>
 <div class="wrapper row3">
@@ -18,7 +19,7 @@
 		</div>
 
 		<div id="content" class="two_third">
-			<h1>포트폴리오 등록 페이지</h1>
+			<h1>포트폴리오 수정 페이지</h1>
 			<br>
 			<form action="${ctx }/portfolio/xml/modify.do" method="post" name=""
 				onsubmit="return checkIt()">

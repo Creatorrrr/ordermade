@@ -37,10 +37,10 @@ public class ProductController {
 	@Autowired
 	private MemberService mService;
 
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@RequestMapping(value = "register.do", method = RequestMethod.POST)
 	public String registerProduct(Model model, Product product, HttpServletRequest req) {
 		// 상품 등록후 상세 상품페이지로 이동
-
+		boolean check = false;
 		String imagePath = Constants.IMAGE_PATH;
 
 		File dir = new File(imagePath);
@@ -49,9 +49,9 @@ public class ProductController {
 			dir.mkdirs();
 		}
 
-		MultipartRequest mr;
 		try {
-			mr = new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy());
+			MultipartRequest mr = new MultipartRequest(
+					req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy());
 			String title = mr.getParameter("productTitle");
 			String category = mr.getParameter("category");
 			String content = mr.getParameter("productContent");
@@ -82,9 +82,12 @@ public class ProductController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 		if (!pService.registerProduct(product)) {
+			System.out.println("거짓");
 			return "product/productRegister";
 		} else {
+			System.out.println("참");
 			model.addAttribute("product", product);
 			return "product/productDetail";
 		}
@@ -151,43 +154,39 @@ public class ProductController {
 		}
 	}
 
-	@RequestMapping(value = "/review/register.do")
-
+	@RequestMapping(value = "/review/register.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerReview(Review review, HttpServletRequest req) {
 		// Ajax 리뷰 등록후 화면유지
 		Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 		review.setConsumer(consumer);
-		boolean check = pService.registerReview(review);
-		return check + "";
+		if (!pService.registerReview(review)) {
+			// return "false";
+			return "rediect:/product/ajax/product/productid.do?productId=" + review.getProduct().getId();
+		} else {
+			return "true";
+		}
 	}
 
-	@RequestMapping(value = "/review/modify", method = RequestMethod.POST, produces = "text/plain")
+	@RequestMapping(value = "/review/modify.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyReviewById(Review review, HttpServletRequest req) {
 		// Ajax 리뷰 수정후 화면유지
 		Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 		review.setConsumer(consumer);
-
-		String productId = req.getParameter("productId");
-		Product product = new Product();
-
-		product.setId(productId);
-		review.setProduct(product);
-
-		if (!pService.registerProduct(product)) {
-			return "true";
-		} else {
+		if (!pService.registerReview(review)) {
 			return "false";
+		} else {
+			return "true";
 		}
 
 	}
 
-	@RequestMapping(value = "/review/remove", produces = "text/plain")
+	@RequestMapping(value = "/review/remove.do", produces = "text/plain")
 	public @ResponseBody String removeReviewById(@RequestParam("productId") String id, HttpServletRequest req) {
 		// Ajax 리뷰 삭제후 화면유지
 		if (!pService.removeReviewById(id)) {
-			return "true";
-		} else {
 			return "false";
+		} else {
+			return "true";
 		}
 	}
 
@@ -220,11 +219,13 @@ public class ProductController {
 
 	// main end
 
-	@RequestMapping(value = "/ajax/product/productid", produces = "text/plain")
+	@RequestMapping(value = "ajax/product/productid.do", produces = "application/xml")
 	public @ResponseBody Product findProductById(String productId) {
+		System.out.println("8888888888");
 		// Ajax 생산품 id 검색으로 생산품 출력
+		System.out.println(productId);
 		Product product = pService.findProductById(productId);
-
+		System.out.println(product.getTitle());
 		return product;
 	}
 
@@ -240,6 +241,7 @@ public class ProductController {
 
 		return products;
 	}
+
 	// test : http://localhost:8080/ordermade/ajax/products/category.do
 	@RequestMapping(value = "/ajax/products/category", produces = "text/plain")
 	public @ResponseBody Products findProductsByCategory(String page, String category) {

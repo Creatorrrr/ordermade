@@ -6,7 +6,6 @@
 <html lang="ko">
 <title>포트폴리오 등록</title>
 <%@ include file="/views/common/head.jsp"%>
-
 <body>
 	<div class="wrapper row3">
 		<div class="rounded">

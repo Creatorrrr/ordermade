@@ -73,8 +73,8 @@
 			<nav id="mainav" class="clear">
 				<ul class="clear">
 					<li class=""><a href="${ctx }/views/index.jsp">Main</a></li>
-					<li class=""><a href="${ctx }/product/register.do">상품등록</a></li>
-					<li><a class="drop" href="#">category</a> 
+					<li class=""><a href="${ctx }/views/product/product.jsp">Product</a></li>
+					<%-- <li><a class="drop" href="#">category</a> 
 					<ul>
 							<li><a href="${ctx }/views/productList.jsp">Furniture</a></li>
 							<li><a href="${ctx }/pages/portfolio.html">Accessory</a></li>
@@ -82,8 +82,8 @@
 							<li><a href="${ctx }/pages/sidebar-left.html">Digital</a></li>
 							<li><a href="${ctx }/pages/sidebar-left-2.html">Clothing</a></li>
 							<li><a href="${ctx }/pages/sidebar-right.html">Sport</a></li>
-					</ul> --%>
-					</li>
+					</ul>
+					</li> --%>
 						
 						<%-- <c:forEach items="${products }" var="product">
 							<li><a class="btn btn-sm btn-success"
@@ -92,7 +92,12 @@
 						</c:forEach> --%>
 						
 					<li><a href="${ctx }/views/portfolio/portfolio.jsp">Portfolio</a></li>
-					<li><a href="#">Request</a></li>
+					<c:if test="${sessionScope.loginId ne null}">
+						<li><a href="#">Request</a></li>
+					</c:if>
+					<c:if test="${sessionScope.loginId eq null}">
+						<li><a href="${ctx}/member/myPage.do">Request</a></li>
+					</c:if>
 					<c:choose>
 						<c:when test="${sessionScope.memberType eq 'C' }">
 							<li>
