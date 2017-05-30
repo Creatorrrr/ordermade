@@ -23,13 +23,9 @@
 						<h1 align="left">받은 의뢰서</h1>
 						<table class="table">
 							<tr>
-								<div class="">
-									<tr>
-										<td><input name="" type="button" value="모든 의뢰서"></td>
-										<td><input name="" type="button" value="진행 중"></td>
-										<td><input name="" type="button" value="완료 "></td>
-									</tr>
-								</div>
+								<td><button id="btn1">모든 의뢰서</button></td>
+								<td><button id="btn2">진행중</button></td>
+								<td><button id="btn3">완료</button></td>
 							</tr>
 						</table>
 					</div> <%-- <c:forEach items="${ box_list }" var="literature"> --%>

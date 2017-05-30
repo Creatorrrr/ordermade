@@ -39,7 +39,8 @@ public class RequestController {
 
 	@RequestMapping(value = "request/xml/register.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerRequest(Request request, HttpSession session) {
-		// String loginId=(String)session.getAttribute("loginId");
+//		String memberType = (String)session.getAttribute("memberType");
+//		String loginId = (String)session.getAttribute("loginId");
 		if(request.getTitle()==null) return "error";
 		//System.out.println(request.getMaker().getId());
 		if(request.getMaker()== null){		//DB member.id null-> fix	
@@ -77,23 +78,30 @@ public class RequestController {
 		return check+"";
 	}	//GET http://localhost:8080/ordermade/request/xml/remove.do?id=5
 
-	@RequestMapping(value = "request/xml/modifyBound.do", method = RequestMethod.POST, produces = "text/plain")
-	public @ResponseBody String modifyRequestBound(Request request, HttpSession session) {
+	@RequestMapping(value = "request/xml/modifyBound.do", method = RequestMethod.GET, produces = "text/plain")
+	public @ResponseBody String modifyRequestBound(String requestId, String bound, HttpSession session) {
 		// String loginId=(String)session.getAttribute("loginId");
-		if(request.getId()==null) return "error";
-		Request requestOK= service.findRequestById(request.getId());
-//		System.out.println(request.getBound());
+		if(requestId==null) return "error";
+		Request requestOK= service.findRequestById(requestId);
+	
 		if(requestOK.getMaker()== null){		//DB member.id null-> fix	
 			Member maker = new Member();
 			maker.setId("");
 			requestOK.setMaker(maker);
 		}
 		//System.out.println(requestOK.toString());
-		requestOK.setBound(request.getBound());
+		if(bound.equals("1")){
+			System.out.println(bound);
+			requestOK.setBound(Constants.BOUND_PUBLIC);
+		}else if(bound.equals("0")){
+			System.out.println(bound);
+			requestOK.setBound(Constants.BOUND_PRIVATE);
+		}
+		System.out.println(requestOK);
 		boolean check = service.modifyRequestById(requestOK);
 		return check+"";
-	}	//POST  http://localhost:8080/ordermade/request/xml/modifyBound.do
-		//{"id":"1","bound":"open"}
+	}	//GET  http://localhost:8080/ordermade/request/xml/modifyBound.do?requestId=1&bound=1
+
 	
 
 	@RequestMapping(value = "request/xml/modifyMakerId.do", method = RequestMethod.POST, produces = "text/plain")
@@ -229,30 +237,38 @@ public class RequestController {
 
 
 	@RequestMapping(value = "request/ui/register.do", method = RequestMethod.GET)
-	public ModelAndView showRegisterRequestUIForOneToOne(String makerId, String productId, String categoryId) {
-		if(makerId==null) return new ModelAndView("request/register");
-		//-----상품페이지에서 데이터를 받아와야 함.
-		ModelAndView modelAndView = new ModelAndView("request/register1_1");
-		modelAndView.addObject("productId", productId);
-		modelAndView.addObject("makerId", makerId);
-		modelAndView.addObject("categoryId", categoryId);		
+	public ModelAndView showRegisterRequestUI(String makerId, String productId, String categoryId) {
+		ModelAndView modelAndView = new ModelAndView("request/register");
+		if(makerId != null){
+			modelAndView.addObject("makerId", makerId);
+			modelAndView.addObject("productId", productId);
+			modelAndView.addObject("categoryId", categoryId);
+		}
 		return modelAndView;
 	}	//GET http://localhost:8080/ordermade/request/ui/register.do
 		//GET http://localhost:8080/ordermade/request/ui/register.do?makerId=maker1&productId=1
 	
-	@RequestMapping(value="request/ui/myPage.do",method=RequestMethod.GET)
-	public ModelAndView showMyRequestUI(){
-		List<Request> list = null;
-		String consumerId = "user1";
-		String type = "consumer";
+	@RequestMapping(value="request/ui/myRequest.do",method=RequestMethod.GET)
+	public ModelAndView showMyRequestUI(String page, HttpSession session){
+		String loginId = (String)session.getAttribute("loginId");
+		String memberType = (String)session.getAttribute("memberType");
 		
-		if(type == "consumer"){
-			list = service.findRequestsByConsumerId(consumerId, "1");
-		}else{
-			list = service.findRequestsByConsumerIdWithMaker(consumerId, "1");
+		if(memberType==null){
+			return new ModelAndView("redirect:../../member/login.do");//로그인 페이지 전환.
 		}
 		
-		ModelAndView modelAndView = new ModelAndView("request/myPage");
+		if(page == null || page == "") page = "1";
+		List<Request> list = null;
+		
+		if(memberType.equals(Constants.CONSUMER)){
+			list = service.findRequestsByConsumerId(loginId, page);
+		}else if(memberType.equals(Constants.MAKER)){
+			list = service.findRequestsByConsumerIdWithMaker(loginId, page);
+		}else{
+			throw new RuntimeException("error");
+		}
+		System.out.println(list.toString());
+		ModelAndView modelAndView = new ModelAndView("request/myRequest");//나의 의뢰서 or 받은 의뢰서
 		modelAndView.addObject("requests", list);
 		return modelAndView;
 	}
