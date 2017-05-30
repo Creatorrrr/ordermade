@@ -105,9 +105,9 @@ var searchRequest = {
 					} else {
 						$("#requestSearchResult").append(searchRequest.makeContentForEmpty());
 					}
-				}
-			});
-		},
+			}
+		});
+	},
 		
 	getRequestsByBoundAndTitle : function(page, title) {
 		$.ajax({
@@ -127,9 +127,9 @@ var searchRequest = {
 					} else {
 						$("#requestSearchResult").append(searchRequest.makeContentForEmpty());
 					}
-				}
-			});
-		},
+			}
+		});
+	},
 	
 	getRequestsByBoundAndContent : function(page, content) {
 		$.ajax({
@@ -149,9 +149,9 @@ var searchRequest = {
 					} else {
 						$("#requestSearchResult").append(searchRequest.makeContentForEmpty());
 					}
-				}
-			});
-		},
+			}
+		});
+	},
 		
 		getMyInviteRequestsForMaker : function(page) {
 			$.ajax({
@@ -171,9 +171,9 @@ var searchRequest = {
 						} else {
 							$("#requestSearchResult").append(searchRequest.makeContentForEmpty());
 						}
-					}
-				});
-			},
+				}
+			});
+		},
 	
 	makeContent : function(xml) {
 		var content = "";

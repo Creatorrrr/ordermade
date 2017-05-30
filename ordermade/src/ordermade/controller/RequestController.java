@@ -174,12 +174,13 @@ public class RequestController {
 
 	// --comment
 
+	// 170530 Complete
 	@RequestMapping(value = "comment/xml/register.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerComment(Comment comment, HttpSession session) {
-		// String loginId=(String)session.getAttribute("loginId");
-		if(comment.getId() == null) return "error";
-		boolean check = service.registerComment(comment);
-		return check+"";
+		if(checkLogined(session)) return "error";	// check logined
+		comment.setMember(new Member());
+		comment.getMember().setId((String)session.getAttribute("loginId"));
+		return service.registerComment(comment) + "";
 	}	//POST  http://localhost:8080/ordermade/comment/xml/register.do
 		//{"content":"cccccccccc","request.id":"7","member.id":"maker2"}
 
@@ -192,12 +193,11 @@ public class RequestController {
 	}	//POST  http://localhost:8080/ordermade/comment/xml/modify.do
 		//{"id":"1","content":"dddd","request.id":"8","member.id":"user1"}
 
+	// 170530 Complete
 	@RequestMapping(value = "comment/xml/remove.do", method = RequestMethod.GET, produces = "text/plain")
 	public @ResponseBody String removeCommentById(String id, HttpSession session) {
-		// String loginId=(String)session.getAttribute("loginId");
-		if(id == null) return "error";
-		boolean check = service.removeCommentById(id);
-		return check+"";
+		if(checkLogined(session)) return "error";	// check logined
+		return service.removeCommentById(id) + "";
 	}	//GET  http://localhost:8080/ordermade/comment/xml/remove.do?id=1
 
 	
