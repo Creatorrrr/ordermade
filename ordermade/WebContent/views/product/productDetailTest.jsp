@@ -10,54 +10,11 @@
 
 <%@ include file="/views/common/common.jsp"%>
 
-<script type="text/javascript">
-	var registContents = function() {
-		$.ajax({
-			url : "${ctx}/product/review/register.do",
-			type : "post",
-			data : {
-				title : $("#title").val(),
-				grade : $("#grade").val(),
-				content : $("#content").val(),
-				product : $("#productId").val()
-			},
-			success : displayComment,
-			error : errorCallback
-		});
-	}
-	var displayComment = function(resultData) {
-		var commentHtml = "";
-		$
-				.each(
-						resultData.comments,
-						function(index, comment) {
-							alert("수행중 성공가 발생했습니다.");
-							commentHtml += '<table class="table" style="font-size:13px; padding:20px;">';
-							commentHtml += '<tr>';
-							commentHtml += '<td><strong>' + comment.authorName
-									+ '</strong></td>';
-							commentHtml += '<td class="text-right">'
-									+ comment.regDate;
-							commentHtml += '<a class="glyphicon glyphicon-trash" href="javascript:removeComment('
-									+ comment.commentId + ');"></a>';
-							commentHtml += '</td></tr>';
-							commentHtml += '<tr><td colspan="2">';
-							commentHtml += '<p class="txt">' + comment.comment
-									+ '</p>';
-							commentHtml += '</td></tr></table>';
-						});
-		$("#commenArea").empty();
-		$("#commenArea").append(commentHtml);
-		$("#comment").val("");
-	};
 
-	var errorCallback = function() {
-		alert("수행중 오류가 발생했습니다.");
-	}
-</script>
 </head>
 <body>
-	<form onsubmit="registContents(); return false;">
+	<form id="form1" name="form1"
+		onsubmit="return false;">
 		${product.id } <input type="hidden" id="productId" name="product.id"
 			value="${product.id }">
 		<div>
@@ -75,16 +32,34 @@
 		</div>
 		<div>
 			<input name="reset" type="reset" value="Reset"> <input
-				type="submit" value="서밋">
+				type="button" id="registReview"  value="서밋">
 		</div>
 	</form>
-	<div>
-		<c:forEach items="">
+	<div id="reiewList"></div>
 
+	<script type="text/javascript">
+	$("#registReview").click(function() {
+		$.ajax({
+			url : "${ctx}/product/review/register.do",
+			type : "post",
+			data : $('#form1').serialize(),
+			dataType : "text",
+			success : displayComment,
+			error : errorCallback
+		});
+	})
+		
+		
+		
+		var displayComment = function(resultData) {
+			console.log("11111111111111111")
+			
+		};
 
+		var errorCallback = function() {
+			alert("수행중 오류가 발생했습니다.");
+		}
+	</script>
 
-
-		</c:forEach>
-	</div>
 </body>
 </html>
