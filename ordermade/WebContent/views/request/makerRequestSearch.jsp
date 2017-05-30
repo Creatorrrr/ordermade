@@ -5,159 +5,208 @@
 
 <%@ include file="/views/common/head.jsp"%>
 
+<style type="text/css">
+	.requestBox {
+		display:inline-block;
+		border-style:solid;
+		margin:5px;
+		width:100%;
+	}
+	.requestBox input {
+		float:right;
+		margin:5px;
+	}
+</style>
+
 <div class="wrapper row3">
 	<div class="rounded">
 		<main class="container clear"> <!-- main body -->
-		<div class="sidebar one_third first">
-
-			<%@ include file="/views/common/myPageNav.jsp"%>
-
-		</div>
-
-		<div id="content" class="two_third">
-
-			<ul class="nospace listing">
-				<li class="clear">
-
-					<div class="content" align="center">
-						<h1 align="left">의뢰서 검색</h1>
-						<form class="clear" method="post" action="#">
-							<div>
-								<fieldset>
-									<select name="type" id="type" class="form-control">
-										<option value="id">제목</option>
-										<option value="name">내용</option>
-									</select> <input input name="search" class="search-box-input"
-										type="text" value="" placeholder="Search Here" />
-									<button class="fa fa-search" type="submit" title="Search">
-										<em>Search</em>
-									</button>
-								</fieldset>
-							</div>
-						</form>
-
-						<table class="table">
+			<div class="sidebar one_third first">
+				<%@ include file="/views/common/myPageNav.jsp"%>
+			</div>
+			<div id="content" class="two_third">
+				<div class="content" align="center">
+					<h1 align="left">의뢰서 검색</h1>
+					<form class="clear" method="post" action="#" style="float:right">
+						<fieldset>
+							<select name="type" id="type" class="form-control" style="display:inline-block">
+								<option value="id">제목</option>
+								<option value="name">내용</option>
+							</select>
+							<input name="requestSearchKeyword" class="search-box-input"
+								type="text" value="" placeholder="Search Here" style="display:inline-block"/>
+							<button id="requestSearchBtn" class="fa fa-search" type="submit" title="Search">
+								<em>Search</em>
+							</button>
+						</fieldset>
+					</form>
+				</div> <%-- <c:forEach items="${ box_list }" var="literature"> --%>
+				
+				<div align="left">
+					<button>모든 의뢰서</button>
+					<button>내가 보낸 의뢰서</button>
+				</div>
+				
+				<div id="requestSearchResult">
+					<!-- loop start -->
+					<div class="requestBox">
+						<table class="request_table">
 							<tr>
-								<div class="">
-									<tr>
-										<td><input name="" type="button" value="모든 의뢰서"></td>
-										<td><input name="" type="button" value="내가보낸 의뢰서"></td>
-									</tr>
-								</div>
+								<td>의뢰명 : </td>
+								<td>의뢰의뢰 SAMPLESAMPLESAMPLESAMPLESAMPLE</td>
+							</tr>
+							<tr>
+								<td>의뢰자 : </td>
+								<td>의뢰자 SAMPLESAMPLESAMPLESAMPLESAMPLE</td>
+							</tr>
+							<tr>
+								<td>제작항목 : </td>
+								<td>카테 SAMPLESAMPLESAMPLESAMPLESAMPLE</td>
+							</tr>
+							<tr>
+								<td>희망 가격 : </td>
+								<td>얼마 SAMPLESAMPLESAMPLESAMPLESAMPLE</td>
 							</tr>
 						</table>
-					</div> <%-- <c:forEach items="${ box_list }" var="literature"> --%>
-					<table class="request_table">
-						<tr>
-							<div class="imgl borderedbox">
-								<img src="${ctx }/views/images/img-10.jpg" />
-							</div>
-						</tr>
-
-						<tr>
-							<p>의뢰 명 : ${title}</p>
-						</tr>
-						<tr>
-							<p>의뢰자 : ${id }</p>
-						</tr>
-						<tr>
-							<p>의뢰 내용 : ${contents }</p>
-						</tr>
-						<tr>
-							<p>제작항목 : ${hope_price }</p>
-						</tr>
-						<tr>
-							<p>희망 가격 : ${hope_price }</p>
-						</tr>
-						<tr>
-							<td><input name="" type="button" value="참가"></td>
-						</tr>
-					</table> <%-- </c:forEach> --%>
-				</li>
-			</ul>
-		</div>
+						<input name="" type="button" value="참가">
+					</div>
+					<!-- loop end -->
+				</div>
+			</div>
+		</main>
 	</div>
-	</main>
 </div>
 
 <%@ include file="/views/common/footer.jsp"%>
 
-<!-- JAVASCRIPTS -->
-<script src="../layout/scripts/jquery.min.js"></script>
-<script src="../layout/scripts/jquery.fitvids.min.js"></script>
-<script src="../layout/scripts/jquery.mobilemenu.js"></script>
 </body>
+<script type="text/javascript">	
+$(document).ready(function() {
+	searchRequest.getRequestsByBound(1);
+	//searchRequest.getRequestsByBoundAndTitle(1,1);	// test
+	//searchRequest.getRequestsByBoundAndContent(1,2);	// test
+});
 
-
-<%-- <!-- request popup form div start-->
-<div id="sendRequest">
-	<form class="form" action="${ctx }/ /invite.do" id="send"
-		method="post">
-		<input type="hidden" name="" value="${invite.id }">
-		<h3>초대 메시지 작성</h3>
-		<hr />
-		<br /> <label>보내는 사람 : ${loginId }</label> <br /> <br /> <label>초대
-			메시지 :</label> <br /> <input type="text" id="message" name="message"
-			placeholder="메세지를 작성하세요" /><br /> <br /> <input type="button"
-			name="sendMessage" id="submit" value="보내기" /> <input type="button"
-			id="cancel" value="취소" /> <br />
-	</form>
-</div>
-<!-- request popup form div end -->
-<script>
- 	var addReceiver = function(id){
-		var addContext = "<input type='hidden' name='receiverId' value='" + id + "'>";
-		$("#send").append(addContext);
-		$("#sendRequest").css("display", "block");
- 	}
-	$(document).ready(function() {
-		
-	$("#cancel").click(function() {
-		$(this).parent().parent().hide();
-	});
-	
-	// Contact form popup send-button click event.
-	// Login form popup login-button click event.
-	//
-	$("#submit").click(function() {
-		alert("초대 완료!");
-		$(this).parent().parent().hide();
+var searchRequest = {
+	getRequestsByBound : function(page) {
 		$.ajax({
-			url :"${ctx }/member/invite.do",
-			type:"post",
-			data:{ receiverId:$("input[name='receiverId']").val(),
-					message:$("input[name='message']").val(),
-					litStorageId:$("input[name='litStorageId']").val()
-			}
-		});
-	});
-
-	/* search ajax */
-						
-	$("input[name='searchbutton']").click(function() {
-		$.ajax({
-			url : "${ctx}/member/search.do",
-			data : {type : $("#type option:selected").val(),
-					keyword : $("#keywordId").val()},
-			type : "post",
+			url : "${ctx}/request/xml/searchBound.do?page=" + page,
+			type : "get",
 			dataType : "xml",
 			success : function(xml) {
-					var xmlData = $(xml).find("members");
+					var xmlData = $(xml).find("request");
 					var listLength = xmlData.length;
-					$("#result > tbody").empty();			
+					$("#requestSearchResult").empty();
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function() {
-							contentStr += "<tr><td>"+ $(this).find("id").text() + "</td><td>"
-								+ $(this).find("name").text() + "</td><td>"
-								+ $(this).find("email").text() + "</td>"
-								+ "<td>" + "<button onclick='addReceiver(\"" + $(this).find("id").text() + "\")' id='pop' type='button'>초대하기</button>" + "</td></tr>";
+							contentStr += "<div class='requestBox'>";
+							contentStr += 	"<table class='request_table'>";
+							contentStr += 		"<tr>";
+							contentStr += 			"<td>의뢰명 : </td>";
+							contentStr += 			"<td>" + $(this).find("request>title").text() + "</td>";
+							contentStr += 		"</tr>";
+							contentStr += 		"<tr>";
+							contentStr += 			"<td>의뢰자 : </td>";
+							contentStr += 			"<td>" + $(this).find("request>consumer>id").text() + "</td>";
+							contentStr += 		"</tr>";
+							contentStr += 		"<tr>";
+							contentStr += 			"<td>제작항목 : </td>";
+							contentStr += 			"<td>" + $(this).find("request>category").text() + "</td>";
+							contentStr += 		"</tr>";
+							contentStr += 		"<tr>";
+							contentStr += 			"<td>희망 가격 : </td>";
+							contentStr += 			"<td>" + $(this).find("request>hopePrice").text() + "</td>";
+							contentStr += 		"</tr>";
+							contentStr += 	"</table>";
+							contentStr += 	"<input name='' type='button' value='참가'>";
+							contentStr += "</div>";
 						});
-						$("#result > tbody").append(contentStr);
+						$("#requestSearchResult").append(contentStr);
 					}
 				}
 			});
-		});
-	});
-	</script> --%>
+		},
+		
+	getRequestsByBoundAndTitle : function(page, title) {
+		$.ajax({
+			url : "${ctx}/request/xml/searchBoundAndTitle.do?page=" + page + "&title=" + title,
+			type : "get",
+			dataType : "xml",
+			success : function(xml) {
+					var xmlData = $(xml).find("request");
+					var listLength = xmlData.length;
+					$("#requestSearchResult").empty();
+					if (listLength) {
+						var contentStr = "";
+						$(xmlData).each(function() {
+							contentStr += "<div class='requestBox'>";
+							contentStr += 	"<table class='request_table'>";
+							contentStr += 		"<tr>";
+							contentStr += 			"<td>의뢰명 : </td>";
+							contentStr += 			"<td>" + $(this).find("request>title").text() + "</td>";
+							contentStr += 		"</tr>";
+							contentStr += 		"<tr>";
+							contentStr += 			"<td>의뢰자 : </td>";
+							contentStr += 			"<td>" + $(this).find("request>consumer>id").text() + "</td>";
+							contentStr += 		"</tr>";
+							contentStr += 		"<tr>";
+							contentStr += 			"<td>제작항목 : </td>";
+							contentStr += 			"<td>" + $(this).find("request>category").text() + "</td>";
+							contentStr += 		"</tr>";
+							contentStr += 		"<tr>";
+							contentStr += 			"<td>희망 가격 : </td>";
+							contentStr += 			"<td>" + $(this).find("request>hopePrice").text() + "</td>";
+							contentStr += 		"</tr>";
+							contentStr += 	"</table>";
+							contentStr += 	"<input name='' type='button' value='참가'>";
+							contentStr += "</div>";
+						});
+						$("#requestSearchResult").append(contentStr);
+					}
+				}
+			});
+		},
+	
+	getRequestsByBoundAndContent : function(page, content) {
+		$.ajax({
+			url : "${ctx}/request/xml/searchBoundAndContent.do?page=" + page + "&content=" + content,
+			type : "get",
+			dataType : "xml",
+			success : function(xml) {
+					var xmlData = $(xml).find("request");
+					var listLength = xmlData.length;
+					$("#requestSearchResult").empty();
+					if (listLength) {
+						var contentStr = "";
+						$(xmlData).each(function() {
+							contentStr += "<div class='requestBox'>";
+							contentStr += 	"<table class='request_table'>";
+							contentStr += 		"<tr>";
+							contentStr += 			"<td>의뢰명 : </td>";
+							contentStr += 			"<td>" + $(this).find("request>title").text() + "</td>";
+							contentStr += 		"</tr>";
+							contentStr += 		"<tr>";
+							contentStr += 			"<td>의뢰자 : </td>";
+							contentStr += 			"<td>" + $(this).find("request>consumer>id").text() + "</td>";
+							contentStr += 		"</tr>";
+							contentStr += 		"<tr>";
+							contentStr += 			"<td>제작항목 : </td>";
+							contentStr += 			"<td>" + $(this).find("request>category").text() + "</td>";
+							contentStr += 		"</tr>";
+							contentStr += 		"<tr>";
+							contentStr += 			"<td>희망 가격 : </td>";
+							contentStr += 			"<td>" + $(this).find("request>hopePrice").text() + "</td>";
+							contentStr += 		"</tr>";
+							contentStr += 	"</table>";
+							contentStr += 	"<input name='' type='button' value='참가'>";
+							contentStr += "</div>";
+						});
+						$("#requestSearchResult").append(contentStr);
+					}
+				}
+			});
+		}
+};
+</script>
 </html>

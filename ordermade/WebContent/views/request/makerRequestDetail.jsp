@@ -20,31 +20,25 @@
 				<li class="clear">
 
 					<div class="content" align="center">
+						<div class="imgl borderedbox">
+							<img src="${ctx }/views/images/img1.jpg" />
+						</div>
 						<table class="table">
 							<tr>
-								<div class="imgl borderedbox">
-									<img src="${ctx }/views/images/img1.jpg" />
-								</div>
-							</tr>
-							<tr class="nospace btmspace-15">
-							<tr>
-								<p>의뢰 명 : ${title}</p>
-							</tr>
-							<tr>
-								<p>의뢰자 : ${id }</p>
-							</tr>
-							<tr>
-								<p>의뢰 내용 : ${contents }</p>
-							</tr>
-							<tr>
-								<p>제작 항목 : ${hope_price }</p>
-							</tr>
-							<tr>
-								<p>희망 가격 : ${hope_price }</p>
-							</tr>
-							</tr>
-							<br>
-
+							<td><p>의뢰 명 : ${request.title}</p></td>
+						</tr>
+						<tr>
+							<td><p>의뢰자 : ${request.id }</p></td>
+						</tr>
+						<tr>
+							<td><p>의뢰 내용 : ${request.content }</p></td>
+						</tr>
+						<tr>
+							<td><p>제작 항목 : ${request.category }</p></td>
+						</tr>
+						<tr>
+							<td><p>희망 가격 : ${request.hopePrice }</p></td>
+						</tr>
 						</table>
 						<div>
 							<tr>

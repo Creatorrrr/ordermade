@@ -270,13 +270,8 @@ public class RequestController {
 	
 	@RequestMapping(value="request/ui/detail.do",method=RequestMethod.GET)
 	public ModelAndView showDetailRequestUI(String id, HttpSession session){
-		if(((String)session.getAttribute("memberType")).equals(Constants.MAKER)) {
-			return new ModelAndView("request/makerRequestDetail")
+			return new ModelAndView("request/detail")
 					.addObject("request", service.findRequestById(id));
-		} else {
-			return new ModelAndView("request/consumerRequestDetail")
-					.addObject("request", service.findRequestById(id));
-		}
 	}
 	
 	// 170529 Complete
@@ -303,18 +298,18 @@ public class RequestController {
 	//==================mobile -> xml
 	
 	@RequestMapping(value="request/xml/searchBound.do", produces="application/xml")
-	public @ResponseBody Requests findRequestsByBound(String bound, String page){
-		return new Requests(service.findRequestsByBound(bound, page));
+	public @ResponseBody Requests findRequestsByBound(String page){
+		return new Requests(service.findRequestsByBound(Constants.BOUND_PUBLIC, page));
 	}
 	
 	@RequestMapping(value="request/xml/searchBoundAndTitle.do", produces="application/xml")
-	public @ResponseBody Requests findRequestsByBoundAndTitle(String bound, String title, String page){
-		return new Requests(service.findRequestsByBoundAndTitle(bound, title, page));
+	public @ResponseBody Requests findRequestsByBoundAndTitle(String title, String page){
+		return new Requests(service.findRequestsByBoundAndTitle(Constants.BOUND_PUBLIC, title, page));
 	}
 	
 	@RequestMapping(value="request/xml/searchBoundAndContent.do", produces="application/xml")
-	public @ResponseBody Requests findRequestsByBoundAndContent(String bound, String content, String page){
-		return new Requests(service.findRequestsByBoundAndContent(bound, content, page));
+	public @ResponseBody Requests findRequestsByBoundAndContent(String content, String page){
+		return new Requests(service.findRequestsByBoundAndContent(Constants.BOUND_PUBLIC, content, page));
 	}
 	
 	@RequestMapping(value="request/xml/searchMyRequests.do", produces="application/xml")
