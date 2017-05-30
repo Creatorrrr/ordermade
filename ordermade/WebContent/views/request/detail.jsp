@@ -3,8 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 
+<!DOCTYPE html>
+<html lang="ko">
+<!-- bxSlider CSS file -->
+<link href="${ctx }/views/css/jquery.bxslider.css" rel="stylesheet" />
+<!-- Header ========================================================================================== -->
+<head>
 <%@ include file="/views/common/head.jsp"%>
-
+</head>
+<title>의뢰서</title>
+<!-- Main Body ========================================================================================== -->
+<body>
 <div class="wrapper row3">
 	<div class="rounded">
 		<main class="container clear"> <!-- main body -->
@@ -85,8 +94,6 @@
 
 <!-- bxSlider JavaScript file -->
 <script src="${ctx }/views/js/jquery.bxslider.min.js"></script>
-<!-- bxSlider CSS file -->
-<link href="${ctx }/views/css/jquery.bxslider.css" rel="stylesheet" />
 
 <script type="text/javascript">
 $("#commentRegister").click(function() {

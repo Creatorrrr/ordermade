@@ -8,6 +8,7 @@
 <head>
 <%@ include file="/views/common/head.jsp"%>
 </head>
+<title>나의 의뢰서</title>
 <!-- Main Body ========================================================================================== -->
 <body>
 <div class="wrapper row3">

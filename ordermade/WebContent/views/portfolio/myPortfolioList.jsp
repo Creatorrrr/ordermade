@@ -7,6 +7,7 @@
 <head>
 <%@ include file="/views/common/head.jsp"%>
 </head>
+<title>나의 포트폴리오</title>
 <body>
 <div class="wrapper row3">
 	<div class="rounded">
@@ -21,13 +22,13 @@
 			<h1>나의 포트폴리오</h1>
 
 			<div class="fl_right">
-				<form method="portfolio" action="${ctx}/portfolio/ui/search.do">
+				<form method="#" action="${ctx}/portfolio/ui/search.do">
 					<div>
-						<select name="selectPortfolio">
+						<select name="selectPortfolio" style="display:inline-block">
 							<option value="title">제목</option>
 							<option value="content">내용</option>
 						</select> <input name="search" class="search-box-input" type="text"
-							placeholder="Search Here" />
+							placeholder="Search Here" style="display:inline-block" />
 						<button class="fa fa-search" type="submit" title="검색">
 							<em>Search</em>
 						</button>
@@ -42,7 +43,7 @@
 						</fieldset>
 					</div>
 				</form> --%>
-
+				<p>
 				<div style="float: right;">
 					<%-- <c:if test="${sessionScope.loginId ne null && portfolioId ne null}"> --%>
 					<a class="btn btn-sm btn-success"
