@@ -5,37 +5,38 @@
   <mapper namespace="ordermade.store.mapper.PortfolioMapper">
 
   	<resultMap type="Portfolio" id="portfolioMap">
-
   		<id property="id" column="id"/>
   		<result property="title" column="title"/>
   		<result property="content" column="content"/>
   		<result property="category" column="type" />
   		<result property="image" column="image"/>
   		<association property="maker" column="maker_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member" jdbcType="VARCHAR" />
-		<collection property="tags" column="id" ofType="Tag" select="ordermade.store.mapper.TagMapper.selectTagsByPortfolioId" javaType="ArrayList" jdbcType="VARCHAR"/>
+		<!-- <collection property="tags" column="id" ofType="Tag" select="ordermade.store.mapper.TagMapper.selectTagsByPortfolioId" javaType="ArrayList" jdbcType="VARCHAR"/> -->
   	</resultMap>
   
   	<insert id="insertPortfolio" parameterType="Portfolio">
   		<selectKey resultType="String" keyProperty="id" order="BEFORE">
-  			SELECT portfolio_seq.NEXTVAL FROM dual
+  			SELECT portfolio_SEQ.NEXTVAL FROM dual
   		</selectKey>
   		INSERT INTO portfolio(id, title, type, content, maker_id, image) 
   		values(#{id}, #{title}, #{category}, #{content}, #{maker.id}, #{image})
   	</insert>
   
   	<update id="updatePortfolioById" parameterType="Portfolio">
-  		update portfolio 
-  		set title=#{title}, type=#{category}, content=#{content}, maker_id=#{maker.id}, image=#{image}
-  		where id=#{id}
+  		UPDATE portfolio 
+  		SET title=#{title}, type=#{category}, content=#{content}, maker_id=#{maker.id}, image=#{image}
+  		WHERE id=#{id}
   	</update>
   
-  	<delete id="deletePortfolioById" parameterType="string">
-  		delete from portfolio 
-  		where id=#{id}
+  	<delete id="deletePortfolioById" parameterType="String">
+  		DELETE from portfolio 
+  		WHERE id=#{id}
   	</delete>
   
   	<select id="selectPortfolioById" parameterType="java.util.Map" resultMap="portfolioMap">
-  		select id, title, type, content, maker_id, image from portfolio where id=#{id}
+  		SELECT id, title, type, content, maker_id, image 
+  		FROM portfolio 
+  		WHERE id=#{id}
   	</select>
   
   	<select id="selectPortfoliosByMakerId" parameterType="java.util.Map" resultMap="portfolioMap">

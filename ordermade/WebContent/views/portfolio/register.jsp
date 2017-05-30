@@ -29,17 +29,17 @@
 					</tr>
 					<tr>
 						<th>포트폴리오 명 <span>*</span></th>
-						<td><input id="portfolioTitle" name="portfolioTitle"
+						<td><input id="title" name="title"
 							class="form-control" type="text" value=""></td>
 					<tr>
 					<tr>
 						<th>표지 이미지</th>
-						<td><input id="portfolioImage" name="portfolioImage"
+						<td><input id="image" name="image"
 							class="btn btn-success" type="file" value="찾아보기"></td>
 					<tr>
 					<tr>
 						<th>포트폴리오 내용 <span>*</span></th>
-						<td><textarea id="portfolioContent" name="portfolioContent"
+						<td><textarea id="content" name="content"
 								class="form-control" cols="35" rows="10"></textarea></td>
 					</tr>
 				</table>
@@ -55,12 +55,12 @@
 
 					var pRegister = document.pRegister;
 
-					if (!pRegister.portfolioTitle.value) {
+					if (!pRegister.title.value) {
 						alert("제목을 입력하세요");
 						return false;
 					}
 
-					if (!pRegister.portfolioContent.value) {
+					if (!pRegister.content.value) {
 						alert("내용을 입력하세요");
 						return false;
 					}

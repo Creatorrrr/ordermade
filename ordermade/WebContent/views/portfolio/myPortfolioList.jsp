@@ -41,7 +41,7 @@
 				</form> --%>
 
 				<div style="float: right;">
-					<%-- <c:if test="${sessionScope.loginId ne null && boardId ne null}"> --%>
+					<%-- <c:if test="${sessionScope.loginId ne null && portfolioId ne null}"> --%>
 					<a class="btn btn-sm btn-success"
 						href="${ctx}/portfolio/ui/register.do">포트폴리오 등록</a>
 					<%-- </c:if> --%>
@@ -60,23 +60,24 @@
 			<br>
 
 			<ul class="nospace listing">
-				<li class="clear">
-					<%-- <c:forEach items="${ portfolios }" var="portfolio"> --%>
+				<li class="clear"><c:forEach items="${ portfolios }"
+						var="portfolio"> -
 					<div class="content" align="center">
-						<table class="table">
-							<tr>
-								<div class="imgl borderedbox">
-									<img src="${ctx }/views/images/img1.jpg" />
-								</div>
-							</tr>
-							<tr class="nospace btmspace-15">
-								<td>포트폴리오 제목</td>
-								<td><a class="portfolio"
-									href="${ctx}/portfolio/ui/detail.do?porfolioId=${porfolio.id }">${portfolio.title }
-										test</a></td>
-							</tr>
-						</table>
-					</div> <%-- </c:forEach> --%>
+							<table class="table">
+								<tr>
+									<div class="imgl borderedbox">
+										<img src="${ctx }/portfolio/image.do?img=${portfolio.image}" />
+									</div>
+								</tr>
+								<tr class="nospace btmspace-15">
+									<td>포트폴리오 명</td>
+									<td><a class="portfolio"
+										href="${ctx }/portfolio/ui/detail.do?portfolioId=${portfolio.id}">${portfolio.title }
+									</a></td>
+								</tr>
+							</table>
+						</div>
+					</c:forEach>
 				</li>
 			</ul>
 		</div>
