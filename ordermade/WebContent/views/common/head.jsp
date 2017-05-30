@@ -2,8 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
-<!DOCTYPE html>
-<html>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -75,15 +73,15 @@
 			<nav id="mainav" class="clear">
 				<ul class="clear">
 					<li class=""><a href="${ctx }/views/index.jsp">Main</a></li>
-					<li><a class="drop" href="#">category</a> 
-					<ul>
+					<li class=""><a href="${ctx }/views/product/product.jsp">Product</a> 
+					<%-- <ul>
 							<li><a href="${ctx }/views/productList.jsp">Furniture</a></li>
 							<li><a href="${ctx }/pages/portfolio.html">Accessory</a></li>
 							<li><a href="${ctx }/pages/full-width.html">Kitchen</a></li>
 							<li><a href="${ctx }/pages/sidebar-left.html">Digital</a></li>
 							<li><a href="${ctx }/pages/sidebar-left-2.html">Clothing</a></li>
 							<li><a href="${ctx }/pages/sidebar-right.html">Sport</a></li>
-					</ul>
+					</ul> --%>
 					</li>
 						
 						<%-- <c:forEach items="${products }" var="product">
@@ -92,10 +90,22 @@
 							</li>
 						</c:forEach> --%>
 						
-				<li><a href="#">포트폴리오 목록</a></li>
-					<li><a href="#">의뢰 목록</a></li>
-					<li><a href="#">요청 목록</a></li>
-					<li><a href="#">거래 목록</a></li>
+					<li><a href="${ctx }/views/portfolio/portfolio.jsp">Portfolio</a></li>
+					<li><a href="#">Request</a></li>
+					<c:choose>
+						<c:when test="${sessionScope.memberType eq 'C' }">
+							<li>
+								<a href="${ctx }/request/ui/consumerInviteList.do?page=1">Invite Request</a>
+							</li>
+						</c:when>
+						<c:when test="${sessionScope.memberType eq 'M' }">
+							<li>
+								<a href="${ctx }/request/ui/makerInviteList.do?page=1">Invite Request</a>
+							</li>
+						</c:when>
+					</c:choose>
+					
+					<li><a href="${ctx}/member/myPage.do">my page</a></li>
 				</ul>
 			</nav>
 		</div>

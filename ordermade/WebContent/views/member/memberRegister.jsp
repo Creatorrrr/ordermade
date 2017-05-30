@@ -2,9 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
-
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Header ========================================================================================== -->
+<head>
 <%@ include file="/views/common/head.jsp"%>
-
+</head>
+<!-- Main Body ========================================================================================== -->
+<body>
 <script type="text/javascript">
 	$(function() {
 		$("#registerForm").validate({

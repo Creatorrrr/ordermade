@@ -14,8 +14,8 @@
 				<li><a href="${ctx }/request/ui/myPage.do">나의 의뢰서</a></li>
 				<li><a href="${ctx }/deal/transaction.do">구매 이력 </a></li>
 				<li><a href="${ctx }/request/ui/consumerInviteList.do?page=1">참가요청내역 </a></li>
-		</c:when>
-		<c:when test="${sessionScope.memberType eq 'M'}">
+			</c:when>
+			<c:when test="${sessionScope.memberType eq 'M'}">
 				<li><a href="${ctx }/request/ui/search.do">의뢰서 검색</a></li>
 				<li><a href="${ctx }/request/ui/myPage.do">받은 의뢰서</a></li>
 				<li><a href="${ctx }/product/myProducts.do?page=1">상품 관리</a></li>

@@ -2,9 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
-
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Header ========================================================================================== -->
+<head>
 <%@ include file="/views/common/head.jsp"%>
-
+</head>
+<!-- Main Body ========================================================================================== -->
+<body>
 <div class="wrapper row3">
 	<div class="rounded">
 		<main class="container clear"> <!-- main body -->
@@ -15,12 +20,12 @@
 		<div id="content" class="two_third">
 			<ul class="nospace listing">
 				<li class="clear">
-					<h1>{member.id}님의 정보</h1>
+					<h1>${member.id}님의 정보</h1>
 
 					<div style="float: right;">
 						<%-- <c:if test="${sessionScope.loginId ne null && boardId ne null}"> --%>
 						<a class="btn btn-sm btn-success"
-							href="${ctx}/portfolio/ui/register.do">회원정보 수정</a>
+							href="${ctx}/member/modifyMember.do">회원정보 수정</a>
 						<%-- </c:if> --%>
 					</div>
 					

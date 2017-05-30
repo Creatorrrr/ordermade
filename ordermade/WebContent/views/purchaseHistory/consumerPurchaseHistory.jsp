@@ -2,15 +2,17 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
-
 <!-- TEST ========================================================================================== -->
 <!-- http://localhost:8080/ordermade/views/purchaseHistory/consumerPurchaseHistory.jsp -->
 <!-- http://localhost:8080/ordermade/deal/transaction.do -->
-
+<!DOCTYPE html>
+<html lang="ko">
 <!-- Header ========================================================================================== -->
+<head>
 <%@ include file="/views/common/head.jsp"%>
-
+</head>
 <!-- Main Body ========================================================================================== -->
+<body>
 <div class="wrapper row3">
 	<div class="rounded">
 		<main class="container clear"> 
@@ -40,8 +42,8 @@
 
 			 <table class="">
                    <colgroup>
-                       <col width="110"/>
-                       <col width="250"/>
+                       <col width="170"/>
+                       <col width="210"/>
                        <col width="200"/>
                        <col width="300"/>
                    </colgroup>

@@ -3,8 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 
+<!DOCTYPE html>
+<html lang="ko">
+<!-- bxSlider CSS file -->
+<link href="${ctx }/views/css/jquery.bxslider.css" rel="stylesheet" />
+<!-- Header ========================================================================================== -->
+<head>
 <%@ include file="/views/common/head.jsp"%>
-									
+</head>
+<!-- Main Body ========================================================================================== -->
+<body>								
 <div class="wrapper row3">
 	<div class="rounded">
 		<main class="container clear"> <!-- main body -->
@@ -83,12 +91,8 @@
 </div>
 
 <%@ include file="/views/common/footer.jsp"%>
-
 <!-- bxSlider JavaScript file -->
 <script src="${ctx }/views/js/jquery.bxslider.min.js"></script>
-<!-- bxSlider CSS file -->
-<link href="${ctx }/views/css/jquery.bxslider.css" rel="stylesheet" />
-
 <script type="text/javascript">
 // append portfolio and product on startup
 $(document).ready(function() {

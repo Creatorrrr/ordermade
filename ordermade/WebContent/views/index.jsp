@@ -2,9 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
-
+<!DOCTYPE html>
+<html lang="ko">
+<!-- bxSlider CSS file -->
+<link href="${ctx }/views/css/jquery.bxslider.css" rel="stylesheet" />
+<head>
 <%@ include file="/views/common/head.jsp"%>
-
+</head>
+<body>	
 <!--Main Image-->
 <div class="wrapper">
 	<div id="slider">
@@ -30,7 +35,7 @@
 					src="${ctx }/views/images/demo/slider/5.png" alt=""></a>
 			</figure>
 			<ul id="slide-tabs">
-				<li><a href="${ctx }#slide-1">A</a></li>
+				<li><a href="${ctx }/views/images/image/cat1.jpg">A</a></li>
 				<li><a href="${ctx }#slide-2">B</a></li>
 				<li><a href="${ctx }#slide-3">C</a></li>
 				<li><a href="${ctx }#slide-4">D</a></li>
@@ -56,9 +61,24 @@
 						<div class="content" align="center">
 							<table class="table">
 								<tr>
-									<div class="imgl borderedbox">
+									<td>
+										<ul id="pfslider">
+											<!-- images from ajax (sample under) -->
+											<li><img src="${ctx }/views/images/img1.jpg"></li>
+											<li><img src="${ctx }/views/images/img1.jpg"></li>
+										</ul>
+							            <a href="#" id="prevPfBtn">
+							                <img src="${ctx }/views/images/bul_prev.png" alt="이전">
+							            </a>
+							            <a href="#" id="nextPfBtn">
+							                <img src="${ctx }/views/images/bul_next.png" alt="다음">
+							            </a>
+						            </td>
+					            </tr>
+								<%-- <tr>
+									<td>
 										<img src="${ctx }/views/images/img1.jpg" />
-									</div>
+									</td>
 								</tr>
 								<tr class="nospace btmspace-15">
 									<td>상품 이름</td>
@@ -68,19 +88,34 @@
 								<tr class="nospace btmspace-15">
 									<td>가격</td>
 									<td class="creatorId">${asf}10000000원</td>
-								</tr>
+								</tr> --%>
 							</table>
 						</div> <%-- </c:forEach> --%>
 					</li>
 				</ul>
 				
-				<h2>최신 상품</h2>
+				<h3>최신 상품</h3>
 				<ul class="nospace listing">
 					<li class="clear">
 						<%-- <c:forEach items="${ box_list }" var="literature"> --%>
 						<div class="content" align="center">
 							<table class="table">
 								<tr>
+									<td>
+										<ul id="productslider">
+											<!-- images from ajax (sample under) -->
+											<li><img src="${ctx }/views/images/img1.jpg"></li>
+											<li><img src="${ctx }/views/images/img1.jpg"></li>
+										</ul>
+							            <a href="#" id="prevProductBtn">
+							                <img src="${ctx }/views/images/bul_prev.png" alt="이전">
+							            </a>
+							            <a href="#" id="nextProductBtn">
+							                <img src="${ctx }/views/images/bul_next.png" alt="다음">
+							            </a>
+						            </td>
+					            </tr>
+								<%-- <tr>
 									<div class="imgl borderedbox">
 										<img src="${ctx }/views/images/img1.jpg" />
 									</div>
@@ -93,7 +128,7 @@
 								<tr class="nospace btmspace-15">
 									<td>가격</td>
 									<td class="creatorId">${asf}10000000원</td>
-								</tr>
+								</tr> --%>
 							</table>
 						</div> <%-- </c:forEach> --%>
 					</li>
@@ -167,10 +202,70 @@
 </div>
 
 <%@ include file="common/footer.jsp"%>
+
 <!-- JAVASCRIPTS -->
 <script src="layout/scripts/jquery.min.js"></script>
 <script src="layout/scripts/jquery.fitvids.min.js"></script>
 <script src="layout/scripts/jquery.mobilemenu.js"></script>
 <script src="layout/scripts/tabslet/jquery.tabslet.min.js"></script>
+<!-- bxSlider JavaScript file -->
+<script src="${ctx }/views/js/jquery.bxslider.min.js"></script>
+<script type="text/javascript">
+//portfolio slider setting
+var pfSlider = $( '#pfslider' ).bxSlider( {
+    mode: 'horizontal',// 가로 방향 수평 슬라이드
+    speed: 500,        // 이동 속도를 설정
+    pager: false,      // 현재 위치 페이징 표시 여부 설정
+    moveSlides: 1,     // 슬라이드 이동시 개수
+    slideWidth: 200,   // 슬라이드 너비
+    minSlides: 4,      // 최소 노출 개수
+    maxSlides: 4,      // 최대 노출 개수
+    slideMargin: 5,    // 슬라이드간의 간격
+    auto: true,        // 자동 실행 여부
+    autoHover: true,   // 마우스 호버시 정지 여부
+    controls: false,   // 이전 다음 버튼 노출 여부
+    captions: true     // 캡션 노출 여부
+} );
+
+//이전 버튼을 클릭하면 이전 슬라이드로 전환
+$( '#prevPfBtn' ).on( 'click', function () {
+	pfSlider.goToPrevSlide();  //이전 슬라이드 배너로 이동
+    return false;              //<a>에 링크 차단
+} );
+
+//다음 버튼을 클릭하면 다음 슬라이드로 전환
+$( '#nextPfBtn' ).on( 'click', function () {
+	pfSlider.goToNextSlide();  //다음 슬라이드 배너로 이동
+    return false;
+} );
+
+//portfolio slider setting
+var productSlider = $( '#productslider' ).bxSlider( {
+    mode: 'horizontal',// 가로 방향 수평 슬라이드
+    speed: 500,        // 이동 속도를 설정
+    pager: false,      // 현재 위치 페이징 표시 여부 설정
+    moveSlides: 1,     // 슬라이드 이동시 개수
+    slideWidth: 200,   // 슬라이드 너비
+    minSlides: 4,      // 최소 노출 개수
+    maxSlides: 4,      // 최대 노출 개수
+    slideMargin: 5,    // 슬라이드간의 간격
+    auto: true,        // 자동 실행 여부
+    autoHover: true,   // 마우스 호버시 정지 여부
+    controls: false,   // 이전 다음 버튼 노출 여부
+    captions: true     // 캡션 노출 여부
+} );
+
+//이전 버튼을 클릭하면 이전 슬라이드로 전환
+$( '#prevProductBtn' ).on( 'click', function () {
+	productSlider.goToPrevSlide();  //이전 슬라이드 배너로 이동
+    return false;              //<a>에 링크 차단
+} );
+
+//다음 버튼을 클릭하면 다음 슬라이드로 전환
+$( '#nextProductBtn' ).on( 'click', function () {
+	productSlider.goToNextSlide();  //다음 슬라이드 배너로 이동
+    return false;
+} );
+</script>
 </body>
 </html>

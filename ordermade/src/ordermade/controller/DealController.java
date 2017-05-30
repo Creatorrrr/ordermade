@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import ordermade.constants.Constants;
 import ordermade.domain.Account;
 import ordermade.domain.Member;
 import ordermade.domain.PurchaseHistories;
@@ -101,26 +102,24 @@ public class DealController {
 	// http://localhost:8080/ordermade/deal/transaction.do
 	@RequestMapping(value="transaction.do", method=RequestMethod.GET)
 	public ModelAndView showPurchaseHistoryUI(String page, HttpSession session){
-		// session에서 회원객체 가져오기
-		String memberType = "C"/*(String)session.getAttribute("memberType")*/;
+		String memberType = (String)session.getAttribute("memberType");
+		String memberId = (String)session.getAttribute("loginId");
 		page = "1";
-		String consumerId = "user1"/*(String)session.getAttribute("loginId")*/;
-		
-		if(memberType == "C"){
+		if(memberType.equals(Constants.CONSUMER)){
 			List<PurchaseHistory> purchaseList = new ArrayList<>();
-			purchaseList = dService.findpurchaseHistoriesByConsumerId(consumerId, page);
+			purchaseList = dService.findpurchaseHistoriesByConsumerId(memberId, page);
 			ModelAndView modelAndView = new ModelAndView("purchaseHistory/consumerPurchaseHistory");
 			modelAndView.addObject("purchaseList", purchaseList);
 			return modelAndView;
-		}else if(memberType == "M"){
-			String makerId = "";
+		}else if(memberType.equals(Constants.MAKER)){
 			List<PurchaseHistory> purchaseList = new ArrayList<>();
-			purchaseList = dService.findpurchaseHistoriesByMakerId(makerId, page);
+			purchaseList = dService.findpurchaseHistoriesByMakerId(memberId, page);
 			ModelAndView modelAndView = new ModelAndView("purchaseHistory/makerPurchaseHistory");
 			modelAndView.addObject("purchaseList", purchaseList);
 			return modelAndView;
+		}else{
+			throw new RuntimeException("No such Information");
 		}
-		return null;
 	}
 	
 	// XML for Mobile
