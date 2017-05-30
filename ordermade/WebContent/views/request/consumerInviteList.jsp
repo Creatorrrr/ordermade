@@ -11,6 +11,7 @@
 <head>
 <%@ include file="/views/common/head.jsp"%>
 </head>
+<title>참가요청내역</title>
 <!-- Main Body ========================================================================================== -->
 <body>
 <div class="wrapper row3">

@@ -4,6 +4,8 @@
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html lang="ko">
+<!-- bxSlider CSS file -->
+<link href="${ctx }/views/css/jquery.bxslider.css" rel="stylesheet" />
 <!-- Header ========================================================================================== -->
 <head>
 <%@ include file="/views/common/head.jsp"%>
@@ -82,8 +84,6 @@
 
 <!-- bxSlider JavaScript file -->
 <script src="${ctx }/views/js/jquery.bxslider.min.js"></script>
-<!-- bxSlider CSS file -->
-<link href="${ctx }/views/css/jquery.bxslider.css" rel="stylesheet" />
 
 <script type="text/javascript">
 $(document).ready(function() {

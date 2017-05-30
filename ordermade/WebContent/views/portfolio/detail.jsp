@@ -8,6 +8,7 @@
 <head>
 <%@ include file="/views/common/head.jsp"%>
 </head>
+<title>포트폴리오 상세페이지</title>
 <!-- Main Body ========================================================================================== -->
 <body>
 <div class="wrapper row3">

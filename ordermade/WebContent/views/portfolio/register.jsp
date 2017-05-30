@@ -7,6 +7,7 @@
 <head>
 <%@ include file="/views/common/head.jsp"%>
 </head>
+<title>포트폴리오 등록 페이지</title>
 <body>
 <div class="wrapper row3">
 	<div class="rounded">
@@ -46,10 +47,13 @@
 								class="form-control" cols="35" rows="10"></textarea></td>
 					</tr>
 				</table>
-				<div>
-					<input name="submit" type="submit" value="등록"> &nbsp; <input
-						name="reset" type="reset" value="취소">
-				</div>
+				<div align="center">
+					<div style="display:inline-block">
+						<input name="submit" type="submit" value="등록">
+						<input name="reset" type="reset" value="취소">
+					</div>
+				</div>	
+				
 			</form>
 			<br>
 

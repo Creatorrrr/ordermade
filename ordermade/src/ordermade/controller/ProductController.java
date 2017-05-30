@@ -37,10 +37,10 @@ public class ProductController {
 	@Autowired
 	private MemberService mService;
 
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String registerProduct(Model model, Product product, HttpServletRequest req) {
+	@RequestMapping(value = "/register.do", method = RequestMethod.POST)
+	public @ResponseBody String registerProduct(Model model, Product product, HttpServletRequest req) {
 		// 상품 등록후 상세 상품페이지로 이동
-
+		boolean check = false;
 		String imagePath = Constants.IMAGE_PATH;
 
 		File dir = new File(imagePath);
@@ -49,9 +49,9 @@ public class ProductController {
 			dir.mkdirs();
 		}
 
-		MultipartRequest mr;
 		try {
-			mr = new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy());
+			MultipartRequest mr = new MultipartRequest(
+					req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy());
 			String title = mr.getParameter("productTitle");
 			String category = mr.getParameter("category");
 			String content = mr.getParameter("productContent");
@@ -82,12 +82,16 @@ public class ProductController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (!pService.registerProduct(product)) {
+		
+		check = pService.registerProduct(product);
+		
+		return check+"";
+		/*if (!pService.registerProduct(product)) {
 			return "product/productRegister";
 		} else {
 			model.addAttribute("product", product);
 			return "product/productDetailTest";
-		}
+		}*/
 
 	}
 

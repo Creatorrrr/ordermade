@@ -8,6 +8,7 @@
 <head>
 <%@ include file="/views/common/head.jsp"%>
 </head>
+<title>회원가입</title>
 <!-- Main Body ========================================================================================== -->
 <body>
 <script type="text/javascript">
