@@ -49,29 +49,7 @@
 				</div>
 				
 				<div id="requestSearchResult">
-					<!-- loop start -->
-					<div class="requestBox">
-						<table class="request_table">
-							<tr>
-								<td>의뢰명 : </td>
-								<td>의뢰의뢰 SAMPLESAMPLESAMPLESAMPLESAMPLE</td>
-							</tr>
-							<tr>
-								<td>의뢰자 : </td>
-								<td>의뢰자 SAMPLESAMPLESAMPLESAMPLESAMPLE</td>
-							</tr>
-							<tr>
-								<td>제작항목 : </td>
-								<td>카테 SAMPLESAMPLESAMPLESAMPLESAMPLE</td>
-							</tr>
-							<tr>
-								<td>희망 가격 : </td>
-								<td>얼마 SAMPLESAMPLESAMPLESAMPLESAMPLE</td>
-							</tr>
-						</table>
-						<input name="" type="button" value="참가">
-					</div>
-					<!-- loop end -->
+					<!-- requests from server -->
 				</div>
 			</div>
 		</main>
@@ -124,6 +102,8 @@ var searchRequest = {
 							contentStr += searchRequest.makeContent(this);
 						});
 						$("#requestSearchResult").append(contentStr);
+					} else {
+						$("#requestSearchResult").append(searchRequest.makeContentForEmpty());
 					}
 				}
 			});
@@ -144,6 +124,8 @@ var searchRequest = {
 							contentStr += searchRequest.makeContent(this);
 						});
 						$("#requestSearchResult").append(contentStr);
+					} else {
+						$("#requestSearchResult").append(searchRequest.makeContentForEmpty());
 					}
 				}
 			});
@@ -164,6 +146,8 @@ var searchRequest = {
 							contentStr += searchRequest.makeContent(this);
 						});
 						$("#requestSearchResult").append(contentStr);
+					} else {
+						$("#requestSearchResult").append(searchRequest.makeContentForEmpty());
 					}
 				}
 			});
@@ -184,6 +168,8 @@ var searchRequest = {
 								contentStr += searchRequest.makeContentForAsked(this);
 							});
 							$("#requestSearchResult").append(contentStr);
+						} else {
+							$("#requestSearchResult").append(searchRequest.makeContentForEmpty());
 						}
 					}
 				});
@@ -196,7 +182,7 @@ var searchRequest = {
 		content += 	"<table class='request_table'>";
 		content += 		"<tr>";
 		content += 			"<td>의뢰명 : </td>";
-		content += 			"<td><p>" + $(xml).find("request>title").text() + "</p></td>";
+		content += 			"<td>" + $(xml).find("request>title").text() + "</td>";
 		content += 		"</tr>";
 		content += 		"<tr>";
 		content += 			"<td>의뢰자 : </td>";
@@ -224,7 +210,7 @@ var searchRequest = {
 		content += 	"<table class='request_table'>";
 		content += 		"<tr>";
 		content += 			"<td>의뢰명 : </td>";
-		content += 			"<td><p>" + $(xml).find("request>title").text() + "</p></td>";
+		content += 			"<td>" + $(xml).find("request>title").text() + "</td>";
 		content += 		"</tr>";
 		content += 		"<tr>";
 		content += 			"<td>의뢰자 : </td>";
@@ -240,6 +226,20 @@ var searchRequest = {
 		content += 		"</tr>";
 		content += 	"</table>";
 		content += 	"<input type='button' value='진행중' disabled>";
+		content += "</div>";
+
+		return content;
+	},
+	
+	makeContentForEmpty : function() {
+		var content = "";
+		
+		content += "<div class='requestBox'>";
+		content += 	"<table class='request_table'>";
+		content += 		"<tr>";
+		content += 			"<td>조건에 해당하는 의뢰서가 없습니다.</td>";
+		content += 		"</tr>";
+		content += 	"</table>";
 		content += "</div>";
 
 		return content;
