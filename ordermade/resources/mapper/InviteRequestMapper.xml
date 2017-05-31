@@ -7,10 +7,11 @@
 		<result property="id" column="id" />
 		<result property="message" column="message" />
 		<result property="form" column="form" />
-		<result property="requestTime" column="request_time"/>    
-		<association property="maker" column="maker_id"
+		<result property="requestTime" column="request_time"/>
+		<result property="maker.id" column="maker_id"/>
+		<!-- <association property="maker" column="maker_id"
 			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
-			jdbcType="VARCHAR" />
+			jdbcType="VARCHAR" /> -->
 		<association property="request" column="request_id"
 			select="ordermade.store.mapper.RequestMapper.selectRequestById" javaType="Request"
 			jdbcType="VARCHAR" />

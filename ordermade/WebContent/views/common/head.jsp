@@ -92,10 +92,10 @@
 						
 					<li><a href="${ctx }/views/portfolio/portfolio.jsp">Portfolio</a></li>
 					<c:if test="${sessionScope.loginId ne null}">
-						<li><a href="#">Request</a></li>
+						<li><a href="${ctx}/request/ui/myRequest.do">Request</a></li>
 					</c:if>
 					<c:if test="${sessionScope.loginId eq null}">
-						<li><a href="${ctx}/member/myPage.do">Request</a></li>
+						<li><a href="${ctx}/request/ui/myRequest.do">Request</a></li>
 					</c:if>
 					<c:choose>
 						<c:when test="${sessionScope.memberType eq 'C' }">

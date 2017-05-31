@@ -6,9 +6,10 @@
   <mapper namespace="ordermade.store.mapper.AccountMapper">
   	<resultMap type="Account" id="accountMap">
   		<result property="money" column="money" />
-  		<association property="member" column="member_id"
+		<result property="maker.id" column="maker_id"/>
+  		<!-- <association property="member" column="member_id"
   			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
-  			jdbcType="VARCHAR"/>
+  			jdbcType="VARCHAR"/> -->
   	</resultMap>
   
   	<update id="updateAccountById" parameterType="Account">
