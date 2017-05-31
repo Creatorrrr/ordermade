@@ -150,7 +150,7 @@ var productController = {
 						if (listLength) {
 							var contentStr = "";
 							$(xmlData).each(function(){
-								contentStr += requestController.makeContent(this, "참가");
+								contentStr += requestController.makeContent(this);
 							});
 							$("#productSearchResult").append(contentStr);
 						} else {

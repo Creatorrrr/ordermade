@@ -1,10 +1,16 @@
 package ordermade.controller;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,8 +56,8 @@ public class ProductController {
 		}
 
 		try {
-			MultipartRequest mr = new MultipartRequest(
-					req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy());
+			MultipartRequest mr = new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8",
+					new DefaultFileRenamePolicy());
 			String title = mr.getParameter("productTitle");
 			String category = mr.getParameter("category");
 			String content = mr.getParameter("productContent");
@@ -67,7 +73,7 @@ public class ProductController {
 			product.setTitle(title);
 			product.setCategory(category);
 			product.setContent(content);
-			product.setImage(image.getCanonicalPath());
+			product.setImage(image.getName());
 			product.setPrice(price);
 			product.setPeriod(period);
 			product.setMaker(maker);
@@ -84,7 +90,13 @@ public class ProductController {
 		}
 
 		check = pService.registerProduct(product);
-		return check+"";
+		return check + "";
+		/*
+		 * if (!pService.registerProduct(product)) { System.out.println("거짓");
+		 * return "product/productRegister"; } else { System.out.println("참");
+		 * model.addAttribute("product", product); return
+		 * "product/productDetail"; }
+		 */
 
 	}
 
@@ -101,8 +113,8 @@ public class ProductController {
 		}
 
 		try {
-			MultipartRequest mr = new MultipartRequest(
-					req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy());
+			MultipartRequest mr = new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8",
+					new DefaultFileRenamePolicy());
 
 			String title = mr.getParameter("title");
 			String category = mr.getParameter("category");
@@ -130,9 +142,13 @@ public class ProductController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		check = pService.modifyProductById(product);
-		return check+"";
+		return check + "";
+		/*
+		 * if (!pService.registerProduct(product)) { return ""; } else { return
+		 * "detailProduct"; }
+		 */
 	}
 
 	@RequestMapping(value="xml/remove.do", produces="text/plain")
@@ -140,7 +156,11 @@ public class ProductController {
 		// 상품페이지 삭제후 상품페이지 목록으로 이동
 		boolean check = false;
 		check = pService.removeProductById(id);
-		return check+"";
+		return check + "";
+		/*
+		 * if (!pService.removeProductById(id)) { return "/product/detail"; }
+		 * else { return "/product/productList"; }
+		 */
 	}
 
 	@RequestMapping(value = "/review/register.do", method = RequestMethod.POST, produces = "text/plain")
@@ -210,16 +230,19 @@ public class ProductController {
 	@RequestMapping(value = "ajax/product/productId.do", produces = "application/xml")
 	public @ResponseBody Product findProductById(String productId) {
 		// Ajax 생산품 id 검색으로 생산품 출력
+
 		Product product = pService.findProductById(productId);
 		return product;
 	}
 
-	@RequestMapping(value = "/ajax/products/makerid", produces = "text/plain")
+	@RequestMapping(value = "/ajax/products/makerid.do")
 	public @ResponseBody Products findMyProducts(String page, HttpServletRequest req) {
 		// Ajax 나의 생산품들 전체 출력
+
+		System.out.println("333333333333");
 		String makerId = (String) req.getSession().getAttribute("loginId");
 
-		List<Product> myProducts = pService.findProductsByMakerId(makerId, page);
+		List<Product> myProducts = pService.findProductsByMakerId(makerId, "1");
 
 		Products products = new Products();
 		products.setProducts(myProducts);
@@ -344,8 +367,7 @@ public class ProductController {
 		// GET 나의 생산품들 출력
 
 		String makerId = (String) req.getSession().getAttribute("loginId");
-
-		List<Product> products = pService.findProductsByMakerId(makerId, page);
+		List<Product> products = pService.findProductsByMakerId(makerId, "1");
 
 		ModelAndView mv = new ModelAndView("product/myProductList");
 		mv.addObject("products", products);
@@ -356,13 +378,33 @@ public class ProductController {
 	@RequestMapping("ui/detail.do")
 	public ModelAndView showDetailProductUI(String id) {
 		// GET 상품 상세정보 출력후 상품 상세 페이지로 이동
-
 		Product product = pService.findProductById(id);
-
 		ModelAndView mv = new ModelAndView("product/detail");
 		mv.addObject("product", product);
 
 		return mv;
+	}
+	
+	@RequestMapping("image.do")
+	public void getProductImage(String img, HttpServletResponse resp) {
+		File image = new File(Constants.IMAGE_PATH+img);
+		System.out.println(img+"img");
+		if(!image.exists()){
+			throw new RuntimeException("No product image");
+		}
+		
+		try (InputStream in = new BufferedInputStream(new FileInputStream(image));
+				OutputStream out = resp.getOutputStream();){
+			byte[] buf = new byte[8096];
+			int readByte = 0;
+			while((readByte = in.read(buf))>-1){
+				out.write(buf,0,readByte);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	 @RequestMapping("ui/search.do")
