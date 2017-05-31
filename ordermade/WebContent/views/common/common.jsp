@@ -22,3 +22,4 @@
 	src="${pageContext.request.contextPath}/views/js/jquery-2.1.3.js"></script>
 <script
 	src="${pageContext.request.contextPath}/views/js/jquery.blockUI.js"></script>
+	<script src="${pageContext.request.contextPath}/views/layout/scripts/jquery.min.js"></script>

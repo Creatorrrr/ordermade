@@ -167,8 +167,7 @@ public class ProductController {
 		Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 		review.setConsumer(consumer);
 		if (!pService.registerReview(review)) {
-			// return "false";
-			return "rediect:/product/ajax/product/productid.do?productId=" + review.getProduct().getId();
+			return "false";
 		} else {
 			return "true";
 		}
@@ -226,13 +225,10 @@ public class ProductController {
 
 	// main end
 
-	@RequestMapping(value = "ajax/product/productid.do", produces = "application/xml")
+	@RequestMapping(value = "ajax/product/productId.do", produces = "application/xml")
 	public @ResponseBody Product findProductById(String productId) {
-		System.out.println("8888888888");
 		// Ajax 생산품 id 검색으로 생산품 출력
-		System.out.println(productId);
 		Product product = pService.findProductById(productId);
-		System.out.println(product.getTitle());
 		return product;
 	}
 
