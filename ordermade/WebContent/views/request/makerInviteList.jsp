@@ -29,7 +29,7 @@
 	                       <col width="120"/>
 	                       <col width="350"/>
 	                       <col width="200"/>
-	                       <col width="100"/>
+	                       <col width="200"/>
 	                   </colgroup>
 	                   <thead>
 	                   <tr>
@@ -62,7 +62,12 @@
 	                           		${inviteRequest.requestTime}<br>
 	                            </td>
 	                            <td style="text-align: center">
-	                            	<input type="button" value="수락"><span><input type="button" value="거절"></span>
+	                            	<!-- 수락 ajax 구현 -->
+	                           		<input type="button" value="수락" style="display: inline-block;">
+	                           		<!-- 거절 ajax 구현 -->
+	                           		<span>
+	                           		<input type="button" value="거절" style="display: inline-block;">
+	                           		</span>
 	                            </td>
 	                        </tr>
 	                       </c:forEach>
