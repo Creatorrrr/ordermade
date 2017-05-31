@@ -330,7 +330,7 @@ public class ProductController {
 		List<Category> categorys = pService.findAllCategory();
 		model.addAttribute("categorys", categorys);
 
-		return "product/productRegister";
+		return "product/register";
 	}
 
 	@RequestMapping("ui/modify.do")
@@ -364,7 +364,7 @@ public class ProductController {
 
 		Product product = pService.findProductById(id);
 
-		ModelAndView mv = new ModelAndView("product/productDetail");
+		ModelAndView mv = new ModelAndView("product/detail");
 		mv.addObject("product", product);
 
 		return mv;
