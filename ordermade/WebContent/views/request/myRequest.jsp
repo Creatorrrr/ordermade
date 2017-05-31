@@ -29,7 +29,7 @@ ${box2 }
 					</div>
 					<div id="resultBox">
 					<c:forEach items="${requests }" var="request" varStatus="status">
-						<div class="request_table" data="${request.id }">
+						<div class="request_table" data="${request.id }" page="${request.page }">
 							
 								<div class="imgl borderedbox">
 									<img src="${ctx }/views/images/img-10.jpg" />
@@ -37,7 +37,10 @@ ${box2 }
 							
 								
 								<p>의뢰 명 : ${request.title}</p>
-								<c:if test="${request.maker.id ne null}"><p>의뢰자 : ${request.maker.id }</p></c:if>
+								<c:choose>
+									<c:when test='${request.maker.id ne null }'><p>의뢰자 : ${request.maker.id }</p></c:when>
+									<c:otherwise><p>의뢰자 : 없음</p></c:otherwise>
+								</c:choose>
 								<p>의뢰 내용 : ${request.content }</p>
 								<p>제작항목 : ${request.category }</p>
 								<p>희망 가격 : ${request.hopePrice }</p>
@@ -53,12 +56,23 @@ ${box2 }
 					</div>
 				</li>
 				<li><button id="registerBtn">의뢰서 추가</button></li>
+				
+				<!-- 페이지 구현  -->
+
+				<link href="${ctx }/resources/js/js_simplePagination/simplePagination.css" rel="stylesheet" type="text/css">
+				<script src="${ctx }/resources/js/js_simplePagination/jquery.simplePagination.js"></script>	
+				<li><div id = "pagination"></li>
+
+
 			</ul>
 			
 			
 	<script type="text/javaScript">
-	
+
 		$(document).ready(function() {
+			
+			//-----페이징
+
 			
 			//공개 설정 버튼 구현 
 			$(".boundBtn").click(function(){
@@ -133,53 +147,92 @@ ${box2 }
 			});
 			
 			
+			//-------------page
 			
-			//-------------------
-		
-
+			var ajaxName = 'searchMyRequests';
+		    
+		   	pagination($($('.request_table').get(0)).attr("page"));//페이지수 얻고 실행
+		    function pagination(pageNum){//참고  http://flaviusmatis.github.io/simplePagination.js
+			    $('#pagination').pagination({
+			        items: pageNum,
+			        itemOnPage: 7,
+			        currentPage: 1,
+			        cssStyle: 'light-theme',
+			        prevText: '',
+			        nextText: '',
+			       /*  onInit: function () {
+			              console.log("------onInit---");
+			        }, */
+			        onPageClick: function (page, evt) {
+			            console.log(page+"---"+ajaxName+"--"+status);
+			            tab1(ajaxName, page);
+			        }
+			    });
+		    }
 			
-			function tab1(page){
+			
+			
+			//-------------------tab
+			var status = 'tab1';
+			
+			function tab1(doName, page){
 				var page = page || 1;
+				ajaxName = doName;
+				//var ctx = ${ctx};
 				$.ajax({
-					url : '${ctx}/request/xml/searchMyRequests.do?page='+page,
+					url : '${ctx}/request/xml/'+doName+'.do?page='+page,
 					type : "get",
 					dataType : "xml",
 					success : function(xml) {
 						console.log(xml);
+						$('#resultBox').html('');
 						var list = $(xml).find("request");
-						console.log(list.size());
+						var pageNum = $('>page',list.get(0)).text();
+						console.log(pageNum);
+						pagination(pageNum);
+						//console.log(list.size());
 						list.each(function(){
-							console.log($('id',this).text());
+							/* console.log($('>id',this).text());
+							console.log($('>title',this).text());
+							console.log($('>consumer>id',this).text());
+							 */
+							
+							
+							var makerId = $(">maker>id",this).text();
+							var bound = $(">bound",this).text();
+							
+							var rs='<div class="request_table" data="'+ $(">id",this).text() +'" page="'+ pageNum +'" >'
+								+'<div class="imgl borderedbox">'
+								+'	<img src="${ctx}/views/images/img-10.jpg" />'
+								+'</div>'
+								+'<p>의뢰 명 : '+ $(">title",this).text() +'</p>';
+								
+							if(makerId == null || makerId==""){
+								rs+='<p>의뢰자 : 없음 </p>';
+							}else{
+								rs+='<p>의뢰자 : '+ makerId +' </p>';
+							}
+							
+							rs+='<p>의뢰 내용 : '+ $(">content",this).text() +' </p>'
+								+'<p>제작항목 : '+ $(">category",this).text() +' </p>'
+								+'<p>희망 가격 : '+ $(">hopePrice",this).text() +' </p>';
+								
+							if(bound == null){
+								rs+='	<button class="boundBtn">비공개</button>';
+							}else{
+								rs+='	<button class="boundBtn">공개</button>';
+							}
+							
+							rs+='<button class="modifyBtn">수정</button>'
+								+'<button class="deleteBtn">삭제</button>'
+								+'</div>'; 
+							$('#resultBox').append(rs);
+							//console.log(rs);
+							
 						});
-/* 						
+				
 						
-						var ctx = ${ctx};
-						var makerId = '';
-						var bound = '';
-						
-						var rs='<div class="request_table" data="request.id ">'
-							+'<div class="imgl borderedbox">'
-							+'	<img src="'+ctx+'/views/images/img-10.jpg" />'
-							+'</div>'
-							+'<p>의뢰 명 : title</p>';
-							
-						if(makerId == null){
-							rs+='<p>의뢰자 : request.maker.id </p>';
-						}
-						
-						rs+='<p>의뢰 내용 : request.content </p>'
-							+'<p>제작항목 : request.category </p>'
-							+'<p>희망 가격 : request.hopePrice </p>';
-							
-						if(bound == null){
-							rs+='	<button class="boundBtn">비공개</button>';
-						}else{
-							rs+='	<button class="boundBtn">공개</button>';
-						}
-						
-						rs+='<button class="modifyBtn">수정</button>'
-							+'<button class="deleteBtn">삭제</button>'
-							+'</div>'; */
+
 						
 					}
 				});
@@ -188,20 +241,32 @@ ${box2 }
 			
 			//모든 의뢰서 탭구현
 			$('#tab1').click(function(){
-				tab1();
+				if(status != 'tab1'){
+					tab1('searchMyRequests');
+					status = 'tab1';
+				}
 			});
 
 			
 			//진행중 탭 구현
 			$('#tab2').click(function(){
-				
+				if(status != 'tab2'){
+					tab1('searchMyRequestsWithMaker');
+					status = 'tab2';
+				}
 			});
 			
 			
 			//완료 탭 구현
 			$('#tab3').click(function(){
-				
+				if(status != 'tab3'){
+					tab1('searchMyRequestsWithPayment');
+					status = 'tab3';
+				}
 			});
+			
+			
+			
 			
 		});
 			

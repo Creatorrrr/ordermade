@@ -9,7 +9,6 @@
 	type="text/css" media="all">
 <script src="${ctx }/views/js/jquery-2.1.3.js"></script>
 <script src="${ctx }/views/js/jquery.blockUI.js"></script>
-<script src="${ctx }/views/layout/scripts/jquery.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.fitvids.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.mobilemenu.js"></script>
 <body id="top">
@@ -93,10 +92,10 @@
 						
 					<li><a href="${ctx }/views/portfolio/portfolio.jsp">Portfolio</a></li>
 					<c:if test="${sessionScope.loginId ne null}">
-						<li><a href="#">Request</a></li>
+						<li><a href="${ctx}/request/ui/myRequest.do">Request</a></li>
 					</c:if>
 					<c:if test="${sessionScope.loginId eq null}">
-						<li><a href="${ctx}/member/myPage.do">Request</a></li>
+						<li><a href="${ctx}/request/ui/myRequest.do">Request</a></li>
 					</c:if>
 					<c:choose>
 						<c:when test="${sessionScope.memberType eq 'C' }">

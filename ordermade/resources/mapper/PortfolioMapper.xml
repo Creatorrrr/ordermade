@@ -10,7 +10,8 @@
   		<result property="content" column="content"/>
   		<result property="category" column="type" />
   		<result property="image" column="image"/>
-  		<association property="maker" column="maker_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member" jdbcType="VARCHAR" />
+		<result property="maker.id" column="maker_id"/>
+  		<!-- <association property="maker" column="maker_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member" jdbcType="VARCHAR" /> -->
 		<collection property="tags" column="id" ofType="Tag" select="ordermade.store.mapper.TagMapper.selectTagsByPortfolioId" javaType="ArrayList" jdbcType="VARCHAR"/> 
   	</resultMap>
   

@@ -292,6 +292,8 @@ public class RequestController {
 		}else{
 			throw new RuntimeException("error");
 		}
+
+		
 		System.out.println(list.toString());
 		ModelAndView modelAndView = new ModelAndView("request/myRequest");//나의 의뢰서 or 받은 의뢰서
 		modelAndView.addObject("requests", list);
