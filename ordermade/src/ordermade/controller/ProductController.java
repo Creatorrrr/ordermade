@@ -152,7 +152,7 @@ public class ProductController {
 	}
 
 	@RequestMapping("xml/remove.do")
-	public @ResponseBody String removeProductById(@RequestParam("productId") String id, HttpServletRequest req) {
+	public @ResponseBody String removeProductById(String id, HttpServletRequest req) {
 		// 상품페이지 삭제후 상품페이지 목록으로 이동
 		boolean check = false;
 		check = pService.removeProductById(id);

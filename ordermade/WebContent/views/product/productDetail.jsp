@@ -160,7 +160,18 @@
 
 <!-- JAVASCRIPTS -->
 <script type="text/javascript">
-function deleteProduct() {
+function deleteProduct(productId) {
+	$.ajax({
+		url:"{ctx}/product/xml/remove.do?productId="+productId,
+		type : "get",
+		dataType : "text",
+		success : function(check) {
+			if(check=="true"){
+				console.log("6415656415634");
+			}
+				
+		}
+	})
 	
 }
 </script>
