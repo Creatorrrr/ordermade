@@ -8,7 +8,7 @@
 <head>
 <%@ include file="/views/common/head.jsp"%>
 </head>
-<title>상품 등록 페이지</title>
+<title>상품 등록페이지</title>
 <!-- Main Body ========================================================================================== -->
 <body>
 <div class="wrapper row3">
@@ -116,7 +116,7 @@ $(document).ready(function() {
 				// 보낼 때
 				type : "post",
 				enctype: 'multipart/form-data',
-				url : "${ctx}/product/register.do",
+				url : "${ctx}/product/xml/register.do",
 				data : data,
 				processData: false,
 				contentType: false,
@@ -125,7 +125,8 @@ $(document).ready(function() {
 				dataType : "text",
 				success : function(resultData) {
 					if(resultData === "true"){
-						location.href="${ctx}/product/ui/detail.do"; // 성공시 페이지 전환
+						location.href= "${ctx}/views/product/myProductList.jsp"
+							/* "${ctx}/product/ui/myProducts.do" */; // 성공시 페이지 전환
 					}
 				},
 				error: function(xml){

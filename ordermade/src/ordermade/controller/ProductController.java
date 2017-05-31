@@ -37,7 +37,7 @@ public class ProductController {
 	@Autowired
 	private MemberService mService;
 
-	@RequestMapping(value = "xml/register.do", method = RequestMethod.POST)
+	@RequestMapping(value = "xml/register.do", method = RequestMethod.POST, produces="text/plain")
 	public @ResponseBody String registerProduct(Model model, Product product, HttpServletRequest req) {
 		// 상품 등록후 상세 상품페이지로 이동
 		boolean check = false;
@@ -85,18 +85,10 @@ public class ProductController {
 
 		check = pService.registerProduct(product);
 		return check+"";
-		/*if (!pService.registerProduct(product)) {
-			System.out.println("거짓");
-			return "product/productRegister";
-		} else {
-			System.out.println("참");
-			model.addAttribute("product", product);
-			return "product/productDetail";
-		}*/
 
 	}
 
-	@RequestMapping(value = "xml/modify.do", method = RequestMethod.POST)
+	@RequestMapping(value = "xml/modify.do", method = RequestMethod.POST, produces="text/plain")
 	public @ResponseBody String modifyProductById(Product product, HttpServletRequest req) {
 		// 상품 수정 후 상세 상품페이지로 이동
 		boolean check = false;
@@ -141,24 +133,14 @@ public class ProductController {
 		
 		check = pService.modifyProductById(product);
 		return check+"";
-		/*if (!pService.registerProduct(product)) {
-			return "";
-		} else {
-			return "detailProduct";
-		}*/
 	}
 
-	@RequestMapping("xml/remove.do")
+	@RequestMapping(value="xml/remove.do", produces="text/plain")
 	public @ResponseBody String removeProductById(@RequestParam("productId") String id, HttpServletRequest req) {
 		// 상품페이지 삭제후 상품페이지 목록으로 이동
 		boolean check = false;
 		check = pService.removeProductById(id);
 		return check+"";
-		/*if (!pService.removeProductById(id)) {
-			return "/product/detail";
-		} else {
-			return "/product/productList";
-		}*/
 	}
 
 	@RequestMapping(value = "/review/register.do", method = RequestMethod.POST, produces = "text/plain")

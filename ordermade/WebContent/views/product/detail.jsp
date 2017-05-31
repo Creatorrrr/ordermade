@@ -65,7 +65,7 @@
 						<!--본인이 작성한 글만 수정 삭제 가능하도록   -->
 						<div align="center">
 							<input class="btn btn-warning" type="button" value="삭제"
-								onclick="javascript:window.location='${ctx }/product/delete.do?productId=${product.id}'">
+								onclick="javascript:productController.deleteProduct(${product.id });">
 							<input class="btn btn-success" type="button" value="수정"
 								onclick="javascript:window.location='${ctx}/product/modify.do?productId=${product.id }'">
 						</div>
@@ -201,8 +201,29 @@
 </div>
 
 <%@ include file="/views/common/footer.jsp"%>
-
+<script type="text/javascript">
+var productController = {
+		deleteProduct : function(id){
+			$.ajax({
+				type : "get",
+				url : "${ctx }/product/xml/remove.do?id="+id,
+				dataType : "text",
+				success : function(text){
+						if(text === "true") {
+							location.href = "${ctx }/views/product/myProductList.jsp";
+						}
+				},
+				error : function(xml){
+					console.log("실패 메시지 : \n" + xml.responseText);
+				}
+			});
+		}
+};
+</script>
 <!-- JAVASCRIPTS -->
+<script src="../layout/scripts/jquery.min.js"></script>
+<script src="../layout/scripts/jquery.fitvids.min.js"></script>
+<script src="../layout/scripts/jquery.mobilemenu.js"></script>
 
 </body>
 </html>

@@ -38,21 +38,20 @@
 				<form class="clear" method="post" action="#">
 					<div>
 						<fieldset>
-							<select name="type" id="type" class="form-control">
+							<select name="type" id="type" class="form-control" style="display: inline-block;">
 								<option value="id">제목</option>
 								<option value="name">내용</option>
 								<option value="name">상품 명</option>
 								<option value="name">제작자</option>
 							</select> <input input name="search" class="search-box-input" type="text"
-								value="" placeholder="Search Here" />
+								value="" placeholder="Search Here" style="display: inline-block;"/>
 							<button class="fa fa-search" type="submit" title="Search">
 								<em>Search</em>
 							</button>
 						</fieldset>
 					</div>
 				</form>
-				
-				<button class="fa fa-search" name="" type="submit" title="Search">
+							<button class="fa fa-search" name="" type="submit" title="Search">
 								<em>Image Search</em>
 							</button>
 			</div>
@@ -61,7 +60,6 @@
 					<%-- <c:forEach items="${ box_list }" var="literature"> --%>
 					<div class="content" align="center">
 						<table class="table">
-
 							<tr>
 								<td>	
 									<img src="${ctx }/views/images/img1.jpg" />
