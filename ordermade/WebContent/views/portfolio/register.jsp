@@ -90,7 +90,7 @@ $(document).ready(function(){
 		}
 	});
 	
- 	/* // 등록버튼 구현
+ 	 // 등록버튼 구현
 	 $("#registBtn").click(function(){
 		console.log("----testing here-------");
 		if(checkIt()){
@@ -111,7 +111,7 @@ $(document).ready(function(){
 				}
 			});
 		}
-	}); */
+	}); 
 
 	//유효성 검사
 	function checkIt() {

@@ -22,7 +22,7 @@
 
 			<h1>상품 등록 페이지</h1>
 			<br>
-			<form action="${ctx }/product/register.do" method="post" id="productRegister"
+			<form action="${ctx }/product/xml/register.do" method="post" id="productRegister"
 				enctype="multipart/form-data" name="productRegister" onsubmit="return checkIt()">
 				<table class="table">
 					<tr>
@@ -116,7 +116,7 @@ $(document).ready(function() {
 				// 보낼 때
 				type : "post",
 				enctype: 'multipart/form-data',
-				url : "${ctx}/product/register.do",
+				url : "${ctx}/product/xml/register.do",
 				data : data,
 				processData: false,
 				contentType: false,
