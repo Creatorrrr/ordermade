@@ -4,53 +4,6 @@
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 <title>상품 상세페이지</title>
 <%@ include file="/views/common/head.jsp"%>
-<script>
-	/* $(function() { */
-
-	var registReview = function() {
-		console.log("11111111");
-		$.ajax({
-			url : "${ctx}/product/review/register.do",
-			type : "post",
-			data : {
-				title : $("#title").val(),
-				grade : $("#grade").val(),
-				content : $("#content").val()
-			},
-			success : displayContents,
-			error : errorCallback
-		});
-	};
-	var displayComment = function(resultData) {
-		var commentHtml = "";
-		$
-				.each(
-						resultData.comments,
-						function(index, comment) {
-							alert("수행중 성공가 발생했습니다.");
-							commentHtml += '<table class="table" style="font-size:13px; padding:20px;">';
-							commentHtml += '<tr>';
-							commentHtml += '<td><strong>' + comment.authorName
-									+ '</strong></td>';
-							commentHtml += '<td class="text-right">'
-									+ comment.regDate;
-							commentHtml += '<a class="glyphicon glyphicon-trash" href="javascript:removeComment('
-									+ comment.commentId + ');"></a>';
-							commentHtml += '</td></tr>';
-							commentHtml += '<tr><td colspan="2">';
-							commentHtml += '<p class="txt">' + comment.comment
-									+ '</p>';
-							commentHtml += '</td></tr></table>';
-						});
-		$("#commenArea").empty();
-		$("#commenArea").append(commentHtml);
-		$("#comment").val("");
-	};
-	var errorCallback = function() {
-		alert("수행중 오류가 발생했습니다.");
-	}
-			/* 	}); */
-</script>
 
 <div class="wrapper row3">
 	<div class="rounded">
@@ -64,10 +17,12 @@
 					<c:if test="${product.maker.id eq sessionScope.loginId}">
 						<!--본인이 작성한 글만 수정 삭제 가능하도록   -->
 						<div align="center">
+							<%-- <input class="btn btn-warning" type="button" value="삭제"
+								onclick="javascript:window.location='${ctx }/product/delete.do?productId=${product.id}'"> --%>
 							<input class="btn btn-warning" type="button" value="삭제"
-								onclick="javascript:window.location='${ctx }/product/delete.do?productId=${product.id}'">
-							<input class="btn btn-success" type="button" value="수정"
-								onclick="javascript:window.location='${ctx}/product/modify.do?productId=${product.id }'">
+								onclick="javascript:deleteProduct(${product.id})">
+							<input class="btn btn-warning" type="button" value="수정"
+								onclick="javascript:updateProduct(${product.id})">
 						</div>
 					</c:if>
 				</c:if>
@@ -183,11 +138,12 @@
 			<h6>제작자 정보</h6>
 			<nav class="sdb_holder">
 				<ul>
-					<li><p>가격정보 : 원</p></li>
-					<li><p>작업기간 : 일</p></li>
-					<li><img src="${ctx }/views/images/img-10.jpg" /></li>
-					<li><p>제작자 아이디 :</p></li>
-					<li><p>제작자 소개</p></li>
+					<li><p>가격정보 : ${product.price }원</p></li>
+					<li><p>작업기간 : ${product.period }일</p></li>
+					<li><img
+						src="${ctx }/member/image.do?img=${product.maker.image}" /></li>
+					<li><p>제작자 아이디 : ${product.maker.id }</p></li>
+					<li><p>제작자 소개 : ${product.maker.introduce }</p></li>
 					<li><p></p></li>
 					<br>
 					<li><a href="">프로필 바로가기</a></li>
@@ -203,6 +159,10 @@
 <%@ include file="/views/common/footer.jsp"%>
 
 <!-- JAVASCRIPTS -->
-
+<script type="text/javascript">
+function deleteProduct() {
+	
+}
+</script>
 </body>
 </html>

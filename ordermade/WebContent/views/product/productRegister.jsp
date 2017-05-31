@@ -116,7 +116,7 @@ $(document).ready(function() {
 				// 보낼 때
 				type : "post",
 				enctype: 'multipart/form-data',
-				url : "${ctx}/product/register.do",
+				url : "${ctx}/product/xml/register.do",
 				data : data,
 				processData: false,
 				contentType: false,
@@ -125,7 +125,7 @@ $(document).ready(function() {
 				dataType : "text",
 				success : function(resultData) {
 					if(resultData === "true"){
-						location.href="${ctx}/product/ui/detail.do"; // 성공시 페이지 전환
+						location.href= "${ctx}/product/ui/myProducts.do"/* "${ctx}/product/ui/myProducts.do" */; // 성공시 페이지 전환
 					}
 				},
 				error: function(xml){

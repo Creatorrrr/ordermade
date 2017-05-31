@@ -73,7 +73,7 @@
 			<nav id="mainav" class="clear">
 				<ul class="clear">
 					<li class=""><a href="${ctx }/views/index.jsp">Main</a></li>
-					<li class=""><a href="${ctx }/views/product/product.jsp">Product</a></li>
+					<li class=""><a href="${ctx }/product/ajax/products/category.do?page=1&category='가구'">Product</a></li>
 					<%-- <li><a class="drop" href="#">category</a> 
 					<ul>
 							<li><a href="${ctx }/views/productList.jsp">Furniture</a></li>
