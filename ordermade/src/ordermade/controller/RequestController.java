@@ -194,10 +194,10 @@ public class RequestController {
 
 	@RequestMapping(value = "comment/xml/modify.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyComment(Comment comment, HttpSession session) {
-		// String loginId=(String)session.getAttribute("loginId");
-		if(comment.getId() == null) return "error";
-		boolean check = service.modifyCommentById(comment);
-		return check+"";
+		if(checkLogined(session)) return "error";	// check logined
+		comment.setMember(new Member());
+		comment.getMember().setId((String)session.getAttribute("loginId"));
+		return service.modifyCommentById(comment) + "";
 	}	//POST  http://localhost:8080/ordermade/comment/xml/modify.do
 		//{"id":"1","content":"dddd","request.id":"8","member.id":"user1"}
 

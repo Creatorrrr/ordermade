@@ -10,6 +10,12 @@
 <!-- Header ========================================================================================== -->
 <head>
 <%@ include file="/views/common/head.jsp"%>
+
+	<style type="text/css">
+		.commentListStyle li p {
+			margin: 5px 0 5px 0;
+		}
+	</style>
 </head>
 <title>의뢰서</title>
 <!-- Main Body ========================================================================================== -->
@@ -47,13 +53,14 @@
 						<tr><td><h3>대화 기록<button style="float: right;">파일함</button></h3></td></tr>
 						<tr>
 							<td>
-								<ul id="commentList">
+								<ul id="commentList" class="commentListStyle">
 									<c:forEach items="${request.comments }" var="comment">
-										<li>
-											<p style="display:inline-block">${comment.member.memberType } : ${comment.content }</p>
+										<li id="commentContent-${comment.id }">
+												<p class="commentWriter"><strong>${comment.member.id }</strong></p>
+												<p class="commentContent" style="display:inline-block">${comment.content }</p>
 											<c:if test="${comment.member.id eq sessionScope.loginId}">
-												<button>수정</button>
-												<button onclick="searchComment.removeComment(${comment.id});">삭제</button>
+												<button onclick="commentController.modifyCommentForm(${comment.id});">수정</button>
+												<button onclick="commentController.removeComment(${comment.id});">삭제</button>
 											</c:if>
 										</li>
 									</c:forEach>
@@ -63,7 +70,7 @@
 						<tr><td><h3>추가 요구 사항</h3></td></tr>
 						<tr>
 							<td>
-								<textarea id="commentContent" rows="5" style="width:100%"></textarea>
+								<textarea id="commentRegisterContent" rows="5" style="width:100%"></textarea>
 								<div style="float:right">
 									<button id="commentRegister">코멘트 등록</button>
 								</div>
@@ -97,27 +104,52 @@
 
 <script type="text/javascript">
 $("#commentRegister").click(function() {
-	searchComment.registerComment();
-	$("#commentContent").val("");
+	commentController.registerComment();
+	$("#commentRegisterContent").val("");
 });
 
-$("#commentRemove").click(function() {
-	searchComment.removeComment();
-	$("#commentContent").val("");
-});
-
-// get portfolios with xml
-var searchComment = {
+// get comments with xml
+var commentController = {
 	registerComment : function() {
 		$.ajax({
 			url : "${ctx }/comment/xml/register.do",
 			data : {'request.id' : "${request.id}",
-					content : $("#commentContent").val()},
+					content : $("#commentRegisterContent").val()},
 			type : "post",
 			dataType : "text",
 			success : function(text) {
 					if(text === "true") {
-						searchComment.getCommentsByRequestId("${request.id}", 1);
+						commentController.getCommentsByRequestId("${request.id}", 1);
+					}
+			}
+		});
+	},
+	
+	modifyCommentForm : function(commentId) {
+		var comment = $("#commentContent-" + commentId);
+		var contentStr = "";
+		
+		contentStr += "<p class='commentWriter'><strong>" + comment.children(".commentWriter").text() + "</strong></p>"
+		contentStr += "<textarea class='commentModifyContent' rows='5' style='width:100%'>" + comment.children(".commentContent").text() + "</textarea>";
+		contentStr += "<div style='float:right'>";
+		contentStr += 	"<button onclick='commentController.modifyComment(" + commentId + ")'>코멘트 수정</button>";
+		contentStr += 	"<button onclick='commentController.getCommentsByRequestId(\"${request.id}\", 1)'>취소</button>";
+		contentStr += "</div>";
+
+		comment.empty().append(contentStr);
+	},
+	
+	modifyComment : function(commentId) {
+		$.ajax({
+			url : "${ctx }/comment/xml/modify.do",
+			data : {id : commentId,
+					'request.id' : "${request.id}",
+					content : $("#commentContent-" + commentId + ">.commentModifyContent").val()},
+			type : "post",
+			dataType : "text",
+			success : function(text) {
+					if(text === "true") {
+						commentController.getCommentsByRequestId("${request.id}", 1);
 					}
 			}
 		});
@@ -130,7 +162,7 @@ var searchComment = {
 			dataType : "text",
 			success : function(text) {
 					if(text === "true") {
-						searchComment.getCommentsByRequestId("${request.id}", 1);
+						commentController.getCommentsByRequestId("${request.id}", 1);
 					}
 			}
 		});
@@ -148,18 +180,27 @@ var searchComment = {
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function() {
-							contentStr += "<li>";
-							contentStr += "<p style='display:inline-block'>" + $(this).find("comment>member>memberType").text() + " : " + $(this).find("comment>content").text() + "</p>"
-							if($(this).find("comment>member>id").text() === "${sessionScope.loginId}") {
-								contentStr += "<button class='commentModify'>수정</button>"
-								contentStr += "<button onclick='searchComment.removeComment(" + $(this).find("comment>id").text() + ");'>삭제</button>";
-							}
-							contentStr += "</li>";
+							contentStr += commentController.makeContent(this);
 						});
 						$("#commentList").append(contentStr);
 					}
 			}
 		});
+	},
+	
+	makeContent : function(xml) {
+		var content = "";
+
+		content += "<li id='commentContent-" + $(xml).find("comment>id").text() + "'>";
+		content += "<p class='commentWriter'><strong>" + $(xml).find("comment>member>id").text() + "</strong></p>";
+		content += "<p class='commentContent' style='display:inline-block'>" + $(xml).find("comment>content").text() + "</p>";
+		if($(xml).find("comment>member>id").text() === "${sessionScope.loginId}") {
+			content += "<button onclick='commentController.modifyCommentForm(" + $(xml).find("comment>id").text() + ");'>수정</button>";
+			content += "<button onclick='commentController.removeComment(" + $(xml).find("comment>id").text() + ");'>삭제</button>";
+		}
+		content += "</li>";
+		
+		return content;
 	}
 };
 </script>

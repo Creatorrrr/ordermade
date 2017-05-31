@@ -99,7 +99,7 @@ var searchRequest = {
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function(){
-							contentStr += searchRequest.makeContent(this);
+							contentStr += searchRequest.makeContent(this, "참가");
 						});
 						$("#requestSearchResult").append(contentStr);
 					} else {
@@ -121,7 +121,7 @@ var searchRequest = {
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function() {
-							contentStr += searchRequest.makeContent(this);
+							contentStr += searchRequest.makeContent(this, "참가");
 						});
 						$("#requestSearchResult").append(contentStr);
 					} else {
@@ -143,7 +143,7 @@ var searchRequest = {
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function() {
-							contentStr += searchRequest.makeContent(this);
+							contentStr += searchRequest.makeContent(this, "참가");
 						});
 						$("#requestSearchResult").append(contentStr);
 					} else {
@@ -165,7 +165,7 @@ var searchRequest = {
 						if (listLength) {
 							var contentStr = "";
 							$(xmlData).each(function() {
-								contentStr += searchRequest.makeContentForAsked(this);
+								contentStr += searchRequest.makeContent(this, "진행중");
 							});
 							$("#requestSearchResult").append(contentStr);
 						} else {
@@ -175,7 +175,7 @@ var searchRequest = {
 			});
 		},
 	
-	makeContent : function(xml) {
+	makeContent : function(xml, contentType) {
 		var content = "";
 		
 		content += "<div class='requestBox'>";
@@ -197,35 +197,11 @@ var searchRequest = {
 		content += 			"<td>" + $(xml).find("request>hopePrice").text() + "</td>";
 		content += 		"</tr>";
 		content += 	"</table>";
-		content += 	"<input name='' type='button' value='참가'>";
-		content += "</div>";
-
-		return content;
-	},
-			
-	makeContentForAsked : function(xml) {
-		var content = "";
-		
-		content += "<div class='requestBox'>";
-		content += 	"<table class='request_table'>";
-		content += 		"<tr>";
-		content += 			"<td>의뢰명 : </td>";
-		content += 			"<td>" + $(xml).find("request>title").text() + "</td>";
-		content += 		"</tr>";
-		content += 		"<tr>";
-		content += 			"<td>의뢰자 : </td>";
-		content += 			"<td>" + $(xml).find("request>consumer>id").text() + "</td>";
-		content += 		"</tr>";
-		content += 		"<tr>";
-		content += 			"<td>제작항목 : </td>";
-		content += 			"<td>" + $(xml).find("request>category").text() + "</td>";
-		content += 		"</tr>";
-		content += 		"<tr>";
-		content += 			"<td>희망 가격 : </td>";
-		content += 			"<td>" + $(xml).find("request>hopePrice").text() + "</td>";
-		content += 		"</tr>";
-		content += 	"</table>";
-		content += 	"<input type='button' value='진행중' disabled>";
+		if(contentType === "참가") {
+			content += 	"<input name='' type='button' value='참가'>";
+		} else if(contentType === "진행중") {
+			content += 	"<input type='button' value='진행중' disabled>";
+		}
 		content += "</div>";
 
 		return content;
