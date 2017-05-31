@@ -61,32 +61,47 @@
 </body>
 <script type="text/javascript">	
 $(document).ready(function() {
-	searchRequest.getRequestsByBound(1);
-	//searchRequest.getRequestsByBoundAndTitle(1,1);	// test
-	//searchRequest.getRequestsByBoundAndContent(1,2);	// test
+	requestController.getRequestsByBound(1);
+	//requestController.getRequestsByBoundAndTitle(1,1);	// test
+	//requestController.getRequestsByBoundAndContent(1,2);	// test
 });
 
 // 모든 의뢰서를 클릭하면 모든 의뢰서 목록을 가져온다.
 $("#allRequests").click(function() {
-	searchRequest.getRequestsByBound(1);
+	requestController.getRequestsByBound(1);
 });
 
 // 내가 보낸 의뢰서를 클릭하면 내가 보낸 의뢰서 목록을 가져온다.
 $("#askedRequests").click(function() {
-	searchRequest.getMyInviteRequestsForMaker(1);
+	requestController.getMyInviteRequestsForMaker(1);
 });
 
 // 검색을 클릭하면 검색된 의뢰서 목록을 가져온다.
 $("#requestSearchBtn").click(function() {
 	var type = $("#requestSearchType option:selected").val();
 	if(type === "title") {
-		searchRequest.getRequestsByBoundAndTitle(1, $("#requestSearchKeyword").val());
+		requestController.getRequestsByBoundAndTitle(1, $("#requestSearchKeyword").val());
 	} else if(type === "content") {
-		searchRequest.getRequestsByBoundAndContent(1, $("#requestSearchKeyword").val());
+		requestController.getRequestsByBoundAndContent(1, $("#requestSearchKeyword").val());
 	}
 });
 
-var searchRequest = {
+var requestController = {
+	registerInviteRequest : function() {	// 작업중
+		$.ajax({
+			url : "${ctx }/request/xml/registerInviteRequest.do",
+			data : {'request.id' : "${request.id}",
+					content : $("#commentRegisterContent").val()},
+			type : "post",
+			dataType : "text",
+			success : function(text) {
+					if(text === "true") {
+						commentController.getCommentsByRequestId("${request.id}", 1);
+					}
+			}
+		});
+	},
+			
 	getRequestsByBound : function(page) {
 		$.ajax({
 			url : "${ctx}/request/xml/searchBound.do?page=" + page,
@@ -99,11 +114,11 @@ var searchRequest = {
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function(){
-							contentStr += searchRequest.makeContent(this);
+							contentStr += requestController.makeContent(this, "참가");
 						});
 						$("#requestSearchResult").append(contentStr);
 					} else {
-						$("#requestSearchResult").append(searchRequest.makeContentForEmpty());
+						$("#requestSearchResult").append(requestController.makeContentForEmpty());
 					}
 			}
 		});
@@ -121,11 +136,11 @@ var searchRequest = {
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function() {
-							contentStr += searchRequest.makeContent(this);
+							contentStr += requestController.makeContent(this, "참가");
 						});
 						$("#requestSearchResult").append(contentStr);
 					} else {
-						$("#requestSearchResult").append(searchRequest.makeContentForEmpty());
+						$("#requestSearchResult").append(requestController.makeContentForEmpty());
 					}
 			}
 		});
@@ -143,11 +158,11 @@ var searchRequest = {
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function() {
-							contentStr += searchRequest.makeContent(this);
+							contentStr += requestController.makeContent(this, "참가");
 						});
 						$("#requestSearchResult").append(contentStr);
 					} else {
-						$("#requestSearchResult").append(searchRequest.makeContentForEmpty());
+						$("#requestSearchResult").append(requestController.makeContentForEmpty());
 					}
 			}
 		});
@@ -165,17 +180,17 @@ var searchRequest = {
 						if (listLength) {
 							var contentStr = "";
 							$(xmlData).each(function() {
-								contentStr += searchRequest.makeContentForAsked(this);
+								contentStr += requestController.makeContent(this, "진행중");
 							});
 							$("#requestSearchResult").append(contentStr);
 						} else {
-							$("#requestSearchResult").append(searchRequest.makeContentForEmpty());
+							$("#requestSearchResult").append(requestController.makeContentForEmpty());
 						}
 				}
 			});
 		},
 	
-	makeContent : function(xml) {
+	makeContent : function(xml, contentType) {
 		var content = "";
 		
 		content += "<div class='requestBox'>";
@@ -197,35 +212,11 @@ var searchRequest = {
 		content += 			"<td>" + $(xml).find("request>hopePrice").text() + "</td>";
 		content += 		"</tr>";
 		content += 	"</table>";
-		content += 	"<input name='' type='button' value='참가'>";
-		content += "</div>";
-
-		return content;
-	},
-			
-	makeContentForAsked : function(xml) {
-		var content = "";
-		
-		content += "<div class='requestBox'>";
-		content += 	"<table class='request_table'>";
-		content += 		"<tr>";
-		content += 			"<td>의뢰명 : </td>";
-		content += 			"<td>" + $(xml).find("request>title").text() + "</td>";
-		content += 		"</tr>";
-		content += 		"<tr>";
-		content += 			"<td>의뢰자 : </td>";
-		content += 			"<td>" + $(xml).find("request>consumer>id").text() + "</td>";
-		content += 		"</tr>";
-		content += 		"<tr>";
-		content += 			"<td>제작항목 : </td>";
-		content += 			"<td>" + $(xml).find("request>category").text() + "</td>";
-		content += 		"</tr>";
-		content += 		"<tr>";
-		content += 			"<td>희망 가격 : </td>";
-		content += 			"<td>" + $(xml).find("request>hopePrice").text() + "</td>";
-		content += 		"</tr>";
-		content += 	"</table>";
-		content += 	"<input type='button' value='진행중' disabled>";
+		if(contentType === "참가") {
+			content += 	"<input name='' type='button' value='참가'>";
+		} else if(contentType === "진행중") {
+			content += 	"<input type='button' value='진행중' disabled>";
+		}
 		content += "</div>";
 
 		return content;

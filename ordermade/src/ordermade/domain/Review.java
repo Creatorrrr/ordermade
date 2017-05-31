@@ -3,6 +3,7 @@ package ordermade.domain;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,7 @@ public class Review {
 	private Member consumer;
 	private String content;
 	private int grade;
-	private Product product;
+	@XmlTransient private Product product;
 
 	public String getId() {
 		return id;

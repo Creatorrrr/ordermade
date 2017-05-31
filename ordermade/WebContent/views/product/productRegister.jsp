@@ -22,9 +22,8 @@
 
 			<h1>상품 등록 페이지</h1>
 			<br>
-			<form action="${ctx }/product/register.do" method="post"
-				name="productRegister" onsubmit="return checkIt()"
-				enctype="multipart/form-data">
+			<form action="${ctx }/product/register.do" method="post" id="productRegister"
+				enctype="multipart/form-data" name="productRegister" onsubmit="return checkIt()">
 				<table class="table">
 					<tr>
 						<th>제작 항목 <span>*</span></th>
@@ -57,9 +56,9 @@
 					</tr>
 				</table>
 				<div align="center">
-					<input id="registBtn" class="btn btn-success" type="button" value="등록하기">
 					<input class="btn" type="reset" value="취소하기"
 						onclick="javascript:window.location='${ctx }/post/list.do?boardId=${boardId }'">
+					<input id="registBtn" class="btn btn-success" type="button" value="등록하기">
 				</div>
 			</form>
 			<br>
@@ -109,18 +108,24 @@ $(document).ready(function() {
 	
 	// 등록버튼 구현
 	$("#registBtn").click(function(){
+		var data = new FormData($('#productRegister')[0]);
+		
 		console.log("----testing here-------");
 		if(checkIt()){
 			$.ajax({
 				// 보낼 때
-				url : "${ctx}/product/register.do",
 				type : "post",
-				data : $('#productRegister').serialize(),
+				enctype: 'multipart/form-data',
+				url : "${ctx}/product/register.do",
+				data : data,
+				processData: false,
+				contentType: false,
+				cache: false,
 				// 받을 때 
 				dataType : "text",
-				success : function(data) {
-					if(data == "true"){
-						location.href="/product/productDetail.jsp"; // 성공시 페이지 전환
+				success : function(resultData) {
+					if(resultData === "true"){
+						location.href="${ctx}/product/ui/detail.do"; // 성공시 페이지 전환
 					}
 				},
 				error: function(xml){
@@ -133,24 +138,24 @@ $(document).ready(function() {
 	//필수 입력값 체크
 	function checkIt() {
 
-		var productRegister = document.productRegister;
+		var pRegister = document.productRegister;
 
-		if (!productRegister.productTitle.value) {
+		if (!pRegister.productTitle.value) {
 			alert("상품명을 입력하세요");
 			return false;
 		}
 
-		if (!productRegister.productContent.value) {
+		if (!pRegister.productContent.value) {
 			alert("내용을 입력하세요");
 			return false;
 		}
 		
-		if(!productRegister.price.value){
+		if(!pRegister.price.value){
 			alert("금액을 입력하세요");
 			return false;
 		}
 		
-		if(!productRegister.period.value){
+		if(!pRegister.period.value){
 			alert("기간을 입력하세요");
 			return false;
 		}

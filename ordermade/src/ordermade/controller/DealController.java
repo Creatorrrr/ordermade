@@ -3,6 +3,7 @@ package ordermade.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,32 +31,32 @@ public class DealController {
 	
 	// http://localhost:8080/ordermade/deal/account/consumerMoney.do
 	// data : {"maker.id":"admin1\n","consumer.id":"consuser1\n","request.id":"1","invoiceNumber":"02255215","deliveryStatus":"yes","payment":"C" }
-	@RequestMapping(value="account/consumerMoney.do", method=RequestMethod.POST, produces="text/plain")
+	@RequestMapping(value="xml/account/consumerMoney.do", method=RequestMethod.POST, produces="text/plain")
 	public @ResponseBody String consumerMoneyToAccount(PurchaseHistory purchaseHistory, HttpSession session){
 		
 		System.out.println("----------controller 성공-----------");
 		System.out.println("------data : "+purchaseHistory.toString());
 		
 		// session에서 회원ID 가져오기
-//		String memberId = (String)session.getAttribute("loginUser");
+		String memberId = (String)session.getAttribute("loginId");
 		boolean checkPurchase = false;
 		boolean checkAccount = false;
-		
 		checkPurchase = dService.registerPurchaseHistory(purchaseHistory);
 		
-//		if(checkPurchase == true){
-			Account account = dService.findAccountById("jwUm");
-			System.out.println(purchaseHistory.getRequest().getPrice());
+		System.out.println("------data : "+purchaseHistory.toString());
+		
+		if(checkPurchase == true){
+			Account account = dService.findAccountById(memberId);
 			account.setMoney(purchaseHistory.getRequest().getPrice());
 			checkAccount = dService.modifyAccountById(account);
-//		}
+		}
 		return checkAccount+"";
 		
 	}
 	
 	// http://localhost:8080/ordermade/deal/account/makerMoney.do
 	// data : {"maker.id":"admin1\n","consumer.id":"consuser1\n","request.id":"1","invoiceNumber":"02255215","deliveryStatus":"yes","payment":"C" }
-	@RequestMapping(value="account/makerMoney.do", method=RequestMethod.POST)
+	@RequestMapping(value="xml/account/makerMoney.do", method=RequestMethod.POST)
 	public String sendMoneyToMakerAccount(PurchaseHistory purchaseHistory, HttpSession session){
 		
 		System.out.println("----------controller 성공-----------");
@@ -79,8 +80,8 @@ public class DealController {
 	
 	// http://localhost:8080/ordermade/deal/purchaseHistory/delivery.do
 	// data : {"invoiceNumber":"02255215","id":"2"}
-	@RequestMapping(value="purchaseHistory/delivery.do", method=RequestMethod.POST)
-	public String registerInvoiceNumberToPurchaseHistory(String invoiceNumber, String id, HttpSession session){
+	@RequestMapping(value="xml/purchaseHistory/delivery.do", method=RequestMethod.POST)
+	public @ResponseBody String registerInvoiceNumberToPurchaseHistory(String invoiceNumber, String id, HttpSession session){
 		
 		System.out.println("----------controller 성공-----------");
 		boolean checkPurchase = false;
@@ -94,13 +95,14 @@ public class DealController {
 			checkPurchase = dService.modifyPurchaseHistoryById(purchaseHistory);
 //		}
 		
-		return Boolean.toString(checkPurchase);
+		return checkPurchase+"";
+//		return Boolean.toString(checkPurchase);
 	}
 	
 	// UI For WEB
 	
 	// http://localhost:8080/ordermade/deal/transaction.do
-	@RequestMapping(value="transaction.do", method=RequestMethod.GET)
+	@RequestMapping(value="ui/transaction.do", method=RequestMethod.GET)
 	public ModelAndView showPurchaseHistoryUI(String page, HttpSession session){
 		String memberType = (String)session.getAttribute("memberType");
 		String memberId = (String)session.getAttribute("loginId");
