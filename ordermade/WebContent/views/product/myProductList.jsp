@@ -43,7 +43,7 @@
 				<div style="float: right;">
 					<%-- <c:if test="${sessionScope.loginId ne null && boardId ne null}"> --%>
 					<a class="btn btn-sm btn-success"
-						href="${ctx}/product/register.do">상품 등록</a>
+						href="${ctx}/product/ui/register.do">상품 등록</a>
 					<%-- </c:if> --%>
 				</div>
 

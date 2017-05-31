@@ -11,7 +11,7 @@
 		<li><a href="${ctx}/member/modifyMember.do">내 정보수정</a></li>
 		<c:choose>
 			<c:when test="${sessionScope.memberType eq 'C'}">
-				<li><a href="${ctx }/request/ui/myPage.do">나의 의뢰서</a></li>
+				<li><a href="${ctx }/request/ui/myRequest.do">나의 의뢰서</a></li>
 				<li><a href="${ctx }/deal/transaction.do">구매 이력 </a></li>
 				<li><a href="${ctx }/request/ui/consumerInviteList.do?page=1">참가요청내역 </a></li>
 			</c:when>

@@ -37,7 +37,7 @@ public class ProductController {
 	@Autowired
 	private MemberService mService;
 
-	@RequestMapping(value = "register.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String registerProduct(Model model, Product product, HttpServletRequest req) {
 		// 상품 등록후 상세 상품페이지로 이동
 		boolean check = false;
@@ -339,7 +339,7 @@ public class ProductController {
 	// ************************
 	// ui start
 
-	@RequestMapping("/register.do")
+	@RequestMapping("/ui/register.do")
 	public String showRegisterProductUI(Model model) {
 		// 상품 등록 페이지 productRegister.jsp로 이동
 		List<Category> categorys = pService.findAllCategory();

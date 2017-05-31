@@ -57,9 +57,9 @@
 					</tr>
 				</table>
 				<div align="center">
+					<input id="registBtn" class="btn btn-success" type="button" value="등록하기">
 					<input class="btn" type="reset" value="취소하기"
 						onclick="javascript:window.location='${ctx }/post/list.do?boardId=${boardId }'">
-					<input id="registBtn" class="btn btn-success" type="button" value="등록하기">
 				</div>
 			</form>
 			<br>
@@ -120,7 +120,7 @@ $(document).ready(function() {
 				dataType : "text",
 				success : function(data) {
 					if(data == "true"){
-						location.href="${ctx}/product/ui/detail.do"; // 성공시 페이지 전환
+						location.href="/product/productDetail.jsp"; // 성공시 페이지 전환
 					}
 				},
 				error: function(xml){
@@ -133,24 +133,24 @@ $(document).ready(function() {
 	//필수 입력값 체크
 	function checkIt() {
 
-		var pRegister = document.productRegister;
+		var productRegister = document.productRegister;
 
-		if (!pRegister.productTitle.value) {
+		if (!productRegister.productTitle.value) {
 			alert("상품명을 입력하세요");
 			return false;
 		}
 
-		if (!pRegister.productContent.value) {
+		if (!productRegister.productContent.value) {
 			alert("내용을 입력하세요");
 			return false;
 		}
 		
-		if(!pRegister.price.value){
+		if(!productRegister.price.value){
 			alert("금액을 입력하세요");
 			return false;
 		}
 		
-		if(!pRegister.period.value){
+		if(!productRegister.period.value){
 			alert("기간을 입력하세요");
 			return false;
 		}

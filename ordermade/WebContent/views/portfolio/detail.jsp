@@ -17,15 +17,15 @@
 			<div id="content" class="two_third">
 				<h1>나의 포트폴리오 -${portfolio.title }</h1>
 				<c:if test="${sessionScope.loginId ne null }">
-					<c:if test="${portfolio.maker.Id eq sessionScope.loginId}">
+				<%-- 	<c:if test="${portfolio.member.id eq sessionScope.loginId"> --%>
 						<!--본인이 작성한 글만 수정 삭제 가능하도록   -->
 						<div align="center">
 							<input class="btn btn-warning" type="button" value="삭제"
 								onclick="javascript:window.location='${ctx }/portfolio/xml/remove.do?portfolioId=${portfolio.id}'">
 							<input class="btn btn-success" type="button" value="수정"
-								onclick="javascript:window.location='${ctx}/portfolio/ui/modify.do?portfolioId=${portfolio.id }'">
+								onclick="javascript:window.location='${ctx}/portfolio/ui/modify.do?portfolioId=${portfolio }'">
 						</div>
-					</c:if>
+			<%-- 		</c:if> --%>
 				</c:if>
 
 				<div>
