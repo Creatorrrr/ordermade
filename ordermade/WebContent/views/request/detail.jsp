@@ -75,7 +75,9 @@
 							<c:when test="${sessionScope.memberType eq 'C'}">
 								<p align="right">제작기간 : 일</p>
 								<p align="right">결제금액 (배송비 포함): ${request.price }원</p> 
-								<input type="button" name="" onclick="" value="결제" style="float:right">
+								<input type="button" name="" 
+									onclick="setPurchaseHistory.registerPurchaseHistory();" 
+									value="결제" style="float:right">
 							</c:when>
 							<c:when test="${sessionScope.memberType eq 'M'}">
 								<p align="right">제작기간 :<input name="" type="text" value="" style="display:inline-block">일</p>
@@ -104,6 +106,10 @@ $("#commentRegister").click(function() {
 $("#commentRemove").click(function() {
 	searchComment.removeComment();
 	$("#commentContent").val("");
+});
+
+$("#paymentButton").click(function(){
+	setPurchaseHistory.registerPurchaseHistory();
 });
 
 // get portfolios with xml
@@ -161,6 +167,32 @@ var searchComment = {
 			}
 		});
 	}
+};
+
+// set purchaseHistory with xml
+var setPurchaseHistory = {
+		registerPurchaseHistory : function(){
+			$.ajax({
+				type: "post",
+				url: "${ctx }/deal/xml/account/consumerMoney.do",
+				data: {"request.id" : "${request.id}",
+						"consumer.id" : "${request.consumer.id}",
+						"maker.id" : "${request.maker.id}",
+						"invoiceNumber":"0",
+						"deliveryStatus":"no",
+						"payment" : "${sessionScope.memberType}"},
+				dataType: "text",
+				success: function(text){
+							if(text === "true") {
+								// 성공시 purchaseHistory UI 페이지 전환
+								location.href="${ctx }/deal/ui/transaction.do?page=" + "1";										
+							}
+				},
+				error: function(xml){
+					console.log("실패 메시지 : \n" + xml.responseText)
+				}
+			});
+		}
 };
 </script>
 
