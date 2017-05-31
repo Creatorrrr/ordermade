@@ -20,19 +20,24 @@
 <title>의뢰서</title>
 <!-- Main Body ========================================================================================== -->
 <body>
-<div class="wrapper row3">
-	<div class="rounded">
-		<main class="container clear"> <!-- main body -->
+	<div class="wrapper row3">
+		<div class="rounded">
+			<main class="container clear"> <!-- main body -->
 			<div class="sidebar one_third first">
 				<%@ include file="/views/common/myPageNav.jsp"%>
 			</div>
-	
+
 			<div id="content" class="two_third">
 				<div class="content" align="center">
+					<h1 align="left">의뢰서</h1>
+					<tr>
+						<td><button id="btn1">의뢰서 수정</button></td>
+						<td><button id="btn2">삭제</button></td>
+					</tr>
 					<div class="imgl borderedbox">
 						<img src="${ctx }/views/images/img1.jpg" />
 					</div>
-					<table class="table" style="color:black">
+					<table class="table" style="color: black">
 						<tr>
 							<td><p>의뢰 명 : ${request.title}</p></td>
 						</tr>
@@ -49,8 +54,13 @@
 							<td><p>희망 가격 : ${request.hopePrice }</p></td>
 						</tr>
 					</table>
-					<table class="table" style="color:black">
-						<tr><td><h3>대화 기록<button style="float: right;">파일함</button></h3></td></tr>
+					<table class="table" style="color: black">
+						<tr>
+							<td><h3>
+									대화 기록
+									<button style="float: right;">파일함</button>
+								</h3></td>
+						</tr>
 						<tr>
 							<td>
 								<ul id="commentList" class="commentListStyle">
@@ -76,6 +86,16 @@
 								</div>
 							</td>
 						</tr>
+						<tr>
+							<td><h3>추가 요구 사항</h3></td>
+						</tr>
+						<tr>
+							<td><textarea id="commentContent" rows="5"
+									style="width: 100%"></textarea>
+								<div style="float: right">
+									<button id="commentRegister">코멘트 등록</button>
+								</div></td>
+						</tr>
 					</table>
 					<div>
 						<c:choose>
@@ -87,24 +107,30 @@
 									value="결제" style="float:right">
 							</c:when>
 							<c:when test="${sessionScope.memberType eq 'M'}">
-								<p align="right">제작기간 :<input name="" type="text" value="" style="display:inline-block">일</p>
-								<p align="right">결제금액 (배송비 포함): <input name="" type="text" value="" style="display:inline-block">원</p> 
-								<input type="button" name="" value="등록" style="float:right">
+								<p align="right">
+									제작기간 :<input name="" type="text" value=""
+										style="display: inline-block">일
+								</p>
+								<p align="right">
+									결제금액 (배송비 포함): <input name="" type="text" value=""
+										style="display: inline-block">원
+								</p>
+								<input type="button" name="" value="등록" style="float: right">
 							</c:when>
 						</c:choose>
 					</div>
 				</div>
 			</div>
-		</main>
+			</main>
+		</div>
 	</div>
-</div>
 
-<%@ include file="/views/common/footer.jsp"%>
+	<%@ include file="/views/common/footer.jsp"%>
 
-<!-- bxSlider JavaScript file -->
-<script src="${ctx }/views/js/jquery.bxslider.min.js"></script>
+	<!-- bxSlider JavaScript file -->
+	<script src="${ctx }/views/js/jquery.bxslider.min.js"></script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 $("#commentRegister").click(function() {
 	commentController.registerComment();
 	$("#commentRegisterContent").val("");
