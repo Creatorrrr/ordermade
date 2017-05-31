@@ -17,7 +17,7 @@
 		<div id="content" class="two_third">
 			<h1>포트폴리오 등록</h1>
 			<br>
-			<form action="${ctx }/portfolio/xml/register.do" method="post"
+			<form action="${ctx }/portfolio/xml/register.do?makerId=${makerId}" method="post"
 				name="pRegister"id="pRegister" onsubmit="return checkIt()">
 				<%--  <input name="makerId" type="hidden" value="${makerId}">  --%>
 				<table class="table">
