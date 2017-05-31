@@ -155,8 +155,8 @@ public class RequestController {
 	
 	//-- invite request
 	
-	@RequestMapping(value = "request/xml/registerInviteToMaker.do", method = RequestMethod.POST, produces = "text/plain")
-	public @ResponseBody String registerInviteRequestToMaker(InviteRequest inviteRequest) {
+	@RequestMapping(value = "request/xml/registerInviteRequest.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String registerInviteRequest(InviteRequest inviteRequest) {
 //		System.out.println(inviteRequest.toString());
 		if(inviteRequest.getMessage()==null) return "error";
 		boolean check = service.registerInviteRequest(inviteRequest);
@@ -192,6 +192,7 @@ public class RequestController {
 	}	//POST  http://localhost:8080/ordermade/comment/xml/register.do
 		//{"content":"cccccccccc","request.id":"7","member.id":"maker2"}
 
+	// 170531 Complete
 	@RequestMapping(value = "comment/xml/modify.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyComment(Comment comment, HttpSession session) {
 		if(checkLogined(session)) return "error";	// check logined
@@ -280,11 +281,13 @@ public class RequestController {
 				.addObject("request", service.findRequestById(requestId));
 	}
 	
+	// 170531 Complete
 	@RequestMapping(value="request/ui/search.do",method=RequestMethod.GET)
 	public String showSearchRequestUI(){
 		return "request/makerRequestSearch";
 	}
 	
+	// 170531 Complete
 	@RequestMapping(value="request/ui/detail.do",method=RequestMethod.GET)
 	public ModelAndView showDetailRequestUI(String id, HttpSession session){
 			return new ModelAndView("request/detail")

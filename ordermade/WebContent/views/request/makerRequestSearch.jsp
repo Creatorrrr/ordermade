@@ -61,32 +61,47 @@
 </body>
 <script type="text/javascript">	
 $(document).ready(function() {
-	searchRequest.getRequestsByBound(1);
-	//searchRequest.getRequestsByBoundAndTitle(1,1);	// test
-	//searchRequest.getRequestsByBoundAndContent(1,2);	// test
+	requestController.getRequestsByBound(1);
+	//requestController.getRequestsByBoundAndTitle(1,1);	// test
+	//requestController.getRequestsByBoundAndContent(1,2);	// test
 });
 
 // 모든 의뢰서를 클릭하면 모든 의뢰서 목록을 가져온다.
 $("#allRequests").click(function() {
-	searchRequest.getRequestsByBound(1);
+	requestController.getRequestsByBound(1);
 });
 
 // 내가 보낸 의뢰서를 클릭하면 내가 보낸 의뢰서 목록을 가져온다.
 $("#askedRequests").click(function() {
-	searchRequest.getMyInviteRequestsForMaker(1);
+	requestController.getMyInviteRequestsForMaker(1);
 });
 
 // 검색을 클릭하면 검색된 의뢰서 목록을 가져온다.
 $("#requestSearchBtn").click(function() {
 	var type = $("#requestSearchType option:selected").val();
 	if(type === "title") {
-		searchRequest.getRequestsByBoundAndTitle(1, $("#requestSearchKeyword").val());
+		requestController.getRequestsByBoundAndTitle(1, $("#requestSearchKeyword").val());
 	} else if(type === "content") {
-		searchRequest.getRequestsByBoundAndContent(1, $("#requestSearchKeyword").val());
+		requestController.getRequestsByBoundAndContent(1, $("#requestSearchKeyword").val());
 	}
 });
 
-var searchRequest = {
+var requestController = {
+	registerInviteRequest : function() {	// 작업중
+		$.ajax({
+			url : "${ctx }/request/xml/registerInviteRequest.do",
+			data : {'request.id' : "${request.id}",
+					content : $("#commentRegisterContent").val()},
+			type : "post",
+			dataType : "text",
+			success : function(text) {
+					if(text === "true") {
+						commentController.getCommentsByRequestId("${request.id}", 1);
+					}
+			}
+		});
+	},
+			
 	getRequestsByBound : function(page) {
 		$.ajax({
 			url : "${ctx}/request/xml/searchBound.do?page=" + page,
@@ -99,11 +114,11 @@ var searchRequest = {
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function(){
-							contentStr += searchRequest.makeContent(this, "참가");
+							contentStr += requestController.makeContent(this, "참가");
 						});
 						$("#requestSearchResult").append(contentStr);
 					} else {
-						$("#requestSearchResult").append(searchRequest.makeContentForEmpty());
+						$("#requestSearchResult").append(requestController.makeContentForEmpty());
 					}
 			}
 		});
@@ -121,11 +136,11 @@ var searchRequest = {
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function() {
-							contentStr += searchRequest.makeContent(this, "참가");
+							contentStr += requestController.makeContent(this, "참가");
 						});
 						$("#requestSearchResult").append(contentStr);
 					} else {
-						$("#requestSearchResult").append(searchRequest.makeContentForEmpty());
+						$("#requestSearchResult").append(requestController.makeContentForEmpty());
 					}
 			}
 		});
@@ -143,11 +158,11 @@ var searchRequest = {
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function() {
-							contentStr += searchRequest.makeContent(this, "참가");
+							contentStr += requestController.makeContent(this, "참가");
 						});
 						$("#requestSearchResult").append(contentStr);
 					} else {
-						$("#requestSearchResult").append(searchRequest.makeContentForEmpty());
+						$("#requestSearchResult").append(requestController.makeContentForEmpty());
 					}
 			}
 		});
@@ -165,11 +180,11 @@ var searchRequest = {
 						if (listLength) {
 							var contentStr = "";
 							$(xmlData).each(function() {
-								contentStr += searchRequest.makeContent(this, "진행중");
+								contentStr += requestController.makeContent(this, "진행중");
 							});
 							$("#requestSearchResult").append(contentStr);
 						} else {
-							$("#requestSearchResult").append(searchRequest.makeContentForEmpty());
+							$("#requestSearchResult").append(requestController.makeContentForEmpty());
 						}
 				}
 			});

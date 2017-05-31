@@ -59,8 +59,8 @@
 												<p class="commentWriter"><strong>${comment.member.id }</strong></p>
 												<p class="commentContent" style="display:inline-block">${comment.content }</p>
 											<c:if test="${comment.member.id eq sessionScope.loginId}">
-												<button onclick="commentController.modifyCommentForm(${comment.id});">수정</button>
-												<button onclick="commentController.removeComment(${comment.id});">삭제</button>
+												<button onclick="javascript:commentController.modifyCommentForm(${comment.id});">수정</button>
+												<button onclick="javascript:commentController.removeComment(${comment.id});">삭제</button>
 											</c:if>
 										</li>
 									</c:forEach>
@@ -132,8 +132,8 @@ var commentController = {
 		contentStr += "<p class='commentWriter'><strong>" + comment.children(".commentWriter").text() + "</strong></p>"
 		contentStr += "<textarea class='commentModifyContent' rows='5' style='width:100%'>" + comment.children(".commentContent").text() + "</textarea>";
 		contentStr += "<div style='float:right'>";
-		contentStr += 	"<button onclick='commentController.modifyComment(" + commentId + ")'>코멘트 수정</button>";
-		contentStr += 	"<button onclick='commentController.getCommentsByRequestId(\"${request.id}\", 1)'>취소</button>";
+		contentStr += 	"<button onclick='javascript:commentController.modifyComment(" + commentId + ")'>코멘트 수정</button>";
+		contentStr += 	"<button onclick='javascript:commentController.getCommentsByRequestId(\"${request.id}\", 1)'>취소</button>";
 		contentStr += "</div>";
 
 		comment.empty().append(contentStr);
@@ -195,8 +195,8 @@ var commentController = {
 		content += "<p class='commentWriter'><strong>" + $(xml).find("comment>member>id").text() + "</strong></p>";
 		content += "<p class='commentContent' style='display:inline-block'>" + $(xml).find("comment>content").text() + "</p>";
 		if($(xml).find("comment>member>id").text() === "${sessionScope.loginId}") {
-			content += "<button onclick='commentController.modifyCommentForm(" + $(xml).find("comment>id").text() + ");'>수정</button>";
-			content += "<button onclick='commentController.removeComment(" + $(xml).find("comment>id").text() + ");'>삭제</button>";
+			content += "<button onclick='javascript:commentController.modifyCommentForm(" + $(xml).find("comment>id").text() + ");'>수정</button>";
+			content += "<button onclick='javascript:commentController.removeComment(" + $(xml).find("comment>id").text() + ");'>삭제</button>";
 		}
 		content += "</li>";
 		
