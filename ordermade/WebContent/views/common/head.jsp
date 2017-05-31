@@ -73,16 +73,16 @@
 				<ul class="clear">
 					<li class=""><a href="${ctx }/views/index.jsp">Main</a></li>
 					<li class=""><a href="${ctx }/product/ajax/products/category.do?page=1&category='가구'">Product</a></li>
-					<%-- <li><a class="drop" href="#">category</a> 
+					<li><a class="drop" href="#">category</a> 
 					<ul>
-							<li><a href="${ctx }/views/productList.jsp">Furniture</a></li>
-							<li><a href="${ctx }/pages/portfolio.html">Accessory</a></li>
-							<li><a href="${ctx }/pages/full-width.html">Kitchen</a></li>
-							<li><a href="${ctx }/pages/sidebar-left.html">Digital</a></li>
-							<li><a href="${ctx }/pages/sidebar-left-2.html">Clothing</a></li>
-							<li><a href="${ctx }/pages/sidebar-right.html">Sport</a></li>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=FUNITURE">Furniture</a></li>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=ACCESSORY">Accessory</a></li>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=KITCHEN">Kitchen</a></li>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=DIGITAL">Digital</a></li>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=CLOTHING">Clothing</a></li>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=SPORT">Sport </a></li>
 					</ul>
-					</li> --%>
+					</li>
 						
 						<%-- <c:forEach items="${products }" var="product">
 							<li><a class="btn btn-sm btn-success"
