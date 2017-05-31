@@ -62,10 +62,34 @@ public class RequestController {
 
 	@RequestMapping(value = "request/xml/modify.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyRequestById(Request request, HttpSession session) {
-		// String loginId=(String)session.getAttribute("loginId");
-		System.out.println(request.toString());
-		if(request.getTitle()==null) return "error";
-		boolean check = service.modifyRequestById(request);
+		String memberType = (String)session.getAttribute("memberType");
+		String loginId = (String)session.getAttribute("loginId");
+		//System.out.println(request.toString());
+		if(request.getId()==null) return "error";//수정할 의뢰서 id를 보내지 않았음.
+		Request requestOK = service.findRequestById(request.getId());
+		//System.out.println(requestOK.toString());
+		if(memberType == Constants.CONSUMER){
+			if(loginId != request.getConsumer().getId()) return "error";//로그인한 사람이 아님.
+		}else if(memberType == Constants.MAKER){
+			if(loginId != request.getMaker().getId()) return "error";//로그인한 사람이 아님.
+		}
+		
+		if(request.getMaker()== null){		//DB member.id null-> fix	
+			Member maker = new Member();
+			maker.setId("");
+			requestOK.setMaker(maker);
+		}else{
+			requestOK.setMaker(request.getMaker());
+		}
+		Member consumer = new Member();
+		consumer.setId(loginId);//session loginId
+		requestOK.setConsumer(consumer);
+		requestOK.setCategory(request.getCategory());
+		requestOK.setTitle(request.getTitle());
+		requestOK.setContent(request.getContent());
+		requestOK.setHopePrice(request.getHopePrice());
+		//System.out.println(requestOK.toString());
+		boolean check = service.modifyRequestById(requestOK);
 		return check+"";
 	}	//post http://localhost:8080/ordermade/request/xml/modify.do
 		//{"id":"test","title":"의뢰2\n","maker.id":"maker2","consumer.id":"user2","category":"bb","content":"uuuuu","hopePrice":"33000","price":"30500","bound":"bbbbbb"}
@@ -279,7 +303,8 @@ public class RequestController {
 		if(checkLogined(session)) return new ModelAndView("member/login");	// check logined
 		return new ModelAndView("request/modify")
 				.addObject("request", service.findRequestById(requestId));
-	}
+	}	//GET  http://localhost:8080/ordermade/request/ui/modify.do?requestId=42
+	
 	
 	// 170531 Complete
 	@RequestMapping(value="request/ui/search.do",method=RequestMethod.GET)
