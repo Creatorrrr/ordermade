@@ -22,9 +22,8 @@
 
 			<h1>상품 등록 페이지</h1>
 			<br>
-			<form action="${ctx }/product/register.do" method="post"
-				name="productRegister" onsubmit="return checkIt()"
-				enctype="multipart/form-data">
+			<form action="${ctx }/product/register.do" method="post" id="productRegister"
+				enctype="multipart/form-data" name="productRegister" onsubmit="return checkIt()">
 				<table class="table">
 					<tr>
 						<th>제작 항목 <span>*</span></th>
@@ -109,17 +108,23 @@ $(document).ready(function() {
 	
 	// 등록버튼 구현
 	$("#registBtn").click(function(){
+		var data = new FormData($('#productRegister')[0]);
+		
 		console.log("----testing here-------");
 		if(checkIt()){
 			$.ajax({
 				// 보낼 때
-				url : "${ctx}/product/register.do",
 				type : "post",
-				data : $('#productRegister').serialize(),
+				enctype: 'multipart/form-data',
+				url : "${ctx}/product/register.do",
+				data : data,
+				processData: false,
+				contentType: false,
+				cache: false,
 				// 받을 때 
 				dataType : "text",
-				success : function(data) {
-					if(data == "true"){
+				success : function(resultData) {
+					if(resultData === "true"){
 						location.href="${ctx}/product/ui/detail.do"; // 성공시 페이지 전환
 					}
 				},

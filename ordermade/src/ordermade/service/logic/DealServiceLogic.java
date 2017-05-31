@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 
 import ordermade.domain.Account;
 import ordermade.domain.PurchaseHistory;
+import ordermade.domain.Request;
 import ordermade.service.facade.DealService;
 import ordermade.store.facade.AccountStore;
 import ordermade.store.facade.PurchaseHistoryStore;
+import ordermade.store.facade.RequestStore;
 
 @Service
 public class DealServiceLogic implements DealService{
@@ -19,6 +21,9 @@ public class DealServiceLogic implements DealService{
 	
 	@Autowired
 	private PurchaseHistoryStore purchaseHistoryStore;
+	
+	@Autowired
+	private RequestStore requestStore;
 
 	@Override
 	public boolean modifyAccountById(Account account) {
@@ -38,6 +43,10 @@ public class DealServiceLogic implements DealService{
 
 	@Override
 	public boolean registerPurchaseHistory(PurchaseHistory purchaseHistory) {
+		String id = purchaseHistory.getRequest().getId();
+		Request request = requestStore.selectRequestById(id);
+		int price = request.getPrice();
+		purchaseHistory.getRequest().setPrice(price);
 		return purchaseHistoryStore.insertPurchaseHistory(purchaseHistory);
 	}
 
