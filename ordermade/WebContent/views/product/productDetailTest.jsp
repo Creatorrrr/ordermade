@@ -9,7 +9,92 @@
 <title>상품 상세 정보</title>
 
 <%@ include file="/views/common/common.jsp"%>
+<!-- <script type="text/javascript">
+	//html구조가 모두 include된 후 실행
 
+	$(document).ready(function() {
+
+		$("#registReview").click(function() {
+			$.ajax({
+				url : "${ctx}/product/review/register.do",
+				type : "post",
+				data : $('#form1').serialize(),
+				dataType : "text",
+				success : function(data) {
+					if (data == "true") {
+						displayReview();
+					}
+				}
+
+			});
+		});
+
+		function deleteReview(id) {
+			alert("2222");
+			$.ajax({
+				
+				url : "${ctx}/product/review/remove.do?productId=" + id,
+				type : "get",
+				data : {
+					productId : $("#productId").val()
+				},
+				dataType : "text",
+				success : function(data) {
+					if (data == "true") {
+						alert("삭제되었습니다");
+					}
+				},
+				error : function(xml) {
+					console.log("실패 메세지:\n" + xml.responseText);
+				}
+
+			});
+		};
+
+		function displayReview(productId) {
+			$.ajax({
+				url : "${ctx}/product/ajax/product/productId.do",
+				type : "get",
+				data : {
+					productId : $("#productId").val()
+				},
+				dataType : "xml",
+				success : function(xml) {
+					var xmlData = $(xml).find("product");
+					var listLength = xmlData.length;
+					if (listLength) {
+						var contentStr = "";
+						$(xmlData).each(function() {
+							contentStr += "<div class='requestBox'>";
+							contentStr += 	"<table class='request_table'>";
+							contentStr +=		"<input id='reviewId' type='hidden' value="+ $(this).find("product>reviews>id").text() +">"
+							contentStr += 		"<tr>";
+							contentStr += 			"<td>제목 : </td>";
+							contentStr += 			 $(this).find("product>reviews>id").text() 
+							contentStr += 			"<td>" + $(this).find("product>reviews>title").text() + "</td>";
+							contentStr += 		"</tr>";
+							contentStr += 		"<tr>";
+							contentStr += 			"<td>작성자 : </td>";
+							contentStr += 			"<td>" + $(this).find("product>reviews>consumer>id").text() + "</td>";
+							contentStr += 		"</tr>";
+							contentStr += 		"<tr>";
+							contentStr += 			"<td>제작항목 : </td>";
+							contentStr += 			"<td>" + $(this).find("product>reviews>content").text() + "</td>";
+							contentStr += 		"</tr>";
+							contentStr += 	"</table>";
+							contentStr += 	"<input name='' type='button' value='수정'>";
+							contentStr += 	"<input type='button' value='수정' onclick='deleteReview("+$(this).find("product>reviews>id").text()+")'>";
+							contentStr += "</div>";
+						});
+						$("#reiewList").empty();
+						$("#reiewList").append(contentStr);
+						$("#title").val("");
+					}
+				}
+			});
+		}
+	})
+</script> -->
 
 </head>
 <body>
@@ -36,7 +121,7 @@
 	</form>
 	<div id="reiewList"></div>
 
-	<script type="text/javascript">
+	 <script type="text/javascript">
 		//html구조가 모두 include된 후 실행
 		$(document).ready(function() {
 
@@ -45,42 +130,59 @@
 					url : "${ctx}/product/review/register.do",
 					type : "post",
 					data : $('#form1').serialize(),
-					success : displayComment,
-					error : errorCallback
+					dataType : "text",
+					success : function(data) {
+						if(data=="true"){
+							var contentStr = "";
+							
+								contentStr += "<div class='reviewBox'>";
+								contentStr += 	"<table class='reviwe_table'>";
+								contentStr += 		"<tr>";
+								contentStr += 			"<td>의뢰명 : </td>";
+								contentStr += 			"<td>" + $("#title").val() + "</td>";
+								contentStr += 		"</tr>";
+								contentStr += 		"<tr>";
+								contentStr += 			"<td>의뢰자 : </td>";
+								contentStr += 			"<td>" + $("#content").val() + "</td>";
+								contentStr += 		"</tr>";
+								contentStr += 	"</table>";
+								/* contentStr += 	'<button class="deleteReview">삭제</button>' */
+								contentStr += "<input type='button' id='button1' onclick='javascript:deletReview()' value='삭제' />"
+								
+								contentStr += "</div>";
+							 $("#reiewList").append(contentStr); 
+							 $("#title").val("");
+							 $("#grade").val("");
+							 $("#content").val("");
+							 
+						}
+					}
 				});
+			});
 			
-		};
-				var displayReview = function(resultData) {
-					var reviewHtml = "";
-					var xmlData = $(resultData).find("product.reviews")
-					$(xmlData).each(function() {
-										reviewHtml += "<div class='requestBox'>"
-										reviewHtml += 	"<table class='request_table'>";
-										reviewHtml +=		"<tr>";
-										reviewHtml +=			"<td>의뢰명 : </td>";
-										reviewHtml +=			"<td>" + $(this).find("request>title").text() + "</td>";
-										reviewHtml += 		"</tr>";
-										reviewHtml +=		"<tr>";
-										reviewHtml +=			"<td>의뢰명 : </td>";
-										reviewHtml +=			"<td>" + $(this).find("request>title").text() + "</td>";
-										reviewHtml += 		"</tr>";
-										reviewHtml +=		"<tr>";
-										reviewHtml +=			"<td>의뢰명 : </td>";
-										reviewHtml +=			"<td>" + $(this).find("request>title").text() + "</td>";
-										reviewHtml += 		"</tr>";
-										reviewHtml += 	"</table>";
-										reviewHtml += 	"<input name='' type='button' value='참가'>";
-										reviewHtml += "</div>";
-									});
-
-					$("#reiewList").append(commentHtml);
-					$("#content").val("");
-				};
-
-				var errorCallback = function() {
-					alert("수행중 오류가 발생했습니다.");
-				};
-		})
-	</script>
+			/* $('reviewBox').on("click",".deleteReview", function(id) { */
+				function deletReview() {
+				console.log("eeeee");
+				$.ajax({
+					url:"${ctx}/product/review/remove.do?productId="+id,
+					type : "get",
+					data : {
+						productId : $("#productId").val()
+					},
+					dataType : "text",
+					success : function(data){
+						if(data=="true"){
+							alert("삭제되었습니다");
+						}
+					},
+					error:function(xml){
+						console.log("실패 메세지:\n"+xml.responseText);
+					}
+					
+				});
+			}
+		});
+	</script> 
 </body>
 </html>
+
