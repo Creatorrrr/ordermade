@@ -325,7 +325,7 @@ public class ProductController {
 		List<Category> categorys = pService.findAllCategory();
 		model.addAttribute("categorys", categorys);
 
-		return "product/productRegister";
+		return "product/register";
 	}
 
 	@RequestMapping("ui/modify.do")

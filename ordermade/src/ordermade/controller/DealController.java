@@ -63,18 +63,18 @@ public class DealController {
 		System.out.println("------data : "+purchaseHistory.toString());
 		
 		// session에서 회원ID 가져오기
-//		String memberId = (String)session.getAttribute("loginUser");
+		String memberId = (String)session.getAttribute("loginId");
 		boolean checkPurchase = false;
 		boolean checkAccount = false;
-		
 		checkPurchase = dService.registerPurchaseHistory(purchaseHistory);
 		
-//		if(checkPurchase == true){
-			Account account = dService.findAccountById("jwUm");
-			System.out.println(purchaseHistory.getRequest().getPrice());
+		System.out.println("------data : "+purchaseHistory.toString());
+		
+		if(checkPurchase == true){
+			Account account = dService.findAccountById(memberId);
 			account.setMoney(purchaseHistory.getRequest().getPrice());
 			checkAccount = dService.modifyAccountById(account);
-//		}
+		}
 		return checkAccount+"";
 	}
 	
@@ -107,15 +107,14 @@ public class DealController {
 		String memberType = (String)session.getAttribute("memberType");
 		String memberId = (String)session.getAttribute("loginId");
 		page = "1";
+		List<PurchaseHistory> purchaseList = new ArrayList<>();
+		purchaseList = dService.findpurchaseHistoriesByConsumerId(memberId, page);
+		
 		if(memberType.equals(Constants.CONSUMER)){
-			List<PurchaseHistory> purchaseList = new ArrayList<>();
-			purchaseList = dService.findpurchaseHistoriesByConsumerId(memberId, page);
 			ModelAndView modelAndView = new ModelAndView("purchaseHistory/consumerPurchaseHistory");
 			modelAndView.addObject("purchaseList", purchaseList);
 			return modelAndView;
 		}else if(memberType.equals(Constants.MAKER)){
-			List<PurchaseHistory> purchaseList = new ArrayList<>();
-			purchaseList = dService.findpurchaseHistoriesByMakerId(memberId, page);
 			ModelAndView modelAndView = new ModelAndView("purchaseHistory/makerPurchaseHistory");
 			modelAndView.addObject("purchaseList", purchaseList);
 			return modelAndView;
