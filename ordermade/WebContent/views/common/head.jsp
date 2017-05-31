@@ -7,11 +7,10 @@
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="${ctx }/views/layout/styles/layout.css" rel="stylesheet"
 	type="text/css" media="all">
-<script src="${ctx }/views/js/jquery-2.1.3.js"></script>
-<script src="${ctx }/views/js/jquery.blockUI.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.fitvids.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.mobilemenu.js"></script>
+<script src="${ctx }/views/js/jquery.blockUI.min.js"></script>
 <body id="top">
 	<div class="wrapper row0">
 		<div id="topbar" class="clear">

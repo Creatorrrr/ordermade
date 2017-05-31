@@ -15,6 +15,12 @@ import org.springframework.stereotype.Component;
 public class Products {
 	@XmlElement(name = "product")
 	private List<Product> products;
+	
+	public Products() {}
+
+	public Products(List<Product> products) {
+		this.products = products;
+	}
 
 	public List<Product> getProducts() {
 		return products;

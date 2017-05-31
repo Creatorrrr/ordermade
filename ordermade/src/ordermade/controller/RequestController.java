@@ -180,11 +180,11 @@ public class RequestController {
 	//-- invite request
 	
 	@RequestMapping(value = "request/xml/registerInviteRequest.do", method = RequestMethod.POST, produces = "text/plain")
-	public @ResponseBody String registerInviteRequest(InviteRequest inviteRequest) {
-//		System.out.println(inviteRequest.toString());
-		if(inviteRequest.getMessage()==null) return "error";
-		boolean check = service.registerInviteRequest(inviteRequest);
-		return check+"";
+	public @ResponseBody String registerInviteRequest(InviteRequest inviteRequest, HttpSession session) {
+		if(checkLogined(session)) return "error";	// check logined
+		inviteRequest.setMaker(new Member());
+		inviteRequest.getMaker().setId((String)session.getAttribute("loginId"));
+		return service.registerInviteRequest(inviteRequest) + "";
 	}	//POST  http://localhost:8080/ordermade/request/xml/registerInviteToMaker.do
 		//{"message":"asdfaasf","maker.id":"maker2","form":"test","request.id":"7"}
 
@@ -375,18 +375,18 @@ public class RequestController {
 	}
 	// Complete
 	@RequestMapping(value="request/xml/searchMyInviteRequestsForMaker.do", produces="application/xml")
-	public @ResponseBody InviteRequests findMyInviteRequestsForMaker(String page, HttpSession session){
+	public @ResponseBody InviteRequests findMyInviteRequestsForMaker(String page, String form, HttpSession session){
 		return new InviteRequests(service.findInviteRequestsByMakerId(
 				(String)session.getAttribute("loginId"),
-				Constants.FORM_INVITE,
+				form,
 				page));
 	}
 	// Complete
 	@RequestMapping(value="request/xml/searchMyInviteRequestsForConsumer.do", produces="application/xml")
-	public @ResponseBody InviteRequests findMyInviteRequestsForConsumer(String page, HttpSession session){
+	public @ResponseBody InviteRequests findMyInviteRequestsForConsumer(String page, String form, HttpSession session){
 		return new InviteRequests(service.findInviteRequestsByConsumerId(
 				(String)session.getAttribute("loginId"),
-				Constants.FORM_REQUEST,
+				form,
 				page));
 	}
 	// Complete

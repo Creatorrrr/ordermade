@@ -6,85 +6,159 @@
 <html lang="ko">
 <head>
 <%@ include file="/views/common/head.jsp"%>
+
+<style type="text/css">
+	.productBox {
+		display:inline-block;
+		border-style:solid;
+		margin:5px;
+		width:45%;
+	}
+	
+	.productExplainBox {
+		display:inline-block;
+		width:100%;
+	}
+	
+	.productExplainBox img {
+		width:30%;
+	}
+	
+	.productExplainBox table{
+		display:inline-block;
+		float:right;
+		border-style:none;
+		width:auto;
+		color:black;
+	}
+	
+	.productExplainBox table * {
+		border-style:none;
+	}
+	
+	.detailBtnBox {
+		width:100%;
+	}
+	
+	.detailBtnBox input{
+		float:right;
+	}
+</style>
 </head>
 <body>
 <div class="wrapper row3">
 	<div class="rounded">
 		<main class="container clear"> <!-- main body -->
-		<div class="sidebar one_third first">
-			<h6>Category</h6>
-			<nav class="sdb_holder">
-				<ul>
-					<li><a href="#">Furniture</a></li>
-					<li><a href="#">Accessory</a></li>
-					<li><a href="#">Kitchen</a></li>
-					<li><a href="#">Digital</a></li>
-					<li><a href="#">Clothing</a></li>
-					<li><a href="#">Sport </a></li>
-				</ul>
-			</nav>
-		</div>
-
-		<div id="content" class="two_third">
-			<h1>${category.type }상품페이지</h1>
-
-			<div class="fl_right">
-				<form class="clear" method="post"
-					action="${ctx }/product/searchList.do">
-					<input type="hidden" name="boardId" value="${boardId }"
-						class="form-control">
-					<div>
-						<fieldset>
-							<select name="type" id="type" class="form-control">
-								<option value="productTitle">제목</option>
-								<option value="productContents">내용</option>
-								<option value="productName">상품 명</option>
-								<option value="maker">제작자</option>
-							</select> <input input name="search" class="search-box-input" type="text"
-								value="" placeholder="Search Here" />
-							<button class="fa fa-search" type="submit" title="Search">
-								<em>Search</em>
-							</button>
-						</fieldset>
-					</div>
-				</form>
+			<div class="sidebar one_third first">
+				<h6>Category</h6>
+				<nav class="sdb_holder">
+					<ul>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=FUNITURE">Furniture</a></li>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=ACCESSORY">Accessory</a></li>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=KITCHEN">Kitchen</a></li>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=DIGITAL">Digital</a></li>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=CLOTHING">Clothing</a></li>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=SPORT">Sport </a></li>
+					</ul>
+				</nav>
 			</div>
-			</br>
-
-			<ul class="nospace listing">
-				<li class="clear">
-					<%-- <c:forEach items="${ box_list }" var="literature"> --%>
-					<div class="content" align="center">
-						<table class="table">
-							<tr>
-								<div class="imgl borderedbox">
-									<img src="${ctx }/views/images/img1.jpg" />
-								</div>
-							</tr>
-							<tr class="nospace btmspace-15">
-								<td>상품 이름</td>
-								<td><a class="literature"
-									href="${ctx}/product/detail.do?productId=${product.id }">${product.title }</a></td>
-							</tr>
-							<tr class="nospace btmspace-15">
-								<td>가격</td>
-								<td class="creatorId">${product.price}원</td>
-							</tr>
-						</table>
-					</div> <%-- </c:forEach> --%>
-				</li>
-			</ul>
-		</div>
+			
+			<div id="content" class="two_third">
+				<div class="content" align="center">
+					<h1 align="left">${category }상품페이지</h1>
+					<div style="float:right">
+						<select id="productSearchType" class="form-control" style="display:inline-block">
+							<option value="title">제목</option>
+							<option value="content">내용</option>
+						</select>
+						<input id="productSearchKeyword" name="productSearchKeyword" class="search-box-input"
+							type="text" value="" placeholder="Search Here" style="display:inline-block"/>
+						<button id="productSearchBtn" class="fa fa-search" title="Search">
+							<em>Search</em>
+						</button>
+						<button id="imageSearchBtn" class="fa fa-search" title="Search">
+							<em>Image Search</em>
+						</button>
+					</div>
+				</div>
+				<div id="productSearchResult">
+					<c:forEach items="${products }" var="product">
+						<div class='productBox'>
+							<div class="productExplainBox">
+								<img src="${ctx }/">
+								<table>
+									<tr>
+										<td>상품명 : </td>
+										<td>${product.title }</td>
+									</tr>
+									<tr>
+										<td>제작자 : </td>
+										<td>${product.maker.id }</td>
+									</tr>
+									<tr>
+										<td>제작항목 : </td>
+										<td>${product.category }</td>
+									</tr>
+									<tr>
+										<td>예상 가격 : </td>
+										<td>${product.price }</td>
+									</tr>
+									<tr>
+										<td>기간 : </td>
+										<td>${product.period }</td>
+									</tr>
+								</table>
+							</div>
+							<div class="detailBtnBox">
+								<input type='button' value='자세히보기' onclick="javascript:location.href='${ctx}/product/ui/detail.do?id=${product.id}'">
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
 		</main>
 	</div>
 </div>
 
-
-
 <%@ include file="/views/common/footer.jsp"%>
-<!-- JAVASCRIPTS -->
-<script src="../layout/scripts/jquery.min.js"></script>
-<script src="../layout/scripts/jquery.fitvids.min.js"></script>
-<script src="../layout/scripts/jquery.mobilemenu.js"></script>
+
 </body>
+
+<script type="text/javascript">
+//검색을 클릭하면 검색된 의뢰서 목록을 가져온다.
+$("#productSearchBtn").click(function() {
+	var type = $("#productSearchType option:selected").val();
+	var keyword = $("#productSearchKeyword");
+	if(type === "title") {
+		requestController.getRequestsByBoundAndTitle(1, keyword.val());
+	} else if(type === "content") {
+		requestController.getRequestsByBoundAndContent(1, keyword.val());
+	}
+	keyword.val("");
+});
+
+var productController = {				
+		getProductsByCategoryAndTitle : function(page, title) {
+			$.ajax({
+				url : "${ctx}/product/ajax/products/CT.do?page=" + page + "&category=${category}&title=" + ,
+				type : "get",
+				dataType : "xml",
+				success : function(xml) {
+						var xmlData = $(xml).find("product");
+						var listLength = xmlData.length;
+						$("#productSearchResult").empty();
+						if (listLength) {
+							var contentStr = "";
+							$(xmlData).each(function(){
+								contentStr += requestController.makeContent(this, "참가");
+							});
+							$("#productSearchResult").append(contentStr);
+						} else {
+							$("#productSearchResult").append(productController.makeContentForEmpty());
+						}
+				}
+			});
+		},
+};
+</script>
 </html>

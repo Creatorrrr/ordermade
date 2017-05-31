@@ -228,15 +228,10 @@ public class ProductController {
 	}
 
 	// test : http://localhost:8080/ordermade/ajax/products/category.do
-	@RequestMapping(value = "/ajax/products/category", produces = "text/plain")
+	@RequestMapping(value = "ajax/products/category.do", produces = "application/xml")
 	public @ResponseBody Products findProductsByCategory(String page, String category) {
 		// Ajax 한 종류 생산품검색으로 생산품들 출력
-		List<Product> categoryProducts = pService.findProductsByCategory(category, page);
-
-		Products products = new Products();
-		products.setProducts(categoryProducts);
-
-		return products;
+		return new Products(pService.findProductsByCategory(category, page));
 	}
 
 	@RequestMapping(value = "/ajax/products/image", produces = "text/plain")
@@ -364,16 +359,16 @@ public class ProductController {
 
 		Product product = pService.findProductById(id);
 
-		ModelAndView mv = new ModelAndView("product/productDetail");
+		ModelAndView mv = new ModelAndView("product/detail");
 		mv.addObject("product", product);
 
 		return mv;
 	}
 
-	// @RequestMapping("/searchProduct")
-	// public ModelAndView showSearchProductsUI() {
-	// // GET
-	// List<Category> categorys = pService.findAllCategory();
-	// }
-	// ui end
+	 @RequestMapping("ui/search.do")
+	 public ModelAndView showSearchProductsUI(String category, String page) {
+		 return new ModelAndView("product/productList")
+				 .addObject("category", category)
+				 .addObject("products", pService.findProductsByCategory(category, page));
+	 }
 }

@@ -44,8 +44,8 @@
 				</div> <%-- <c:forEach items="${ box_list }" var="literature"> --%>
 				
 				<div align="left">
-					<button id="allRequests">모든 의뢰서</button>
-					<button id="askedRequests">내가 보낸 의뢰서</button>
+					<button onclick="javascript:requestController.getRequestsByBound(1);">모든 의뢰서</button>
+					<button onclick="javascript:requestController.getMyInviteRequestsForMaker(1);">내가 보낸 의뢰서</button>
 				</div>
 				
 				<div id="requestSearchResult">
@@ -66,38 +66,50 @@ $(document).ready(function() {
 	//requestController.getRequestsByBoundAndContent(1,2);	// test
 });
 
-// 모든 의뢰서를 클릭하면 모든 의뢰서 목록을 가져온다.
-$("#allRequests").click(function() {
-	requestController.getRequestsByBound(1);
-});
-
-// 내가 보낸 의뢰서를 클릭하면 내가 보낸 의뢰서 목록을 가져온다.
-$("#askedRequests").click(function() {
-	requestController.getMyInviteRequestsForMaker(1);
-});
-
 // 검색을 클릭하면 검색된 의뢰서 목록을 가져온다.
 $("#requestSearchBtn").click(function() {
 	var type = $("#requestSearchType option:selected").val();
+	var keyword = $("#requestSearchKeyword");
 	if(type === "title") {
-		requestController.getRequestsByBoundAndTitle(1, $("#requestSearchKeyword").val());
+		requestController.getRequestsByBoundAndTitle(1, keyword.val());
 	} else if(type === "content") {
-		requestController.getRequestsByBoundAndContent(1, $("#requestSearchKeyword").val());
+		requestController.getRequestsByBoundAndContent(1, keyword.val());
 	}
+	keyword.val("");
 });
+
+var createInviteModal = function(requestId) {
+	var contentStr = "";
+
+	contentStr += "<form id='inviteRequestForm'>";
+	contentStr += "	<input type='hidden' name='request.id' value='" + requestId + "'>";
+	contentStr += "	<input type='hidden' name='form' value='R'>";
+	contentStr += "	<div>";
+	contentStr += "    	<label>메시지<textarea name='message' rows='5' style='width: 100%' placeholder='메시지를 입력해주세요.'></textarea></label>";
+	contentStr += "	</div>";
+	contentStr += "	<div align='right'>";
+	contentStr += "		<button type='button' onclick='javascript:requestController.registerInviteRequest()'>참가요청 보내기</button>";
+	contentStr += "    	<button type='reset' onclick='javascript:$.unblockUI();'>취소</button>";
+	contentStr += "	</div>";
+	contentStr += "</form>";
+	
+    $.blockUI({message : contentStr});
+};
 
 var requestController = {
 	registerInviteRequest : function() {	// 작업중
 		$.ajax({
 			url : "${ctx }/request/xml/registerInviteRequest.do",
-			data : {'request.id' : "${request.id}",
-					content : $("#commentRegisterContent").val()},
+			data : $('#inviteRequestForm').serialize(),
 			type : "post",
 			dataType : "text",
 			success : function(text) {
 					if(text === "true") {
-						commentController.getCommentsByRequestId("${request.id}", 1);
+						alert("참가 요청 성공");
+					} else {
+						alert("참가 요청 실패");
 					}
+					javascript:$.unblockUI();
 			}
 		});
 	},
@@ -168,27 +180,27 @@ var requestController = {
 		});
 	},
 		
-		getMyInviteRequestsForMaker : function(page) {
-			$.ajax({
-				url : "${ctx}/request/xml/searchMyInviteRequestsForMaker.do?page=" + page,
-				type : "get",
-				dataType : "xml",
-				success : function(xml) {
-						var xmlData = $(xml).find("inviterequest>request");
-						var listLength = xmlData.length;
-						$("#requestSearchResult").empty();
-						if (listLength) {
-							var contentStr = "";
-							$(xmlData).each(function() {
-								contentStr += requestController.makeContent(this, "진행중");
-							});
-							$("#requestSearchResult").append(contentStr);
-						} else {
-							$("#requestSearchResult").append(requestController.makeContentForEmpty());
-						}
-				}
-			});
-		},
+	getMyInviteRequestsForMaker : function(page) {
+		$.ajax({
+			url : "${ctx}/request/xml/searchMyInviteRequestsForMaker.do?page=" + page + "&form=R",
+			type : "get",
+			dataType : "xml",
+			success : function(xml) {
+					var xmlData = $(xml).find("inviterequest>request");
+					var listLength = xmlData.length;
+					$("#requestSearchResult").empty();
+					if (listLength) {
+						var contentStr = "";
+						$(xmlData).each(function() {console.log($(xmlData).text());
+							contentStr += requestController.makeContent(this, "진행중");
+						});
+						$("#requestSearchResult").append(contentStr);
+					} else {
+						$("#requestSearchResult").append(requestController.makeContentForEmpty());
+					}
+			}
+		});
+	},
 	
 	makeContent : function(xml, contentType) {
 		var content = "";
@@ -213,7 +225,7 @@ var requestController = {
 		content += 		"</tr>";
 		content += 	"</table>";
 		if(contentType === "참가") {
-			content += 	"<input name='' type='button' value='참가'>";
+			content += 	"<input type='button' value='참가' onclick='javascript:createInviteModal(" + $(xml).find("request>id").text() + ")'>";
 		} else if(contentType === "진행중") {
 			content += 	"<input type='button' value='진행중' disabled>";
 		}
@@ -237,4 +249,5 @@ var requestController = {
 	}
 };
 </script>
+
 </html>
