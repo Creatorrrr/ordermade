@@ -7,11 +7,10 @@
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="${ctx }/views/layout/styles/layout.css" rel="stylesheet"
 	type="text/css" media="all">
-<script src="${ctx }/views/js/jquery-2.1.3.js"></script>
-<script src="${ctx }/views/js/jquery.blockUI.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.fitvids.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.mobilemenu.js"></script>
+<script src="${ctx }/views/js/jquery.blockUI.min.js"></script>
 <body id="top">
 	<div class="wrapper row0">
 		<div id="topbar" class="clear">
@@ -73,17 +72,17 @@
 			<nav id="mainav" class="clear">
 				<ul class="clear">
 					<li class=""><a href="${ctx }/views/index.jsp">Main</a></li>
-					<li class=""><a href="${ctx }/views/product/product.jsp">Product</a></li>
-					<%-- <li><a class="drop" href="#">category</a> 
+					<li class=""><a href="${ctx }/product/ajax/products/category.do?page=1&category='가구'">Product</a></li>
+					<li><a class="drop" href="#">category</a> 
 					<ul>
-							<li><a href="${ctx }/views/productList.jsp">Furniture</a></li>
-							<li><a href="${ctx }/pages/portfolio.html">Accessory</a></li>
-							<li><a href="${ctx }/pages/full-width.html">Kitchen</a></li>
-							<li><a href="${ctx }/pages/sidebar-left.html">Digital</a></li>
-							<li><a href="${ctx }/pages/sidebar-left-2.html">Clothing</a></li>
-							<li><a href="${ctx }/pages/sidebar-right.html">Sport</a></li>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=FUNITURE">Furniture</a></li>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=ACCESSORY">Accessory</a></li>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=KITCHEN">Kitchen</a></li>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=DIGITAL">Digital</a></li>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=CLOTHING">Clothing</a></li>
+						<li><a href="${ctx }/product/ui/search.do?page=1&category=SPORT">Sport </a></li>
 					</ul>
-					</li> --%>
+					</li>
 						
 						<%-- <c:forEach items="${products }" var="product">
 							<li><a class="btn btn-sm btn-success"
@@ -93,10 +92,10 @@
 						
 					<li><a href="${ctx }/views/portfolio/portfolio.jsp">Portfolio</a></li>
 					<c:if test="${sessionScope.loginId ne null}">
-						<li><a href="#">Request</a></li>
+						<li><a href="${ctx}/request/ui/myRequest.do">Request</a></li>
 					</c:if>
 					<c:if test="${sessionScope.loginId eq null}">
-						<li><a href="${ctx}/member/myPage.do">Request</a></li>
+						<li><a href="${ctx}/request/ui/myRequest.do">Request</a></li>
 					</c:if>
 					<c:choose>
 						<c:when test="${sessionScope.memberType eq 'C' }">

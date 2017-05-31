@@ -102,7 +102,7 @@
 							<c:when test="${sessionScope.memberType eq 'C'}">
 								<p align="right">제작기간 : 일</p>
 								<p align="right">결제금액 (배송비 포함): ${request.price }원</p> 
-								<input type="button" name="" 
+								<input type="button" name=""
 									onclick="setPurchaseHistory.registerPurchaseHistory();" 
 									value="결제" style="float:right">
 							</c:when>

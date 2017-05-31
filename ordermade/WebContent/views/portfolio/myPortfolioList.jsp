@@ -26,7 +26,8 @@
 								<option value="title">제목</option>
 								<option value="content">내용</option>
 							</select> <input id="portfolioSearch" name="portfolioSearch"
-								class="search-box-input" type="text" value="" placeholder="Search Here" style="display: inline-block" />
+								class="search-box-input" type="text" value=""
+								placeholder="Search Here" style="display: inline-block" />
 							<button id="portfolioSearchBtn" class="fa fa-search"
 								type="submit" title="검색">
 								<em>Search</em>
@@ -34,10 +35,11 @@
 						</form>
 
 						<div style="float: right;">
-								<c:if test="${sessionScope.loginId ne null && makerId ne null}"> 
-							<a class="btn btn-sm btn-success"
-								href="${ctx}/portfolio/ui/register.do?makerId=${makerId}">포트폴리오 등록</a>
-							 </c:if> 
+							<c:if test="${sessionScope.loginId ne null && makerId ne null}">
+								<a class="btn btn-sm btn-success"
+									href="${ctx}/portfolio/ui/register.do?makerId=${makerId}">포트폴리오
+									등록</a>
+							</c:if>
 						</div>
 
 						<!-- test -->
@@ -50,15 +52,6 @@
 						</div>
 						<!-- /test -->
 
-
-						<%-- 	<c:if test="${sessionScope.loginId ne null}">
-				<c:if test="${portfolio.maker.id eq sessionScope.loginId}">
-						<div align="center">
-							<input class="btn btn-success" type="button" value=" 등록"
-								onclick="javascript:window.location='${ctx}/portfolio/ui/register.do?portfolioId=${portfolio.Id}'">
-						</div>
-					</c:if>
-				</c:if> --%>
 					</div>
 
 					<br>
@@ -70,15 +63,28 @@
 									<table class="table">
 										<tr>
 											<div class="imgl borderedbox">
-												<img src="${ctx }/portfolio/image.do?img=${portfolio.image}" />
+												<img src="${ctx }/views/images/img1.jpg" />
 											</div>
 										</tr>
 										<tr class="nospace btmspace-15">
 											<td>포트폴리오 명</td>
-											<td><a class="portfolio"
-												href="${ctx }/portfolio/ui/detail.do?portfolioId=${portfolio.id}">${portfolio.title }
+											<td class="text-left"><a
+												href="${ctx }/portfolio/ui/detail.do?portfolioId=${portfolio.id}&makerId=${makerId}">${portfolio.title }
 											</a></td>
 										</tr>
+
+										<!--test  -->
+										<tr>
+											<div style="float: right">
+												<input style="display: inline-block" class="btn btn-success" type="button" value="수정"
+													onclick="javascript:window.location='${ctx}/portfolio/ui/modify.do?portfolioId=${portfolio.id }&id=${makerId }'">
+												<input class="btn btn-warning"
+													type="button" value="삭제"
+													onclick="javascript:window.location='${ctx }/portfolio/xml/remove.do?portfolioId=${portfolio.id}&makerId=${makerId }'">
+											</div>
+										</tr>
+										<!--/test  -->
+
 									</table>
 								</div>
 							</c:forEach></li>
@@ -87,6 +93,7 @@
 			</main>
 		</div>
 	</div>
+
 
 	<%@ include file="/views/common/footer.jsp"%>
 	<!-- JAVASCRIPTS -->

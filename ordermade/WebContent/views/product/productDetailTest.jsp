@@ -122,7 +122,30 @@
 	<div id="reiewList"></div>
 
 	 <script type="text/javascript">
-		//html구조가 모두 include된 후 실행
+		
+		$('.reviewBox').on("click",".deletebtn", function(id) {
+			deletReview();
+		}	
+		function deletReview() {
+				console.log("eeeee");
+				$.ajax({
+					url:"${ctx}/product/review/remove.do?productId="+id,
+					type : "get",
+					data : {
+						productId : $("#productId").val()
+					},
+					dataType : "text",
+					success : function(data){
+						if(data=="true"){
+							alert("삭제되었습니다");
+						}
+					},
+					error:function(xml){
+						console.log("실패 메세지:\n"+xml.responseText);
+					}
+					
+				});
+			}
 		$(document).ready(function() {
 
 			$("#registReview").click(function() {
@@ -147,7 +170,7 @@
 								contentStr += 		"</tr>";
 								contentStr += 	"</table>";
 								/* contentStr += 	'<button class="deleteReview">삭제</button>' */
-								contentStr += "<input type='button' id='button1' onclick='javascript:deletReview()' value='삭제' />"
+								contentStr += "<button class='deletebtn' onclick='deletReview()'>삭제</button>"
 								
 								contentStr += "</div>";
 							 $("#reiewList").append(contentStr); 
@@ -160,27 +183,8 @@
 				});
 			});
 			
-			/* $('reviewBox').on("click",".deleteReview", function(id) { */
-				function deletReview() {
-				console.log("eeeee");
-				$.ajax({
-					url:"${ctx}/product/review/remove.do?productId="+id,
-					type : "get",
-					data : {
-						productId : $("#productId").val()
-					},
-					dataType : "text",
-					success : function(data){
-						if(data=="true"){
-							alert("삭제되었습니다");
-						}
-					},
-					error:function(xml){
-						console.log("실패 메세지:\n"+xml.responseText);
-					}
-					
-				});
-			}
+			
+			
 		});
 	</script> 
 </body>

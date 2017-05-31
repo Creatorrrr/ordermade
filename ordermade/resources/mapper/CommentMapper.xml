@@ -8,9 +8,10 @@
   	<resultMap type="Comment" id="commentMap">
   		<id property="id" column="id"/>
   		<result property="content" column="content"/>
-  		<association property="member" column="member_id"
+		<result property="member.id" column="member_id"/>
+  		<!-- <association property="member" column="member_id"
   			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
-  			jdbcType="VARCHAR" />
+  			jdbcType="VARCHAR" /> -->
   		<association property="request" column="request_id"
   			select="ordermade.store.mapper.RequestMapper.selectRequestById" javaType="Request"
   			jdbcType="VARCHAR" />
