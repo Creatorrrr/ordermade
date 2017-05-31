@@ -11,6 +11,7 @@
 <head>
 <%@ include file="/views/common/head.jsp"%>
 </head>
+<title>구매이력</title>
 <!-- Main Body ========================================================================================== -->
 <body>
 <div class="wrapper row3">
@@ -27,19 +28,19 @@
 				<form class="clear" method="post" action="${ctx }/deal/xml/searchPurchaseConsumerTitleList.do">
 					<div>
 						<fieldset>
-							<select name="type" id="type" class="form-control">
+							<select name="type" id="type" class="form-control" style="display:inline-block">
 								<option value="id">의뢰서 제목</option>
 								<option value="name">아이디</option>
 							</select> 
 							<input name="requestTitle" class="search-box-input" type="text"
-								value="" placeholder="Search Here" />
+								value="" placeholder="Search Here" style="display:inline-block" />
 							<button class="fa fa-search" type="submit" title="Search">
 							</button>
 						</fieldset>
 					</div>
 				</form>
 			</div>
-
+			<p>
 			 <table class="">
                    <colgroup>
                        <col width="170"/>

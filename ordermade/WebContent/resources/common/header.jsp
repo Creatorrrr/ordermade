@@ -22,9 +22,6 @@
 							</ul>
 						</c:otherwise>
 					</c:choose>
-					<!-- <li><a href="#">Home</a></li>
-					<li><a href="#">Login</a></li>
-					<li><a href="#">Sign up</a></li> -->
 				</ul>
 			</nav>
 		</div>
@@ -34,12 +31,15 @@
 		<header id="header" class="clear">
 			<div id="logo" class="fl_left">
 				<h1>
-					<a href="${ctx }/views/index.jsp"><img src="${ctx }/views/images/panda4.jpg" style="width:100px;height:100px"> 판다</a>
+					<a href="${ctx }/views/index.jsp"><img
+						src="${ctx }/views/images/panda4.jpg"
+						style="width: 100px; height: 100px"> 판다</a>
 				</h1>
 				<p>다 판다</p>
 				<p>없으면 만들어서 판다</p>
 				<p>1:1 매칭 서비스</p>
 			</div>
+
 			<div class="fl_right">
 				<form class="clear" method="post" action="#">
 					<fieldset>
@@ -52,38 +52,54 @@
 					</fieldset>
 				</form>
 			</div>
-		</header>
 
+		</header>
 	</div>
+
 	<div class="wrapper row2">
 		<div class="rounded">
 			<nav id="mainav" class="clear">
 				<ul class="clear">
 					<li class=""><a href="${ctx }/views/index.jsp">Main</a></li>
-					<li><a class="drop" href="#">상품 목록</a>
-						<ul>
+					<li class=""><a href="${ctx }/views/product/product.jsp">Product</a></li>
+					<%-- <li><a class="drop" href="#">category</a> 
+					<ul>
 							<li><a href="${ctx }/views/productList.jsp">Furniture</a></li>
 							<li><a href="${ctx }/pages/portfolio.html">Accessory</a></li>
 							<li><a href="${ctx }/pages/full-width.html">Kitchen</a></li>
 							<li><a href="${ctx }/pages/sidebar-left.html">Digital</a></li>
 							<li><a href="${ctx }/pages/sidebar-left-2.html">Clothing</a></li>
 							<li><a href="${ctx }/pages/sidebar-right.html">Sport</a></li>
-						</ul></li>
-
-					<!-- <li><a class="drop" href="#">Dropdown</a>
-						<ul>
-							<li><a href="#">Level 2</a></li>
-							<li><a class="drop" href="#">Level 2 + Drop</a>
-								<ul>
-									<li><a href="#">Level 3</a></li>
-									<li><a href="#">Level 3</a></li>
-								</ul></li>
-						</ul>
-					</li> -->
-					<li><a href="#">Link Text</a></li>
-					<li><a href="#">Another Link Text</a></li>
-					<li><a href="#">This a very long link</a></li>
-					<li><a href="#">This is the last</a></li>
+					</ul>
+					</li> --%>
+						
+						<%-- <c:forEach items="${products }" var="product">
+							<li><a class="btn btn-sm btn-success"
+								href="${ctx}/product//ajax/product/productid?productId=${product.id}">${product.title }</a>
+							</li>
+						</c:forEach> --%>
+						
+					<li><a href="${ctx }/views/portfolio/portfolio.jsp">Portfolio</a></li>
+					<c:if test="${sessionScope.loginId ne null}">
+						<li><a href="#">Request</a></li>
+					</c:if>
+					<c:if test="${sessionScope.loginId eq null}">
+						<li><a href="${ctx}/member/myPage.do">Request</a></li>
+					</c:if>
+					<c:choose>
+						<c:when test="${sessionScope.memberType eq 'C' }">
+							<li>
+								<a href="${ctx }/request/ui/consumerInviteList.do?page=1">Invite Request</a>
+							</li>
+						</c:when>
+						<c:when test="${sessionScope.memberType eq 'M' }">
+							<li>
+								<a href="${ctx }/request/ui/makerInviteList.do?page=1">Invite Request</a>
+							</li>
+						</c:when>
+					</c:choose>
+					
+					<li><a href="${ctx}/member/myPage.do">my page</a></li>
 				</ul>
 			</nav>
 		</div>

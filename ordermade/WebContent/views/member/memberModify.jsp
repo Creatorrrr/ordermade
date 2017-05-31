@@ -8,6 +8,7 @@
 <head>
 <%@ include file="/views/common/head.jsp"%>
 </head>
+<title>회원 정보 수정</title>
 <!-- Main Body ========================================================================================== -->
 <body>
 <div class="wrapper row3">

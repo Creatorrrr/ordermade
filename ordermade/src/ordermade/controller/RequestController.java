@@ -39,7 +39,8 @@ public class RequestController {
 
 	@RequestMapping(value = "request/xml/register.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerRequest(Request request, HttpSession session) {
-		// String loginId=(String)session.getAttribute("loginId");
+//		String memberType = (String)session.getAttribute("memberType");
+//		String loginId = (String)session.getAttribute("loginId");
 		if(request.getTitle()==null) return "error";
 		//System.out.println(request.getMaker().getId());
 		if(request.getMaker()== null){		//DB member.id null-> fix	
@@ -61,10 +62,34 @@ public class RequestController {
 
 	@RequestMapping(value = "request/xml/modify.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyRequestById(Request request, HttpSession session) {
-		// String loginId=(String)session.getAttribute("loginId");
-		System.out.println(request.toString());
-		if(request.getTitle()==null) return "error";
-		boolean check = service.modifyRequestById(request);
+		String memberType = (String)session.getAttribute("memberType");
+		String loginId = (String)session.getAttribute("loginId");
+		//System.out.println(request.toString());
+		if(request.getId()==null) return "error";//수정할 의뢰서 id를 보내지 않았음.
+		Request requestOK = service.findRequestById(request.getId());
+		//System.out.println(requestOK.toString());
+		if(memberType == Constants.CONSUMER){
+			if(loginId != request.getConsumer().getId()) return "error";//로그인한 사람이 아님.
+		}else if(memberType == Constants.MAKER){
+			if(loginId != request.getMaker().getId()) return "error";//로그인한 사람이 아님.
+		}
+		
+		if(request.getMaker()== null){		//DB member.id null-> fix	
+			Member maker = new Member();
+			maker.setId("");
+			requestOK.setMaker(maker);
+		}else{
+			requestOK.setMaker(request.getMaker());
+		}
+		Member consumer = new Member();
+		consumer.setId(loginId);//session loginId
+		requestOK.setConsumer(consumer);
+		requestOK.setCategory(request.getCategory());
+		requestOK.setTitle(request.getTitle());
+		requestOK.setContent(request.getContent());
+		requestOK.setHopePrice(request.getHopePrice());
+		//System.out.println(requestOK.toString());
+		boolean check = service.modifyRequestById(requestOK);
 		return check+"";
 	}	//post http://localhost:8080/ordermade/request/xml/modify.do
 		//{"id":"test","title":"의뢰2\n","maker.id":"maker2","consumer.id":"user2","category":"bb","content":"uuuuu","hopePrice":"33000","price":"30500","bound":"bbbbbb"}
@@ -77,23 +102,30 @@ public class RequestController {
 		return check+"";
 	}	//GET http://localhost:8080/ordermade/request/xml/remove.do?id=5
 
-	@RequestMapping(value = "request/xml/modifyBound.do", method = RequestMethod.POST, produces = "text/plain")
-	public @ResponseBody String modifyRequestBound(Request request, HttpSession session) {
+	@RequestMapping(value = "request/xml/modifyBound.do", method = RequestMethod.GET, produces = "text/plain")
+	public @ResponseBody String modifyRequestBound(String requestId, String bound, HttpSession session) {
 		// String loginId=(String)session.getAttribute("loginId");
-		if(request.getId()==null) return "error";
-		Request requestOK= service.findRequestById(request.getId());
-//		System.out.println(request.getBound());
+		if(requestId==null) return "error";
+		Request requestOK= service.findRequestById(requestId);
+	
 		if(requestOK.getMaker()== null){		//DB member.id null-> fix	
 			Member maker = new Member();
 			maker.setId("");
 			requestOK.setMaker(maker);
 		}
 		//System.out.println(requestOK.toString());
-		requestOK.setBound(request.getBound());
+		if(bound.equals("1")){
+			System.out.println(bound);
+			requestOK.setBound(Constants.BOUND_PUBLIC);
+		}else if(bound.equals("0")){
+			System.out.println(bound);
+			requestOK.setBound(Constants.BOUND_PRIVATE);
+		}
+		System.out.println(requestOK);
 		boolean check = service.modifyRequestById(requestOK);
 		return check+"";
-	}	//POST  http://localhost:8080/ordermade/request/xml/modifyBound.do
-		//{"id":"1","bound":"open"}
+	}	//GET  http://localhost:8080/ordermade/request/xml/modifyBound.do?requestId=1&bound=1
+
 	
 
 	@RequestMapping(value = "request/xml/modifyMakerId.do", method = RequestMethod.POST, produces = "text/plain")
@@ -147,8 +179,8 @@ public class RequestController {
 	
 	//-- invite request
 	
-	@RequestMapping(value = "request/xml/registerInviteToMaker.do", method = RequestMethod.POST, produces = "text/plain")
-	public @ResponseBody String registerInviteRequestToMaker(InviteRequest inviteRequest) {
+	@RequestMapping(value = "request/xml/registerInviteRequest.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String registerInviteRequest(InviteRequest inviteRequest) {
 //		System.out.println(inviteRequest.toString());
 		if(inviteRequest.getMessage()==null) return "error";
 		boolean check = service.registerInviteRequest(inviteRequest);
@@ -174,30 +206,31 @@ public class RequestController {
 
 	// --comment
 
+	// 170530 Complete
 	@RequestMapping(value = "comment/xml/register.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerComment(Comment comment, HttpSession session) {
-		// String loginId=(String)session.getAttribute("loginId");
-		if(comment.getId() == null) return "error";
-		boolean check = service.registerComment(comment);
-		return check+"";
+		if(checkLogined(session)) return "error";	// check logined
+		comment.setMember(new Member());
+		comment.getMember().setId((String)session.getAttribute("loginId"));
+		return service.registerComment(comment) + "";
 	}	//POST  http://localhost:8080/ordermade/comment/xml/register.do
 		//{"content":"cccccccccc","request.id":"7","member.id":"maker2"}
 
+	// 170531 Complete
 	@RequestMapping(value = "comment/xml/modify.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyComment(Comment comment, HttpSession session) {
-		// String loginId=(String)session.getAttribute("loginId");
-		if(comment.getId() == null) return "error";
-		boolean check = service.modifyCommentById(comment);
-		return check+"";
+		if(checkLogined(session)) return "error";	// check logined
+		comment.setMember(new Member());
+		comment.getMember().setId((String)session.getAttribute("loginId"));
+		return service.modifyCommentById(comment) + "";
 	}	//POST  http://localhost:8080/ordermade/comment/xml/modify.do
 		//{"id":"1","content":"dddd","request.id":"8","member.id":"user1"}
 
+	// 170530 Complete
 	@RequestMapping(value = "comment/xml/remove.do", method = RequestMethod.GET, produces = "text/plain")
 	public @ResponseBody String removeCommentById(String id, HttpSession session) {
-		// String loginId=(String)session.getAttribute("loginId");
-		if(id == null) return "error";
-		boolean check = service.removeCommentById(id);
-		return check+"";
+		if(checkLogined(session)) return "error";	// check logined
+		return service.removeCommentById(id) + "";
 	}	//GET  http://localhost:8080/ordermade/comment/xml/remove.do?id=1
 
 	
@@ -229,30 +262,38 @@ public class RequestController {
 
 
 	@RequestMapping(value = "request/ui/register.do", method = RequestMethod.GET)
-	public ModelAndView showRegisterRequestUIForOneToOne(String makerId, String productId, String categoryId) {
-		if(makerId==null) return new ModelAndView("request/register");
-		//-----상품페이지에서 데이터를 받아와야 함.
-		ModelAndView modelAndView = new ModelAndView("request/register1_1");
-		modelAndView.addObject("productId", productId);
-		modelAndView.addObject("makerId", makerId);
-		modelAndView.addObject("categoryId", categoryId);		
+	public ModelAndView showRegisterRequestUI(String makerId, String productId, String categoryId) {
+		ModelAndView modelAndView = new ModelAndView("request/register");
+		if(makerId != null){
+			modelAndView.addObject("makerId", makerId);
+			modelAndView.addObject("productId", productId);
+			modelAndView.addObject("categoryId", categoryId);
+		}
 		return modelAndView;
 	}	//GET http://localhost:8080/ordermade/request/ui/register.do
 		//GET http://localhost:8080/ordermade/request/ui/register.do?makerId=maker1&productId=1
 	
-	@RequestMapping(value="request/ui/myPage.do",method=RequestMethod.GET)
-	public ModelAndView showMyRequestUI(){
-		List<Request> list = null;
-		String consumerId = "user1";
-		String type = "consumer";
+	@RequestMapping(value="request/ui/myRequest.do",method=RequestMethod.GET)
+	public ModelAndView showMyRequestUI(String page, HttpSession session){
+		String loginId = (String)session.getAttribute("loginId");
+		String memberType = (String)session.getAttribute("memberType");
 		
-		if(type == "consumer"){
-			list = service.findRequestsByConsumerId(consumerId, "1");
-		}else{
-			list = service.findRequestsByConsumerIdWithMaker(consumerId, "1");
+		if(memberType==null){
+			return new ModelAndView("redirect:../../member/login.do");//로그인 페이지 전환.
 		}
 		
-		ModelAndView modelAndView = new ModelAndView("request/myPage");
+		if(page == null || page == "") page = "1";
+		List<Request> list = null;
+		
+		if(memberType.equals(Constants.CONSUMER)){
+			list = service.findRequestsByConsumerId(loginId, page);
+		}else if(memberType.equals(Constants.MAKER)){
+			list = service.findRequestsByConsumerIdWithMaker(loginId, page);
+		}else{
+			throw new RuntimeException("error");
+		}
+		System.out.println(list.toString());
+		ModelAndView modelAndView = new ModelAndView("request/myRequest");//나의 의뢰서 or 받은 의뢰서
 		modelAndView.addObject("requests", list);
 		return modelAndView;
 	}
@@ -262,13 +303,16 @@ public class RequestController {
 		if(checkLogined(session)) return new ModelAndView("member/login");	// check logined
 		return new ModelAndView("request/modify")
 				.addObject("request", service.findRequestById(requestId));
-	}
+	}	//GET  http://localhost:8080/ordermade/request/ui/modify.do?requestId=42
 	
+	
+	// 170531 Complete
 	@RequestMapping(value="request/ui/search.do",method=RequestMethod.GET)
 	public String showSearchRequestUI(){
 		return "request/makerRequestSearch";
 	}
 	
+	// 170531 Complete
 	@RequestMapping(value="request/ui/detail.do",method=RequestMethod.GET)
 	public ModelAndView showDetailRequestUI(String id, HttpSession session){
 			return new ModelAndView("request/detail")

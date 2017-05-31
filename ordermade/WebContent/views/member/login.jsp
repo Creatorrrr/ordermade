@@ -8,6 +8,7 @@
 <head>
 <%@ include file="/views/common/head.jsp"%>
 </head>
+<title>로그인</title>
 <!-- Main Body ========================================================================================== -->
 <body>
 <div class="wrapper row3">
@@ -29,8 +30,7 @@
 				</table>
 				<br>
 				<div align="center">
-					<input class="btn" type="reset" value="취소"> <input
-						class="btn btn-success" type="submit" value="로그인">
+					<input class="btn btn-success" type="submit" value="로그인"><input class="btn" type="reset" value="취소"> 
 				</div>
 			</form>
 		</main>

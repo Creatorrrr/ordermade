@@ -48,10 +48,10 @@ public class PortfolioController {
 	private ProductService pdService;
 
 	@RequestMapping(value = "xml/register.do", method = RequestMethod.POST, produces = "text/plain")
-	public @ResponseBody String registerPortfolio(Portfolio portfolio, HttpServletRequest req) {
-
+	public @ResponseBody String registerPortfolio(Portfolio portfolio, Model model, HttpServletRequest req) {
+		
 		String imagePath = Constants.IMAGE_PATH;
-
+		
 		File dir = new File(imagePath);
 		if (!dir.exists()) {
 			// 폴더가 존재하지 않으면 폴더 생성
@@ -59,18 +59,17 @@ public class PortfolioController {
 		}
 
 		try {
-			MultipartRequest mr = new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8",
+			MultipartRequest mr = new MultipartRequest(req, imagePath, 5*1024*1024 , "UTF-8",
 					new DefaultFileRenamePolicy());
 
 			String title = mr.getParameter("title");
 			String content = mr.getParameter("content");
 			String category = mr.getParameter("category");
 			// File image = mr.getFile("portfolioImage");
-			String makerId = mr.getParameter("makerId");
-
-			Member maker = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
-			maker.setId(makerId);
-
+			
+			Member maker = new Member();
+			maker.setId((String) req.getSession().getAttribute("loginId"));
+		
 			portfolio.setTitle(title);
 			portfolio.setContent(content);
 			portfolio.setCategory(category);
@@ -79,19 +78,20 @@ public class PortfolioController {
 
 			// portfolio.setTitle(mr.getParameter("title"));
 			portfolio.setImage(mr.getFile("image").getName());
-
+			
+			System.out.println("+++++++++++++++++makerId:" + maker);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		if (!pService.registerPortfolio(portfolio)) {
-			return "/portfolio/register";
-		} else {
+		
+		if (pService.registerPortfolio(portfolio)) {
+			model.addAttribute("portfolio", portfolio);
 			return "/portfolio/detail";
+		}else {
+			return "/portfolio/register";
 		}
-	} // test http://localhost:8080/ordermade/portfolio/xml/register.do
-		// post
-		// {"title":"asdfadsf","maker.id":"user1\n","image":"asdf.jpg","content":"aaaaaaa","tags[0].id":"1","category":"aaa"}
+	} 
 
 	@RequestMapping("/image.do")
 	public void getPortfolioImage(String img, HttpServletResponse resp) {
@@ -116,7 +116,7 @@ public class PortfolioController {
 	}
 
 	@RequestMapping(value = "xml/modify.do", method = RequestMethod.POST, produces = "text/plain")
-	public @ResponseBody String modifyPortfolioById(Portfolio portfolio, HttpServletRequest req) {
+	public @ResponseBody String modifyPortfolioById(Model model,Portfolio portfolio, HttpServletRequest req) {
 
 		String imagePath = Constants.IMAGE_PATH;
 		File dir = new File(imagePath);
@@ -145,6 +145,7 @@ public class PortfolioController {
 			e.printStackTrace();
 		}
 		if (pService.modifyPortfolio(portfolio)) {
+			model.addAttribute("portfolio",portfolio);
 			return "redierct:/portfolio/detail";
 		} else {
 			throw new RuntimeException("Modify portfolio failed");
@@ -174,15 +175,19 @@ public class PortfolioController {
 		// portfolio.setId(portfolioId);
 		// model.addAttribute("portfolioId",portfolio.getId());
 		// model.addAttribute("portfolioId",portfolioId);
-
+		System.out.println("@@@@@@@@@@@@@@@@@@makerId:" + makerId);
 		model.addAttribute("makerId", makerId);
 		return "portfolio/register";
 
 	} // test http://localhost:8080/ordermade/portfolio/ui/register.do
 
 	@RequestMapping(value = "ui/modify.do", method = RequestMethod.GET)
-	public ModelAndView showEditPortfolioUI(String id) {
+	public ModelAndView showEditPortfolioUI(String id,String title, String content, String category) {
 		Portfolio portfolio = pService.findPortfolioById(id);
+		portfolio.setTitle(title);
+		portfolio.setContent(content);
+		portfolio.setCategory(category);
+		
 		ModelAndView modelAndView = new ModelAndView("portfolio/modify");
 		modelAndView.addObject("portfolio", portfolio);
 		return modelAndView;
@@ -212,11 +217,19 @@ public class PortfolioController {
 	public ModelAndView showMyPortfolioListUI(HttpSession session) { // String
 																		// page
 		// -------session으로 로그인 정보 갖고 오기.
-		String makerId = (String) session.getAttribute("loginId");
 
+		String makerId = (String) session.getAttribute("loginId");
 		List<Portfolio> portfolios = pService.findPortfoliosByMakerId(makerId, "1");
 		ModelAndView modelAndView = new ModelAndView("/portfolio/myPortfolioList");
+
+// test
+//		Member maker = new Member();
+//		maker.setId((String) session.getAttribute("loginId"));
+		
 		modelAndView.addObject("portfolios", portfolios);
+		modelAndView.addObject("makerId", makerId);
+		
+		System.out.println("######### makerId - " + makerId );       //여기까진 makerId 도착
 		return modelAndView;
 	}
 

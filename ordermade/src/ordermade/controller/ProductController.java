@@ -29,7 +29,7 @@ import ordermade.service.facade.MemberService;
 import ordermade.service.facade.ProductService;
 
 @Controller
-@RequestMapping("/product")
+@RequestMapping("product")
 public class ProductController {
 
 	@Autowired
@@ -37,10 +37,10 @@ public class ProductController {
 	@Autowired
 	private MemberService mService;
 
-	@RequestMapping(value = "register.do", method = RequestMethod.POST)
-	public String registerProduct(Model model, Product product, HttpServletRequest req) {
+	@RequestMapping(value = "xml/register.do", method = RequestMethod.POST)
+	public @ResponseBody String registerProduct(Model model, Product product, HttpServletRequest req) {
 		// 상품 등록후 상세 상품페이지로 이동
-
+		boolean check = false;
 		String imagePath = Constants.IMAGE_PATH;
 
 		File dir = new File(imagePath);
@@ -49,9 +49,9 @@ public class ProductController {
 			dir.mkdirs();
 		}
 
-		MultipartRequest mr;
 		try {
-			mr = new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy());
+			MultipartRequest mr = new MultipartRequest(
+					req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy());
 			String title = mr.getParameter("productTitle");
 			String category = mr.getParameter("category");
 			String content = mr.getParameter("productContent");
@@ -82,21 +82,24 @@ public class ProductController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (!pService.registerProduct(product)) {
+
+		check = pService.registerProduct(product);
+		return check+"";
+		/*if (!pService.registerProduct(product)) {
 			System.out.println("거짓");
 			return "product/productRegister";
 		} else {
 			System.out.println("참");
 			model.addAttribute("product", product);
-			return "product/productDetailTest";
-		}
+			return "product/productDetail";
+		}*/
 
 	}
 
-	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public String modifyProductById(Product product, HttpServletRequest req) {
+	@RequestMapping(value = "xml/modify.do", method = RequestMethod.POST)
+	public @ResponseBody String modifyProductById(Product product, HttpServletRequest req) {
 		// 상품 수정 후 상세 상품페이지로 이동
-
+		boolean check = false;
 		String imagePath = Constants.IMAGE_PATH;
 
 		File dir = new File(imagePath);
@@ -105,9 +108,9 @@ public class ProductController {
 			dir.mkdirs();
 		}
 
-		MultipartRequest mr;
 		try {
-			mr = new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy());
+			MultipartRequest mr = new MultipartRequest(
+					req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy());
 
 			String title = mr.getParameter("title");
 			String category = mr.getParameter("category");
@@ -135,22 +138,27 @@ public class ProductController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		if (!pService.registerProduct(product)) {
+		
+		check = pService.modifyProductById(product);
+		return check+"";
+		/*if (!pService.registerProduct(product)) {
 			return "";
 		} else {
 			return "detailProduct";
-		}
+		}*/
 	}
 
-	@RequestMapping("/remove")
-	public String removeProductById(@RequestParam("productId") String id, HttpServletRequest req) {
+	@RequestMapping("xml/remove.do")
+	public @ResponseBody String removeProductById(@RequestParam("productId") String id, HttpServletRequest req) {
 		// 상품페이지 삭제후 상품페이지 목록으로 이동
-		if (!pService.removeProductById(id)) {
-			return "";
+		boolean check = false;
+		check = pService.removeProductById(id);
+		return check+"";
+		/*if (!pService.removeProductById(id)) {
+			return "/product/detail";
 		} else {
 			return "/product/productList";
-		}
+		}*/
 	}
 
 	@RequestMapping(value = "/review/register.do", method = RequestMethod.POST, produces = "text/plain")
@@ -334,7 +342,7 @@ public class ProductController {
 	// ************************
 	// ui start
 
-	@RequestMapping("/register.do")
+	@RequestMapping("ui/register.do")
 	public String showRegisterProductUI(Model model) {
 		// 상품 등록 페이지 productRegister.jsp로 이동
 		List<Category> categorys = pService.findAllCategory();
@@ -343,7 +351,7 @@ public class ProductController {
 		return "product/productRegister";
 	}
 
-	@RequestMapping("/modify.do")
+	@RequestMapping("ui/modify.do")
 	public ModelAndView showEditProductUI(String id) {
 		// 상품 수정 페이지로 이동
 
@@ -354,7 +362,7 @@ public class ProductController {
 		return mv;
 	}
 
-	@RequestMapping("/myProducts.do")
+	@RequestMapping("ui/myProducts.do")
 	public ModelAndView showMyProductListUI(String page, HttpServletRequest req) {
 		// GET 나의 생산품들 출력
 
@@ -368,13 +376,13 @@ public class ProductController {
 		return mv;
 	}
 
-	@RequestMapping("/detailProduct.do")
+	@RequestMapping("ui/detail.do")
 	public ModelAndView showDetailProductUI(String id) {
 		// GET 상품 상세정보 출력후 상품 상세 페이지로 이동
 
 		Product product = pService.findProductById(id);
 
-		ModelAndView mv = new ModelAndView("");
+		ModelAndView mv = new ModelAndView("product/productDetail");
 		mv.addObject("product", product);
 
 		return mv;
