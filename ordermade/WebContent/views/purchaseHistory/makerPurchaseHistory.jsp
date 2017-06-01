@@ -75,7 +75,7 @@
 	                            </td>
 	                            <td class="text-center" style="text-align: center">
 	                           		${purchaseHistory.deliveryStatus}<br>
-	                           		<a href="" class="">구매확정</a>
+	                           		<a href="" class="btn btn-sm btn-success">구매확정</a>
 	                            </td>
 	                        </tr>
 	                       </c:forEach>

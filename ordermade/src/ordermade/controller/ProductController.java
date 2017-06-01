@@ -206,7 +206,6 @@ public class ProductController {
 	public @ResponseBody Products findProductsByCategoryOrderByHitsForMain(String category, String page) {
 		// Ajax 메인화면에서 히트 상품 종류 나옴
 		List<Product> hitProducts = pService.findProductsByCategoryOrderByHitsForMain(category, page);
-
 		Products products = new Products();
 		products.setProducts(hitProducts);
 
