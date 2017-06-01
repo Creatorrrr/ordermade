@@ -29,7 +29,7 @@ ${box2 }
 					</div>
 					<c:forEach items="${requests }" var="request" varStatus="status">
 						<div class="request_table" data="${request.id }">
-							
+							<table>
 								<div class="imgl borderedbox">
 									<img src="${ctx }/views/images/img-10.jpg" />
 								</div>
@@ -46,7 +46,7 @@ ${box2 }
 								</c:choose>
 								<button class="modifyBtn">수정</button>
 								<button class="deleteBtn">삭제</button>
-							
+							</table>
 						</div>
 					</c:forEach>
 					

@@ -81,6 +81,7 @@
 						</button>
 					</div>
 				</div>
+				
 				<div id="productSearchResult">
 					<c:forEach items="${products }" var="product">
 						<div class='productBox'>
