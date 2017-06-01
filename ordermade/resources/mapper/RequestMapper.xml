@@ -50,7 +50,9 @@
 		WHERE id = #{id}
 	</delete>
 
-
+		<sql id="columns">
+			id, title, maker_id, consumer_id, type, content, hope_price, price, bound
+		</sql>
 		<sql id="selectRequest">
 			SELECT id, title, maker_id, consumer_id, type, content, hope_price, price, bound, page
 		</sql>
@@ -63,15 +65,17 @@
 	<select id="selectRequestById" parameterType="String" resultMap="requestMap">
 		<include refid="selectRequest"/>
 		FROM request
+		, (select (count(id)/${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) page from request)
 		WHERE id = #{id}
 	</select>
 	
 	<select id="selectRequestsByBound" parameterType="HashMap" resultMap="requestMap">
 		select * from (
-			select rownum limitNum, A.* from request A where bound = #{bound}
+			select rownum limitNum, A.* from request A 
+			where bound = #{bound}
 			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) order by A.id desc
 		) 
-		, (select /*+INDEX_FES(table column) */ ceil(count(*)/10) page from request)
+		, (select /*+INDEX_FES(table column) */ ceil(count(*)/10) page from request where bound = #{bound})
 		where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>
 
@@ -80,7 +84,7 @@
 		FROM (<include refid="selectRequestRownum"/>
 		 	FROM request 
 		 	WHERE bound = #{bound} AND title LIKE '%${title}%')       
-		, (select /*+INDEX_FES(table column) */ ceil(count(*)/10) page from request)
+		, (select /*+INDEX_FES(table column) */ ceil(count(*)/10) page from request WHERE bound = #{bound} AND title LIKE '%${title}%')
 		WHERE rnum BETWEEN (#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE} AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>
 	
@@ -89,7 +93,7 @@
 		FROM (<include refid="selectRequestRownum"/>
 			 FROM request 
 			 WHERE bound = #{bound} AND content LIKE '%${content}%')        <!-- '%${value}%' -->
-		, (select /*+INDEX_FES(table column) */ ceil(count(*)/10) page from request)
+		, (select /*+INDEX_FES(table column) */ ceil(count(*)/10) page from request WHERE bound = #{bound} AND content LIKE '%${content}%')
 		WHERE rnum BETWEEN (#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE} AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>	
 		
@@ -99,7 +103,7 @@
 			 FROM request 
 			 WHERE consumer_id = #{consumerId} 
 			 ORDER BY id DESC)  
-		, (select /*+INDEX_FES(table column) */ ceil(count(*)/10) page from request)     
+		, (select /*+INDEX_FES(table column) */ ceil(count(*)/10) page from request  WHERE consumer_id = #{consumerId} )     
 		WHERE rnum BETWEEN ((#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>
 			
@@ -108,7 +112,7 @@
 		FROM (<include refid="selectRequestRownum"/>
 		 	FROM request 
 		 	WHERE consumer_id = #{consumerId} AND maker_id IS NOT NULL)  
-		, (select /*+INDEX_FES(table column) */ ceil(count(*)/10) page from request)
+		, (select /*+INDEX_FES(table column) */ ceil(count(*)/10) page from request WHERE consumer_id = #{consumerId} AND maker_id IS NOT NULL)
 		WHERE rnum BETWEEN ((#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>		
 	
