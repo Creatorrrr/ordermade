@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 @XmlRootElement(name="category")
 @XmlAccessorType(XmlAccessType.FIELD)
-@Component
 public class Category {
 	private String type;
 
