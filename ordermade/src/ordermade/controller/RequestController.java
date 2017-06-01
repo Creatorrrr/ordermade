@@ -273,7 +273,7 @@ public class RequestController {
 	}	//GET http://localhost:8080/ordermade/request/ui/register.do
 		//GET http://localhost:8080/ordermade/request/ui/register.do?makerId=maker1&productId=1
 	
-	@RequestMapping(value="request/ui/myPage.do",method=RequestMethod.GET)
+	@RequestMapping(value="request/ui/myRequest.do",method=RequestMethod.GET)
 	public ModelAndView showMyRequestUI(String page, HttpSession session){
 		String loginId = (String)session.getAttribute("loginId");
 		String memberType = (String)session.getAttribute("memberType");
