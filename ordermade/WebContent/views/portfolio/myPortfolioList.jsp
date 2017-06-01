@@ -17,83 +17,75 @@
 			</div>
 
 			<div id="content" class="two_third">
-				<div class="content" align="center">
-					<h1 align="left">나의 포트폴리오</h1>
-					<div style="float: right">
-						<form method="portfolio" action="${ctx}/portfolio/ui/search.do">
-							<select name="selectPortfolio" class="form-control"
-								style="display: inline-block">
-								<option value="title">제목</option>
-								<option value="content">내용</option>
-							</select> <input id="portfolioSearch" name="portfolioSearch"
-								class="search-box-input" type="text" value=""
-								placeholder="Search Here" style="display: inline-block" />
-							<button id="portfolioSearchBtn" class="fa fa-search"
-								type="submit" title="검색">
-								<em>Search</em>
-							</button>
-						</form>
+				<h1 align="left">나의 포트폴리오</h1>
+				<!-- <div class="content" align="center"> -->
+				<div style="float: right">
+					<form method="portfolioSearch" action="${ctx}/portfolio/ui/search.do">
 
-						<div style="float: right;">
-							<c:if test="${sessionScope.loginId ne null && makerId ne null}">
-								<a class="btn btn-sm btn-success"
-									href="${ctx}/portfolio/ui/register.do?makerId=${makerId}">포트폴리오
-									등록</a>
-							</c:if>
-						</div>
+						<select name="selectPortfolio" class="form-control"
+							style="display: inline-block">
+							<option value="title">제목</option>
+							<option value="content">내용</option>
+						</select> <input id="portfolioSearch" name="portfolioSearch"
+							class="search-box-input" type="text" value=""
+							placeholder="Search Here" style="display: inline-block" />
+						<button id="portfolioSearchBtn" class="fa fa-search" type="submit"
+							title="검색">
+							<em>Search</em>
+						</button>
+					</form>
 
-						<!-- test -->
-						<br>
-						<div style="float: right;">
-							<c:if test="${sessionScope.loginId ne null}">
-								<a class="btn btn-sm btn-success"
-									href="${ctx}/portfolio/ui/register.do">등록</a>
-							</c:if>
-						</div>
-						<!-- /test -->
-
+					<div style="float: right;">
+						<c:if test="${sessionScope.loginId ne null && makerId ne null}">
+							<a class="btn btn-sm btn-success"
+								href="${ctx}/portfolio/ui/register.do">포트폴리오 등록</a>
+						</c:if>
 					</div>
-
-					<br>
-
-					<ul class="nospace listing">
-						<li class="clear"><c:forEach items="${portfolios }"
-								var="portfolio">
-								<div class="content" align="center">
-									<table class="table">
-										<tr>
-											<div class="imgl borderedbox">
-												<img src="${ctx }/views/images/img1.jpg" />
-											</div>
-										</tr>
-										<tr class="nospace btmspace-15">
-											<td>포트폴리오 명</td>
-											<td class="text-left"><a
-												href="${ctx }/portfolio/ui/detail.do?portfolioId=${portfolio.id}&makerId=${makerId}">${portfolio.title }
-											</a></td>
-										</tr>
-
-										<!--test  -->
-										<tr>
-											<div style="float: right">
-												<input style="display: inline-block" class="btn btn-success" type="button" value="수정"
-													onclick="javascript:window.location='${ctx}/portfolio/ui/modify.do?portfolioId=${portfolio.id }&id=${makerId }'">
-												<input class="btn btn-warning"
-													type="button" value="삭제"
-													onclick="javascript:window.location='${ctx }/portfolio/xml/remove.do?portfolioId=${portfolio.id}&makerId=${makerId }'">
-											</div>
-										</tr>
-										<!--/test  -->
-
-									</table>
-								</div>
-							</c:forEach></li>
-					</ul>
+					<!-- test -->
+					<%-- 	<a class="btn btn-sm btn-success"
+									href="${ctx}/portfolio/ui/register.do?makerId=${makerId}">포트폴리오
+									등록</a> --%>
+					<!-- /test -->
 				</div>
+				<br>
+
+				<ul class="nospace listing">
+					<li class="clear"><c:forEach items="${portfolios }"
+							var="portfolio">
+							<div class="content" align="center">
+								<table class="table">
+									<tr>
+										<div class="imgl borderedbox">
+											<img src="${ctx }/portfolio/image.do?img=${portfolio.image}" />
+										</div>
+									</tr>
+									<tr class="nospace btmspace-15">
+										<td>포트폴리오 명</td>
+										<td><a class="portfolio" id="portfolioTitle"
+											href="${ctx }/portfolio/ui/detail.do?id=${portfolio.id}">${portfolio.title }</a>
+										</td>
+									</tr>
+
+									<!--test  -->
+									<tr>
+										<div style="float: right">
+											<input style="display: inline-block" class="btn btn-success"
+												type="button" value="수정"
+												onclick="javascript:window.location='${ctx}/portfolio/ui/modify.do?portfolioId=${portfolio.id }&id=${makerId }'">
+											<input class="btn btn-warning" type="button" value="삭제"
+												onclick="javascript:window.location='${ctx }/portfolio/xml/remove.do?portfolioId=${portfolio.id}&makerId=${makerId }'">
+										</div>
+									</tr>
+									<!--/test  -->
+
+								</table>
+							</div>
+						</c:forEach></li>
+				</ul>
+			</div>
 			</main>
 		</div>
 	</div>
-
 
 	<%@ include file="/views/common/footer.jsp"%>
 	<!-- JAVASCRIPTS -->

@@ -17,7 +17,7 @@
 		<div id="content" class="two_third">
 			<h1>포트폴리오 등록</h1>
 			<br>
-			<form action="${ctx }/portfolio/xml/register.do?makerId=${makerId}" method="post"
+			<form action="${ctx }/portfolio/xml/register.do" method="post" enctype="multipart/form-data"
 				name="pRegister"id="pRegister" onsubmit="return checkIt()">
 				<%--  <input name="makerId" type="hidden" value="${makerId}">  --%>
 				<table class="table">
@@ -43,7 +43,7 @@
 				</table>
 				<div>
 					<input id="registBtn" name="registBtn" class="btn btn-success"
-						type="submit" value="등록하기"> &nbsp; <input name="reset"
+						type="button" value="등록하기"> &nbsp; <input name="reset"
 						type="reset" value="취소">
 				</div>
 			</form>
@@ -92,19 +92,25 @@ $(document).ready(function(){
 	
  	 // 등록버튼 구현
 	 $("#registBtn").click(function(){
+		 var data = new FormData($('#pRegister')[0]);
+		 
 		console.log("----testing here-------");
 		if(checkIt()){
 			$.ajax({
 				// 보낼 때
-				url : "${ctx }/portfolio/xml/register.do",
 				type : "post",
-				data : $('#pRegister').serialize(),
+				enctype :'multipart/form-data',
+				url : "${ctx }/portfolio/xml/register.do",
+				data : data,
+				processData: false,
+				contentType: false,
+				cache: false,
 				// 받을 때 
 				dataType : "text",
 				success : function(data) {
-					if(data == "true"){
-						location.href="/portfolio/detail"; // 성공시 페이지 전환
-					}
+					if(data === "true"){
+						location.href="${ctx}/portfolio/ui/mylist.do"; // 성공시 페이지 전환
+					}/* ${ctx}/portfolio/ui/mylist.do */
 				},
 				error: function(xml){
 					console.log("실패 메시지 :\n"+xml.responseText);

@@ -52,6 +52,7 @@ public class PortfolioController {
 	public @ResponseBody String registerPortfolio(Portfolio portfolio, Model model, HttpServletRequest req) {
 		
 		String imagePath = Constants.IMAGE_PATH;
+		boolean check=false;
 		
 		File dir = new File(imagePath);
 		if (!dir.exists()) {
@@ -63,23 +64,26 @@ public class PortfolioController {
 			MultipartRequest mr = new MultipartRequest(req, imagePath, 5*1024*1024 , "UTF-8",
 					new DefaultFileRenamePolicy());
 
-//			String title = mr.getParameter("title");
-//			String content = mr.getParameter("content");
-//			String category = mr.getParameter("category");
-			//// File image = mr.getFile("image");
+			String title = mr.getParameter("title");
+			String content = mr.getParameter("content");
+			String category = mr.getParameter("category");
 			
-			Member maker = new Member();
-			maker.setId((String) req.getSession().getAttribute("loginId"));
+//			File image = mr.getFile("image");
+			
+//			Member maker = new Member();
+//			maker.setId((String) req.getSession().getAttribute("loginId"));
+			Member maker = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 		
-//			portfolio.setTitle(title);
-//			portfolio.setContent(content);
-//			portfolio.setCategory(category);
-//			// portfolio.setImage(image.getCanonicalPath());
-//			portfolio.setMaker(maker);
-
-			 portfolio.setTitle(mr.getParameter("title"));
-			 portfolio.setCategory(mr.getParameter("category"));
-			 portfolio.setContent(mr.getParameter("content"));
+			portfolio.setTitle(title);
+			portfolio.setContent(content);
+			portfolio.setCategory(category);
+	//		portfolio.setImage(image.getCanonicalPath());
+			portfolio.setMaker(maker);
+			
+//			String title = mr.getParameter("title"); + portfolio.setTitle(title);
+//			= portfolio.setTitle(mr.getParameter("title"));
+//			 portfolio.setCategory(mr.getParameter("category"));
+//			 portfolio.setContent(mr.getParameter("content"));
 			 
 			 portfolio.setImage(mr.getFile("image").getName());
 			
@@ -89,39 +93,21 @@ public class PortfolioController {
 			e.printStackTrace();
 		}
 		
-		if (pService.registerPortfolio(portfolio)) {
-			model.addAttribute("portfolio", portfolio);
-			return "portfolio/detail";
-		}else {
-			return "portfolio/register";
-		}
+		check = pService.registerPortfolio(portfolio);
+		return check+"";
+//		if (pService.registerPortfolio(portfolio)) {
+//			model.addAttribute("portfolio", portfolio);
+//			return "portfolio/detail";
+//		}else {
+//			return "portfolio/register";
+//		}
 	} 
-
-	@RequestMapping("/image.do")
-	public void getPortfolioImage(String img, HttpServletResponse resp) {
-		File image = new File(Constants.IMAGE_PATH + img);
-
-		if (!image.exists()) {
-			throw new RuntimeException("No portfolio image");
-		}
-
-		try (InputStream in = new BufferedInputStream(new FileInputStream(image));
-				OutputStream out = resp.getOutputStream();) {
-			byte[] buf = new byte[8096];
-			int readByte = 0;
-			while ((readByte = in.read(buf)) > -1) {
-				out.write(buf, 0, readByte);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
 	@RequestMapping(value = "xml/modify.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyPortfolioById(Model model,Portfolio portfolio, String makerId, HttpServletRequest req) {
 
+		boolean check = false;
+		
 		String imagePath = Constants.IMAGE_PATH;
 		File dir = new File(imagePath);
 		if (!dir.exists()) {
@@ -136,25 +122,29 @@ public class PortfolioController {
 			String title = mr.getParameter("title");
 			String content = mr.getParameter("content");
 			String category = mr.getParameter("category");
-			File image = mr.getFile("image");
+			//File image = mr.getFile("image");
 			Member maker = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 		
+			portfolio.setImage(mr.getFile("image").getName());
 			portfolio.setTitle(title);
 			portfolio.setContent(content);
 			portfolio.setCategory(category);
-			portfolio.setImage(image.getCanonicalPath());
+			//portfolio.setImage(image.getCanonicalPath());
 			portfolio.setMaker(maker);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (pService.modifyPortfolio(portfolio)) {
-			model.addAttribute("portfolio",portfolio);
-			model.addAttribute("makerId",makerId);
-			return "/portfolio/myPortfolioList";
-		} else {
-			throw new RuntimeException("Modify portfolio failed");
-		}
+//		if (pService.modifyPortfolio(portfolio)) {
+//			model.addAttribute("portfolio",portfolio);
+//			model.addAttribute("makerId",makerId);
+//			return "/portfolio/myPortfolioList";
+//		} else {
+//			throw new RuntimeException("Modify portfolio failed");
+//		}
+		
+		check = pService.modifyPortfolio(portfolio);
+		return check +"";
 	} // test http://localhost:8080/ordermade/portfolio/xml/modify.do
 		// {"title":"asdfadsf","maker.id":"user1\n","image":"asdf.jpg","content":"aaaaaaa","tags[0].id":"1","category":"aaa","id":"10"}
 
@@ -182,7 +172,7 @@ public class PortfolioController {
 	// ----------web -> html
 
 	@RequestMapping(value = "ui/register.do", method = RequestMethod.GET)
-	public String showRegisterPortfolioUI(String makerId, Model model) {
+	public String showRegisterPortfolioUI(/*String makerId,*/ Model model) {
 
 		List<Category> categorys = pdService.findAllCategory();
 		model.addAttribute("categorys", categorys);
@@ -191,36 +181,36 @@ public class PortfolioController {
 		// portfolio.setId(portfolioId);
 		// model.addAttribute("portfolioId",portfolio.getId());
 		// model.addAttribute("portfolioId",portfolioId);
-		System.out.println("@@@@@@@@@@@@@@@@@@makerId:" + makerId);
 		
-		model.addAttribute("makerId", makerId);
+//		System.out.println("@@@@@@@@@@@@@@@@@@makerId:" + makerId);
+//		
+//		model.addAttribute("makerId", makerId);
 		return "portfolio/register";
 
 	} // test http://localhost:8080/ordermade/portfolio/ui/register.do
 
 	@RequestMapping(value = "ui/modify.do", method = RequestMethod.GET)
 	public ModelAndView showEditPortfolioUI(String id, HttpSession session) {
-		//Portfolio portfolio = pService.findPortfolioById(id);
 		
-		return new ModelAndView("/portfolio/modify")
-				.addObject("portfolio", pService.findPortfolioById(id));
 		
-//		ModelAndView modelAndView = new ModelAndView("/portfolio/modify");
-//		modelAndView.addObject("portfolio", portfolio);
-//		return modelAndView;
+//		return new ModelAndView("portfolio/modify")
+//				.addObject("portfolio", pService.findPortfolioById(id));
+		
+		Portfolio portfolio = pService.findPortfolioById(id);
+		ModelAndView modelAndView = new ModelAndView("portfolio/modify");
+		modelAndView.addObject("portfolio", portfolio);
+		return modelAndView;
 	} // test http://localhost:8080/ordermade/portfolio/ui/modify.do?id=7
 
 	@RequestMapping(value = "ui/detail.do", method = RequestMethod.GET)
-	public ModelAndView showDetailPortfolioUI(String id, String makerId) {
-		
+	public ModelAndView showDetailPortfolioUI(String id) {
 		
 		Portfolio portfolio = pService.findPortfolioById(id);
 	
 		System.out.println("#########################"+id);  //test
-		System.out.println("#########################"+makerId);
-		ModelAndView modelAndView = new ModelAndView("/portfolio/detail");
+		
+		ModelAndView modelAndView = new ModelAndView("portfolio/detail");
 		modelAndView.addObject("portfolio", portfolio);
-		modelAndView.addObject("makerId", makerId);
 		return modelAndView;
 
 	} // test http://localhost:8080/ordermade/portfolio/ui/detail.do?id=7
@@ -236,13 +226,14 @@ public class PortfolioController {
 	} // test http://localhost:8080/ordermade/portfolio/ui/search.do?type=aa
 
 	@RequestMapping(value = "ui/mylist.do", method = RequestMethod.GET)
-	public ModelAndView showMyPortfolioListUI(HttpSession session) { // String
+	public ModelAndView showMyPortfolioListUI(String page, HttpServletRequest req) { // String
 																		// page
 		// -------session으로 로그인 정보 갖고 오기.
 
-		String makerId = (String) session.getAttribute("loginId");
+		String makerId = (String) req.getSession().getAttribute("loginId");
 		List<Portfolio> portfolios = pService.findPortfoliosByMakerId(makerId, "1");
-		ModelAndView modelAndView = new ModelAndView("/portfolio/myPortfolioList");
+		
+		ModelAndView modelAndView = new ModelAndView("portfolio/myPortfolioList");
 		
 		modelAndView.addObject("portfolios", portfolios);
 		modelAndView.addObject("makerId", makerId);
@@ -290,5 +281,27 @@ public class PortfolioController {
 			return null;
 		return pService.findPortfolioById(id);
 	} // test http://localhost:8080/ordermade/portfolio/xml/searchById.do?id=7
+	
+	@RequestMapping("image.do")
+	public void getProductImage(String img, HttpServletResponse resp) {
+		File image = new File(Constants.IMAGE_PATH+img);
+		//System.out.println(img+"img");
+		if(!image.exists()){
+			throw new RuntimeException("No product image");
+		}
+		
+		try (InputStream in = new BufferedInputStream(new FileInputStream(image));
+				OutputStream out = resp.getOutputStream();){
+			byte[] buf = new byte[8096];
+			int readByte = 0;
+			while((readByte = in.read(buf))>-1){
+				out.write(buf,0,readByte);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }
