@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 @XmlRootElement(name="categories")
 @XmlAccessorType(XmlAccessType.FIELD)
-@Component
 public class Categories {
 	@XmlElement(name="category")
 	private List<Category> categories;

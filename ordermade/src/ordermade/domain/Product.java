@@ -10,8 +10,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.springframework.stereotype.Component;
 
 @XmlRootElement(name = "product")
-@XmlAccessorType(XmlAccessType.FIELD)
-@Component
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class Product {
 
 	private String id;
@@ -28,7 +27,6 @@ public class Product {
 	public String getId() {
 		return id;
 	}
-
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -36,15 +34,18 @@ public class Product {
 	public String getTitle() {
 		return title;
 	}
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
 	public Member getMaker() {
-		return maker;
+		if(this.maker == null) return this.maker;
+		Member safeMaker=this.maker;
+		safeMaker.setPassword(null);
+		safeMaker.setMemberType(null);
+		safeMaker.setLicenseNumber(null);
+		return safeMaker;
 	}
-
 	public void setMaker(Member maker) {
 		this.maker = maker;
 	}
@@ -52,7 +53,6 @@ public class Product {
 	public String getCategory() {
 		return category;
 	}
-
 	public void setCategory(String category) {
 		this.category = category;
 	}
@@ -60,7 +60,6 @@ public class Product {
 	public String getContent() {
 		return content;
 	}
-
 	public void setContent(String content) {
 		this.content = content;
 	}
@@ -68,7 +67,6 @@ public class Product {
 	public String getImage() {
 		return image;
 	}
-
 	public void setImage(String image) {
 		this.image = image;
 	}
@@ -76,7 +74,6 @@ public class Product {
 	public int getPrice() {
 		return price;
 	}
-
 	public void setPrice(int price) {
 		this.price = price;
 	}
@@ -84,7 +81,6 @@ public class Product {
 	public int getPeriod() {
 		return period;
 	}
-
 	public void setPeriod(int period) {
 		this.period = period;
 	}
@@ -92,7 +88,6 @@ public class Product {
 	public int getHit() {
 		return hit;
 	}
-
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
@@ -100,7 +95,6 @@ public class Product {
 	public List<Review> getReviews() {
 		return reviews;
 	}
-
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
 	}

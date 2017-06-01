@@ -12,15 +12,15 @@
 		<result property="category" column="type" />
 		<result property="hopePrice" column="hope_price" jdbcType="NUMERIC" />
 		<result property="price" column="price" jdbcType="NUMERIC" />
-		<result property="consumer.id" column="consumer_id"/>
-		<result property="maker.id" column="maker_id"/>
-		<result property="page" column="page"/>		
-		<!-- <association property="maker" column="maker_id"
+		<result property="page" column="page"/>	
+		<!-- <result property="consumer.id" column="consumer_id"/> -->
+		<!-- <result property="maker.id" column="maker_id"/> -->
+		<association property="maker" column="maker_id"
 			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
-			jdbcType="VARCHAR" /> 보안성 문제 -->
-		<!-- <association property="consumer" column="consumer_id"
+			jdbcType="VARCHAR" />
+		<association property="consumer" column="consumer_id"
 			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
-			jdbcType="VARCHAR" /> 보안성 문제 -->
+			jdbcType="VARCHAR" />
 		<collection property="comments" column="id"
 			select="ordermade.store.mapper.CommentMapper.selectCommentsByRequestId"
 			javaType="ArrayList" jdbcType="VARCHAR" />
@@ -75,7 +75,7 @@
 			where bound = #{bound}
 			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) order by A.id desc
 		) 
-		, (select /*+INDEX_FES(table column) */ ceil(count(*)/10) page from request where bound = #{bound})
+		, (select /*+INDEX_FES(table column) */ ceil(count(*)/${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) page from request where bound = #{bound})
 		where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>
 
@@ -84,7 +84,7 @@
 		FROM (<include refid="selectRequestRownum"/>
 		 	FROM request 
 		 	WHERE bound = #{bound} AND title LIKE '%${title}%')       
-		, (select /*+INDEX_FES(table column) */ ceil(count(*)/10) page from request WHERE bound = #{bound} AND title LIKE '%${title}%')
+		, (select /*+INDEX_FES(table column) */ ceil(count(*)/${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) page from request WHERE bound = #{bound} AND title LIKE '%${title}%')
 		WHERE rnum BETWEEN (#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE} AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>
 	
@@ -93,7 +93,7 @@
 		FROM (<include refid="selectRequestRownum"/>
 			 FROM request 
 			 WHERE bound = #{bound} AND content LIKE '%${content}%')        <!-- '%${value}%' -->
-		, (select /*+INDEX_FES(table column) */ ceil(count(*)/10) page from request WHERE bound = #{bound} AND content LIKE '%${content}%')
+		, (select /*+INDEX_FES(table column) */ ceil(count(*)/${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) page from request WHERE bound = #{bound} AND content LIKE '%${content}%')
 		WHERE rnum BETWEEN (#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE} AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>	
 		
@@ -103,7 +103,7 @@
 			 FROM request 
 			 WHERE consumer_id = #{consumerId} 
 			 ORDER BY id DESC)  
-		, (select /*+INDEX_FES(table column) */ ceil(count(*)/10) page from request  WHERE consumer_id = #{consumerId} )     
+		, (select /*+INDEX_FES(table column) */ ceil(count(*)/${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) page from request  WHERE consumer_id = #{consumerId} )     
 		WHERE rnum BETWEEN ((#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>
 			
@@ -112,7 +112,7 @@
 		FROM (<include refid="selectRequestRownum"/>
 		 	FROM request 
 		 	WHERE consumer_id = #{consumerId} AND maker_id IS NOT NULL)  
-		, (select /*+INDEX_FES(table column) */ ceil(count(*)/10) page from request WHERE consumer_id = #{consumerId} AND maker_id IS NOT NULL)
+		, (select /*+INDEX_FES(table column) */ ceil(count(*)/${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) page from request WHERE consumer_id = #{consumerId} AND maker_id IS NOT NULL)
 		WHERE rnum BETWEEN ((#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>		
 	
@@ -122,11 +122,29 @@
 		 	FROM request r 
 		 	INNER JOIN  purchase_history ph ON r.consumer_id = ph.consumer_id
 			WHERE r.consumer_id = #{consumerId} AND ph.payment = '${@ordermade.constants.Constants@PAYMENT_Y}') 
-		, (select /*+INDEX_FES(table column) */ ceil(count(*)/10) page from request)
+		, (select /*+INDEX_FES(table column) */ ceil(count(*)/${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) page from request)
 		WHERE rnum BETWEEN ((#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>
 	
-
+	<select id="selectRequestsByMakerId" parameterType="HashMap" resultMap="requestMap">
+		<include refid="selectRequest"/>
+		FROM (<include refid="selectRequestRownum"/>
+			 FROM request 
+			 WHERE maker_id = #{makerId} 
+			 ORDER BY id DESC)  
+		, (select /*+INDEX_FES(table column) */ ceil(count(*)/${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) page from request  WHERE maker_id = #{makerId}  )     
+		WHERE rnum BETWEEN ((#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
+	</select>
+			
+	<select id="selectRequestsByMakerIdWithPayment" parameterType="HashMap" resultMap="requestMap">
+		<include refid="selectRequest"/>
+		FROM (SELECT rownum rnum, r.id, r.title, r.maker_id, r.consumer_id, r.type, r.content, r.hope_price, r.price, r.bound
+		 	FROM request r 
+		 	INNER JOIN  purchase_history ph ON r.id = ph.request_id
+			WHERE r.maker_id = #{makerId} AND ph.payment = '${@ordermade.constants.Constants@PAYMENT_Y}') 
+		, (select /*+INDEX_FES(table column) */ ceil(count(*)/${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) page from request)
+		WHERE rnum BETWEEN ((#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
+	</select>
 	
 	
 </mapper>

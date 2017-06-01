@@ -2,6 +2,8 @@ package ordermade.store.facade;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import ordermade.domain.Request;
 
 public interface RequestStore {
@@ -16,4 +18,6 @@ public interface RequestStore {
 	public List<Request> selectRequestsByConsumerId(String consumerId, String page);
 	public List<Request> selectRequestsByConsumerIdWithMaker(String consumerId, String page);
 	public List<Request> selectRequestsByConsumerIdWithPayment(String consumerId, String page);
+	public List<Request> selectRequestsByMakerId(String makerId, String page);
+	public List<Request> selectRequestsByMakerIdWithPayment(String makerId, String page);
 }

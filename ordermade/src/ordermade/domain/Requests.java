@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 @XmlRootElement(name="requests")
 @XmlAccessorType(XmlAccessType.FIELD)
-@Component
 public class Requests {
 	
 	@XmlElement(name="request")

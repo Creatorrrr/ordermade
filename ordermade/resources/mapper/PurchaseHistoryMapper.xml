@@ -12,10 +12,10 @@
   		<result property="deliveryStatus" column="delivery_status"/>
   		<result property="payment" column="payment"/>
   		<result property="orderDate" column="order_date"/>
-  		<result property="consumer.id" column="consumer_id"/>
-		<result property="maker.id" column="maker_id"/>
-  		<!-- <association property="maker" column="maker_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="String" jdbcType="VARCHAR"/> -->
-  		<!-- <association property="consumer" column="consumer_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="String" jdbcType="VARCHAR"/> -->
+  		<!-- <result property="consumer.id" column="consumer_id"/> -->
+		<!-- <result property="maker.id" column="maker_id"/> -->
+  		<association property="maker" column="maker_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="String" jdbcType="VARCHAR"/>
+  		<association property="consumer" column="consumer_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="String" jdbcType="VARCHAR"/>
   		<association property="request" column="request_id" select="ordermade.store.mapper.RequestMapper.selectRequestById" javaType="String" jdbcType="VARCHAR"/>
 		
   	</resultMap>

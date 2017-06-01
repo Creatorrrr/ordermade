@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 @XmlRootElement(name="inviterequests")
 @XmlAccessorType(XmlAccessType.FIELD)
-@Component
 public class InviteRequests {
 	@XmlElement(name="inviterequest")
 	private List<InviteRequest> inviteRequests;

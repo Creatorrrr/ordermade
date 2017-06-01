@@ -294,18 +294,19 @@ public class RequestController {
 		
 		if(page == null || page == "") page = "1";
 		List<Request> list = null;
+		ModelAndView modelAndView = null;
 		
 		if(memberType.equals(Constants.CONSUMER)){
 			list = service.findRequestsByConsumerId(loginId, page);
+			modelAndView = new ModelAndView("request/consumerMyRequestList");//나의 의뢰서
 		}else if(memberType.equals(Constants.MAKER)){
-			list = service.findRequestsByConsumerIdWithMaker(loginId, page);
+			list = service.findRequestsByMakerId(loginId, page);
+			modelAndView = new ModelAndView("request/makerMyRequestList");//받은 의뢰서
 		}else{
 			throw new RuntimeException("error");
 		}
 
-		
-		System.out.println(list.toString());
-		ModelAndView modelAndView = new ModelAndView("request/myRequest");//나의 의뢰서 or 받은 의뢰서
+		//System.out.println(list.toString());
 		modelAndView.addObject("requests", list);
 		return modelAndView;
 	}
@@ -358,36 +359,55 @@ public class RequestController {
 	// Complete
 	@RequestMapping(value="request/xml/searchBound.do", produces="application/xml")
 	public @ResponseBody Requests findRequestsByBound(String page){
+		if(page == null) page = "1";
 		return new Requests(service.findRequestsByBound(Constants.BOUND_PUBLIC, page));
 	}
 	// Complete
 	@RequestMapping(value="request/xml/searchBoundAndTitle.do", produces="application/xml")
 	public @ResponseBody Requests findRequestsByBoundAndTitle(String title, String page){
+		if(page == null) page = "1";
 		return new Requests(service.findRequestsByBoundAndTitle(Constants.BOUND_PUBLIC, title, page));
 	}
 	// Complete
 	@RequestMapping(value="request/xml/searchBoundAndContent.do", produces="application/xml")
 	public @ResponseBody Requests findRequestsByBoundAndContent(String content, String page){
+		if(page == null) page = "1";
 		return new Requests(service.findRequestsByBoundAndContent(Constants.BOUND_PUBLIC, content, page));
 	}
 	// Complete
 	@RequestMapping(value="request/xml/searchMyRequests.do", produces="application/xml")
-	public @ResponseBody Requests findMyRequests(String page, HttpSession session){
+	public @ResponseBody Requests findMyRequestsByConsumerId(String page, HttpSession session){
+		if(page == null) page = "1";
 		return new Requests(service.findRequestsByConsumerId((String)session.getAttribute("loginId"), page));
 	}
 	// Complete
 	@RequestMapping(value="request/xml/searchMyRequestsWithMaker.do", produces="application/xml")
-	public @ResponseBody Requests findMyRequestsWithMaker(String page, HttpSession session){
+	public @ResponseBody Requests findMyRequestsByConsumerIdWithMaker(String page, HttpSession session){
+		if(page == null) page = "1";
 		return new Requests(service.findRequestsByConsumerIdWithMaker((String)session.getAttribute("loginId"), page));
 	}
 	// Complete
 	@RequestMapping(value="request/xml/searchMyRequestsWithPayment.do", produces="application/xml")
-	public @ResponseBody Requests findMyRequestsWithPayment(String page, HttpSession session){
+	public @ResponseBody Requests findMyRequestsByConsumerIdWithPayment(String page, HttpSession session){
+		if(page == null) page = "1";
 		return new Requests(service.findRequestsByConsumerIdWithPayment((String)session.getAttribute("loginId"), page));
 	}
+	
+	@RequestMapping(value="request/xml/searchMyRequestsByMakerId.do", produces="application/xml")
+	public @ResponseBody Requests findMyRequestsByMakerId(String page, HttpSession session){
+		if(page == null) page = "1";
+		return new Requests(service.findRequestsByMakerId((String)session.getAttribute("loginId"), page));
+	}
+	@RequestMapping(value="request/xml/searchMyRequestsByMakerIdWithPayment.do", produces="application/xml")
+	public @ResponseBody Requests findMyRequestsByMakerIdWithPayment(String page, HttpSession session){
+		if(page == null) page = "1";
+		return new Requests(service.findRequestsByMakerIdWithPayment((String)session.getAttribute("loginId"), page));
+	}
+	
 	// Complete
 	@RequestMapping(value="request/xml/searchMyInviteRequestsForMaker.do", produces="application/xml")
 	public @ResponseBody InviteRequests findMyInviteRequestsForMaker(String page, String form, HttpSession session){
+		if(page == null) page = "1";
 		return new InviteRequests(service.findInviteRequestsByMakerId(
 				(String)session.getAttribute("loginId"),
 				form,
@@ -396,6 +416,7 @@ public class RequestController {
 	// Complete
 	@RequestMapping(value="request/xml/searchMyInviteRequestsForConsumer.do", produces="application/xml")
 	public @ResponseBody InviteRequests findMyInviteRequestsForConsumer(String page, String form, HttpSession session){
+		if(page == null) page = "1";
 		return new InviteRequests(service.findInviteRequestsByConsumerId(
 				(String)session.getAttribute("loginId"),
 				form,
@@ -404,16 +425,19 @@ public class RequestController {
 	// Complete
 	@RequestMapping(value="comment/xml/searchRequestId.do", produces="application/xml")
 	public @ResponseBody Comments findCommentsByRequestId(String requestId, String page){
+		if(page == null) page = "1";
 		return new Comments(service.findCommentsByRequestId(requestId, page));
 	}
 	// Complete
 	@RequestMapping(value="attach/xml/searchByRequestId.do", produces="application/xml")
 	public @ResponseBody Attachs findAttachsByRequestId(String requestId, String page){
+		if(page == null) page = "1";
 		return new Attachs(service.findAllAttachsByRequestId(requestId, page));
 	}
 	// Complete
 	@RequestMapping(value="attach/xml/searchByRequestIdAndFileName.do", produces="application/xml")
 	public @ResponseBody Attachs findAttachsByRequestIdAndFileName(String requestId, String fileName, String page){
+		if(page == null) page = "1";
 		return new Attachs(service.findAttachsByFileNameAndRequestId(fileName, requestId, page));
 	}
 	// Complete
