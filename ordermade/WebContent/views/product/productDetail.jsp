@@ -26,7 +26,7 @@
 								<input class="btn btn-warning" type="button" value="삭제"
 									onclick="javascript:deleteProduct(${product.id})"> <input
 									class="btn btn-warning" type="button" value="수정"
-									onclick="location.href=${ctx}/product/ui/modify.do?id=${}">
+									onclick="location.href='${ctx}/product/ui/modify.do?id=${product.id}';">
 							</div>
 						</c:if>
 					</c:if>

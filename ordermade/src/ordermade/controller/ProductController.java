@@ -364,9 +364,7 @@ public class ProductController {
 	@RequestMapping("ui/myProducts.do")
 	public ModelAndView showMyProductListUI(String page, HttpServletRequest req) {
 		// GET 나의 생산품들 출력
-		System.out.println("왔어");
 		String makerId = (String) req.getSession().getAttribute("loginId");
-		System.out.println(makerId);
 		List<Product> products = pService.findProductsByMakerId(makerId, "1");
 
 		ModelAndView mv = new ModelAndView("product/myProductList");
