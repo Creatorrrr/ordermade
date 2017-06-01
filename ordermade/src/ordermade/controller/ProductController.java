@@ -103,7 +103,6 @@ public class ProductController {
 	@RequestMapping(value = "xml/modify.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyProductById(Product product, HttpServletRequest req) {
 		// 상품 수정 후 상세 상품페이지로 이동
-		boolean check = false;
 		String imagePath = Constants.IMAGE_PATH;
 
 		File dir = new File(imagePath);
@@ -116,9 +115,10 @@ public class ProductController {
 			MultipartRequest mr = new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8",
 					new DefaultFileRenamePolicy());
 
-			String title = mr.getParameter("title");
+			String id = mr.getParameter("id");
+			String title = mr.getParameter("productTitle");
 			String category = mr.getParameter("category");
-			String content = mr.getParameter("content");
+			String content = mr.getParameter("productContent");
 
 			File image = mr.getFile("image");
 
@@ -127,11 +127,12 @@ public class ProductController {
 			int hit = Integer.parseInt(mr.getParameter("hit"));
 			Member maker = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 
+			product.setId(id);
 			product.setTitle(title);
 			product.setCategory(category);
 			product.setContent(content);
 
-			product.setImage(image.getCanonicalPath());
+			product.setImage(image.getName());
 
 			product.setPrice(price);
 			product.setPeriod(period);
@@ -143,7 +144,7 @@ public class ProductController {
 			e.printStackTrace();
 		}
 
-		check = pService.modifyProductById(product);
+		boolean check = pService.modifyProductById(product);
 		return check + "";
 		/*
 		 * if (!pService.registerProduct(product)) { return ""; } else { return
@@ -155,7 +156,7 @@ public class ProductController {
 	public @ResponseBody String removeProductById(String id, HttpServletRequest req) {
 		// 상품페이지 삭제후 상품페이지 목록으로 이동
 
-		 boolean check = pService.removeProductById(id);
+		boolean check = pService.removeProductById(id);
 		return check + "";
 		/*
 		 * if (!pService.removeProductById(id)) { return "/product/detail"; }
@@ -244,7 +245,7 @@ public class ProductController {
 
 		Products products = new Products();
 		products.setProducts(myProducts);
-		
+
 		return products;
 	}
 
@@ -348,9 +349,7 @@ public class ProductController {
 	@RequestMapping("ui/myProducts.do")
 	public ModelAndView showMyProductListUI(String page, HttpServletRequest req) {
 		// GET 나의 생산품들 출력
-		System.out.println("왔어");
 		String makerId = (String) req.getSession().getAttribute("loginId");
-		System.out.println(makerId);
 		List<Product> products = pService.findProductsByMakerId(makerId, "1");
 
 		ModelAndView mv = new ModelAndView("product/myProductList");
@@ -371,11 +370,11 @@ public class ProductController {
 
 	@RequestMapping("image.do")
 	public void getProductImage(String img, HttpServletResponse resp) {
-		File image = new File(Constants.IMAGE_PATH+img);
-		if(!image.exists()){
+		File image = new File(Constants.IMAGE_PATH + img);
+		if (!image.exists()) {
 			throw new RuntimeException("No product image");
 		}
-		
+
 		try (InputStream in = new BufferedInputStream(new FileInputStream(image));
 				OutputStream out = resp.getOutputStream();) {
 			byte[] buf = new byte[8096];
@@ -389,8 +388,8 @@ public class ProductController {
 			e.printStackTrace();
 		}
 	}
-	
-	@RequestMapping(value = "imageUpload.do", method = RequestMethod.POST, produces="text/plain")
+
+	@RequestMapping(value = "imageUpload.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String uploadProductImage(HttpServletRequest req) {
 		String imagePath = Constants.IMAGE_PATH;
 
@@ -411,8 +410,7 @@ public class ProductController {
 
 	@RequestMapping("ui/search.do")
 	public ModelAndView showSearchProductsUI(String category, String page) {
-		return new ModelAndView("product/productList")
-				.addObject("category", category)
-				.addObject("products", pService.findProductsByCategory(category, page));
+		return new ModelAndView("product/productList").addObject("category", category).addObject("products",
+				pService.findProductsByCategory(category, page));
 	}
 }

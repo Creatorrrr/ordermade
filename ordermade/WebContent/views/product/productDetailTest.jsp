@@ -125,7 +125,6 @@
 		
 		$('.reviewBox').on("click",".deletebtn", function(id) {
 			deletReview();
-		}	
 		function deletReview() {
 				console.log("eeeee");
 				$.ajax({
