@@ -58,15 +58,13 @@
 								<table class="table">
 									<tr>
 										<div class="imgl borderedbox">
-											 <img
-												src="${ctx }/product/image.do?img=${product.image}" />
+											<a href="${ctx }/product/ui/detail.do?id=${product.id }"><img
+												src="${ctx }/product/image.do?img=${product.image}" /></a>
 										</div>
 									</tr>
 									<tr class="nospace btmspace-15">
 										<td>상품 이름</td>
-										<td><a class="literature" id="productId"
-											href="${ctx }/product/ui/detail.do?id=${product.id }">${product.title }</a>
-										</td>
+										<td class="creatorId">${product.title}</td>
 									</tr>
 									<tr class="nospace btmspace-15">
 										<td>가격</td>

@@ -27,6 +27,7 @@
 					name="productModify" onsubmit="return checkIt()">
 					<table class="table">
 						<tr>
+
 							<th>제작 항목 <span>*</span></th>
 							<td><div id="category"></div></td>
 						</tr>
@@ -57,6 +58,8 @@
 						</tr>
 					</table>
 					<div align="center">
+						<input type="hidden" name="hit" value="${product.hit }"> 
+						<input type="hidden" name="id" value="${product.id }">
 						<input class="btn" type="reset" value="취소하기"
 							onclick="javascript:window.location='${ctx }/post/list.do?boardId=${boardId }'">
 						<input id="modifyBtn" class="btn btn-success" type="button"
@@ -85,27 +88,25 @@
 										dataType : "xml",
 										success : function(xml) {
 											var categoryId = "${product.category}";
-											var rs = '<select name="category" id="category" class="form-control">';
-											var list = $(xml).find(
-													"category > type");
-											console.log(list.size());
-											list
-													.each(function() {
-														rs += '<option value"'
-																+ $(this)
-																		.text()
-																+ '""';
-														if (categoryId == $(
-																this).text()) {
-															rs += 'selected="selected"';
-														}
-														rs += '>'
-																+ $(this)
-																		.text()
-																+ '</option>';
-													});
-											rs += '</select>';
-											$("#category").html(rs);
+											
+											{
+												var categoryId = "${product.category}";
+												
+												var rs = '<select name="category" id="category" class="form-control">';
+												var list = $(xml).find("category > type");
+												
+												list.each(function() {
+															rs += '<option value="'+ $(this).text()+ '"'
+															
+															if (categoryId == $(this).text()) {
+																rs += 'selected="selected"';
+															}
+															rs += '>'+ $(this).text()
+													+ '</option>';
+														});
+												rs += '</select>';
+												$("#category").html(rs);
+											}
 										},
 										error : function(xml) {
 											$("#category")
@@ -143,8 +144,7 @@
 																success : function(
 																		resultData) {
 																	if (resultData == "true") {
-																		location.href = "${ctx}/views/product/myProductList.jsp"
-																		/* "${ctx}/product/ui/myProducts.do" */; // 성공시 페이지 전환
+																		location.href = "${ctx}/product/ui/myProducts.do"
 																	}
 																},
 																error : function(
