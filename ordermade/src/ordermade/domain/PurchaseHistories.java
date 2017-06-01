@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 @XmlRootElement(name="purchaseHistories")
 @XmlAccessorType(XmlAccessType.FIELD)
-@Component
 public class PurchaseHistories {
 	
 	@XmlElement(name="purchaseHistory")

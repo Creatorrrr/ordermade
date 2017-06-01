@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 @XmlRootElement(name="attach")
 @XmlAccessorType(XmlAccessType.FIELD)
-@Component
 public class Attach {
 	private String id;
 	private String path;

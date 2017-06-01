@@ -13,10 +13,9 @@
 		<result column="period" property="period" />
 		<result column="hit" property="hit" />
 		<result column="type" property="category" />
-		<!-- <result property="maker.id" column="maker_id" /> -->
 		<association property="maker" column="maker_id"
-			select="ordermade.store.mapper.MemberMapper.selectMemberById"
-			javaType="Member" jdbcType="VARCHAR" />
+			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
+			jdbcType="VARCHAR" />
 		<collection property="reviews" column="id" ofType="Review"
 			select="ordermade.store.mapper.ReviewMapper.selectReviewsByProductIdForCollection"
 			javaType="ArrayList" jdbcType="VARCHAR" />

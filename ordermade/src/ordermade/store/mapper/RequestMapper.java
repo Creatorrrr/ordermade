@@ -18,5 +18,7 @@ public interface RequestMapper {
 	public List<Request> selectRequestsByBoundAndContent(@Param("bound")String bound, @Param("content")String content, @Param("page")String page);
 	public List<Request> selectRequestsByConsumerId(@Param("consumerId")String consumerId, @Param("page")String page);
 	public List<Request> selectRequestsByConsumerIdWithMaker(@Param("consumerId")String consumerId, @Param("page")String page);
-	public List<Request> selectRequestsByConsumerIdWithPayment(@Param("consumerId")String inconsumerId, @Param("page")String page);
+	public List<Request> selectRequestsByConsumerIdWithPayment(@Param("consumerId")String consumerId, @Param("page")String page);
+	public List<Request> selectRequestsByMakerId(@Param("makerId")String makerId, @Param("page")String page);
+	public List<Request> selectRequestsByMakerIdWithPayment(@Param("makerId")String makerId, @Param("page")String page);
 }

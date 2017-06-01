@@ -10,8 +10,7 @@ import org.springframework.stereotype.Component;
 
 
 @XmlRootElement(name="portfolio")
-@XmlAccessorType(XmlAccessType.FIELD)
-@Component
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class Portfolio {
 	private String id;
 	private String title;
@@ -52,7 +51,12 @@ public class Portfolio {
 		this.category = category;
 	}
 	public Member getMaker() {
-		return maker;
+		if(this.maker == null) return this.maker;
+		Member safeMaker=this.maker;
+		safeMaker.setPassword(null);
+		safeMaker.setMemberType(null);
+		safeMaker.setLicenseNumber(null);
+		return safeMaker;
 	}
 	public void setMaker(Member maker) {
 		this.maker = maker;

@@ -86,16 +86,6 @@
 								</div>
 							</td>
 						</tr>
-						<tr>
-							<td><h3>추가 요구 사항</h3></td>
-						</tr>
-						<tr>
-							<td><textarea id="commentContent" rows="5"
-									style="width: 100%"></textarea>
-								<div style="float: right">
-									<button id="commentRegister">코멘트 등록</button>
-								</div></td>
-						</tr>
 					</table>
 					<div>
 						<c:choose>
@@ -127,10 +117,12 @@
 
 	<%@ include file="/views/common/footer.jsp"%>
 
-	<!-- bxSlider JavaScript file -->
-	<script src="${ctx }/views/js/jquery.bxslider.min.js"></script>
+<script type="text/javascript">
+CKEDITOR.replace('commentRegisterContent', {
+	imageUploadUrl : '${ctx}/request/fileUpload.do',
+	filebrowserUploadUrl: '${ctx}/request/fileUpload.do'
+});
 
-	<script type="text/javascript">
 $("#commentRegister").click(function() {
 	commentController.registerComment();
 	$("#commentRegisterContent").val("");

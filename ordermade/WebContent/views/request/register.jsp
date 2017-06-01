@@ -36,7 +36,13 @@ ${box2 }
 						<th>희망 금액</th>
 						<td><input id="hopePrice" name="hopePrice" class="" type="text" value=""></td>
 					</tr>
-
+					<tr>
+						<th>공개 여부</th>
+						<td>
+							<input type="radio" name="bound" id="boundPublic" value="PUBLIC"><label for="boundPublic">공개</label>
+							<input type="radio" name="bound" id="boundPrivate" value="PRIVATE" checked="checked"><label for="boundPrivate">비공개</label>
+						</td>
+					</tr>
 				</table>
 				<div align="center">
 					<input class="btn btn-success" type="button" id="btn" value="저장하기">

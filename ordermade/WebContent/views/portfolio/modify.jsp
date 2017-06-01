@@ -21,9 +21,9 @@
 			<div id="content" class="two_third">
 				<h1>포트폴리오 수정 페이지</h1>
 				<br>
-				<form action="${ctx }/portfolio/xml/modify.do" id="pModify" name="pModify"
-					method="post" enctype="multipart/form-data" onsubmit="return checkIt()">
-			 <%-- 	<input name="portfolio" type="hidden" value="${portfolio.id}"> --%>
+				<form action="${ctx }/portfolio/xml/modify.do" id="pModify" name="pModify" enctype="multipart/form-data"
+					method="post" onsubmit="return checkIt()">
+			  	<%--  <input name="portfolio" type="hidden" value="${portfolio.maker.id}">   --%>
 					<table class="table">
 						<tr>
 							<th>제작 항목 <span>*</span></th>
@@ -46,7 +46,7 @@
 						</tr>
 					</table>
 					<div>
-						<input class="btn btn-success" type="button" id="modifyBtn" value="등록">
+						<input class="btn btn-success" type="submit" id="modifyBtn" value="등록">
 						&nbsp; <input type="reset" value="취소">
 					</div>
 				</form>
@@ -90,9 +90,40 @@
 											+ '</select>');
 			}
 		});
-			// 등록버튼 구현
-			  $("#modifyBtn").click(function(){
-					var data = new FormData($('#pModify')[0]);
+		 	
+		/*  //저장버튼 구현
+			$("#modifyBtn").click(function() {
+				//console.log("----------");
+				if(checkIt()){
+					$.ajax({
+						enctype: 'multipart/form-data',
+						processData: false,
+						contentType: false,
+						cache: false,
+						
+						url : "${ctx }/portfolio/xml/modify.do",
+						type : "post",
+						data : $('#pModify').serialize(),
+						dataType : "text",
+						success : function(data) {
+							console.log(data);
+							if(data=="true"){
+								location.href="${ctx}/portfolio/ui/detail.do";//성공시 페이지 전환
+							}
+						},
+						error: function(xml){
+							console.log("실패 메세지:\n"+xml.responseText);
+						}
+						
+					});
+				}
+			});
+			 */
+			
+			
+			/* // 등록버튼 구현
+		 	 $("#modifyBtn").click(function(){
+				var data = new FormData($('#pModify')[0]);
 				  
 					console.log("----testing here-------");
 					if(checkIt()){
@@ -117,7 +148,7 @@
 							}
 						});
 					}
-				});
+				});  */
 
 			//유효성 검사
 			function checkIt() {
@@ -141,7 +172,7 @@
 							
 	</script>
 
-	<!-- JAVASCRIPTS -->
+	
 
 </body>
 </html>

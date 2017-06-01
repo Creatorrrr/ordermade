@@ -15,7 +15,7 @@
 	<div class="rounded">
 		<main class="container clear">
 			<h1>로그인</h1>
-			<form action="${ctx }/member/login.do" method="post">
+			<form id="loginForm">
 				<table class="table">
 					<tr>
 						<th>ID</th>
@@ -30,7 +30,8 @@
 				</table>
 				<br>
 				<div align="center">
-					<input class="btn btn-success" type="submit" value="로그인"><input class="btn" type="reset" value="취소"> 
+					<input class="btn btn-success" type="button" value="로그인" onclick="javascript:memberController.loginMember()">
+					<input class="btn" type="reset" value="취소"> 
 				</div>
 			</form>
 		</main>
@@ -38,6 +39,27 @@
 </div>
 
 <%@include file="/views/common/footer.jsp"%>
+
+<script type="text/javascript">
+var memberController = {
+	loginMember : function() {	// 작업중
+		$('#loginForm').ajaxForm({
+			url : "${ctx }/member/login.do",
+			type : "post",
+			dataType : "text",
+			success : function(text) {
+					if(text === "true") {
+						location.href="${ctx}/main/main.do"
+					} else {
+						location.href="${ctx}/member/login"
+					}
+					javascript:$.unblockUI();
+			}
+		});
+		$("#loginForm").submit();
+	}
+};
+</script>
 
 </body>
 </html>

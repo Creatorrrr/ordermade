@@ -11,59 +11,13 @@
 <title>회원가입</title>
 <!-- Main Body ========================================================================================== -->
 <body>
-<script type="text/javascript">
-	$(function() {
-		$("#registerForm").validate({
-			rules : {
-				id : "required",
-				name : {
-					required : true,
-					minlength : 2
-				},
-				password : {
-					required : true,
-					minlength : 5
-				},
-				password2 : {
-					required : true,
-					minlength : 5,
-					equalTo : "#password"
-				},
-				email : {
-					required : true,
-					email : true
-				}
-			},
-			messages : {
-				id : "ID를 입력해주세요.",
-				name : "이름을 입력해주세요.",
-				password : {
-					required : "비밀번호를 입력해주세요.",
-					minlength : "비밀번호는 5자 이상이여야 합니다."
-				},
-				password2 : {
-					required : "비밀번호를 확인을 입력해주세요.",
-					minlength : "비밀번호는 5자 이상이여야 합니다.",
-					equalTo : "비밀번호가 일치하지 않습니다."
-				},
-				email : {
-					required : "이메일을 입력해주세요."
-				},
-				memberType : {
-					required : "회원 종류를 선택해 주세요."
-				}
-			}
-		});
-	});
-</script>
 
 <div class="wrapper row3">
 	<div class="rounded">
 		<main class="container clear">
 			<h3>회원가입</h3>
 			<br>
-			<form id="registerForm" action="${ctx }/member/join.do" method="post"
-				enctype="multipart/form-data">
+			<form id="registerForm">
 				<table class="table">
 					<tr>
 						<th><label for="id">ID</label></th>
@@ -128,7 +82,7 @@
 				<br>
 				<div align="center">
 					<input class="btn" type="reset" value="취소"> <input
-						class="btn btn-success" type="submit" value="회원가입">
+						class="btn btn-success" type="button" value="회원가입" onclick="javascript:memberController.registerMember()">
 				</div>
 			</form>
 		</main>
@@ -136,6 +90,72 @@
 </div>
 
 <%@ include file="/views/common/footer.jsp"%>
+
+<script type="text/javascript">
+$(function() {
+	$("#registerForm").validate({
+		rules : {
+			id : "required",
+			name : {
+				required : true,
+				minlength : 2
+			},
+			password : {
+				required : true,
+				minlength : 5
+			},
+			password2 : {
+				required : true,
+				minlength : 5,
+				equalTo : "#password"
+			},
+			email : {
+				required : true,
+				email : true
+			}
+		},
+		messages : {
+			id : "ID를 입력해주세요.",
+			name : "이름을 입력해주세요.",
+			password : {
+				required : "비밀번호를 입력해주세요.",
+				minlength : "비밀번호는 5자 이상이여야 합니다."
+			},
+			password2 : {
+				required : "비밀번호를 확인을 입력해주세요.",
+				minlength : "비밀번호는 5자 이상이여야 합니다.",
+				equalTo : "비밀번호가 일치하지 않습니다."
+			},
+			email : {
+				required : "이메일을 입력해주세요."
+			},
+			memberType : {
+				required : "회원 종류를 선택해 주세요."
+			}
+		}
+	});
+});
+
+var memberController = {
+	registerMember : function() {	// 작업중
+		$('#registerForm').ajaxForm({
+			url : "${ctx }/member/join.do",
+			enctype : "multipart/form-data",
+			type : "post",
+			dataType : "text",
+			success : function(text) {
+					if(text === "true") {
+						location.href="${ctx}/member/login.do"
+					} else {
+						location.href="${ctx}/member/join.do"
+					}
+					javascript:$.unblockUI();
+			}
+		});
+		$("#registerForm").submit();
+	}
+};
+</script>
 
 </body>
 </html>

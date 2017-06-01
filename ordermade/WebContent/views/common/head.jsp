@@ -11,9 +11,11 @@
 <script src="${ctx }/views/layout/scripts/jquery.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.fitvids.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.mobilemenu.js"></script>
+<script src="${ctx }/views/js/jquery.form.min.js"></script>
 <script src="${ctx }/views/js/jquery.blockUI.min.js"></script>
 <script src="${ctx }/views/layout/scripts/tabslet/jquery.tabslet.min.js"></script>
 <script src="${ctx }/views/js/jquery.bxslider.min.js"></script>
+<script src="${ctx }/views/vendor/ckeditor/ckeditor.js"></script>
 <body id="top">
 	<div class="wrapper row0">
 		<div id="topbar" class="clear">
@@ -75,7 +77,7 @@
 			<nav id="mainav" class="clear">
 				<ul class="clear">
 					<li class=""><a href="${ctx }/views/index.jsp">Main</a></li>
-					<li><a class="drop" href="#">category</a> 
+					<li><a class="drop" href="#">Product</a> 
 					<ul>
 						<li><a href="${ctx }/product/ui/search.do?page=1&category=FUNITURE">Furniture</a></li>
 						<li><a href="${ctx }/product/ui/search.do?page=1&category=ACCESSORY">Accessory</a></li>
@@ -91,7 +93,6 @@
 								href="${ctx}/product//ajax/product/productid?productId=${product.id}">${product.title }</a>
 							</li>
 						</c:forEach> --%>
-					<li class=""><a href="${ctx }/product/ajax/products/category.do?page=1&category='가구'">Product</a></li>
 					<li><a href="${ctx }/views/portfolio/portfolio.jsp">Portfolio</a></li>
 					<c:if test="${sessionScope.loginId ne null}">
 						<li><a href="${ctx}/request/ui/myRequest.do">Request</a></li>

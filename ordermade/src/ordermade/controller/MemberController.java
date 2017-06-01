@@ -39,8 +39,8 @@ public class MemberController {
 		return "member/memberRegister";
 	}
 
-	@RequestMapping(value = "/join.do", method = RequestMethod.POST) // end
-	public String registerMember(HttpServletRequest request) {
+	@RequestMapping(value = "/join.do", method = RequestMethod.POST, produces="text/plain") // end
+	public @ResponseBody String registerMember(HttpServletRequest request) {
 		// 회원가입 **회원가입이 실패하면 memberRegister.jsp 화면으로 이동 **회원가입이 성공하면 login.jsp으로
 		// 이동
 		String imagePath = Constants.IMAGE_PATH;
@@ -78,11 +78,7 @@ public class MemberController {
 			e.printStackTrace();
 		}
 
-		if (!service.registerMember(member)) {
-			return "member/memberRegister";
-		} else {
-			return "member/login";
-		}
+		return service.registerMember(member) + "";
 	}
 
 	@RequestMapping("/login.do") // end
@@ -91,8 +87,8 @@ public class MemberController {
 		return "member/login";
 	}
 
-	@RequestMapping(value = "/login.do", method = RequestMethod.POST) // end
-	public String loginMember(Member member, HttpSession session) {
+	@RequestMapping(value = "/login.do", method = RequestMethod.POST, produces="text/plain") // end
+	public @ResponseBody String loginMember(Member member, HttpSession session) {
 		// 로그인 --아이디와 비밀 번호 일치할 경우 main/main.do로 이동 --아이디와 비밀 번호 불일치할 경우
 		// login.jsp으로 이동
 		Member loginedUser = service.findMemberById(member.getId());
@@ -100,9 +96,9 @@ public class MemberController {
 		if (loginedUser != null && loginedUser.getPassword().equals(member.getPassword())) {
 			session.setAttribute("loginId", loginedUser.getId());
 			session.setAttribute("memberType", loginedUser.getMemberType());
-			return "redirect:/main/main.do";
+			return "true";
 		} else {
-			return "member/login";
+			return "false";
 		}
 	}
 

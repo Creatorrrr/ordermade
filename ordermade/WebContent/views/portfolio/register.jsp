@@ -110,7 +110,7 @@ $(document).ready(function(){
 				success : function(data) {
 					if(data === "true"){
 						location.href="${ctx}/portfolio/ui/mylist.do"; // 성공시 페이지 전환
-					}/* ${ctx}/portfolio/ui/mylist.do */
+					}
 				},
 				error: function(xml){
 					console.log("실패 메시지 :\n"+xml.responseText);

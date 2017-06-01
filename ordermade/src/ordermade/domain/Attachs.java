@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 @XmlRootElement(name="attachs")
 @XmlAccessorType(XmlAccessType.FIELD)
-@Component
 public class Attachs {
 	
 	@XmlElement(name="attach")

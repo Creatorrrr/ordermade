@@ -79,6 +79,16 @@ public class RequestServiceLogic implements RequestService{
 	}
 
 	@Override
+	public List<Request> findRequestsByMakerId(String makerId, String page) {
+		return rStore.selectRequestsByMakerId(makerId, page);
+	}
+
+	@Override
+	public List<Request> findRequestsByMakerIdWithPayment(String makerId, String page) {
+		return rStore.selectRequestsByMakerIdWithPayment(makerId, page);
+	}
+	
+	@Override
 	public boolean registerInviteRequest(InviteRequest inviteRequest) {
 		return irStore.insertInviteRequest(inviteRequest);
 	}

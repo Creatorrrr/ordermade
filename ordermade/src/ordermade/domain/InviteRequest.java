@@ -9,8 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.springframework.stereotype.Component;
 
 @XmlRootElement(name="inviterequest")
-@XmlAccessorType(XmlAccessType.FIELD)
-@Component
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class InviteRequest {
 	private String id;
 	private String message;
@@ -32,7 +31,12 @@ public class InviteRequest {
 		this.message = message;
 	}
 	public Member getMaker() {
-		return maker;
+		if(this.maker == null) return this.maker;
+		Member safeMaker=this.maker;
+		safeMaker.setPassword(null);
+		safeMaker.setMemberType(null);
+		safeMaker.setLicenseNumber(null);
+		return safeMaker;
 	}
 	public void setMaker(Member maker) {
 		this.maker = maker;

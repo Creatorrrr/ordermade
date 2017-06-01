@@ -34,25 +34,21 @@
 							<em>Search</em>
 						</button>
 					</form>
-
+				</div>
+				
 					<div style="float: right;">
 						<c:if test="${sessionScope.loginId ne null && makerId ne null}">
 							<a class="btn btn-sm btn-success"
 								href="${ctx}/portfolio/ui/register.do">포트폴리오 등록</a>
 						</c:if>
 					</div>
-					<!-- test -->
-					<%-- 	<a class="btn btn-sm btn-success"
-									href="${ctx}/portfolio/ui/register.do?makerId=${makerId}">포트폴리오
-									등록</a> --%>
-					<!-- /test -->
-				</div>
 				<br>
 
 				<ul class="nospace listing">
-					<li class="clear"><c:forEach items="${portfolios }"
-							var="portfolio">
-							<div class="content" align="center">
+					<li class="clear">
+					<div id="result">
+					<c:forEach items="${portfolios }" var="portfolio">
+							<div class="portfolioList" align="center">
 								<table class="table">
 									<tr>
 										<div class="imgl borderedbox">
@@ -65,22 +61,9 @@
 											href="${ctx }/portfolio/ui/detail.do?id=${portfolio.id}">${portfolio.title }</a>
 										</td>
 									</tr>
-
-									<!--test  -->
-									<tr>
-										<div style="float: right">
-											<input style="display: inline-block" class="btn btn-success"
-												type="button" value="수정"
-												onclick="javascript:window.location='${ctx}/portfolio/ui/modify.do?portfolioId=${portfolio.id }&id=${makerId }'">
-											<input class="btn btn-warning" type="button" value="삭제"
-												onclick="javascript:window.location='${ctx }/portfolio/xml/remove.do?portfolioId=${portfolio.id}&makerId=${makerId }'">
-										</div>
-									</tr>
-									<!--/test  -->
-
 								</table>
 							</div>
-						</c:forEach></li>
+						</c:forEach></div></li>
 				</ul>
 			</div>
 			</main>
@@ -89,6 +72,79 @@
 
 	<%@ include file="/views/common/footer.jsp"%>
 	<!-- JAVASCRIPTS -->
+	
+<script type="text/javascript">	
 
+$("#portfolioSearchBtn").click(function() {
+	var type = $("#selectPortfolio option:selected").val();
+	var keyword = $("#portfolioSearch");
+	if(type === "title") {
+		portfolioController.getMyPortfoliosByTitle(1, keyword.val());
+	} else if(type === "makerName") {
+		portfolioController.getProductsByCategoryAndMakerName(1, keyword.val());
+	}
+	keyword.val("");
+});
+
+	var portfolioController = {				
+			getMyPortfoliosByTitle : function(page, title) {
+				$.ajax({
+					url : "${ctx}/xml/searchByTitle.do?page=" + page + "&makerId=${makerId}&title=" + title,
+					type : "get",
+					dataType : "xml",
+					success : function(xml) {
+							var xmlData = $(xml).find("portfolio");
+							var listLength = xmlData.length;
+							$("#result").empty();
+							if (listLength) {
+								var contentStr = "";
+								$(xmlData).each(function(){
+									contentStr += portfolioController.makeContent(this);
+								});
+								$("#result").append(contentStr);
+							} else {
+								$("#result").append(portfolioController.makeContentForEmpty());
+							}
+					}
+				});
+			},
+
+			makeContent : function(xml) {
+				var content = "";
+				
+				content += "<div class='portfolioList' align='center'>";
+				content += "	<table class='table'>";
+				content += "		<tr>";
+				content += "			<div class='imgl borderedbox'>";
+				content += "			<img src='${ctx }/portfolio/image.do?img=" + $(xml).find("portfolio>image").text() + "'>";
+				content += "			</div>";
+				content += "		</tr>";
+				content += "		<tr class='nospace btmspace-15'>";
+				content += "			<td>포트폴리오 명</td>";
+				content += "			<td><a class='portfolio' id='portfolioTitle' href='${ctx }/portfolio/ui/detail.do?id="+$(xml).find("portfolio>id").text()+"'>"+$(xml).find("portfolio>title").text()+"</a>";
+				content += "			</td>";
+				content += "		</tr>";
+				content += "	</table>";
+				content += "</div>";
+				
+				return content;
+			},
+			
+			makeContentForEmpty : function() {
+				var content = "";
+				
+				content += "<div class='portfolioList'  align='center'>";
+				content += 	"<table>";
+				content += 		"<tr>";
+				content += 			"<td>조건에 해당하는 상품이 없습니다.</td>";
+				content += 		"</tr>";
+				content += 	"</table>";
+				content += "</div>";
+
+				return content;
+			}
+	};
+
+</script>
 </body>
 </html>

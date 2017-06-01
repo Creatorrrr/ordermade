@@ -13,7 +13,7 @@
 		<div class="rounded">
 			<main class="container clear"> <!-- main body -->
 
-			<div id="content" class="two_third first">
+			<div id="contents" class="two_third first">
 				<div class="sdb_holder">
 					<h1>상품페이지-${product.title }</h1>
 
@@ -26,7 +26,7 @@
 								<input class="btn btn-warning" type="button" value="삭제"
 									onclick="javascript:deleteProduct(${product.id})"> <input
 									class="btn btn-warning" type="button" value="수정"
-									onclick="location.href=${ctx}/product/ui/modify.do?id=${}">
+									onclick="location.href='${ctx}/product/ui/modify.do?id=${product.id}';">
 							</div>
 						</c:if>
 					</c:if>
@@ -104,31 +104,31 @@
 
 
 					<h2>후기 작성</h2>
-					<form onsubmit="registReview();">
+					<form id="form2" onsubmit="return false;">
+						<input type="hidden" id="productId" name="product.id"
+							value="${product.id }">
 						<div class="one_third first">
 							<label for="title">제목 <span>*</span></label> <input type="text"
-								id="title" value="" size="22">
+								id="title" name="title" value="" size="22">
 						</div>
-
-						<!-- <div class="one_third">
-							<label for="password">비밀번호 <span>*</span></label> <input
-								type="text" id="cosumer.password" value="" size="22">
-						</div>-->
 
 						<div class="one_third">
 							<label for="grade">평점<span>*</span></label> <input type="text"
-								id="grade" value="" size="22">
+								id="grade" name="grade" value="" size="22">
 						</div>
 
 						<div class="block clear">
 							<label for="content">후기</label>
-							<textarea id="content" placeholder="댓글쓰기" cols="55" rows="7"></textarea>
+							<textarea id="content" name="content" placeholder="댓글쓰기"
+								cols="55" rows="7"></textarea>
 						</div>
-
-						<input type="submit" value="Submit">
-						<!-- <button onclick="alert('a');"></button> -->
-						<input name="reset" type="reset" value="Reset">
+						<div>
+							<input type="button" onclick="javascript:reviewRegister()"
+								value="Submit"> <input name="reset" type="reset"
+								value="Reset">
+						</div>
 					</form>
+					<div id="reiewList"></div>
 				</div>
 			</div>
 			<div class="sidebar one_third">
@@ -142,7 +142,7 @@
 						<li><p>제작자 아이디 : ${product.maker.id }</p></li>
 						<li><p>제작자 소개 : ${product.maker.introduce }</p></li>
 						<li><p></p></li>
-						<li><a href="">프로필 바로가기</a></li>
+						<li><a href="${ctx }/member/myPage.do">프로필 바로가기</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -168,7 +168,37 @@ function deleteProduct(productId) {
 				
 	}
 	})
-	
+}
+
+function reviewRegister(){
+	$.ajax({
+		url:"${ctx}/product/review/register.do",
+		type:"post",
+		data:$('#form2').serialize(),
+		dataType : "text",
+		success : function(data) {
+			if(data=="true"){
+				var contentStr = "";
+				console.log($("#content").val())
+				contentStr += "<div class='reviewBox'>";
+				contentStr += 	"<table class='reviwe_table'>";
+				contentStr += 		"<tr>";
+				contentStr += 			"<td>제목 : </td>";
+				contentStr += 			"<td>" + $("#title").val() + "</td>";
+				contentStr += 		"</tr>";
+				contentStr += 		"<tr>";
+				contentStr += 			"<td>내용 : </td>";
+				contentStr += 			"<td>" + $("#content").val() + "</td>";
+				contentStr += 		"</tr>";
+				contentStr += 	"</table>";
+				contentStr += "</div>";
+			 $("#reiewList").append(contentStr); 
+			 $("#title").val("");
+			 $("#grade").val("");
+			 $("#content").val("");
+			}
+		}
+	})
 }
 </script>
 </body>

@@ -9,8 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.springframework.stereotype.Component;
 
 @XmlRootElement(name="purchasehistory")
-@XmlAccessorType(XmlAccessType.FIELD)
-@Component
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class PurchaseHistory {
 	private String id;
 	private Member maker;
@@ -28,14 +27,26 @@ public class PurchaseHistory {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
 	public Member getMaker() {
-		return maker;
+		if(this.maker == null) return this.maker;
+		Member safeMaker=this.maker;
+		safeMaker.setPassword(null);
+		safeMaker.setMemberType(null);
+		safeMaker.setLicenseNumber(null);
+		return safeMaker;
 	}
 	public void setMaker(Member maker) {
 		this.maker = maker;
 	}
+	
 	public Member getConsumer() {
-		return consumer;
+		if(this.consumer == null) return this.consumer;
+		Member safeConsumer=this.consumer;
+		safeConsumer.setPassword(null);
+		safeConsumer.setMemberType(null);
+		safeConsumer.setLicenseNumber(null);
+		return safeConsumer;
 	}
 	public void setConsumer(Member consumer) {
 		this.consumer = consumer;

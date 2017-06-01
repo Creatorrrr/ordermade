@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 @XmlRootElement(name="portfolios")
 @XmlAccessorType(XmlAccessType.FIELD)
-@Component
 public class Portfolios {
 	
 	@XmlElement(name="portfolio")
