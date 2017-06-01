@@ -11,9 +11,11 @@
 <script src="${ctx }/views/layout/scripts/jquery.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.fitvids.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.mobilemenu.js"></script>
+<script src="${ctx }/views/js/jquery.form.min.js"></script>
 <script src="${ctx }/views/js/jquery.blockUI.min.js"></script>
 <script src="${ctx }/views/layout/scripts/tabslet/jquery.tabslet.min.js"></script>
 <script src="${ctx }/views/js/jquery.bxslider.min.js"></script>
+<script src="${ctx }/views/vendor/ckeditor/ckeditor.js"></script>
 <body id="top">
 	<div class="wrapper row0">
 		<div id="topbar" class="clear">
