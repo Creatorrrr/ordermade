@@ -81,7 +81,7 @@
 		</div>
 	</div>
 
-	<%@ include file="/views/common/head.jsp"%>
+	<%@ include file="/views/common/footer.jsp"%>
 	<!-- JAVASCRIPTS -->
 	<script type="text/javascript">
 		function findProduct(data) {
