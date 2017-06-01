@@ -41,7 +41,8 @@ public class MemberController {
 
 	@RequestMapping(value = "/join.do", method = RequestMethod.POST) // end
 	public String registerMember(HttpServletRequest request) {
-		// 회원가입 **회원가입이 실패하면 memberRegister.jsp 화면으로 이동 **회원가입이 성공하면 login.jsp으로 이동
+		// 회원가입 **회원가입이 실패하면 memberRegister.jsp 화면으로 이동 **회원가입이 성공하면 login.jsp으로
+		// 이동
 		String imagePath = Constants.IMAGE_PATH;
 
 		File dir = new File(imagePath);
@@ -49,7 +50,7 @@ public class MemberController {
 			// 폴더가 존재하지 않으면 폴더 생성
 			dir.mkdirs();
 		}
-		
+
 		Member member = new Member();
 
 		try {
@@ -63,15 +64,15 @@ public class MemberController {
 			member.setAddress(mr.getParameter("address"));
 			member.setIntroduce(mr.getParameter("introduce"));
 			member.setMemberType(mr.getParameter("memberType"));
-			
+
 			if (member.getMemberType().equals(Constants.MAKER)) {
 				member.setLicenseNumber(mr.getParameter("licenseNumber"));
-			} else if(member.getMemberType().equals(Constants.CONSUMER)){
+			} else if (member.getMemberType().equals(Constants.CONSUMER)) {
 				member.setLicenseNumber("null");
 			} else {
 				throw new RuntimeException("Invalid MemberType");
 			}
-			
+
 			member.setImage(mr.getFile("image").getName());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -92,7 +93,8 @@ public class MemberController {
 
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST) // end
 	public String loginMember(Member member, HttpSession session) {
-		// 로그인 --아이디와 비밀 번호 일치할 경우 main/main.do로 이동 --아이디와 비밀 번호 불일치할 경우 login.jsp으로 이동
+		// 로그인 --아이디와 비밀 번호 일치할 경우 main/main.do로 이동 --아이디와 비밀 번호 불일치할 경우
+		// login.jsp으로 이동
 		Member loginedUser = service.findMemberById(member.getId());
 
 		if (loginedUser != null && loginedUser.getPassword().equals(member.getPassword())) {
@@ -113,20 +115,21 @@ public class MemberController {
 
 	@RequestMapping("/modifyMember.do") // end
 	public ModelAndView showEditMyPageUI(HttpSession session) {
-		if(checkLogined(session)) return new ModelAndView("member/login");	// check logined
-		
+		if (checkLogined(session))
+			return new ModelAndView("member/login"); // check logined
+
 		// 회원 정보를 불러와 memberModify.jsp화면으로 이동
-		return new ModelAndView("member/memberModify")
-				.addObject("member", 
-						service.findMemberById((String)session.getAttribute("loginId")));
+		return new ModelAndView("member/memberModify").addObject("member",
+				service.findMemberById((String) session.getAttribute("loginId")));
 	}
 
 	@RequestMapping(value = "/modifyMember.do", method = RequestMethod.POST) // end
 	public String modifyMemberById(Member member, HttpSession session) {
-		if(checkLogined(session)) return "member/login";	// check logined
-		
+		if (checkLogined(session))
+			return "member/login"; // check logined
+
 		// 회원 수정후 마이페이지로 이동한다.
-		if(service.modifyMemberById(member)) {
+		if (service.modifyMemberById(member)) {
 			return "redirect:/member/myPage.do";
 		} else {
 			throw new RuntimeException("Modify member failed");
@@ -135,10 +138,11 @@ public class MemberController {
 
 	@RequestMapping("/removeMember.do") // end
 	public String removeMemberById(HttpSession session) {
-		if(checkLogined(session)) return "member/login";	// check logined
-		
+		if (checkLogined(session))
+			return "member/login"; // check logined
+
 		// 회원 탈퇴시 메인 화면으로 이동
-		if (service.removeMemberById((String)session.getAttribute("loginId"))) {
+		if (service.removeMemberById((String) session.getAttribute("loginId"))) {
 			session.invalidate();
 			return "index";
 		} else {
@@ -148,19 +152,18 @@ public class MemberController {
 
 	@RequestMapping("/myPage.do")
 	public ModelAndView showMyPageUI(HttpSession session) {
-		if(checkLogined(session)) return new ModelAndView("member/login");	// check logined
-		
-		// 자신의 정보를 불러온다. 그 후 마이페이지화면으로 이동
-		String memberType = (String)session.getAttribute("memberType");
+		if (checkLogined(session))
+			return new ModelAndView("member/login"); // check logined
 
-		if(memberType.equals(Constants.CONSUMER)) {
-			return new ModelAndView("/member/consumerMyPage")
-					.addObject("member", 
-							service.findMemberById((String)session.getAttribute("loginId")));
-		} else if(memberType.equals(Constants.MAKER)) {
-			return new ModelAndView("/member/makerMyPage")
-					.addObject("member", 
-							service.findMemberById((String)session.getAttribute("loginId")));
+		// 자신의 정보를 불러온다. 그 후 마이페이지화면으로 이동
+		String memberType = (String) session.getAttribute("memberType");
+
+		if (memberType.equals(Constants.CONSUMER)) {
+			return new ModelAndView("/member/consumerMyPage").addObject("member",
+					service.findMemberById((String) session.getAttribute("loginId")));
+		} else if (memberType.equals(Constants.MAKER)) {
+			return new ModelAndView("/member/makerMyPage").addObject("member",
+					service.findMemberById((String) session.getAttribute("loginId")));
 		} else {
 			throw new RuntimeException("No such membertype");
 		}
@@ -168,24 +171,23 @@ public class MemberController {
 
 	// Mobile용
 	// http://localhost:8080/ordermade/member/xml/myPage.do
-	@RequestMapping(value="/xml/myPage.do", produces="application/xml")
+	@RequestMapping(value = "/xml/myPage.do", produces = "application/xml")
 	public @ResponseBody Member findMyMember(HttpSession session) {
-		return service.findMemberById((String)session.getAttribute("loginId"));
+		return service.findMemberById((String) session.getAttribute("loginId"));
 	}
-	
-	@RequestMapping("/image.do")
-	public void getMemberImage(String img, HttpServletResponse resp) {
-		File image = new File(Constants.IMAGE_PATH + img);
 
-		if(!image.exists()) {
+	@RequestMapping("/image.do")
+	public void getMemberImage(String img, HttpServletResponse resp) throws IOException {
+		File image = new File(Constants.IMAGE_PATH + img);
+		if (!image.exists()) {
 			throw new RuntimeException("No member image");
 		}
-		
+
 		try (InputStream in = new BufferedInputStream(new FileInputStream(image));
-				OutputStream out = resp.getOutputStream();){
+				OutputStream out = resp.getOutputStream();) {
 			byte[] buf = new byte[8096];
 			int readByte = 0;
-			while((readByte = in.read(buf)) > -1) {
+			while ((readByte = in.read(buf)) > -1) {
 				out.write(buf, 0, readByte);
 			}
 		} catch (FileNotFoundException e) {
@@ -196,7 +198,7 @@ public class MemberController {
 	}
 
 	private boolean checkLogined(HttpSession session) {
-		String loginId = (String)session.getAttribute("loginId");
+		String loginId = (String) session.getAttribute("loginId");
 		return loginId == null || loginId.isEmpty();
 	}
 }

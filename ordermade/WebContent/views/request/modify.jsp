@@ -109,7 +109,7 @@ ${box2 }
 						success : function(data) {
 							console.log(data);
 							if(data=="true"){
-								location.href="${ctx}/request/ui/detail.do";//성공시 페이지 전환
+								location.href="${ctx}/request/ui/myRequest.do";//성공시 페이지 전환
 							}
 						},
 						error: function(xml){

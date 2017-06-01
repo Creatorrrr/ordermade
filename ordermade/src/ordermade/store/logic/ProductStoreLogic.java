@@ -127,8 +127,8 @@ public class ProductStoreLogic implements ProductStore {
 		List<Product> productList = null;
 		HashMap<String, String> map = new HashMap<>();
 		map.put("category", category);
-		map.put("begin", begin);System.out.println(begin);
-		map.put("end", end);System.out.println(end);
+		map.put("begin", begin);
+		map.put("end", end);
 		try {
 			ProductMapper mapper = session.getMapper(ProductMapper.class);
 			productList = mapper.selectProductsByCategory(map);

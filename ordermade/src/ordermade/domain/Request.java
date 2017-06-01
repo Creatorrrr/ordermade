@@ -27,7 +27,14 @@ public class Request {
 	@XmlElement(name="attach")
 	private List<Attach> attachs;
 	private String bound;
+	private String page;
 	
+	public String getPage() {
+		return page;
+	}
+	public void setPage(String page) {
+		this.page = page;
+	}
 	@Override
 	public String toString() {
 		return "Request [id=" + id + ", title=" + title + ", maker=" + maker + ", consumer=" + consumer + ", category="

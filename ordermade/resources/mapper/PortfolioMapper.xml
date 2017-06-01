@@ -10,13 +10,14 @@
   		<result property="content" column="content"/>
   		<result property="category" column="type" />
   		<result property="image" column="image"/>
-  		<association property="maker" column="maker_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member" jdbcType="VARCHAR" />
+		<result property="maker.id" column="maker_id"/>
+  		<!-- <association property="maker" column="maker_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member" jdbcType="VARCHAR" /> -->
 		<collection property="tags" column="id" ofType="Tag" select="ordermade.store.mapper.TagMapper.selectTagsByPortfolioId" javaType="ArrayList" jdbcType="VARCHAR"/> 
   	</resultMap>
   
   	<insert id="insertPortfolio" parameterType="Portfolio">
   		<selectKey resultType="String" keyProperty="id" order="BEFORE">
-  			SELECT portfolio_SEQ.NEXTVAL FROM dual
+  			SELECT portfolio_seq.NEXTVAL FROM dual
   		</selectKey>
   		INSERT INTO portfolio(id, title, type, content, maker_id, image) 
   		values(#{id}, #{title}, #{category}, #{content}, #{maker.id}, #{image})
@@ -62,13 +63,13 @@
 		) where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE})
   	</select>
   	
-  	<select id="selectPortfoliosByTags" parameterType="List" resultMap="portfolioMap">
+  <!-- 	<select id="selectPortfoliosByTags" parameterType="List" resultMap="portfolioMap">
 		SELECT DISTINCT portfolio.id, portfolio.title, portfolio.content, portfolio.type, portfolio.image, portfolio.maker_id
 		FROM portfolio INNER JOIN tag ON portfolio.id = tag.portfolio_id
 		WHERE tag.keyword IN
 			<foreach collection="list" item="tag" open="(" close=")" separator=",">
 	            #{tag.keyword}
 	        </foreach>
- 	</select>
+ 	</select> -->
   </mapper>
   

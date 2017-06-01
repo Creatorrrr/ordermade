@@ -8,7 +8,7 @@
 <head>
 <%@ include file="/views/common/head.jsp"%>
 </head>
-<title>상품 등록 페이지</title>
+<title>상품 수정페이지</title>
 <!-- Main Body ========================================================================================== -->
 <body>
 <div class="wrapper row3">
@@ -20,10 +20,10 @@
 
 		<div id="content" class="two_third">
 
-			<h1>상품 등록 페이지</h1>
+			<h1>상품  수정페이지</h1>
 			<br>
-			<form action="${ctx }/product/xml/register.do" method="post" id="productRegister"
-				enctype="multipart/form-data" name="productRegister" onsubmit="return checkIt()">
+			<form action="${ctx }/product/xml/modify.do" method="post" id="productModify"
+				enctype="multipart/form-data" name="productModify" onsubmit="return checkIt()">
 				<table class="table">
 					<tr>
 						<th>제작 항목 <span>*</span></th>
@@ -58,7 +58,7 @@
 				<div align="center">
 					<input class="btn" type="reset" value="취소하기"
 						onclick="javascript:window.location='${ctx }/post/list.do?boardId=${boardId }'">
-					<input id="registBtn" class="btn btn-success" type="button" value="등록하기">
+					<input id="modifyBtn" class="btn btn-success" type="button" value="수정하기">
 				</div>
 			</form>
 			<br>
@@ -85,13 +85,13 @@ $(document).ready(function() {
 			var list = $(xml).find("category > type");
 			console.log(list.size());
 			list.each(function(){
-					rs += '<option value"' + $(this).text() + '""';
+				rs += '<option value"' + $(this).text() + '""';
 				if(categoryId == $(this).text()){
 					rs += 'selected="selected"';
 				}
 					rs += '>' + $(this).text() + '</option>';
-				});
-					rs += '</select>';
+			});
+			rs += '</select>';
 			$("#category").html(rs);
 		},
 		error: function(xml){
@@ -106,8 +106,12 @@ $(document).ready(function() {
 		}
 	});
 	
+	$.ajax({
+		url:"${ctx}/product/ajax/product/productId.do"
+	})
+	
 	// 등록버튼 구현
-	$("#registBtn").click(function(){
+	$("#modifyBtn").click(function(){
 		var data = new FormData($('#productRegister')[0]);
 		
 		console.log("----testing here-------");
@@ -116,7 +120,7 @@ $(document).ready(function() {
 				// 보낼 때
 				type : "post",
 				enctype: 'multipart/form-data',
-				url : "${ctx}/product/xml/register.do",
+				url : "${ctx}/product/xml/modify.do",
 				data : data,
 				processData: false,
 				contentType: false,
@@ -124,9 +128,10 @@ $(document).ready(function() {
 				// 받을 때 
 				dataType : "text",
 				success : function(resultData) {
-					if(resultData == "true"){
-						location.href= "${ctx}/product/ui/myProducts.do"	
-						}
+					if(resultData === "true"){
+						location.href= "${ctx}/views/product/myProductList.jsp"
+							/* "${ctx}/product/ui/myProducts.do" */; // 성공시 페이지 전환
+					}
 				},
 				error: function(xml){
 					console.log("실패 메시지 :\n"+xml.responseText);
@@ -164,7 +169,5 @@ $(document).ready(function() {
 });
 
 </script>
-<!-- JAVASCRIPTS -->
-
 </body>
 </html>

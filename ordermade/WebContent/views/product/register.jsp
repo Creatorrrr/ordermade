@@ -8,7 +8,7 @@
 <head>
 <%@ include file="/views/common/head.jsp"%>
 </head>
-<title>상품 등록 페이지</title>
+<title>상품 등록페이지</title>
 <!-- Main Body ========================================================================================== -->
 <body>
 <div class="wrapper row3">
@@ -22,7 +22,7 @@
 
 			<h1>상품 등록 페이지</h1>
 			<br>
-			<form action="${ctx }/product/xml/register.do" method="post" id="productRegister"
+			<form action="${ctx }/product/register.do" method="post" id="productRegister"
 				enctype="multipart/form-data" name="productRegister" onsubmit="return checkIt()">
 				<table class="table">
 					<tr>
@@ -85,13 +85,13 @@ $(document).ready(function() {
 			var list = $(xml).find("category > type");
 			console.log(list.size());
 			list.each(function(){
-					rs += '<option value"' + $(this).text() + '""';
+				rs += '<option value"' + $(this).text() + '""';
 				if(categoryId == $(this).text()){
 					rs += 'selected="selected"';
 				}
 					rs += '>' + $(this).text() + '</option>';
-				});
-					rs += '</select>';
+			});
+			rs += '</select>';
 			$("#category").html(rs);
 		},
 		error: function(xml){
@@ -124,9 +124,10 @@ $(document).ready(function() {
 				// 받을 때 
 				dataType : "text",
 				success : function(resultData) {
-					if(resultData == "true"){
-						location.href= "${ctx}/product/ui/myProducts.do"	
-						}
+					if(resultData === "true"){
+						location.href= "${ctx}/product/ui/myProducts.do"
+							/* "${ctx}/product/ui/myProducts.do" */; // 성공시 페이지 전환
+					}
 				},
 				error: function(xml){
 					console.log("실패 메시지 :\n"+xml.responseText);
@@ -165,6 +166,8 @@ $(document).ready(function() {
 
 </script>
 <!-- JAVASCRIPTS -->
-
+<script src="../layout/scripts/jquery.min.js"></script>
+<script src="../layout/scripts/jquery.fitvids.min.js"></script>
+<script src="../layout/scripts/jquery.mobilemenu.js"></script>
 </body>
 </html>
