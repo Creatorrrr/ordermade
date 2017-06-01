@@ -76,8 +76,10 @@ public class ProductStoreLogicTest {
 //
 //	@Test
 //	public void testSelectProductsByCategoryOrderByHitsForMain() {
-//		List<Product> productList = pStore.selectProductsByCategoryOrderByHitsForMain("1", "2");
-//		System.out.println(productList.size());
+//		List<Product> productList = pStore.selectProductsByCategoryOrderByHitsForMain("Accessory", "5");
+//		for(Product product : productList){
+//			System.out.println(product.toString());
+//		}
 //		assertEquals(2, productList.size());
 //		assertEquals("5", productList.get(1).getId());
 //	}

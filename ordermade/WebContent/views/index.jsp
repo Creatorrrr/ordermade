@@ -4,11 +4,10 @@
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html lang="ko">
-<!-- bxSlider CSS file -->
-<link href="${ctx }/views/css/jquery.bxslider.css" rel="stylesheet" />
 <head>
 <%@ include file="/views/common/head.jsp"%>
 </head>
+<title>판다 - OrderMade</title>
 <body>	
 <!--Main Image-->
 <div class="wrapper">
@@ -64,8 +63,9 @@
 									<td>
 										<ul id="pfslider">
 											<!-- images from ajax (sample under) -->
-											<li><img src="${ctx }/views/images/img1.jpg"></li>
-											<li><img src="${ctx }/views/images/img1.jpg"></li>
+											<%-- <li><img src="${ctx }/views/images/image/cat5.jpg"></li>
+											<li><img src="${ctx }/views/images/image/cat5.jpg"></li> --%>
+											<li id="HitsProductImages"></li>
 										</ul>
 							            <a href="#" id="prevPfBtn">
 							                <img src="${ctx }/views/images/bul_prev.png" alt="이전">
@@ -104,8 +104,8 @@
 									<td>
 										<ul id="productslider">
 											<!-- images from ajax (sample under) -->
-											<li><img src="${ctx }/views/images/img1.jpg"></li>
-											<li><img src="${ctx }/views/images/img1.jpg"></li>
+											<li><img src="${ctx }/views/images/image/cat1.jpg"></li>
+											<li><img src="${ctx }/views/images/image/cat1.jpg"></li>
 										</ul>
 							            <a href="#" id="prevProductBtn">
 							                <img src="${ctx }/views/images/bul_prev.png" alt="이전">
@@ -203,15 +203,34 @@
 
 <%@ include file="common/footer.jsp"%>
 
-<!-- JAVASCRIPTS -->
-<script src="layout/scripts/jquery.min.js"></script>
-<script src="layout/scripts/jquery.fitvids.min.js"></script>
-<script src="layout/scripts/jquery.mobilemenu.js"></script>
-<script src="layout/scripts/tabslet/jquery.tabslet.min.js"></script>
-<!-- bxSlider JavaScript file -->
-<script src="${ctx }/views/js/jquery.bxslider.min.js"></script>
+// image load setting
 <script type="text/javascript">
-//portfolio slider setting
+$(document).ready(function(){
+	$.ajax({
+		type : "get",
+		url : "${ctx }/product/xml/main/category/hit.do?category=Accessory&page=1",
+		dataType : "xml",
+		success : function(xml) {
+				console.log("------load Success-----")
+				var xmlData = $(xml).find("products>product");
+				var listLength = xmlData.length;
+				console.log(listLength)
+				$("#HitsProductImages").empty();
+				if(listLength){
+					var content = "";
+					$(xmlData).each(function() {
+						content += "<li><img src=\"";
+						content += $(xml).find("product>image").text() +"\">";
+						content += "</li>";	
+					});
+					$("#HitsProductImages").append(content);
+				}
+				console.log(content)
+		}		
+	});
+});
+
+//main slider setting
 var pfSlider = $( '#pfslider' ).bxSlider( {
     mode: 'horizontal',// 가로 방향 수평 슬라이드
     speed: 500,        // 이동 속도를 설정
@@ -221,7 +240,7 @@ var pfSlider = $( '#pfslider' ).bxSlider( {
     minSlides: 4,      // 최소 노출 개수
     maxSlides: 4,      // 최대 노출 개수
     slideMargin: 5,    // 슬라이드간의 간격
-    auto: true,        // 자동 실행 여부
+    auto: false,        // 자동 실행 여부
     autoHover: true,   // 마우스 호버시 정지 여부
     controls: false,   // 이전 다음 버튼 노출 여부
     captions: true     // 캡션 노출 여부

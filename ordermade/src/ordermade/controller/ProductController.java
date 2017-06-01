@@ -202,7 +202,7 @@ public class ProductController {
 	// Product start
 
 	// main start
-	@RequestMapping(value = "/main/category/hit", produces = "text/plain")
+	@RequestMapping(value = "xml/main/category/hit.do", produces = "application/xml")
 	public @ResponseBody Products findProductsByCategoryOrderByHitsForMain(String category, String page) {
 		// Ajax 메인화면에서 히트 상품 종류 나옴
 		List<Product> hitProducts = pService.findProductsByCategoryOrderByHitsForMain(category, page);
@@ -214,7 +214,7 @@ public class ProductController {
 
 	}
 
-	@RequestMapping(value = "/main/category/id", produces = "text/plain")
+	@RequestMapping(value = "xml/main/category/brandNew.do", produces = "application/xml")
 	public @ResponseBody Products findProductsByCategoryOrderByIdForMain(String category, String page) {
 		// Ajax 메인화면에서 히트 상품 종류 나옴
 		List<Product> idProducts = pService.findProductsByCategoryOrderByIdForMain(category, page);
@@ -256,37 +256,22 @@ public class ProductController {
 		return new Products(pService.findProductsByCategory(category, page));
 	}
 
-	@RequestMapping(value = "/ajax/products/image", produces = "text/plain")
+	@RequestMapping(value = "ajax/products/image.do", produces = "application/xml")
 	public @ResponseBody Products findProductsByImage(String image) {
 		// Ajax 생산품 그리고 이미지로 생산품들 출력
-		List<Product> imageProducts = pService.findProductsByImage(image);
-
-		Products products = new Products();
-		products.setProducts(imageProducts);
-
-		return products;
+		return new Products(pService.findProductsByImage(image));
 	}
 
-	@RequestMapping(value = "/ajax/products/CT", produces = "text/plain")
+	@RequestMapping(value = "ajax/products/CT.do", produces = "application/xml")
 	public @ResponseBody Products findProductsByCategoryAndTitle(String page, String category, String title) {
 		// Ajax 생산품 종류와 내용 검색으로 생산품들 출력
-		List<Product> TCProducts = pService.findProductsByCategoryAndTitle(category, title, page);
-
-		Products products = new Products();
-		products.setProducts(TCProducts);
-
-		return products;
+		return new Products(pService.findProductsByCategoryAndTitle(category, title, page));
 	}
 
-	@RequestMapping(value = "/ajax/products/CM", produces = "text/plain")
+	@RequestMapping(value = "ajax/products/CM.do", produces = "application/xml")
 	public @ResponseBody Products findProductsByCategoryAndMakerName(String page, String category, String makerName) {
 		// Ajax 생산자 이름 그리고 생산품 종류로 생산품들 출력
-		List<Product> MCProducts = pService.findProductsByCategoryAndMakerName(category, makerName, page);
-
-		Products products = new Products();
-		products.setProducts(MCProducts);
-
-		return products;
+		return new Products(pService.findProductsByCategoryAndMakerName(category, makerName, page));
 	}
 
 	@RequestMapping(value = "/ajax/products/MT", produces = "text/plain")
@@ -384,12 +369,12 @@ public class ProductController {
 	}
 
 	@RequestMapping("image.do")
-	public void getProductImage(String img, HttpServletResponse resp) throws IOException {
-		File image = new File(Constants.IMAGE_PATH + img);
-		if (!image.exists()) {
+	public void getProductImage(String img, HttpServletResponse resp) {
+		File image = new File(Constants.IMAGE_PATH+img);
+		if(!image.exists()){
 			throw new RuntimeException("No product image");
 		}
-
+		
 		try (InputStream in = new BufferedInputStream(new FileInputStream(image));
 				OutputStream out = resp.getOutputStream();) {
 			byte[] buf = new byte[8096];
@@ -403,10 +388,30 @@ public class ProductController {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping(value = "imageUpload.do", method = RequestMethod.POST, produces="text/plain")
+	public @ResponseBody String uploadProductImage(HttpServletRequest req) {
+		String imagePath = Constants.IMAGE_PATH;
+
+		File dir = new File(imagePath);
+		if (!dir.exists()) {
+			// 폴더가 존재하지 않으면 폴더 생성
+			dir.mkdirs();
+		}
+
+		try {
+			return new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy())
+					.getFile("image").getName();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "fail";
+	}
 
 	@RequestMapping("ui/search.do")
 	public ModelAndView showSearchProductsUI(String category, String page) {
-		return new ModelAndView("product/productList").addObject("category", category).addObject("products",
-				pService.findProductsByCategory(category, page));
+		return new ModelAndView("product/productList")
+				.addObject("category", category)
+				.addObject("products", pService.findProductsByCategory(category, page));
 	}
 }

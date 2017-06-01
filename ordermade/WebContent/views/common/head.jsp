@@ -7,10 +7,13 @@
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="${ctx }/views/layout/styles/layout.css" rel="stylesheet"
 	type="text/css" media="all">
+<link href="${ctx }/views/css/jquery.bxslider.min.css" rel="stylesheet" />
 <script src="${ctx }/views/layout/scripts/jquery.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.fitvids.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.mobilemenu.js"></script>
 <script src="${ctx }/views/js/jquery.blockUI.min.js"></script>
+<script src="${ctx }/views/layout/scripts/tabslet/jquery.tabslet.min.js"></script>
+<script src="${ctx }/views/js/jquery.bxslider.min.js"></script>
 <body id="top">
 	<div class="wrapper row0">
 		<div id="topbar" class="clear">
@@ -72,7 +75,6 @@
 			<nav id="mainav" class="clear">
 				<ul class="clear">
 					<li class=""><a href="${ctx }/views/index.jsp">Main</a></li>
-					<li class=""><a href="${ctx }/product/ajax/products/category.do?page=1&category='가구'">Product</a></li>
 					<li><a class="drop" href="#">category</a> 
 					<ul>
 						<li><a href="${ctx }/product/ui/search.do?page=1&category=FUNITURE">Furniture</a></li>
@@ -89,7 +91,7 @@
 								href="${ctx}/product//ajax/product/productid?productId=${product.id}">${product.title }</a>
 							</li>
 						</c:forEach> --%>
-						
+					<li class=""><a href="${ctx }/product/ajax/products/category.do?page=1&category='가구'">Product</a></li>
 					<li><a href="${ctx }/views/portfolio/portfolio.jsp">Portfolio</a></li>
 					<c:if test="${sessionScope.loginId ne null}">
 						<li><a href="${ctx}/request/ui/myRequest.do">Request</a></li>

@@ -3,6 +3,7 @@ package ordermade.domain;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Member {
 	private String id;
-	private String password;
+	@XmlTransient private String password;
 	private String email;
 	private String address;
 	private String memberType;

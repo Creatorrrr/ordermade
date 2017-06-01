@@ -132,11 +132,10 @@
 	<select id="selectProductsByCategoryAndTitle" parameterType="HashMap"
 		resultMap="productMap">
 		<include refid="selectProduct" />
-		FROM (
-		<include refid="selectProductWithRowNum" />
-		FROM product
-		WHERE type = #{category} AND title = #{title}
-		ORDER BY id DESC)
+		FROM (<include refid="selectProductWithRowNum" />
+				FROM product
+				WHERE type = #{category} AND title LIKE '%${title}%'
+				ORDER BY id DESC)
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
@@ -144,18 +143,18 @@
 		resultMap="productMap">
 		<include refid="selectProduct" />
 		FROM (SELECT rownum rnum,
-		product.id,
-		product.title,
-		product.content,
-		product.image,
-		product.price,
-		product.period,
-		product.maker_id,
-		product.type,
-		product.hit
-		FROM product INNER JOIN member ON product.maker_id = member.id
-		WHERE product.type = #{category} AND member.name = #{makerName}
-		ORDER BY product.id DESC)
+						product.id, 
+						product.title, 
+						product.content, 
+						product.image, 
+						product.price, 
+						product.period, 
+						product.maker_id, 
+						product.type,
+						product.hit
+				FROM product INNER JOIN member ON product.maker_id = member.id
+				WHERE product.type = #{category} AND member.name LIKE '%${makerName}%'
+				ORDER BY product.id DESC)
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 

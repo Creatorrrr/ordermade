@@ -56,8 +56,8 @@ public class DealController {
 	
 	// http://localhost:8080/ordermade/deal/account/makerMoney.do
 	// data : {"maker.id":"admin1\n","consumer.id":"consuser1\n","request.id":"1","invoiceNumber":"02255215","deliveryStatus":"yes","payment":"C" }
-	@RequestMapping(value="xml/account/makerMoney.do", method=RequestMethod.POST)
-	public String sendMoneyToMakerAccount(PurchaseHistory purchaseHistory, HttpSession session){
+	@RequestMapping(value="xml/account/makerMoney.do", method=RequestMethod.POST, produces="text/plain")
+	public @ResponseBody String sendMoneyToMakerAccount(PurchaseHistory purchaseHistory, HttpSession session){
 		
 		System.out.println("----------controller 성공-----------");
 		System.out.println("------data : "+purchaseHistory.toString());
@@ -80,7 +80,7 @@ public class DealController {
 	
 	// http://localhost:8080/ordermade/deal/purchaseHistory/delivery.do
 	// data : {"invoiceNumber":"02255215","id":"2"}
-	@RequestMapping(value="xml/purchaseHistory/delivery.do", method=RequestMethod.POST)
+	@RequestMapping(value="xml/purchaseHistory/delivery.do", method=RequestMethod.POST, produces="text/plain")
 	public @ResponseBody String registerInvoiceNumberToPurchaseHistory(String invoiceNumber, String id, HttpSession session){
 		
 		System.out.println("----------controller 성공-----------");
@@ -130,8 +130,7 @@ public class DealController {
 	@RequestMapping(value="xml/searchPurchaseConsumerList.do", produces="application/xml")
 	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesForConsumer(String page, HttpSession session){
 		// session에서 회원ID 가져오기
-//		String consumerId = (String)session.getAttribute("loginUser");
-		String consumerId = "user1";
+		String consumerId = (String)session.getAttribute("loginId");
 		page = "1";
 		List<PurchaseHistory> purchaseConsumerList = dService.findpurchaseHistoriesByConsumerId(consumerId, page);
 		PurchaseHistories purchaseHistories = new PurchaseHistories();
