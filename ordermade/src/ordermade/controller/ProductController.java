@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +43,7 @@ public class ProductController {
 	@Autowired
 	private MemberService mService;
 
-	@RequestMapping(value = "xml/register.do", method = RequestMethod.POST, produces="text/plain")
+	@RequestMapping(value = "xml/register.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerProduct(Model model, Product product, HttpServletRequest req) {
 		// 상품 등록후 상세 상품페이지로 이동
 		boolean check = false;
@@ -101,7 +100,7 @@ public class ProductController {
 
 	}
 
-	@RequestMapping(value = "xml/modify.do", method = RequestMethod.POST, produces="text/plain")
+	@RequestMapping(value = "xml/modify.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyProductById(Product product, HttpServletRequest req) {
 		// 상품 수정 후 상세 상품페이지로 이동
 		boolean check = false;
@@ -152,11 +151,11 @@ public class ProductController {
 		 */
 	}
 
-	@RequestMapping(value="xml/remove.do", produces="text/plain")
-	public @ResponseBody String removeProductById(@RequestParam("productId") String id, HttpServletRequest req) {
+	@RequestMapping(value = "xml/remove.do", produces = "text/plain")
+	public @ResponseBody String removeProductById(String id, HttpServletRequest req) {
 		// 상품페이지 삭제후 상품페이지 목록으로 이동
-		boolean check = false;
-		check = pService.removeProductById(id);
+
+		 boolean check = pService.removeProductById(id);
 		return check + "";
 		/*
 		 * if (!pService.removeProductById(id)) { return "/product/detail"; }
@@ -240,14 +239,13 @@ public class ProductController {
 	public @ResponseBody Products findMyProducts(String page, HttpServletRequest req) {
 		// Ajax 나의 생산품들 전체 출력
 
-		System.out.println("333333333333");
 		String makerId = (String) req.getSession().getAttribute("loginId");
 
 		List<Product> myProducts = pService.findProductsByMakerId(makerId, "1");
 
 		Products products = new Products();
 		products.setProducts(myProducts);
-
+		
 		return products;
 	}
 
@@ -342,7 +340,7 @@ public class ProductController {
 		// 상품 수정 페이지로 이동
 
 		Product product = pService.findProductById(id);
-		ModelAndView mv = new ModelAndView("");
+		ModelAndView mv = new ModelAndView("product/modify");
 		mv.addObject("product", product);
 
 		return mv;
@@ -351,8 +349,9 @@ public class ProductController {
 	@RequestMapping("ui/myProducts.do")
 	public ModelAndView showMyProductListUI(String page, HttpServletRequest req) {
 		// GET 나의 생산품들 출력
-
+		System.out.println("왔어");
 		String makerId = (String) req.getSession().getAttribute("loginId");
+		System.out.println(makerId);
 		List<Product> products = pService.findProductsByMakerId(makerId, "1");
 
 		ModelAndView mv = new ModelAndView("product/myProductList");
@@ -365,24 +364,25 @@ public class ProductController {
 	public ModelAndView showDetailProductUI(String id) {
 		// GET 상품 상세정보 출력후 상품 상세 페이지로 이동
 		Product product = pService.findProductById(id);
-		ModelAndView mv = new ModelAndView("product/detail");
+		ModelAndView mv = new ModelAndView("product/productDetail");
 		mv.addObject("product", product);
 
 		return mv;
 	}
-	
+
 	@RequestMapping("image.do")
 	public void getProductImage(String img, HttpServletResponse resp) {
 		File image = new File(Constants.IMAGE_PATH+img);
 		if(!image.exists()){
 			throw new RuntimeException("No product image");
 		}
+		
 		try (InputStream in = new BufferedInputStream(new FileInputStream(image));
-				OutputStream out = resp.getOutputStream();){
+				OutputStream out = resp.getOutputStream();) {
 			byte[] buf = new byte[8096];
 			int readByte = 0;
-			while((readByte = in.read(buf))>-1){
-				out.write(buf,0,readByte);
+			while ((readByte = in.read(buf)) > -1) {
+				out.write(buf, 0, readByte);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

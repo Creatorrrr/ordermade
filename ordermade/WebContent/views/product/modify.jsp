@@ -106,6 +106,10 @@ $(document).ready(function() {
 		}
 	});
 	
+	$.ajax({
+		url:"${ctx}/product/ajax/product/productId.do"
+	})
+	
 	// 등록버튼 구현
 	$("#modifyBtn").click(function(){
 		var data = new FormData($('#productRegister')[0]);
@@ -165,9 +169,5 @@ $(document).ready(function() {
 });
 
 </script>
-<!-- JAVASCRIPTS -->
-<script src="../layout/scripts/jquery.min.js"></script>
-<script src="../layout/scripts/jquery.fitvids.min.js"></script>
-<script src="../layout/scripts/jquery.mobilemenu.js"></script>
 </body>
 </html>

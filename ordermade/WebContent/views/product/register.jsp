@@ -125,7 +125,7 @@ $(document).ready(function() {
 				dataType : "text",
 				success : function(resultData) {
 					if(resultData === "true"){
-						location.href= "${ctx}/views/product/myProductList.jsp"
+						location.href= "${ctx}/product/ui/myProducts.do"
 							/* "${ctx}/product/ui/myProducts.do" */; // 성공시 페이지 전환
 					}
 				},

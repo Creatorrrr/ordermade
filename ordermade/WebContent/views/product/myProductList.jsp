@@ -81,21 +81,7 @@
 		</div>
 	</div>
 
-	<%@ include file="/views/common/head.jsp"%>
+	<%@ include file="/views/common/footer.jsp"%>
 	<!-- JAVASCRIPTS -->
-	<script type="text/javascript">
-		function findProduct(data) {
-			$.ajax({
-				url : "${ctx}/product/ajax/product/productId.do?productId="
-						+ data,
-				type : "get",
-				dataType : "xml",
-				success : function(xml) {
-					console.log("333")
-				}
-			})
-
-		}
-	</script>
 </body>
 </html>

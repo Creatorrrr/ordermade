@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
@@ -17,11 +17,11 @@
 					<c:if test="${product.maker.id eq sessionScope.loginId}">
 						<!--본인이 작성한 글만 수정 삭제 가능하도록   -->
 						<div align="center">
-							<%-- <input class="btn btn-warning" type="button" value="삭제"
-								onclick="javascript:window.location='${ctx }/product/delete.do?productId=${product.id}'"> --%>
 							<input class="btn btn-warning" type="button" value="삭제"
-								onclick="javascript:productController.deleteProduct(${product.id });">
-							<input class="btn btn-warning" type="button" value="수정"
+								onclick="javascript:window.location='${ctx }/product/delete.do?productId=${product.id}'">
+							<input class="btn btn-warning" type="button" value="삭제"
+								onclick="javascript:deleteProduct(${product.id})"> <input
+								class="btn btn-warning" type="button" value="수정"
 								onclick="javascript:updateProduct(${product.id})">
 						</div>
 					</c:if>
@@ -34,19 +34,12 @@
 					felisi eger id justo maurisus convallicitur.</p>
 			</div>
 			<br>
-			<div>
-				<h2>상품 내용</h2>
-				<p class="">상품 번호 :</p>
-				<p class="">색상 :</p>
-				<p class="">소재 :</p>
-				<p class="">크기 :</p>
-			</div>
-			<%-- <c:forEach items="${ box_list }" var="literature"> --%>
+			<c:forEach items="${ box_list }" var="literature">
 			<div align="center">
 				<img src="${ctx }/views/images/img6.jpg" />
 			</div>
 			<br>
-			<%--  </c:forEach>--%>
+			 </c:forEach>
 
 			<!-- 확인</main>  -->
 
@@ -78,7 +71,7 @@
 					<li>
 						<article>
 							<header>
-								<%--        <c:forEach items="${reviews }" var="review"> --%>
+								       <c:forEach items="${reviews }" var="review">
 								<figure class="avatar">
 									<img src="${ctx }/views/images/img-10.jpg">
 								</figure>
@@ -97,7 +90,7 @@
 								<!-- <time datetime="2045-04-06T08:15+00:00">
 									Friday, 6<sup>th</sup> April 2045 @08:15:00
 								</time> -->
-								<%--	</c:forEach> --%>
+									</c:forEach>
 							</header>
 						</article>
 					</li>
@@ -160,23 +153,20 @@
 
 <!-- JAVASCRIPTS -->
 <script type="text/javascript">
-var productController = {
-		deleteProduct : function(id){
-			$.ajax({
-				type : "get",
-				url : "${ctx }/product/xml/remove.do?id="+id,
-				dataType : "text",
-				success : function(text){
-						if(text === "true") {
-							location.href = "${ctx }/views/product/myProductList.jsp";
-						}
-				},
-				error : function(xml){
-					console.log("실패 메시지 : \n" + xml.responseText);
-				}
-			});
-		}
-};
+function deleteProduct(productId) {
+	$.ajax({
+		url:"/product/xml/remove.do?id="+productId,
+		type : "get",
+		dataType : "text",
+		success : function(check) {
+			if(check=="true"){
+				location.href="${ctx}/product/ui/myProducts.do";
+			}
+				
+	}
+	})
+	
+}
 </script>
 </body>
-</html>
+</html> --%>
