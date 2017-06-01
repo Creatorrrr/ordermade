@@ -18,6 +18,8 @@ public interface RequestService {
 	public List<Request> findRequestsByConsumerId(String consumerId, String page);
 	public List<Request> findRequestsByConsumerIdWithMaker(String consumerId, String page);
 	public List<Request> findRequestsByConsumerIdWithPayment(String consumerId, String page);
+	public List<Request> findRequestsByMakerId(String makerId, String page);
+	public List<Request> findRequestsByMakerIdWithPayment(String makerId, String page);
 	public boolean registerInviteRequest(InviteRequest inviteRequest);
 	public boolean removeInviteRequestById(String id);
 	public boolean removeInviteRequestByRequestId(String requestId);

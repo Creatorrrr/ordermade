@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 @XmlRootElement(name="comments")
 @XmlAccessorType(XmlAccessType.FIELD)
-@Component
 public class Comments {
 	@XmlElement(name="comment")
 	private List<Comment> comments;

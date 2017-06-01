@@ -10,13 +10,12 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.springframework.stereotype.Component;
 
 @XmlRootElement(name="comment")
-@XmlAccessorType(XmlAccessType.FIELD)
-@Component
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class Comment {
 	private String id;
 	private String content;
 	private Member member;
-	@XmlTransient private Request request;
+	private Request request;
 	private Date time;
 	
 	public String getId() {
@@ -25,24 +24,34 @@ public class Comment {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
 	public String getContent() {
 		return content;
 	}
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
 	public Member getMember() {
-		return member;
+		if(this.member == null) return this.member;
+		Member safeMaker=this.member;
+		safeMaker.setPassword(null);
+		safeMaker.setMemberType(null);
+		safeMaker.setLicenseNumber(null);
+		return safeMaker;
 	}
 	public void setMember(Member member) {
 		this.member = member;
 	}
+	
+	@XmlTransient 
 	public Request getRequest() {
 		return request;
 	}
 	public void setRequest(Request request) {
 		this.request = request;
 	}
+	
 	public Date getTime() {
 		return time;
 	}

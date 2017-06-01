@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 @XmlRootElement(name="member")
 @XmlAccessorType(XmlAccessType.FIELD)
-@Component
 public class Member {
 	private String id;
 	private String password;
