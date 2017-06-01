@@ -202,7 +202,7 @@ public class ProductController {
 	// Product start
 
 	// main start
-	@RequestMapping(value = "/main/category/hit", produces = "text/plain")
+	@RequestMapping(value = "xml/main/category/hit.do", produces = "application.xml")
 	public @ResponseBody Products findProductsByCategoryOrderByHitsForMain(String category, String page) {
 		// Ajax 메인화면에서 히트 상품 종류 나옴
 		List<Product> hitProducts = pService.findProductsByCategoryOrderByHitsForMain(category, page);
@@ -214,7 +214,7 @@ public class ProductController {
 
 	}
 
-	@RequestMapping(value = "/main/category/id", produces = "text/plain")
+	@RequestMapping(value = "xml/main/category/brandNew.do", produces = "application/xml")
 	public @ResponseBody Products findProductsByCategoryOrderByIdForMain(String category, String page) {
 		// Ajax 메인화면에서 히트 상품 종류 나옴
 		List<Product> idProducts = pService.findProductsByCategoryOrderByIdForMain(category, page);

@@ -42,13 +42,13 @@
 								<button class="fa fa-search" type="submit" title="Search">
 									<em>Search</em>
 								</button>
+								<button class="fa fa-search" name="" type="submit" title="Search">
+									<em>Image Search</em>
+								</button>
 							</fieldset>
 						</div>
 					</form>
-
-					<button class="fa fa-search" name="" type="submit" title="Search">
-						<em>Image Search</em>
-					</button>
+					
 				</div>
 				<ul class="nospace listing">
 					<li class="clear">

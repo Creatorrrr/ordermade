@@ -27,20 +27,24 @@ public class RequestStoreLogicTest {
 //		Member consumer = new Member();
 //		Request rs = new Request();
 //
-//		maker.setId("testM");
-//		consumer.setId("testC");
+//		
+//		for(int i= 1 ; i < 101 ; i++){
+//			maker.setId("test"+i);
+//			consumer.setId("user1");
 //
-//		rs.setId("test");
-//		rs.setTitle("의뢰");
-//		rs.setContent("12345");
-//		rs.setBound("");
-//		rs.setCategory("가구");
-//		rs.setHopePrice(10000);
-//		rs.setPrice(10500);
-//		rs.setMaker(maker);
-//		rs.setConsumer(consumer);
+//			rs.setTitle("의뢰");
+//			rs.setContent("content :"+i);
+//			rs.setBound("");
+//			rs.setCategory("가구"+i);
+//			rs.setHopePrice(100+i+00);
+//			rs.setPrice(105+i+00);
+//			rs.setMaker(maker);
+//			rs.setConsumer(consumer);
 //
-//		assertTrue(rStore.insertRequest(rs));
+//			rStore.insertRequest(rs);
+//			assertTrue(rStore.insertRequest(rs));
+//		}
+//		
 //	}
 
 	

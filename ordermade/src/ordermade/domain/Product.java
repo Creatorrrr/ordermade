@@ -104,4 +104,15 @@ public class Product {
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", title=" + title + ", maker=" + maker + ", category=" + category + ", content="
+				+ content + ", image=" + image + ", price=" + price + ", period=" + period + ", hit=" + hit
+				+ ", reviews=" + reviews + "]";
+	}
+	
 }
