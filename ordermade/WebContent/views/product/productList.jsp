@@ -7,9 +7,6 @@
 <head>
 <%@ include file="/views/common/head.jsp"%>
 
-<link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
-<script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
-
 <style type="text/css">
 	.productBox {
 		display:inline-block;
@@ -288,4 +285,8 @@ var productController = {
 		}
 };
 </script>
+
+<link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
+<script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
+
 </html>
