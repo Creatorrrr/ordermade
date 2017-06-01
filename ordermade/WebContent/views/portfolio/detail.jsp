@@ -23,7 +23,8 @@
 						<div align="center">
 							<input class="btn btn-warning" type="button" value="삭제"
 								onclick="javascript:window.location='${ctx }/portfolio/xml/remove.do?portfolioId=${portfolio.id}'">
-							<input class="btn btn-success" id="modifyBtn" name="modifyBtn" type="button" value="수정">
+							<input class="btn btn-success" id="modifyBtn" type="button" value="수정"
+								onclick="javascript:window.location='${ctx }/portfolio/ui/modify.do?id=${portfolio.id }'">
 						</div>
 					<%-- </c:if> --%>
 				</c:if>
@@ -78,34 +79,28 @@
 			}
 		}; */
 		
-		 // 등록버튼 구현
+/* 		  // 등록버튼 구현
 		 $("#modifyBtn").click(function(){
-			// var data = new FormData($('#pModify')[0]);
-			 
-			//console.log("----testing here-------");
 			//if(checkIt()){
 				$.ajax({
 					// 보낼 때
 					type : "get",
-				//	enctype :false,
 					url : "${ctx }/portfolio/ui/modify.do",
-				//	data : data,
-				//	processData: false,
-				//	contentType: false,
-				//	cache: false,
+			
 					// 받을 때 
 					dataType : "text",
 					success : function(text) {
 						if(text === "true"){
 							location.href="${ctx}/portfolio/ui/detail.do"; // 성공시 페이지 전환
-						}/* ${ctx}/portfolio/ui/mylist.do */
+						}// ${ctx}/portfolio/ui/mylist.do 
 					},
 					error: function(xml){
 						console.log("실패 메시지 :\n"+xml.responseText);
 					}
 				});
-		//	}
-		}); 
+	
+		});  */
+		
 	</script>
 
 	</body>
