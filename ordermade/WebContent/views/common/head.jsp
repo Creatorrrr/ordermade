@@ -75,7 +75,7 @@
 			<nav id="mainav" class="clear">
 				<ul class="clear">
 					<li class=""><a href="${ctx }/views/index.jsp">Main</a></li>
-					<li><a class="drop" href="#">category</a> 
+					<li><a class="drop" href="#">Product</a> 
 					<ul>
 						<li><a href="${ctx }/product/ui/search.do?page=1&category=FUNITURE">Furniture</a></li>
 						<li><a href="${ctx }/product/ui/search.do?page=1&category=ACCESSORY">Accessory</a></li>
@@ -91,7 +91,6 @@
 								href="${ctx}/product//ajax/product/productid?productId=${product.id}">${product.title }</a>
 							</li>
 						</c:forEach> --%>
-					<li class=""><a href="${ctx }/product/ajax/products/category.do?page=1&category='가구'">Product</a></li>
 					<li><a href="${ctx }/views/portfolio/portfolio.jsp">Portfolio</a></li>
 					<c:if test="${sessionScope.loginId ne null}">
 						<li><a href="${ctx}/request/ui/myRequest.do">Request</a></li>

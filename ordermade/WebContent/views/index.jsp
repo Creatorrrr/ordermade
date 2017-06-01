@@ -34,7 +34,7 @@
 					src="${ctx }/views/images/demo/slider/5.png" alt=""></a>
 			</figure>
 			<ul id="slide-tabs">
-				<li><a href="${ctx }/views/images/image/cat1.jpg">A</a></li>
+				<li><a href="${ctx }#slide-1">A</a></li>
 				<li><a href="${ctx }#slide-2">B</a></li>
 				<li><a href="${ctx }#slide-3">C</a></li>
 				<li><a href="${ctx }#slide-4">D</a></li>
@@ -54,88 +54,41 @@
 			<div class="one_half">
 
 				<h2>인기 상품</h2>
-				<ul class="nospace listing">
+				<ul class="nospace listing" style="width: 195%;">
 					<li class="clear">
-						<%-- <c:forEach items="${ box_list }" var="literature"> --%>
 						<div class="content" align="center">
-							<table class="table">
-								<tr>
-									<td>
-										<ul id="pfslider">
-											<!-- images from ajax (sample under) -->
-											<%-- <li><img src="${ctx }/views/images/image/cat5.jpg"></li>
-											<li><img src="${ctx }/views/images/image/cat5.jpg"></li> --%>
-											<li id="HitsProductImages"></li>
-										</ul>
-							            <a href="#" id="prevPfBtn">
-							                <img src="${ctx }/views/images/bul_prev.png" alt="이전">
-							            </a>
-							            <a href="#" id="nextPfBtn">
-							                <img src="${ctx }/views/images/bul_next.png" alt="다음">
-							            </a>
-						            </td>
-					            </tr>
-								<%-- <tr>
-									<td>
-										<img src="${ctx }/views/images/img1.jpg" />
-									</td>
-								</tr>
-								<tr class="nospace btmspace-15">
-									<td>상품 이름</td>
-									<td><a class="literature" href="${ctx}/#/#.do?#=${asf }">${asf  }
-											rkrkrk</a></td>
-								</tr>
-								<tr class="nospace btmspace-15">
-									<td>가격</td>
-									<td class="creatorId">${asf}10000000원</td>
-								</tr> --%>
-							</table>
-						</div> <%-- </c:forEach> --%>
+							<ul id="HitsProductSlider">
+								<!-- images from ajax (sample under) -->
+								<li><img src="${ctx }/views/images/image/cat1.jpg"></li>
+								<li><img src="${ctx }/views/images/image/cat1.jpg"></li>
+								<li><img src="${ctx }/views/images/image/cat1.jpg"></li>
+								<li><img src="${ctx }/views/images/image/cat1.jpg"></li>
+								<li><img src="${ctx }/views/images/image/cat1.jpg"></li>
+								<li><img src="${ctx }/views/images/image/cat1.jpg"></li>
+							</ul>
+							<%-- <a href="#" id="prevPfBtn">
+				                <img src="${ctx }/views/images/bul_prev.png" alt="이전">
+				            </a>
+				            <a href="#" id="nextPfBtn">
+				                <img src="${ctx }/views/images/bul_next.png" alt="다음">
+				            </a> --%>
+						</div> 
 					</li>
 				</ul>
-				
+				<p>
 				<h3>최신 상품</h3>
-				<ul class="nospace listing">
+				<ul class="nospace listing" style="width: 195%;">
 					<li class="clear">
-						<%-- <c:forEach items="${ box_list }" var="literature"> --%>
-						<div class="content" align="center">
-							<table class="table">
-								<tr>
-									<td>
-										<ul id="productslider">
-											<!-- images from ajax (sample under) -->
-											<li><img src="${ctx }/views/images/image/cat1.jpg"></li>
-											<li><img src="${ctx }/views/images/image/cat1.jpg"></li>
-										</ul>
-							            <a href="#" id="prevProductBtn">
-							                <img src="${ctx }/views/images/bul_prev.png" alt="이전">
-							            </a>
-							            <a href="#" id="nextProductBtn">
-							                <img src="${ctx }/views/images/bul_next.png" alt="다음">
-							            </a>
-						            </td>
-					            </tr>
-								<%-- <tr>
-									<div class="imgl borderedbox">
-										<img src="${ctx }/views/images/img1.jpg" />
-									</div>
-								</tr>
-								<tr class="nospace btmspace-15">
-									<td>상품 이름</td>
-									<td><a class="literature" href="${ctx}/#/#.do?#=${asf }">${asf  }
-											rkrkrk</a></td>
-								</tr>
-								<tr class="nospace btmspace-15">
-									<td>가격</td>
-									<td class="creatorId">${asf}10000000원</td>
-								</tr> --%>
-							</table>
-						</div> <%-- </c:forEach> --%>
+						<ul id="BrandNewProductSlider">
+							<!-- images from ajax (sample under) -->
+							<li id="HitsProductImages"></li>
+						</ul>
 					</li>
 				</ul>
 			</div>
 			<!-- / Middle Column -->
 		</div>
+
 
 		<div id="twitter" class="group btmspace-30">
 			<div class="one_quarter first center">
@@ -208,7 +161,7 @@
 $(document).ready(function(){
 	$.ajax({
 		type : "get",
-		url : "${ctx }/product/xml/main/category/hit.do?category=Accessory&page=1",
+		url : "${ctx }/product/xml/main/category/hit.do?category=Digital&page=5",
 		dataType : "xml",
 		success : function(xml) {
 				console.log("------load Success-----")
@@ -217,27 +170,38 @@ $(document).ready(function(){
 				console.log(listLength)
 				$("#HitsProductImages").empty();
 				if(listLength){
-					var content = "";
+					var contentStr = "";
 					$(xmlData).each(function() {
-						content += "<li><img src=\"";
-						content += $(xml).find("product>image").text() +"\">";
-						content += "</li>";	
+						contentStr += mainImageController.makeImage(this);
 					});
-					$("#HitsProductImages").append(content);
+					$("#HitsProductImages").append(contentStr);
 				}
-				console.log(content)
+				console.log(contentStr)
 		}		
 	});
 });
 
+var mainImageController = {
+		makeImage : function(xml) {
+			var content = "";
+			
+			content += "<li><img src=\"";
+			content += "${ctx }/product/image.do?img=";
+			content += $(xml).find("product>image").text() +"\">";
+			content += "</li>";
+			
+			return content;
+		}
+};
+
 //main slider setting
-var pfSlider = $( '#pfslider' ).bxSlider( {
+var pfSlider = $( '#HitsProductSlider' ).bxSlider( {
     mode: 'horizontal',// 가로 방향 수평 슬라이드
     speed: 500,        // 이동 속도를 설정
     pager: false,      // 현재 위치 페이징 표시 여부 설정
     moveSlides: 1,     // 슬라이드 이동시 개수
-    slideWidth: 200,   // 슬라이드 너비
-    minSlides: 4,      // 최소 노출 개수
+    slideWidth: 300,   // 슬라이드 너비
+    minSlides: 3,      // 최소 노출 개수
     maxSlides: 4,      // 최대 노출 개수
     slideMargin: 5,    // 슬라이드간의 간격
     auto: false,        // 자동 실행 여부
@@ -258,33 +222,23 @@ $( '#nextPfBtn' ).on( 'click', function () {
     return false;
 } );
 
-//portfolio slider setting
-var productSlider = $( '#productslider' ).bxSlider( {
+//product slider setting
+var productSlider = $( '#BrandNewProductSlider' ).bxSlider( {
     mode: 'horizontal',// 가로 방향 수평 슬라이드
+    useCSS: false,
     speed: 500,        // 이동 속도를 설정
     pager: false,      // 현재 위치 페이징 표시 여부 설정
     moveSlides: 1,     // 슬라이드 이동시 개수
-    slideWidth: 200,   // 슬라이드 너비
-    minSlides: 4,      // 최소 노출 개수
-    maxSlides: 4,      // 최대 노출 개수
-    slideMargin: 5,    // 슬라이드간의 간격
+    slideWidth: 300,   // 슬라이드 너비
+    minSlides: 3,      // 최소 노출 개수
+    maxSlides: 5,      // 최대 노출 개수
+    slideMargin: 3,    // 슬라이드간의 간격
     auto: true,        // 자동 실행 여부
     autoHover: true,   // 마우스 호버시 정지 여부
-    controls: false,   // 이전 다음 버튼 노출 여부
-    captions: true     // 캡션 노출 여부
+    controls: true,	   // 이전 다음 버튼 노출 여부
+    captions: false     // 캡션 노출 여부
 } );
 
-//이전 버튼을 클릭하면 이전 슬라이드로 전환
-$( '#prevProductBtn' ).on( 'click', function () {
-	productSlider.goToPrevSlide();  //이전 슬라이드 배너로 이동
-    return false;              //<a>에 링크 차단
-} );
-
-//다음 버튼을 클릭하면 다음 슬라이드로 전환
-$( '#nextProductBtn' ).on( 'click', function () {
-	productSlider.goToNextSlide();  //다음 슬라이드 배너로 이동
-    return false;
-} );
 </script>
 </body>
 </html>
