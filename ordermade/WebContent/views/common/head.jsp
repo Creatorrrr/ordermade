@@ -7,10 +7,13 @@
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="${ctx }/views/layout/styles/layout.css" rel="stylesheet"
 	type="text/css" media="all">
+<link href="${ctx }/views/css/jquery.bxslider.min.css" rel="stylesheet" />
 <script src="${ctx }/views/layout/scripts/jquery.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.fitvids.min.js"></script>
 <script src="${ctx }/views/layout/scripts/jquery.mobilemenu.js"></script>
 <script src="${ctx }/views/js/jquery.blockUI.min.js"></script>
+<script src="${ctx }/views/layout/scripts/tabslet/jquery.tabslet.min.js"></script>
+<script src="${ctx }/views/js/jquery.bxslider.min.js"></script>
 <body id="top">
 	<div class="wrapper row0">
 		<div id="topbar" class="clear">

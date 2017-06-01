@@ -5,7 +5,7 @@
 
 ${head_body}
 <%@ include file="/resources/common/header.jsp"%>
-
+<link href="${ctx }/resources/js/js_simplePagination/simplePagination.css" rel="stylesheet" type="text/css">
 ${box1 }
 		
 			<%@ include file="/views/common/myPageNav.jsp"%>
@@ -58,15 +58,15 @@ ${box2 }
 				<li><button id="registerBtn">의뢰서 추가</button></li>
 				
 				<!-- 페이지 구현  -->
-
-				<link href="${ctx }/resources/js/js_simplePagination/simplePagination.css" rel="stylesheet" type="text/css">
-				<script src="${ctx }/resources/js/js_simplePagination/jquery.simplePagination.js"></script>	
-				<li><div id = "pagination"></li>
+			
+				<li>
+					<div id = "pagination"></div>
+				</li>
 
 
 			</ul>
 			
-			
+	<script src="${ctx }/resources/js/js_simplePagination/jquery.simplePagination.js"></script>
 	<script type="text/javaScript">
 
 		$(document).ready(function() {
