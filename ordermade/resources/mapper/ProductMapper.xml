@@ -13,10 +13,10 @@
 		<result column="period" property="period" />
 		<result column="hit" property="hit" />
 		<result column="type" property="category" />
-		<result property="maker.id" column="maker_id"/>
-		<!-- <association property="maker" column="maker_id"
+		<!-- <result property="maker.id" column="maker_id"/> -->
+		<association property="maker" column="maker_id"
 			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
-			jdbcType="VARCHAR" /> -->
+			jdbcType="VARCHAR" />
 		<collection property="reviews" column="id" ofType="Review"
 			select="ordermade.store.mapper.ReviewMapper.selectReviewsByProductIdForCollection" javaType="ArrayList"
 			jdbcType="VARCHAR" />
@@ -126,7 +126,7 @@
 		<include refid="selectProduct" />
 		FROM (<include refid="selectProductWithRowNum" />
 				FROM product
-				WHERE type = #{category} AND title = #{title}
+				WHERE type = #{category} AND title LIKE '%${title}%'
 				ORDER BY id DESC)
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
@@ -144,7 +144,7 @@
 						product.type,
 						product.hit
 				FROM product INNER JOIN member ON product.maker_id = member.id
-				WHERE product.type = #{category} AND member.name = #{makerName}
+				WHERE product.type = #{category} AND member.name LIKE '%${makerName}%'
 				ORDER BY product.id DESC)
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>

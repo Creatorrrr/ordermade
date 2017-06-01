@@ -63,13 +63,13 @@
 		) where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE})
   	</select>
   	
-  <!-- 	<select id="selectPortfoliosByTags" parameterType="List" resultMap="portfolioMap">
+  	<select id="selectPortfoliosByTags" parameterType="List" resultMap="portfolioMap">
 		SELECT DISTINCT portfolio.id, portfolio.title, portfolio.content, portfolio.type, portfolio.image, portfolio.maker_id
 		FROM portfolio INNER JOIN tag ON portfolio.id = tag.portfolio_id
 		WHERE tag.keyword IN
 			<foreach collection="list" item="tag" open="(" close=")" separator=",">
 	            #{tag.keyword}
 	        </foreach>
- 	</select> -->
+ 	</select>
   </mapper>
   

@@ -88,7 +88,7 @@ public class TagStoreLogic implements TagStore {
 
 		try {
 			ObjectMapper mapper = new ObjectMapper();
-			JsonNode root = mapper.readTree(getJsonFromGoogleVision(Constants.GOOGLE_VISION_URL, path, "LABEL_DETECTION", 5));
+			JsonNode root = mapper.readTree(getJsonFromGoogleVision(Constants.GOOGLE_VISION_URL, Constants.IMAGE_PATH + path, "LABEL_DETECTION", 5));
 		    JsonNode labelNode = root.path("responses").get(0).path("labelAnnotations");
 		    
 		    for(JsonNode node : labelNode) {

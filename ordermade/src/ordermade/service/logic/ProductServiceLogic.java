@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ordermade.constants.Constants;
 import ordermade.domain.Category;
+import ordermade.domain.Member;
 import ordermade.domain.Portfolio;
 import ordermade.domain.Product;
 import ordermade.domain.Review;
@@ -49,17 +50,17 @@ public class ProductServiceLogic implements ProductService{
 
 	@Override
 	public Product findProductById(String id) {
-		return pStore.selectProductById(id);
+		return excludePassword(pStore.selectProductById(id));
 	}
 
 	@Override
 	public List<Product> findProductsByCategoryOrderByHitsForMain(String category, String page) {
-		return pStore.selectProductsByCategoryOrderByHitsForMain(category, page);
+		return excludePassword(pStore.selectProductsByCategoryOrderByHitsForMain(category, page));
 	}
 
 	@Override
 	public List<Product> findProductsByCategoryOrderByIdForMain(String category, String page) {
-		return pStore.selectProductsByCategoryOrderByIdForMain(category, page);
+		return excludePassword(pStore.selectProductsByCategoryOrderByIdForMain(category, page));
 	}
 
 	@Override
@@ -67,32 +68,32 @@ public class ProductServiceLogic implements ProductService{
 		List<Tag> tagList = tStore.retrieveTagsFromGoogleVision(image);	// 현재 이미지의 특징을 추출함
 		List<Portfolio> portfolioList = pfStore.selectPortfoliosByTags(tagList);	// 태그에 해당하는 포트폴리오 불러옴
 
-		return pStore.selectProductsByCategoryAndMakerIdForImage(portfolioList);
+		return excludePassword(pStore.selectProductsByCategoryAndMakerIdForImage(portfolioList));
 	}
 
 	@Override
 	public List<Product> findProductsByCategoryAndTitle(String category, String title, String page) {
-		return pStore.selectProductsByCategoryAndTitle(category, title, getProductBegin(page), getProductEnd(page));
+		return excludePassword(pStore.selectProductsByCategoryAndTitle(category, title, getProductBegin(page), getProductEnd(page)));
 	}
 
 	@Override
 	public List<Product> findProductsByCategoryAndMakerName(String category, String makerName, String page) {
-		return pStore.selectProductsByCategoryAndMakerName(category, makerName, getProductBegin(page), getProductEnd(page));
+		return excludePassword(pStore.selectProductsByCategoryAndMakerName(category, makerName, getProductBegin(page), getProductEnd(page)));
 	}
 
 	@Override
 	public List<Product> findProductsByMakerId(String makerId, String page) {
-		return pStore.selectProductsByMakerId(makerId, getProductBegin(page), getProductEnd(page));
+		return excludePassword(pStore.selectProductsByMakerId(makerId, getProductBegin(page), getProductEnd(page)));
 	}
 
 	@Override
 	public List<Product> findProductsByMakerIdAndTitle(String makerId, String title, String page) {
-		return pStore.selectProductsByMakerIdAndTitle(makerId, title, getProductBegin(page), getProductEnd(page));
+		return excludePassword(pStore.selectProductsByMakerIdAndTitle(makerId, title, getProductBegin(page), getProductEnd(page)));
 	}
 
 	@Override
 	public List<Product> findProductsByCategory(String category, String page) {
-		return pStore.selectProductsByCategory(category, getProductBegin(page), getProductEnd(page));
+		return excludePassword(pStore.selectProductsByCategory(category, getProductBegin(page), getProductEnd(page)));
 	}
 
 	@Override
@@ -144,5 +145,23 @@ public class ProductServiceLogic implements ProductService{
 	
 	private String getReviewEnd(String page) {
 		return Integer.parseInt(page) * Constants.REVIEW_ROW_SIZE + "";
+	}
+	
+	private Product excludePassword(Product product) {
+		Member maker = product.getMaker();
+		if(maker != null) {
+			maker.setPassword("");
+		}
+		return product;
+	}
+	
+	private List<Product> excludePassword(List<Product> productList) {
+		for(Product p : productList) {
+			Member maker = p.getMaker();
+			if(maker != null) {
+				maker.setPassword("");
+			}
+		}
+		return productList;
 	}
 }
