@@ -106,14 +106,14 @@ ${box2 }
 			
 			
 			//수정 버튼 구현
-			$(".modifyBtn").click(function(){
+			$("#resultBox").on('click','.modifyBtn',function(){
 				var requestId = $(this).parent().attr("data");
 				window.location.href = "${ctx}/request/ui/modify.do?requestId="+requestId;
 			});
 			
 			
 			//삭제 버튼 구현 
-			$(".deleteBtn").click(function(){
+			$("#resultBox").on('click','.deleteBtn',function(){
 				var thisOne = $(this).parent();
 				var requestId = thisOne.attr("data");
 				

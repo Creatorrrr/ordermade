@@ -69,14 +69,14 @@ ${box2 }
 			
 
 			//수정 버튼 구현
-			$(".request_table").on('click','.modifyBtn',function(){
+			$("#resultBox").on('click','.modifyBtn',function(){
 				var requestId = $(this).parent().attr("data");
 				window.location.href = "${ctx}/request/ui/modify.do?requestId="+requestId;
 			});
 			
 			
 			//삭제 버튼 구현 
-			$(".deleteBtn").on('onclick',function(){
+			$("#resultBox").on('click','.deleteBtn',function(){
 				var thisOne = $(this).parent();
 				var requestId = thisOne.attr("data");
 				
