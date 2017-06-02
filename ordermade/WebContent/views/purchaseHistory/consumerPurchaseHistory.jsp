@@ -64,23 +64,40 @@
                        </c:if>
                        <c:forEach var="purchaseHistory" items="${purchaseList}"
                                   varStatus="sts">
-                        <tr>
-                            <td class="text-center">
-                            	<img src=${ctx }/views/images/img-10.jpg>
-                            </td>
-                            <td style="text-align: center">
-								상품명 : ${purchaseHistory.request.title }<br>
-								아이디 : ${purchaseHistory.consumer.id }<br>
-								가격 : ${purchaseHistory.request.price }<br>
-							</td>
-                            <td class="text-center" style="text-align: center">
-                            	${purchaseHistory.orderDate}
-                            </td>
-                            <td class="text-center" style="text-align: center">
-                           		${purchaseHistory.deliveryStatus}<br>
-                           		<a href="" class="btn btn-sm btn-success">구매확정</a>
-                            </td>
-                        </tr>
+                          
+	                        <tr>
+	                            <td class="text-center" style="text-align: center">
+	                            	<%-- <img src=${ctx }/views/images/img-10.jpg> --%>
+	                            	${purchaseHistory.request.id }
+	                            </td>
+	                            <td style="text-align: center">
+									상품명 : ${purchaseHistory.request.title }<br>
+									아이디 : ${purchaseHistory.consumer.id }<br>
+									가격 : ${purchaseHistory.request.price }<br>
+								</td>
+	                            <td class="text-center" style="text-align: center">
+	                            	${purchaseHistory.orderDate}
+	                            </td>
+	                            <td class="text-center" style="text-align: center">
+	                           		${purchaseHistory.deliveryStatus}<br>
+	                           		<c:if test="${purchaseHistory.payment eq false}">
+		                           		<input class="purchaseBtn" type="button" 
+		                           			value="구매확정" class="btn btn-sm btn-success"
+		                           			data1 = "${purchaseHistory.id }"
+			                        		data2 = "${purchaseHistory.request.id }"
+			                        		data3 = "${purchaseHistory.consumer.id }"
+			                        		data4 = "${purchaseHistory.maker.id }"
+			                        		data5 = "${purchaseHistory.invoiceNumber }"
+			                        		data6 = "${purchaseHistory.deliveryStatus }"
+			                        		data7 = "${purchaseHistory.payment }">
+		                        	</c:if>
+		                        	<c:if test="${purchaseHistory.payment eq true}">
+		                        		<input class="" type="button" 
+		                           			value="구매완료" class="btn btn-sm btn-success" disabled>
+		                        	</c:if>
+	                            </td>
+	                        </tr>
+	                        
                        </c:forEach>
                    </tbody>
                </table>
@@ -90,9 +107,45 @@
 </div>
 
 <%@ include file="/views/common/footer.jsp"%>
-<!-- JAVASCRIPTS -->
-<script src="../layout/scripts/jquery.min.js"></script>
-<script src="../layout/scripts/jquery.fitvids.min.js"></script>
-<script src="../layout/scripts/jquery.mobilemenu.js"></script>
+<script type="text/javascript">
+
+$(".purchaseBtn").click(function(){
+	var dom = $(this);
+	console.log(dom)
+	console.log(dom.attr("value"))
+	sendMoneyToMakerAccount.changeMakerAccount(dom);
+});
+
+var sendMoneyToMakerAccount = {
+	changeMakerAccount : function(dom) {
+		$.ajax({
+			type: "post",
+			url: "${ctx }/deal/xml/account/makerMoney.do",
+			data: {
+					"id" : dom.attr("data1"),
+					"request.id" : dom.attr("data2"),
+					"consumer.id" : dom.attr("data3"),
+					"maker.id" : dom.attr("data4"),
+					"invoiceNumber" : dom.attr("data5"),
+					"deliveryStatus" : dom.attr("data6"),
+					"payment" : dom.attr("data7")
+				   },
+			dataType: "text",
+			success: function(text){
+						if(text === "true"){
+							console.log(text)
+							dom.attr("value", "구매완료");
+							dom.attr("disabled", "true");
+						}else{
+							alert("구매확정이 실패하였습니다.");
+						}
+			},
+			error: function(xml){
+				console.log("실패 메시지 : \n" + xml.responseText)
+			}
+		});
+	},
+};
+</script>
 </body>
 </html>
