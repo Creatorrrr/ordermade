@@ -20,8 +20,7 @@
 				<h1 align="left">나의 포트폴리오</h1>
 				<!-- <div class="content" align="center"> -->
 				<div style="float: right">
-					<form method="portfolioSearch" action="${ctx}/portfolio/ui/search.do">
-
+					<!-- <form id="portfolioSearch" > -->
 						<select id="selectPortfolio" class="form-control"
 							style="display: inline-block">
 							<option value="title">제목</option>
@@ -29,11 +28,11 @@
 						</select> <input id="portfolioSearch" name="portfolioSearch"
 							class="search-box-input" type="text" value=""
 							placeholder="Search Here" style="display: inline-block" />
-						<button id="portfolioSearchBtn" class="fa fa-search" type="submit"
-							title="검색">
+						<button id="portfolioSearchBtn" class="fa fa-search" type="button"
+							title="검색" onclick="javascript:portfolioController.getMyPortfoliosByTitle()">
 							<em>Search</em>
 						</button>
-					</form>
+					<!-- </form> -->
 				</div>
 				
 					<div style="float: right;">
@@ -48,7 +47,7 @@
 					<li class="clear">
 					<div id="portfolioResult">
 					<c:forEach items="${portfolios }" var="portfolio">
-							<div class="portfolioList" align="center">
+							<div class="portfolioList">
 								<table class="table">
 									<tr>
 										<div class="imgl borderedbox">
@@ -80,16 +79,14 @@ $("#portfolioSearchBtn").click(function() {
 	var keyword = $("#portfolioSearch");
 	if(type === "title") {
 		portfolioController.getMyPortfoliosByTitle(1, keyword.val());
-	} else if(type === "makerName") {
-		portfolioController.getProductsByCategoryAndMakerName(1, keyword.val());
-	}
+	} 
 	keyword.val("");
 });
 
 	var portfolioController = {				
-			getMyPortfoliosByTitle : function(page, title) {
+			getMyPortfoliosByTitle : function(page) {
 				$.ajax({
-					url : "${ctx}/xml/searchByTitle.do?page=" + page + "&makerId=${makerId}&title=" + title,
+					url : "${ctx}/portfolio/xml/searchByTitle.do?page=" + page + "&title=" + $("#portfolioSearch").val(),
 					type : "get",
 					dataType : "xml",
 					success : function(xml) {
@@ -112,7 +109,7 @@ $("#portfolioSearchBtn").click(function() {
 			makeContent : function(xml) {
 				var content = "";
 				
-				content += "<div class='portfolioList' align='center'>";
+				content += "<div class='portfolioList'>";
 				content += "	<table class='table'>";
 				content += "		<tr>";
 				content += "			<div class='imgl borderedbox'>";
@@ -133,7 +130,7 @@ $("#portfolioSearchBtn").click(function() {
 			makeContentForEmpty : function() {
 				var content = "";
 				
-				content += "<div class='portfolioList'  align='center'>";
+				content += "<div class='portfolioList'>";
 				content += 	"<table>";
 				content += 		"<tr>";
 				content += 			"<td>조건에 해당하는 상품이 없습니다.</td>";
