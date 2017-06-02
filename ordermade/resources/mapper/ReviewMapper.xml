@@ -2,105 +2,121 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-  <mapper namespace="ordermade.store.mapper.ReviewMapper">
+
+<mapper namespace="ordermade.store.mapper.ReviewMapper">
 	<resultMap type="Review" id="reviewMap">
 		<id column="id" property="id" />
 		<result column="title" property="title" />
 		<result column="content" property="content" />
 		<result column="grade" property="grade" />
-		<result property="consumer.id" column="consumer_id"/>
+		<result property="consumer.id" column="consumer_id" />
 		<association property="product" column="product_id"
-			select="ordermade.store.mapper.ProductMapper.selectProductById" javaType="Product"
-			jdbcType="VARCHAR" />
-		<!-- <association property="consumer" column="consumer_id"
-			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
-			jdbcType="VARCHAR" /> -->
+			select="ordermade.store.mapper.ProductMapper.selectProductById"
+			javaType="Product" jdbcType="VARCHAR" />
+		<!-- <association property="consumer" column="consumer_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" 
+			javaType="Member" jdbcType="VARCHAR" /> -->
 	</resultMap>
-	
+
 	<sql id="selectReview">
-		SELECT id, 
-				title, 
-				content, 
-				grade, 
-				product_id, 
-				consumer_id
+		SELECT id,
+		title,
+		content,
+		grade,
+		product_id,
+		consumer_id
 	</sql>
-	
+
 	<sql id="selectReviewWithRowNum">
 		SELECT rownum rnum,
-				id, 
-				title, 
-				content, 
-				grade, 
-				product_id, 
-				consumer_id
+		id,
+		title,
+		content,
+		grade,
+		product_id,
+		consumer_id
 	</sql>
-	
+
 	<insert id="insertReview" parameterType="Review">
 		<selectKey keyProperty="id" resultType="String" order="BEFORE">
 			SELECT review_seq.nextval FROM dual
 		</selectKey>
-		INSERT INTO review(id, 
-							title, 
-							content, 
-							grade, 
-							product_id, 
-							consumer_id)
-		VALUES(#{id}, 
-				#{title}, 
-				#{content}, 
-				#{grade}, 
-				#{product.id}, 
-				#{consumer.id})
+		INSERT INTO review(id,
+		title,
+		content,
+		grade,
+		product_id,
+		consumer_id)
+		VALUES(#{id},
+		#{title},
+		#{content},
+		#{grade},
+		#{product.id},
+		#{consumer.id})
 	</insert>
-	
+
 	<update id="updateReviewById" parameterType="Review">
 		UPDATE review
-		SET title = #{title}, 
-			content = #{content}, 
-			grade = #{grade}, 
-			product_id = #{product.id}, 
-			consumer_id = #{consumer.id}
+		SET
+		title = #{title},
+		content = #{content},
+		grade = #{grade},
+		product_id =
+		#{product.id},
+		consumer_id = #{consumer.id}
 		WHERE id = #{id}
 	</update>
-	
+
 	<delete id="deleteReviewById" parameterType="String">
-		DELETE FROM review 
+		DELETE FROM review
 		WHERE id = #{id}
 	</delete>
-	
-	<select id="selectReviewsByProductId" parameterType="HashMap" resultMap="reviewMap">
+
+	<select id="selectReviewsByProductId" parameterType="HashMap"
+		resultMap="reviewMap">
 		<include refid="selectReview" />
-		FROM (<include refid="selectReviewWithRowNum" />
-				FROM review
-				WHERE product_id = #{productId})
-		WHERE rnum BETWEEN #{begin} AND #{end}
-	</select>
-	
-	<!-- For ProductMapper - Review Association -->
-	<select id="selectReviewsByProductIdForCollection" parameterType="String" resultMap="reviewMap">
-		<include refid="selectReview" />
-		FROM (<include refid="selectReviewWithRowNum" />
-				FROM review
-				WHERE product_id = #{productId})
-		WHERE rnum BETWEEN 1 AND 10
-	</select>
-	
-	<select id="selectReviewsByTitleAndProductId" parameterType="HashMap" resultMap="reviewMap">
-		<include refid="selectReview" />
-		FROM (<include refid="selectReviewWithRowNum" />
-				FROM review
-				WHERE title = #{title} AND product_id = #{productId})
-		WHERE rnum BETWEEN #{begin} AND #{end}
-	</select>
-	
-	<select id="selectReviewsByConsumerIdAndProductId" parameterType="HashMap" resultMap="reviewMap">
-		<include refid="selectReview" />
-		FROM (<include refid="selectReviewWithRowNum" />
-				FROM review
-				WHERE consumer_id = #{consumerId} AND product_id = #{productId})
-		WHERE rnum BETWEEN #{begin} AND #{end}
+		FROM (
+		<include refid="selectReviewWithRowNum" />
+		FROM review
+		WHERE product_id = #{productId})
+		WHERE rnum BETWEEN #{begin}
+		AND #{end}
 	</select>
 
-  </mapper>
+	<!-- For ProductMapper - Review Association -->
+	<select id="selectReviewsByProductIdForCollection"
+		parameterType="String" resultMap="reviewMap">
+		<include refid="selectReview" />
+		FROM (
+		<include refid="selectReviewWithRowNum" />
+		FROM review
+		WHERE product_id = #{productId}
+		ORDER BY id ASC
+		)
+		WHERE rnum BETWEEN 1 AND 10
+	</select>
+
+	<select id="selectReviewsByTitleAndProductId" parameterType="HashMap"
+		resultMap="reviewMap">
+		<include refid="selectReview" />
+		FROM (
+		<include refid="selectReviewWithRowNum" />
+		FROM review
+		WHERE title = #{title} AND product_id = #{productId})
+		WHERE
+		rnum BETWEEN
+		#{begin} AND #{end}
+	</select>
+
+	<select id="selectReviewsByConsumerIdAndProductId"
+		parameterType="HashMap" resultMap="reviewMap">
+		<include refid="selectReview" />
+		FROM (
+		<include refid="selectReviewWithRowNum" />
+		FROM review
+		WHERE consumer_id = #{consumerId} AND product_id =
+		#{productId})
+		WHERE rnum
+		BETWEEN #{begin} AND #{end}
+	</select>
+
+</mapper>

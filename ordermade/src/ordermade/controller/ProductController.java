@@ -190,7 +190,7 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/review/remove.do", produces = "text/plain")
-	public @ResponseBody String removeReviewById(@RequestParam("productId") String id, HttpServletRequest req) {
+	public @ResponseBody String removeReviewById(String id, HttpServletRequest req) {
 		// Ajax 리뷰 삭제후 화면유지
 		if (!pService.removeReviewById(id)) {
 			return "false";
@@ -228,11 +228,11 @@ public class ProductController {
 
 	// main end
 
-	@RequestMapping(value = "ajax/product/productId.do", produces = "application/xml")
+	@RequestMapping(value = "ajax/product/productId.do")
 	public @ResponseBody Product findProductById(String productId) {
 		// Ajax 생산품 id 검색으로 생산품 출력
 
-		Product product = pService.findProductById(productId);
+		Product product = pService.findProductById("203");
 		return product;
 	}
 
@@ -301,10 +301,12 @@ public class ProductController {
 		return reviews;
 	}
 
-	@RequestMapping(value = "/ajax/reviews/TP", produces = "text/plain")
+	@RequestMapping(value = "/ajax/reviews/TP.do")
 	public @ResponseBody Reviews findReviewsByTitleAndProductId(String page, String productId, String title) {
 		// Ajax 생산품 아이디 그리고 내용으로 리뷰들 출력
-		List<Review> TPreview = pService.findReviewsByTitleAndProductId(title, productId, page);
+		System.out.println(productId);
+		System.out.println(title);
+		List<Review> TPreview = pService.findReviewsByTitleAndProductId(title, productId, "1");
 
 		Reviews reviews = new Reviews();
 		reviews.setReviews(TPreview);
@@ -312,10 +314,11 @@ public class ProductController {
 		return reviews;
 	}
 
-	@RequestMapping(value = "/ajax/reviews/CP", produces = "text/plain")
-	public Reviews findReviewsByConsumerIdAndProductId(String page, String productId, String consumerId) {
+	@RequestMapping(value = "/ajax/reviews/CP.do")
+	public @ResponseBody Reviews findReviewsByConsumerIdAndProductId(String page, String productId, String consumerId) {
 		// Ajax 생산품 아이디 그리고 내용으로 리뷰들 출력
-		List<Review> CPreview = pService.findReviewsByConsumerIdAndProductId(consumerId, productId, page);
+
+		List<Review> CPreview = pService.findReviewsByConsumerIdAndProductId(consumerId, productId, "1");
 
 		Reviews reviews = new Reviews();
 		reviews.setReviews(CPreview);
@@ -363,7 +366,7 @@ public class ProductController {
 	public ModelAndView showDetailProductUI(String id) {
 		// GET 상품 상세정보 출력후 상품 상세 페이지로 이동
 		Product product = pService.findProductById(id);
-		ModelAndView mv = new ModelAndView("product/productDetail");
+		ModelAndView mv = new ModelAndView("product/detail");
 		mv.addObject("product", product);
 
 		return mv;
@@ -411,7 +414,7 @@ public class ProductController {
 
 	@RequestMapping("ui/search.do")
 	public ModelAndView showSearchProductsUI(String category, String page) {
-		return new ModelAndView("product/productList").addObject("category", category).addObject("products",
+		return new ModelAndView("product/productList").addObject("categories", category).addObject("products",
 				pService.findProductsByCategory(category, page));
 	}
 }
