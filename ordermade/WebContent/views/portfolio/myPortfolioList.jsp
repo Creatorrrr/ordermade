@@ -22,7 +22,7 @@
 				<div style="float: right">
 					<form method="portfolioSearch" action="${ctx}/portfolio/ui/search.do">
 
-						<select name="selectPortfolio" class="form-control"
+						<select id="selectPortfolio" class="form-control"
 							style="display: inline-block">
 							<option value="title">제목</option>
 							<option value="content">내용</option>
@@ -46,7 +46,7 @@
 
 				<ul class="nospace listing">
 					<li class="clear">
-					<div id="result">
+					<div id="portfolioResult">
 					<c:forEach items="${portfolios }" var="portfolio">
 							<div class="portfolioList" align="center">
 								<table class="table">
@@ -95,15 +95,15 @@ $("#portfolioSearchBtn").click(function() {
 					success : function(xml) {
 							var xmlData = $(xml).find("portfolio");
 							var listLength = xmlData.length;
-							$("#result").empty();
+							$("#portfolioResult").empty();
 							if (listLength) {
 								var contentStr = "";
 								$(xmlData).each(function(){
 									contentStr += portfolioController.makeContent(this);
 								});
-								$("#result").append(contentStr);
+								$("#portfolioResult").append(contentStr);
 							} else {
-								$("#result").append(portfolioController.makeContentForEmpty());
+								$("#portfolioResult").append(portfolioController.makeContentForEmpty());
 							}
 					}
 				});

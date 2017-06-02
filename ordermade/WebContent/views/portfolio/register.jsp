@@ -109,7 +109,7 @@ $(document).ready(function(){
 				dataType : "text",
 				success : function(data) {
 					if(data === "true"){
-						location.href="${ctx}/portfolio/ui/mylist.do"; // 성공시 페이지 전환
+						location.href="${ctx}/portfolio/ui/mylist.do" // 성공시 페이지 전환
 					}
 				},
 				error: function(xml){

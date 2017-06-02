@@ -93,9 +93,12 @@ public class PortfolioController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+	
 		check = pService.registerPortfolio(portfolio);
+		
+		System.out.println("ZZZZZZZZZZZZZZZZZZZz"+ check);
 		return check+"";
+		
 //		if (pService.registerPortfolio(portfolio)) {
 //		//	model.addAttribute("portfolio", portfolio);
 //			return "portfolio/myPortfolioList";
@@ -121,12 +124,16 @@ public class PortfolioController {
 			MultipartRequest mr = new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8",
 					new DefaultFileRenamePolicy());
 
+			String id = mr.getParameter("id");
+			
 			String title = mr.getParameter("title");
 			String content = mr.getParameter("content");
 			String category = mr.getParameter("category");
 			//File image = mr.getFile("image");
 			Member maker = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 		
+			portfolio.setId(id);
+			
 			portfolio.setTitle(title);
 			portfolio.setContent(content);
 			portfolio.setCategory(category);
@@ -137,16 +144,16 @@ public class PortfolioController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (pService.modifyPortfolio(portfolio)) {
-//			model.addAttribute("portfolio",portfolio);
-//			model.addAttribute("makerId",makerId);
-			return "redirect:/portfolio/detail";
-		} else {
-			throw new RuntimeException("Modify portfolio failed");
-		}
+//		if (pService.modifyPortfolio(portfolio)) {
+////			model.addAttribute("portfolio",portfolio);
+////			model.addAttribute("makerId",makerId);
+//			return "redirect:/portfolio/detail";
+//		} else {
+//			throw new RuntimeException("Modify portfolio failed");
+//		}
 		
-//		check = pService.modifyPortfolio(portfolio);
-//		return check +"";
+		check = pService.modifyPortfolio(portfolio);
+		return check +"";
 	} 
 
 	@RequestMapping(value = "xml/remove.do", method = RequestMethod.GET, produces = "text/plain")
