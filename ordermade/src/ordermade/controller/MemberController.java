@@ -40,44 +40,12 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/join.do", method = RequestMethod.POST, produces="text/plain") // end
-	public @ResponseBody String registerMember(HttpServletRequest request) {
+	public @ResponseBody String registerMember(Member member, HttpServletRequest request) {
 		// 회원가입 **회원가입이 실패하면 memberRegister.jsp 화면으로 이동 **회원가입이 성공하면 login.jsp으로
 		// 이동
-		String imagePath = Constants.IMAGE_PATH;
-
-		File dir = new File(imagePath);
-		if (!dir.exists()) {
-			// 폴더가 존재하지 않으면 폴더 생성
-			dir.mkdirs();
+		if(member.getId().equals(service.findMemberById(member.getId()))) {
+			return "false";
 		}
-
-		Member member = new Member();
-
-		try {
-			MultipartRequest mr = new MultipartRequest(request, imagePath, 5 * 1024 * 1024, "UTF-8",
-					new DefaultFileRenamePolicy());
-
-			member.setId(mr.getParameter("id"));
-			member.setPassword(mr.getParameter("password"));
-			member.setName(mr.getParameter("name"));
-			member.setEmail(mr.getParameter("email"));
-			member.setAddress(mr.getParameter("address"));
-			member.setIntroduce(mr.getParameter("introduce"));
-			member.setMemberType(mr.getParameter("memberType"));
-
-			if (member.getMemberType().equals(Constants.MAKER)) {
-				member.setLicenseNumber(mr.getParameter("licenseNumber"));
-			} else if (member.getMemberType().equals(Constants.CONSUMER)) {
-				member.setLicenseNumber("null");
-			} else {
-				throw new RuntimeException("Invalid MemberType");
-			}
-
-			member.setImage(mr.getFile("image").getName());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 		return service.registerMember(member) + "";
 	}
 
@@ -109,7 +77,7 @@ public class MemberController {
 		return "redirect:/main/main.do";
 	}
 
-	@RequestMapping("/modifyMember.do") // end
+	@RequestMapping("/modify.do") // end
 	public ModelAndView showEditMyPageUI(HttpSession session) {
 		if (checkLogined(session))
 			return new ModelAndView("member/login"); // check logined
@@ -119,20 +87,16 @@ public class MemberController {
 				service.findMemberById((String) session.getAttribute("loginId")));
 	}
 
-	@RequestMapping(value = "/modifyMember.do", method = RequestMethod.POST) // end
-	public String modifyMemberById(Member member, HttpSession session) {
+	@RequestMapping(value="/modify.do", method=RequestMethod.POST, produces="text/plain") // end
+	public @ResponseBody String modifyMemberById(Member member, HttpSession session) {
 		if (checkLogined(session))
 			return "member/login"; // check logined
-
+		member.setId((String)session.getAttribute("loginId"));
 		// 회원 수정후 마이페이지로 이동한다.
-		if (service.modifyMemberById(member)) {
-			return "redirect:/member/myPage.do";
-		} else {
-			throw new RuntimeException("Modify member failed");
-		}
+		return service.modifyMemberById(member) + "";
 	}
 
-	@RequestMapping("/removeMember.do") // end
+	@RequestMapping("/remove.do") // end
 	public String removeMemberById(HttpSession session) {
 		if (checkLogined(session))
 			return "member/login"; // check logined
@@ -170,27 +134,6 @@ public class MemberController {
 	@RequestMapping(value = "/xml/myPage.do", produces = "application/xml")
 	public @ResponseBody Member findMyMember(HttpSession session) {
 		return service.findMemberById((String) session.getAttribute("loginId"));
-	}
-
-	@RequestMapping("/image.do")
-	public void getMemberImage(String img, HttpServletResponse resp) throws IOException {
-		File image = new File(Constants.IMAGE_PATH + img);
-		if (!image.exists()) {
-			throw new RuntimeException("No member image");
-		}
-
-		try (InputStream in = new BufferedInputStream(new FileInputStream(image));
-				OutputStream out = resp.getOutputStream();) {
-			byte[] buf = new byte[8096];
-			int readByte = 0;
-			while ((readByte = in.read(buf)) > -1) {
-				out.write(buf, 0, readByte);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private boolean checkLogined(HttpSession session) {

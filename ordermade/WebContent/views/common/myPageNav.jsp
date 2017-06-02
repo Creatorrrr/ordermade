@@ -8,7 +8,7 @@
 <nav class="sdb_holder">
 	<ul>
 		<li><a href="${ctx}/member/myPage.do">나의 프로필</a></li>
-		<li><a href="${ctx}/member/modifyMember.do">내 정보수정</a></li>
+		<li><a href="${ctx}/member/modify.do">내 정보수정</a></li>
 		<c:choose>
 			<c:when test="${sessionScope.memberType eq 'C'}">
 				<li><a href="${ctx }/request/ui/myRequest.do">나의 의뢰서</a></li>
@@ -33,7 +33,7 @@
 	function deleteBtn(){
 		var r = confirm("탈퇴하시면 로그인을 할수가 없습니다!");
 		if (r == true) {
-		   	location.href="${ctx }/member/removeMember.do";
+		   	location.href="${ctx }/member/remove.do";
 		}
 	}
 </script>

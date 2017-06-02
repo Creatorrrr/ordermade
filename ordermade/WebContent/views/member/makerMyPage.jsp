@@ -25,16 +25,9 @@
 				<li class="clear">
 					<div class="content" align="left">
 						<h1>${member.id }님의정보</h1>
-
-						<div style="float: right;">
-							<%-- <c:if test="${sessionScope.loginId ne null && boardId ne null}"> --%>
-							<a class="btn btn-sm btn-success"
-								href="${ctx}/member/modifyMember.do">회원정보 수정</a>
-							<%-- </c:if> --%>
-						</div>
 						
 					<div class="imgl borderedbox">
-						<img src="${ctx }/member/image.do?img=${member.image}" />
+						<img src="${ctx }/main/file/download.do?fileName=${member.image}" />
 					</div>
 					<table class="table">
 						<tr class="nospace btmspace-15">
@@ -57,8 +50,8 @@
 							<td>
 								<ul id="pfslider">
 									<!-- images from ajax (sample under) -->
-									<li><img src="${ctx }/member/image.do?img=phonecase4.jpg"></li>
-									<li><img src="${ctx }/member/image.do?img=phonecase9.jpg"></li>
+									<li><img src="${ctx }/main/file/download.do?fileName=panda1.png"></li>
+									<li><img src="${ctx }/main/file/download.do?fileName=panda4.jpg"></li>
 								</ul>
 					            <a href="#" id="prevPfBtn">
 					                <img src="${ctx }/views/images/bul_prev.png" alt="이전">
@@ -73,8 +66,8 @@
 							<td>
 								<ul id="productslider">
 									<!-- images from ajax (sample under) -->
-									<li><img src="${ctx }/member/image.do?img=phonecase4.jpg"></li>
-									<li><img src="${ctx }/member/image.do?img=phonecase9.jpg"></li>
+									<li><img src="${ctx }/main/file/download.do?fileName=panda1.png"></li>
+									<li><img src="${ctx }/main/file/download.do?fileName=panda4.jpg"></li>
 								</ul>
 					            <a href="#" id="prevProductBtn">
 					                <img src="${ctx }/views/images/bul_prev.png" alt="이전">
@@ -116,7 +109,7 @@ var getPortfolios = function(page) {
 					var contentStr = "";
 					$(xmlData).each(function() {
 						contentStr += "<li>";
-						contentStr += "<img src='${ctx }/member/image.do?img=" + $(this).find('portfolio>image') + "'>";
+						contentStr += "<img src='${ctx }/main/file/download.do?fileName=" + $(this).find('portfolio>image') + "'>";
 						contentStr += "</li>";
 					});
 					$("#pfslider").append(contentStr);
@@ -139,7 +132,7 @@ var getProducts = function(page) {
 					var contentStr = "";
 					$(xmlData).each(function() {
 						contentStr += "<li>";
-						contentStr += "<img src='${ctx }/member/image.do?img=" + $(this).find('product>image') + "'>";
+						contentStr += "<img src='${ctx }/main/file/download.do?fileName=" + $(this).find('product>image') + "'>";
 						contentStr += "</li>";
 					});
 					$("#productslider").append(contentStr);

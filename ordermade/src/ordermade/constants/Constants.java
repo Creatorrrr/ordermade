@@ -13,7 +13,8 @@ public class Constants {
 	// 본인 이클립스 경로의 WebContent 폴더에 생성됨
 	// ex) C:\kosta_14\down\eclipse-jee-neon-2-win32-x86_64\eclipse\WebContent
 	public static final String ROOT = "./WebContent";	
-	
+
+	public static final String FILE_PATH = ROOT +"/file/";
 	public static final String IMAGE_PATH = ROOT +"/img/";
 	
 	public static final String GOOGLE_VISION_URL = "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyCATcj6V5nyNSrx7ql4jfhRKgOfQQelYaU";

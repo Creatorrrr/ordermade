@@ -22,17 +22,10 @@
 			<ul class="nospace listing">
 				<li class="clear">
 					<h1>${member.id}님의 정보</h1>
-
-					<div style="float: right;">
-						<%-- <c:if test="${sessionScope.loginId ne null && boardId ne null}"> --%>
-						<a class="btn btn-sm btn-success"
-							href="${ctx}/member/modifyMember.do">회원정보 수정</a>
-						<%-- </c:if> --%>
-					</div>
 					
 					<div class="content" align="left">
 						<div class="imgl borderedbox">
-							<img src="${ctx }/member/image.do?img=${member.image}">
+							<img src="${ctx }/main/file/download.do?fileName=${member.image}">
 						</div>
 						<table class="table">
 							<tr class="nospace btmspace-15">

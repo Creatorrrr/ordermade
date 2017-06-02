@@ -75,8 +75,12 @@
 					</tr>
 					<tr>
 						<th><label>이미지 업로드</label></th>
-						<td><input id="image" name="image" class="form-control"
-							type="file" placeholder="사진을 등록 하세요."></td>
+						<td>
+							<div id='imageuploader'>Upload</div>
+							<button onclick="javascript:imageUploader()">다시 업로드 하기</button>
+							<div><img id='memberImage' src="" style="width:100px;display:none"></div>
+							<input id="memberImageHidden" name="image" type="hidden" value="${member.image }">
+						</td>
 					</tr>
 				</table>
 				<br>
@@ -92,6 +96,10 @@
 <%@ include file="/views/common/footer.jsp"%>
 
 <script type="text/javascript">
+$( document ).ready(function() {
+	imageUploader();
+});
+
 $(function() {
 	$("#registerForm").validate({
 		rules : {
@@ -136,8 +144,29 @@ $(function() {
 	});
 });
 
+var imageUploader = function() {
+	$("#imageuploader").uploadFile({
+		url:"${ctx}/main/file/upload.do",
+		acceptFiles:"image/*",
+		fileName:"upload",
+		multiple:false,
+		maxFileCount:1,
+		returnType:"text",
+		onSuccess:function(files,data,xhr,pd)
+		{
+			var result = data;
+			if(result === "fail") {
+				alert("이미지 업로드 실패")
+			} else {
+				$("#memberImage").css("display", "block").attr("src", "${ctx}/main/file/download.do?fileName=" + data);
+				$("#memberImageHidden").val(data);
+			}
+		},
+	});	
+};
+
 var memberController = {
-	registerMember : function() {	// 작업중
+	registerMember : function() {
 		$('#registerForm').ajaxForm({
 			url : "${ctx }/member/join.do",
 			enctype : "multipart/form-data",

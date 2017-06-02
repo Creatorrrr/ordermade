@@ -51,7 +51,8 @@ var memberController = {
 					if(text === "true") {
 						location.href="${ctx}/main/main.do"
 					} else {
-						location.href="${ctx}/member/login"
+						alert("로그인 실패");
+						location.href="${ctx}/member/login.do"
 					}
 					javascript:$.unblockUI();
 			}
