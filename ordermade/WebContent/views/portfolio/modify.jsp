@@ -23,7 +23,7 @@
 				<br>
 				<form action="${ctx }/portfolio/xml/modify.do" id="pModify" name="pModify" enctype="multipart/form-data"
 					method="post" onsubmit="return checkIt()">
-			  	<%--  <input name="portfolio" type="hidden" value="${portfolio.maker.id}">   --%>
+			  	  <input name="portfolio" type="hidden" value="${portfolio.maker.id}">   
 					<table class="table">
 						<tr>
 							<th>제작 항목 <span>*</span></th>
@@ -46,7 +46,8 @@
 						</tr>
 					</table>
 					<div>
-						<input class="btn btn-success" type="submit" id="modifyBtn" value="등록">
+						<input type="hidden" name="id" value="${portfolio.id }">
+						<input class="btn btn-success" type="button" id="modifyBtn" value="등록">
 						&nbsp; <input type="reset" value="취소">
 					</div>
 				</form>
@@ -121,7 +122,7 @@
 			 */
 			
 			
-			/* // 등록버튼 구현
+			 // 등록버튼 구현
 		 	 $("#modifyBtn").click(function(){
 				var data = new FormData($('#pModify')[0]);
 				  
@@ -140,7 +141,7 @@
 							dataType : "text",
 							success : function(data) {
 								if(data === "true"){
-									location.href="${ctx}/portfolio/ui/detail.do"; // 성공시 페이지 전환
+									location.href="${ctx}/portfolio/ui/mylist.do"; // 성공시 페이지 전환
 								}
 							},
 							error: function(xml){
@@ -148,7 +149,7 @@
 							}
 						});
 					}
-				});  */
+				});  
 
 			//유효성 검사
 			function checkIt() {

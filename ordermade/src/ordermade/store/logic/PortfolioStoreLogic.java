@@ -1,5 +1,6 @@
 package ordermade.store.logic;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -7,9 +8,11 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Repository;
 
 import ordermade.domain.Portfolio;
+import ordermade.domain.Product;
 import ordermade.domain.Tag;
 import ordermade.store.facade.PortfolioStore;
 import ordermade.store.mapper.PortfolioMapper;
+import ordermade.store.mapper.ProductMapper;
 
 @Repository
 public class PortfolioStoreLogic implements PortfolioStore {
@@ -77,24 +80,67 @@ public class PortfolioStoreLogic implements PortfolioStore {
 	}
 
 	@Override
-	public List<Portfolio> selectPortfoliosByMakerId(String makerId, String page) {
+	public List<Portfolio> selectPortfoliosByMakerId(String makerId, String begin, String end) {
 		SqlSession session = factory.openSession();
-		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
-		return mapper.selectPortfoliosByMakerId(makerId, page);
+		
+		List<Portfolio> pList = null;
+		HashMap<String, String> map = new HashMap<>();
+		map.put("makerId", makerId);
+		map.put("begin", begin);
+		map.put("end", end);
+		try {
+			PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+			pList = mapper.selectPortfoliosByMakerId(map);
+		}finally {
+			session.close();
+		}
+		return pList;
+		
+		//PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+		//return mapper.selectPortfoliosByMakerId(makerId, begin, end);
 	}
 
 	@Override
-	public List<Portfolio> selectPortfoliosByMakerIdAndTitle(String makerId, String title, String page) {
+	public List<Portfolio> selectPortfoliosByMakerIdAndTitle(String makerId, String title, String begin, String end) {
 		SqlSession session = factory.openSession();
-		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
-		return mapper.selectPortfoliosByMakerIdAndTitle(makerId, title, page);
+		
+		List<Portfolio> pList = null;
+		HashMap<String, String> map = new HashMap<>();
+		map.put("makerId", makerId);
+		map.put("title", title);
+		map.put("begin", begin);
+		map.put("end", end);
+		try {
+			PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+			pList = mapper.selectPortfoliosByMakerId(map);
+		}finally {
+			session.close();
+		}
+		return pList;
+		
+//		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+//		return mapper.selectPortfoliosByMakerIdAndTitle(makerId, title, page);
 	}
 
 	@Override
-	public List<Portfolio> selectPortfoliosByCategory(String category, String page) {
+	public List<Portfolio> selectPortfoliosByCategory(String category, String begin, String end) {
 		SqlSession session = factory.openSession();
-		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
-		return mapper.selectPortfoliosByCategory(category, page);
+		
+		List<Portfolio> pList = null;
+		HashMap<String, String> map = new HashMap<>();
+		map.put("category", category);
+		map.put("begin", begin);
+		map.put("end", end);
+		try {
+			PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+			pList = mapper.selectPortfoliosByMakerId(map);
+		}finally {
+			session.close();
+		}
+		return pList;
+		
+//		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+//		return mapper.selectPortfoliosByCategory(category, page);
 	}
 	
 	@Override

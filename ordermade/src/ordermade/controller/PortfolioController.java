@@ -93,9 +93,12 @@ public class PortfolioController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+	
 		check = pService.registerPortfolio(portfolio);
+		
+		System.out.println("ZZZZZZZZZZZZZZZZZZZz"+ check);
 		return check+"";
+		
 //		if (pService.registerPortfolio(portfolio)) {
 //		//	model.addAttribute("portfolio", portfolio);
 //			return "portfolio/myPortfolioList";
@@ -121,12 +124,16 @@ public class PortfolioController {
 			MultipartRequest mr = new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8",
 					new DefaultFileRenamePolicy());
 
+			String id = mr.getParameter("id");
+			
 			String title = mr.getParameter("title");
 			String content = mr.getParameter("content");
 			String category = mr.getParameter("category");
 			//File image = mr.getFile("image");
 			Member maker = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 		
+			portfolio.setId(id);
+			
 			portfolio.setTitle(title);
 			portfolio.setContent(content);
 			portfolio.setCategory(category);
@@ -137,16 +144,16 @@ public class PortfolioController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (pService.modifyPortfolio(portfolio)) {
-//			model.addAttribute("portfolio",portfolio);
-//			model.addAttribute("makerId",makerId);
-			return "redirect:/portfolio/detail";
-		} else {
-			throw new RuntimeException("Modify portfolio failed");
-		}
+//		if (pService.modifyPortfolio(portfolio)) {
+////			model.addAttribute("portfolio",portfolio);
+////			model.addAttribute("makerId",makerId);
+//			return "redirect:/portfolio/detail";
+//		} else {
+//			throw new RuntimeException("Modify portfolio failed");
+//		}
 		
-//		check = pService.modifyPortfolio(portfolio);
-//		return check +"";
+		check = pService.modifyPortfolio(portfolio);
+		return check +"";
 	} 
 
 	@RequestMapping(value = "xml/remove.do", method = RequestMethod.GET, produces = "text/plain")
@@ -249,41 +256,51 @@ public class PortfolioController {
 	@RequestMapping(value = "xml/search.do", produces = "application/xml")
 	public @ResponseBody Portfolios findMyPortfolios(String page, HttpSession session) {
 
-		String loginId = (String) session.getAttribute("loginId");
-
-		String makerId = "user1";
-
-		if (page == null)
-			page = "1";
-		List<Portfolio> list = pService.findPortfoliosByMakerId(makerId, page);
+		String makerId = (String) session.getAttribute("loginId");
+		//String makerId = "user1";
+//		if (page == null)
+//			page = "1";
+		List<Portfolio> pList = pService.findPortfoliosByMakerId(makerId, "1");
+		
 		Portfolios portfolios = new Portfolios();
-		portfolios.setPortfolios(list);
+		portfolios.setPortfolios(pList);
+		
 		return portfolios;
 	} // test http://localhost:8080/ordermade/portfolio/xml/search.do?page=2
 
 	@RequestMapping(value = "xml/searchByTitle.do", produces = "application/xml")
-	public @ResponseBody Portfolios findMyPortfoliosByTitle(String title, String page, String makerId, HttpSession session) {
+	public @ResponseBody Portfolios findMyPortfoliosByTitle(String title, String page,  HttpSession session) {
 		// -------session으로 로그인 정보 갖고 오기.
 //		makerId = (String)session.getAttribute("loginId");
 //		return new Portfolios(pService.findPortfoliosByMakerIdAndTitle(makerId, title, page));
-//		String makerId = (String) session.getAttribute("loginId");
-//
-//		String makerId = "user1";
-		makerId = (String) session.getAttribute("loginId");
-		if (page == null)
-			page = "1";
-		List<Portfolio> list = pService.findPortfoliosByMakerIdAndTitle(makerId, title, page);
+		
+//origin
+//		makerId = (String) session.getAttribute("loginId");
+//		if (page == null)
+//			page = "1";
+//		List<Portfolio> list = pService.findPortfoliosByMakerIdAndTitle(makerId, title, page);
+//		Portfolios portfolios = new Portfolios();
+//		portfolios.setPortfolios(list);
+//		return portfolios;
+		
+		String makerId = (String) session.getAttribute("loginId");
+		System.out.println("@@@@@@@@@@@" + makerId);
+		List<Portfolio> pList = pService.findPortfoliosByMakerIdAndTitle(makerId, title, page);
 		Portfolios portfolios = new Portfolios();
-		portfolios.setPortfolios(list);
+		portfolios.setPortfolios(pList);
 		return portfolios;
-	} // test
-		// http://localhost:8080/ordermade/portfolio/xml/search2.do?title=a&page=2
+		
+	} // test - http://localhost:8080/ordermade/portfolio/xml/search2.do?title=a&page=2
 
 	@RequestMapping(value = "xml/searchById.do", produces = "application/xml")
 	public @ResponseBody Portfolio findPortfolioById(String id) {
-		if (id == null)
-			return null;
-		return pService.findPortfolioById(id);
+//		if (id == null)
+//			return null;
+//		return pService.findPortfolioById(id);
+		
+		Portfolio portfolio = pService.findPortfolioById(id);
+		return portfolio;
+		
 	} // test http://localhost:8080/ordermade/portfolio/xml/searchById.do?id=7
 	
 	@RequestMapping("image.do")
