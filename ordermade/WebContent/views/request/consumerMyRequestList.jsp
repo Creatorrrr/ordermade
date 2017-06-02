@@ -49,7 +49,7 @@ ${box2 }
 								</c:choose>
 								<button class="modifyBtn">수정</button>
 								<button class="deleteBtn">삭제</button>
-							</table>
+							
 						</div>
 					</c:forEach>
 					</div>
@@ -70,7 +70,7 @@ ${box2 }
 
 		$(document).ready(function() {
 			
-			//-----페이징
+	
 
 			
 			//공개 설정 버튼 구현 
@@ -106,14 +106,14 @@ ${box2 }
 			
 			
 			//수정 버튼 구현
-			$(".modifyBtn").click(function(){
+			$("#resultBox").on('click','.modifyBtn',function(){
 				var requestId = $(this).parent().attr("data");
 				window.location.href = "${ctx}/request/ui/modify.do?requestId="+requestId;
 			});
 			
 			
 			//삭제 버튼 구현 
-			$(".deleteBtn").click(function(){
+			$("#resultBox").on('click','.deleteBtn',function(){
 				var thisOne = $(this).parent();
 				var requestId = thisOne.attr("data");
 				
@@ -154,14 +154,16 @@ ${box2 }
 		   	pagination($($('.request_table').get(0)).attr("page"));//페이지수 얻고 실행
 		    function pagination(pageNum){//참고  http://flaviusmatis.github.io/simplePagination.js
 		   		//URL에서 현재 페이지 번호 얻어오기.
-		    	var list=location.search.match(/[^\d]+/g)
+		   		//var urlStr= location.search;//?...
+		   		var urlStr= location.hash;//#...
+		   		var list=urlStr.match(/[^\d]+/g);
 		    	var thisPage=1;
 		   		if(list != null){		   			
 			   		for(i=0; i<list.length; i++){
 			   			if(list[i].indexOf('page=')==1){
-			   				var temp = location.search.match(/\d+/g);
+			   				var temp = urlStr.match(/\d+/g);
 			   				if(temp != null) thisPage=temp[i];
-			   				//console.log(thisPage);
+			   				console.log("thispage-----"+thisPage);
 			   			}
 			   		}
 		   		}
@@ -171,20 +173,19 @@ ${box2 }
 			        itemOnPage: 7,
 			        currentPage: thisPage,
 			        cssStyle: 'light-theme',
-			        hrefTextPrefix : '?page=',
+			        hrefTextPrefix : '#page=', //#..
 			        prevText: '',
 			        nextText: '',
 			       /*  onInit: function () {
 			              console.log("------onInit---");
 			        }, */
 			        onPageClick: function (page, evt) {
-			            console.log(page+"---"+ajaxName+"--"+status);
+			           // console.log(page+"---"+ajaxName+"--"+status);
 			            tab1(ajaxName, page);
 			        }
 			    });
 		    }
-			
-			
+
 			
 			//-------------------tab
 			var status = 'tab1';
@@ -202,7 +203,7 @@ ${box2 }
 						$('#resultBox').html('');
 						var list = $(xml).find("request");
 						var pageNum = $('>page',list.get(0)).text();
-						console.log(pageNum);
+						//console.log(pageNum);
 						pagination(pageNum);
 						//console.log(list.size());
 						list.each(function(){

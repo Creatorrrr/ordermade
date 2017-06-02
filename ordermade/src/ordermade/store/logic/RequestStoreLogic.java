@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Repository;
 
+import ordermade.constants.Constants;
 import ordermade.domain.Request;
 import ordermade.store.facade.RequestStore;
 import ordermade.store.mapper.RequestMapper;
@@ -173,6 +174,23 @@ public class RequestStoreLogic implements RequestStore {
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
 			list = mapper.selectRequestsByConsumerIdWithPayment(consumerId, page);
+			//--------pagefix
+			double length = list.size()* 1.0;
+			int pageNum = (int)Math.ceil(length/Constants.REQUEST_ROW_SIZE);
+			System.out.println(pageNum);
+			int index = 0 ;
+			int start = (Integer.parseInt(page)-1)*Constants.REQUEST_ROW_SIZE;	//0*10=0 , 1*10=10
+			int end = Integer.parseInt(page)*Constants.REQUEST_ROW_SIZE;		//1*10=10, 2*10=20
+			for(Request request : list){//page bug 수정
+				//페이지 만큼 불러주기
+				//1페이지 일때0-9, 2페이지 일떄 10-19 내의 데이터만 불러옴
+				if(start <= index && index < end){
+					//System.out.println(pageNum+"");
+					request.setPage(pageNum+"");//총페이지 수
+				}
+				//System.out.println(index);
+				index++;
+			}//--------
 		} finally {
 			session.close();
 		}
@@ -200,7 +218,23 @@ public class RequestStoreLogic implements RequestStore {
 		
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			list = mapper.selectRequestsByMakerIdWithPayment(makerId, page);
+			list = mapper.selectRequestsByMakerIdWithPayment(makerId, page);//모든것을 데이터를 불러옴.
+			//--------pagefix
+			double length = list.size()* 1.0;
+			int pageNum = (int)Math.ceil(length/Constants.REQUEST_ROW_SIZE);
+			int index = 0 ;
+			int start = (Integer.parseInt(page)-1)*Constants.REQUEST_ROW_SIZE;	//0*10=0 , 1*10=10
+			int end = Integer.parseInt(page)*Constants.REQUEST_ROW_SIZE;		//1*10=10, 2*10=20
+			for(Request request : list){//page bug 수정
+				//페이지 만큼 불러주기
+				//1페이지 일때0-9, 2페이지 일떄 10-19 내의 데이터만 불러옴
+				if(start <= index && index < end){
+					//System.out.println(pageNum+"");
+					request.setPage(pageNum+"");//총페이지 수
+				}
+				//System.out.println(index);
+				index++;
+			}//--------
 		} finally {
 			session.close();
 		}

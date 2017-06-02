@@ -117,13 +117,11 @@
 	</select>		
 	
 	<select id="selectRequestsByConsumerIdWithPayment" parameterType="HashMap" resultMap="requestMap">
-		<include refid="selectRequest"/>
-		FROM (SELECT rownum rnum, r.id, r.title, r.maker_id, r.consumer_id, r.type, r.content, r.hope_price, r.price, r.bound
+		(SELECT rownum rnum, r.id, r.title, r.maker_id, r.consumer_id, r.type, r.content, r.hope_price, r.price, r.bound, 1 page
 		 	FROM request r 
-		 	INNER JOIN  purchase_history ph ON r.consumer_id = ph.consumer_id
+		 	INNER JOIN  purchase_history ph ON r.id = ph.request_id
 			WHERE r.consumer_id = #{consumerId} AND ph.payment = '${@ordermade.constants.Constants@PAYMENT_Y}') 
-		, (select /*+INDEX_FES(table column) */ ceil(count(*)/${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) page from request)
-		WHERE rnum BETWEEN ((#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
+		
 	</select>
 	
 	<select id="selectRequestsByMakerId" parameterType="HashMap" resultMap="requestMap">
@@ -136,15 +134,14 @@
 		WHERE rnum BETWEEN ((#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
 	</select>
 			
-	<select id="selectRequestsByMakerIdWithPayment" parameterType="HashMap" resultMap="requestMap">
-		<include refid="selectRequest"/>
-		FROM (SELECT rownum rnum, r.id, r.title, r.maker_id, r.consumer_id, r.type, r.content, r.hope_price, r.price, r.bound
+ 	<select id="selectRequestsByMakerIdWithPayment" parameterType="HashMap" resultMap="requestMap">
+		(SELECT rownum rnum, r.id, r.title, r.maker_id, r.consumer_id, r.type, r.content, r.hope_price, r.price, r.bound , 1 page
 		 	FROM request r 
 		 	INNER JOIN  purchase_history ph ON r.id = ph.request_id
 			WHERE r.maker_id = #{makerId} AND ph.payment = '${@ordermade.constants.Constants@PAYMENT_Y}') 
-		, (select /*+INDEX_FES(table column) */ ceil(count(*)/${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) page from request)
-		WHERE rnum BETWEEN ((#{page}-1)*${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@REQUEST_ROW_SIZE})
+		
 	</select>
-	
+
+
 	
 </mapper>
