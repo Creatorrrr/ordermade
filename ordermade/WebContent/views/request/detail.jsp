@@ -15,6 +15,17 @@
 		.commentListStyle li p {
 			margin: 5px 0 5px 0;
 		}
+		
+		.ajax-upload-dragdrop
+		{
+		  border:2px dotted #A5A5C7;
+		  width:420px;
+		  height:300px;
+		  color: #DADCE3;
+		  text-align:left;
+		  vertical-align:middle;
+		  padding:10px 10px 0px 10px;
+		}
 	</style>
 </head>
 <title>의뢰서</title>
@@ -29,11 +40,11 @@
 
 			<div id="content" class="two_third">
 				<div class="content" align="center">
-					<h1 align="left">의뢰서</h1>
-					<tr>
-						<td><button id="btn1">의뢰서 수정</button></td>
-						<td><button id="btn2">삭제</button></td>
-					</tr>
+					<h1 align="left">
+						의뢰서
+						<button id="btn2" style="float:right" onclick="javascript:location.href='${ctx}/request/xml/remove.do?id=${request.id }'">삭제</button>
+						<button id="btn1" style="float:right" onclick="javascript:location.href='${ctx}/request/ui/modify.do?requestId=${request.id }'">수정</button>
+					</h1>
 					<div class="imgl borderedbox">
 						<img src="${ctx }/views/images/img1.jpg" />
 					</div>
@@ -56,33 +67,58 @@
 					</table>
 					<table class="table" style="color: black">
 						<tr>
-							<td><h3>
+							<td>
+								<h3>
 									대화 기록
 									<button style="float: right;">파일함</button>
-								</h3></td>
+								</h3>
+							</td>
 						</tr>
 						<tr>
 							<td>
-								<ul id="commentList" class="commentListStyle">
-									<c:forEach items="${request.comments }" var="comment">
+								<ul id="commentList" class="commentListStyle"><h1>${request }</h1><h1>${request.comments }</h1>
+									<%-- <c:forEach items="${request.comments }" var="comment">
 										<li id="commentContent-${comment.id }">
-												<p class="commentWriter"><strong>${comment.member.id }</strong></p>
-												<p class="commentContent" style="display:inline-block">${comment.content }</p>
+											<p class="commentWriter"><strong>${comment.member.id }</strong></p>
+											<c:choose>
+												<c:when test="${comment.contentType eq 'C'}">
+													<p class="commentContent">${comment.content }</p>
+												</c:when>
+												<c:when test="${comment.contentType eq 'F'}">
+													<p class="commentContent">
+														<a href="${ctx }/main/file/download.do?fileName=${comment.content }" download="${comment.content }">
+															<img src="${ctx }/views/images/file_icon.png" style="width:50px">
+															${comment.content }
+														</a>
+													</p>
+												</c:when>
+											</c:choose>
 											<c:if test="${comment.member.id eq sessionScope.loginId}">
 												<button onclick="javascript:commentController.modifyCommentForm(${comment.id});">수정</button>
 												<button onclick="javascript:commentController.removeComment(${comment.id});">삭제</button>
 											</c:if>
 										</li>
-									</c:forEach>
+									</c:forEach> --%>
 								</ul>
 				            </td>
 						</tr>
 						<tr><td><h3>추가 요구 사항</h3></td></tr>
 						<tr>
 							<td>
-								<textarea id="commentRegisterContent" rows="5" style="width:100%"></textarea>
-								<div style="float:right">
-									<button id="commentRegister">코멘트 등록</button>
+								<div id="tabs">
+									<ul>
+								    	<li><a href="#tabs-1">코멘트 입력</a></li>
+								    	<li><a href="#tabs-2">파일 업로드</a></li>
+									</ul>
+									<div id="tabs-1">
+										<textarea id="commentRegisterContent" rows="5" style="width:100%"></textarea>
+										<div align="right">
+											<button id="commentRegister">코멘트 등록</button>
+										</div>
+									</div>
+									<div id="tabs-2">
+										<div id='fileuploader'>Upload</div>
+									</div>
 								</div>
 							</td>
 						</tr>
@@ -115,17 +151,48 @@
 		</div>
 	</div>
 
-	<%@ include file="/views/common/footer.jsp"%>
+<%@ include file="/views/common/footer.jsp"%>
 
 <script type="text/javascript">
-CKEDITOR.replace('commentRegisterContent', {
-	imageUploadUrl : '${ctx}/request/fileUpload.do',
-	filebrowserUploadUrl: '${ctx}/request/fileUpload.do'
+$(document).ready(function() {
+	$("#tabs").tabs({active:2});
+	fileUploader();
+	commentController.getCommentsByRequestId("${request.id}", 1);
 });
 
+CKEDITOR.replace('commentRegisterContent', {
+	imageUploadUrl : '${ctx}/main/file/uploadJson.do',
+	filebrowserUploadUrl: '${ctx}/main/file/uploadJson.do'
+});
+
+var fileUploader = function() {
+	$("#fileuploader").uploadFile({
+		url:"${ctx}/main/file/upload.do",
+		fileName:"upload",
+		dragdropWidth:"95%",
+		dragdropHeight:"500px",
+		returnType:"text",
+		showStatusAfterSuccess:false,
+		onSuccess:function(files,data,xhr,pd)
+		{
+			var result = data;
+			if(result === "fail" || result === "error") {
+				alert("이미지 업로드 실패")
+			} else {
+				commentController.registerComment(data, "F");
+			}
+		},
+	});	
+};
+
 $("#commentRegister").click(function() {
-	commentController.registerComment();
-	$("#commentRegisterContent").val("");
+	var editor = CKEDITOR.instances.commentRegisterContent;
+	if(editor.getData().length < 1){
+		alert("내용을 입력해 주세요.");
+	} else {
+		commentController.registerComment(editor.getData(), "C");
+		editor.setData("");
+	}
 });
 
 $("#paymentButton").click(function(){
@@ -134,11 +201,12 @@ $("#paymentButton").click(function(){
 
 // get comments with xml
 var commentController = {
-	registerComment : function() {
+	registerComment : function(content, type) {
 		$.ajax({
 			url : "${ctx }/comment/xml/register.do",
 			data : {'request.id' : "${request.id}",
-					content : $("#commentRegisterContent").val()},
+					content : content,
+					contentType : type},
 			type : "post",
 			dataType : "text",
 			success : function(text) {
@@ -217,7 +285,15 @@ var commentController = {
 
 		content += "<li id='commentContent-" + $(xml).find("comment>id").text() + "'>";
 		content += "<p class='commentWriter'><strong>" + $(xml).find("comment>member>id").text() + "</strong></p>";
-		content += "<p class='commentContent' style='display:inline-block'>" + $(xml).find("comment>content").text() + "</p>";
+		if($(xml).find("comment>contentType").text() === "C") {
+			content += '<p class="commentContent">' + $(xml).find("comment>content").text() + '</p>';
+		} else if($(xml).find("comment>contentType").text() === "F") {
+			content += '<p class="commentContent">';
+			content += '	<a href="${ctx }/main/file/download.do?fileName=' + $(xml).find("comment>content").text() + '">';
+			content += '		<img src="${ctx }/views/images/file_icon.png" style="width:50px">' + $(xml).find("comment>content").text();
+			content += '	</a>';
+			content += '</p>';
+		}
 		if($(xml).find("comment>member>id").text() === "${sessionScope.loginId}") {
 			content += "<button onclick='javascript:commentController.modifyCommentForm(" + $(xml).find("comment>id").text() + ");'>수정</button>";
 			content += "<button onclick='javascript:commentController.removeComment(" + $(xml).find("comment>id").text() + ");'>삭제</button>";
@@ -255,5 +331,7 @@ var setPurchaseHistory = {
 };
 </script>
 
+<link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" >
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 </body>
 </html>

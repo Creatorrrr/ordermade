@@ -78,7 +78,6 @@
 							<th><label>이미지 업로드</label></th>
 							<td>
 								<div id='imageuploader'>Upload</div>
-								<button onclick="javascript:imageUploader()">다시 업로드 하기</button>
 								<div><img id='memberImage' src="${ctx }/main/file/download.do?fileName=${member.image }" style="width:100px"></div>
 								<input id="memberImageHidden" name="image" type="hidden" value="${member.image }">
 							</td>
@@ -151,9 +150,8 @@ var imageUploader = function() {
 		url:"${ctx}/main/file/upload.do",
 		acceptFiles:"image/*",
 		fileName:"upload",
-		multiple:false,
-		maxFileCount:1,
 		returnType:"text",
+		showStatusAfterSuccess:false,
 		onSuccess:function(files,data,xhr,pd)
 		{
 			var result = data;

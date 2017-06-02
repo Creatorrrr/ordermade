@@ -22,6 +22,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import ordermade.constants.Constants;
 import ordermade.domain.Categories;
+import ordermade.dto.Image;
 import ordermade.service.facade.ProductService;
 
 @Controller
@@ -63,7 +64,7 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "file/upload.do", method = RequestMethod.POST, produces = "text/plain")
-	public @ResponseBody String uploadImage(HttpServletRequest req) {
+	public @ResponseBody String uploadFile(HttpServletRequest req) {
 		String filePath = Constants.FILE_PATH;
 
 		File dir = new File(filePath);
@@ -79,5 +80,26 @@ public class MainController {
 			e.printStackTrace();
 		}
 		return "fail";
+	}
+	
+	@RequestMapping(value = "file/uploadJson.do", method = RequestMethod.POST, produces="application/json")
+	public @ResponseBody Image uploadRequestFile(HttpServletRequest req) {
+		String imagePath = Constants.FILE_PATH;
+
+		File dir = new File(imagePath);
+		if (!dir.exists()) {
+			// 폴더가 존재하지 않으면 폴더 생성
+			dir.mkdirs();
+		}
+		
+		String fileName = null;
+		try {
+			fileName = new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy())
+					.getFile("upload").getName();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return new Image(1, fileName, "http://localhost:8080/ordermade/main/file/download.do?fileName=" + fileName);
 	}
 }

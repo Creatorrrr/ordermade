@@ -1,16 +1,7 @@
 package ordermade.controller;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import ordermade.constants.Constants;
 import ordermade.domain.Attach;
@@ -33,7 +21,6 @@ import ordermade.domain.InviteRequests;
 import ordermade.domain.Member;
 import ordermade.domain.Request;
 import ordermade.domain.Requests;
-import ordermade.dto.Image;
 import ordermade.service.facade.RequestService;
 
 @Controller
@@ -327,7 +314,7 @@ public class RequestController {
 	
 	// 170531 Complete
 	@RequestMapping(value="request/ui/detail.do",method=RequestMethod.GET)
-	public ModelAndView showDetailRequestUI(String id, HttpSession session){
+	public ModelAndView showDetailRequestUI(String id, HttpSession session){System.out.println(service.findRequestById(id).getComments());
 			return new ModelAndView("request/detail")
 					.addObject("request", service.findRequestById(id));
 	}
@@ -444,69 +431,6 @@ public class RequestController {
 	@RequestMapping(value="request/xml/searchById.do", produces="application/xml")
 	public @ResponseBody Request findRequestById(String id){
 		return service.findRequestById(id);
-	}
-	
-	@RequestMapping("request/file.do")
-	public void getRequestFile(String fileName, HttpServletResponse resp) {
-		File image = new File(Constants.IMAGE_PATH+fileName);
-		if(!image.exists()){
-			throw new RuntimeException("No request file");
-		}
-		
-		try (InputStream in = new BufferedInputStream(new FileInputStream(image));
-				OutputStream out = resp.getOutputStream();) {
-			byte[] buf = new byte[8096];
-			int readByte = 0;
-			while ((readByte = in.read(buf)) > -1) {
-				out.write(buf, 0, readByte);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@RequestMapping(value = "request/imageUpload.do", method = RequestMethod.POST, produces="application/json")
-	public @ResponseBody Image uploadRequestImage(HttpServletRequest req) {
-		String imagePath = Constants.IMAGE_PATH;
-
-		File dir = new File(imagePath);
-		if (!dir.exists()) {
-			// 폴더가 존재하지 않으면 폴더 생성
-			dir.mkdirs();
-		}
-		
-		String fileName = null;
-		try {
-			fileName = new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy())
-					.getFile("upload").getName();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return new Image(1, fileName, "http://localhost:8080/ordermade/request/image.do?img=" + fileName);
-	}
-	
-	@RequestMapping(value = "request/fileUpload.do", method = RequestMethod.POST, produces="application/json")
-	public @ResponseBody Image uploadRequestFile(HttpServletRequest req) {
-		String imagePath = Constants.IMAGE_PATH;
-
-		File dir = new File(imagePath);
-		if (!dir.exists()) {
-			// 폴더가 존재하지 않으면 폴더 생성
-			dir.mkdirs();
-		}
-		
-		String fileName = null;
-		try {
-			fileName = new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy())
-					.getFile("upload").getName();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return new Image(1, fileName, "http://localhost:8080/ordermade/request/file.do?fileName=" + fileName);
 	}
 	
 	// Complete

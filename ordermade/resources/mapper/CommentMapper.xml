@@ -8,6 +8,7 @@
   	<resultMap type="Comment" id="commentMap">
   		<id property="id" column="id"/>
   		<result property="content" column="content"/>
+  		<result property="contentType" column="content_type"/>
   		<association property="member" column="member_id"
   			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
   			jdbcType="VARCHAR" />
@@ -20,13 +21,13 @@
   		<selectKey keyProperty="id" resultType="String" order="BEFORE">
   			select comment_seq.nextval FROM DUAL
   		</selectKey>
-		INSERT INTO COMM(id, content, member_id, request_id, time)
-		VALUES (#{id}, #{content}, #{member.id}, #{request.id}, TO_DATE(sysdate,'yyyy/mm/dd hh24:mi:ss'))
+		INSERT INTO COMM(id, content, content_type, member_id, request_id, time)
+		VALUES (#{id}, #{content}, #{contentType}, #{member.id}, #{request.id}, TO_DATE(sysdate,'yyyy/mm/dd hh24:mi:ss'))
   	</insert>
   	
   	<update id="updateCommentById" parameterType="Comment">
   		UPDATE COMM 
-  		SET content = #{content}, member_id=#{member.id}, request_id=#{request.id}, time=TO_DATE(sysdate,'yyyy/mm/dd hh24:mi:ss')
+  		SET content = #{content}, content_type=#{contentType}, member_id=#{member.id}, request_id=#{request.id}, time=TO_DATE(sysdate,'yyyy/mm/dd hh24:mi:ss')
   		WHERE id = #{id}
   	</update>
 

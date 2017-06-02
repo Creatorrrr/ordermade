@@ -25,6 +25,8 @@ public class Constants {
 	public static final String PAYMENT_N = "N";
 	public static final String CONSUMER = "C";
 	public static final String MAKER = "M";
+	public static final String COMMENT_TYPE_CONTENT = "C";
+	public static final String COMMENT_TYPE_FILE = "F";
 	
 	public static final String BOUND_PUBLIC = "PUBLIC";
 	public static final String BOUND_PRIVATE = "PRIVATE";

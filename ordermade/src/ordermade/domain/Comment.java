@@ -7,13 +7,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.springframework.stereotype.Component;
-
 @XmlRootElement(name="comment")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Comment {
 	private String id;
 	private String content;
+	private String contentType;
 	private Member member;
 	private Request request;
 	private Date time;
@@ -30,6 +29,13 @@ public class Comment {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+	public String getContentType() {
+		return contentType;
+	}
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 	
 	public Member getMember() {

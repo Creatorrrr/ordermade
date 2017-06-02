@@ -63,7 +63,7 @@ CREATE TABLE invite_request (
 CREATE TABLE comm (-- 테이블 이름 : comment에서 comm으로 수정
   id VARCHAR2(50) PRIMARY KEY,
   content VARCHAR2(2000),
-  attach_id VARCHAR2(50),
+  content_type VARCHAR2(50),
   member_id VARCHAR2(50),
   request_id VARCHAR2(50),
   time DATE
@@ -148,5 +148,12 @@ CREATE SEQUENCE purchase_history_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE request_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE review_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE tag_seq START WITH 1 INCREMENT BY 1;
+
+INSERT INTO category(type) VALUES ('FUNITURE');
+INSERT INTO category(type) VALUES ('ACCESSORY');
+INSERT INTO category(type) VALUES ('KITCHEN');
+INSERT INTO category(type) VALUES ('DIGITAL');
+INSERT INTO category(type) VALUES ('CLOTHING');
+INSERT INTO category(type) VALUES ('SPORT');
 
 COMMIT;
