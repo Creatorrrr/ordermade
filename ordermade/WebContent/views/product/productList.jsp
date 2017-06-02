@@ -54,8 +54,7 @@
 				<nav class="sdb_holder">
 					<ul>
 						<c:forEach items="categories" var="category">
-							<li><a
-								href="${ctx }/product/ui/search.do?page=1&category=${category.type}">${category.type }</a></li>
+							<li><a href="${ctx }/product/ui/search.do?page=1&category=${category.type}">${category.type }</a></li>
 						</c:forEach>
 					</ul>
 				</nav>
