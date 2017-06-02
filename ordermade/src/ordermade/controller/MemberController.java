@@ -111,21 +111,35 @@ public class MemberController {
 	}
 
 	@RequestMapping("/myPage.do")
-	public ModelAndView showMyPageUI(HttpSession session) {
-		if (checkLogined(session))
-			return new ModelAndView("member/login"); // check logined
+	public ModelAndView showMyPageUI(String makerId, HttpSession session) {
+		// 다른 사람이 나의 페이지를 이동할 때 profile 
+		if (makerId == null) {
+			if (checkLogined(session))
+				return new ModelAndView("member/login"); // check logined
 
-		// 자신의 정보를 불러온다. 그 후 마이페이지화면으로 이동
-		String memberType = (String) session.getAttribute("memberType");
+			// 자신의 정보를 불러온다. 그 후 마이페이지화면으로 이동
+			String memberType = (String) session.getAttribute("memberType");
 
-		if (memberType.equals(Constants.CONSUMER)) {
-			return new ModelAndView("/member/consumerMyPage").addObject("member",
-					service.findMemberById((String) session.getAttribute("loginId")));
-		} else if (memberType.equals(Constants.MAKER)) {
-			return new ModelAndView("/member/makerMyPage").addObject("member",
-					service.findMemberById((String) session.getAttribute("loginId")));
+			if (memberType.equals(Constants.CONSUMER)) {
+				return new ModelAndView("/member/consumerMyPage").addObject("member",
+						service.findMemberById((String) session.getAttribute("loginId")));
+			} else if (memberType.equals(Constants.MAKER)) {
+				return new ModelAndView("/member/makerMyPage").addObject("member",
+						service.findMemberById((String) session.getAttribute("loginId")));
+			} else {
+				throw new RuntimeException("No such membertype");
+			}
 		} else {
-			throw new RuntimeException("No such membertype");
+
+			Member profile = service.findMemberById(makerId);
+
+			if (profile.getMemberType().equals(Constants.CONSUMER)) {
+				return new ModelAndView("/member/consumerMyPage").addObject("member", profile);
+			} else if (profile.getMemberType().equals(Constants.MAKER)) {
+				return new ModelAndView("/member/makerMyPage").addObject("member", profile);
+			} else {
+				throw new RuntimeException("No such membertype");
+			}
 		}
 	}
 

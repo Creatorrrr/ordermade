@@ -289,7 +289,7 @@ var commentController = {
 			content += '<p class="commentContent">' + $(xml).find("comment>content").text() + '</p>';
 		} else if($(xml).find("comment>contentType").text() === "F") {
 			content += '<p class="commentContent">';
-			content += '	<a href="${ctx }/main/file/download.do?fileName=' + $(xml).find("comment>content").text() + '">';
+			content += '	<a href="${ctx }/main/file/download.do?fileName=' + $(xml).find("comment>content").text() + '" download="' + $(xml).find("comment>content").text() + '">';
 			content += '		<img src="${ctx }/views/images/file_icon.png" style="width:50px">' + $(xml).find("comment>content").text();
 			content += '	</a>';
 			content += '</p>';
