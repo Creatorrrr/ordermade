@@ -209,6 +209,7 @@ var mainImageController = {
 			
 			return content;
 		}
+
 };
 
 //main slider setting
