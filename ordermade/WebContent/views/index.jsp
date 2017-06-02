@@ -79,12 +79,24 @@
 				<h3>최신 상품</h3>
 				<ul class="nospace listing" style="width: 195%;">
 					<li class="clear">
-						<ul id="BrandNewProductSlider">
-							<!-- images from ajax (sample under) -->
-							<li id="HitsProductImages"></li>
-						</ul>
+							<ul id="BrandNewProductSlider">
+								<!-- images from ajax (sample under) -->
+								<li><img src="${ctx }/product/image.do?img=baduk.jpg"></li>
+								<li><img src="${ctx }/product/image.do?img=error4.PNG"></li>
+								<li><img src="${ctx }/product/image.do?img=baduk1.jpg"></li>
+								<li><img src="${ctx }/product/image.do?img=error4.PNG"></li>
+								<li><img src="${ctx }/product/image.do?img=baduk2.jpg"></li>
+							</ul>
+							<%-- <a href="#" id="prevPfBtn">
+				                <img src="${ctx }/views/images/bul_prev.png" alt="이전">
+				            </a>
+				            <a href="#" id="nextPfBtn">
+				                <img src="${ctx }/views/images/bul_next.png" alt="다음">
+				            </a> --%>
 					</li>
 				</ul>
+				<!-- <div id="HitsProductImages">
+				</div> -->
 			</div>
 			<!-- / Middle Column -->
 		</div>
@@ -171,24 +183,29 @@ $(document).ready(function(){
 				$("#HitsProductImages").empty();
 				if(listLength){
 					var contentStr = "";
+					contentStr += "<ul class='nospace listing' style='width: 195%;'>";
+					contentStr +=    "<li class='clear'>";
+					contentStr +=			"<ul id='BrandNewProductSlider'>";
 					$(xmlData).each(function() {
 						contentStr += mainImageController.makeImage(this);
 					});
+					contentStr += 			"</ul>";
+					contentStr +=	  "</li>"
+					contentStr += "</ul>"
 					$("#HitsProductImages").append(contentStr);
 				}
 				console.log(contentStr)
 		}		
 	});
+	
 });
 
 var mainImageController = {
 		makeImage : function(xml) {
 			var content = "";
 			
-			content += "<li><img src=\"";
-			content += "${ctx }/product/image.do?img=";
-			content += $(xml).find("product>image").text() +"\">";
-			content += "</li>";
+			content += "<li><img src=\"${ctx }/product/image.do?img=";
+			content += 		$(xml).find("product>image").text() +"\"></li>";
 			
 			return content;
 		}
@@ -237,7 +254,7 @@ var productSlider = $( '#BrandNewProductSlider' ).bxSlider( {
     autoHover: true,   // 마우스 호버시 정지 여부
     controls: true,	   // 이전 다음 버튼 노출 여부
     captions: false     // 캡션 노출 여부
-} );
+});
 
 </script>
 </body>

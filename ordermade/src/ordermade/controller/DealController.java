@@ -63,19 +63,31 @@ public class DealController {
 		System.out.println("------data : "+purchaseHistory.toString());
 		
 		// session에서 회원ID 가져오기
-		String memberId = (String)session.getAttribute("loginId");
-		boolean checkPurchase = false;
 		boolean checkAccount = false;
-		checkPurchase = dService.registerPurchaseHistory(purchaseHistory);
+		boolean checkPurchase = false;
+//		if(session.getAttribute("memberType").equals(Constants.CONSUMER)){
+			String memberId = (String)session.getAttribute("loginId");
+			System.out.println("------ID : " + memberId);
+			System.out.println("------makerID : "+purchaseHistory.getMaker().getId());
+			Account makerAccount = dService.findAccountById(purchaseHistory.getMaker().getId());
+			Account consumerAccount = dService.findAccountById(purchaseHistory.getConsumer().getId());
+			
+			purchaseHistory = dService.findPurchseHistoryById(purchaseHistory.getId());
+			System.out.println("------data2 : " + purchaseHistory.toString());
+			System.out.println("------consumerID : "+purchaseHistory.getConsumer().getId());
+			System.out.println(consumerAccount.getMoney());
+			
+			
+			makerAccount.setMoney(consumerAccount.getMoney());
+			checkAccount = dService.modifyAccountById(makerAccount);
+			if(checkAccount){
+				purchaseHistory.setPayment("true");
+				checkPurchase = dService.modifyPurchaseHistoryById(purchaseHistory);
+			}
+			return checkPurchase+"";
+//		}
 		
-		System.out.println("------data : "+purchaseHistory.toString());
-		
-		if(checkPurchase == true){
-			Account account = dService.findAccountById(memberId);
-			account.setMoney(purchaseHistory.getRequest().getPrice());
-			checkAccount = dService.modifyAccountById(account);
-		}
-		return checkAccount+"";
+//		return checkAccount+"";
 	}
 	
 	// http://localhost:8080/ordermade/deal/purchaseHistory/delivery.do
@@ -84,14 +96,15 @@ public class DealController {
 	public @ResponseBody String registerInvoiceNumberToPurchaseHistory(String invoiceNumber, String id, HttpSession session){
 		
 		System.out.println("----------controller 성공-----------");
+		System.out.println("invoiceNumber : " + invoiceNumber);
+		System.out.println("id : " + id);
 		boolean checkPurchase = false;
 		// session에서 회원ID 가져오기
-//		if(session.getAttribute("loginUser") != null){
+//		if(session.getAttribute("loginId") != null){
 			PurchaseHistory purchaseHistory = dService.findPurchseHistoryById(id);
-//			purchaseHistory.getMaker().setId("tempmUser");
-//			purchaseHistory.getConsumer().setId("tempcUser");
+			System.out.println("-------data : "+purchaseHistory.toString());
 			purchaseHistory.setInvoiceNumber(invoiceNumber);
-			System.out.println(purchaseHistory.toString());
+			System.out.println("-------data2 : "+purchaseHistory.toString());
 			checkPurchase = dService.modifyPurchaseHistoryById(purchaseHistory);
 //		}
 		
@@ -106,15 +119,16 @@ public class DealController {
 	public ModelAndView showPurchaseHistoryUI(String page, HttpSession session){
 		String memberType = (String)session.getAttribute("memberType");
 		String memberId = (String)session.getAttribute("loginId");
-		page = "1";
+		if(page == null || page == "") page = "1";
 		List<PurchaseHistory> purchaseList = new ArrayList<>();
-		purchaseList = dService.findpurchaseHistoriesByConsumerId(memberId, page);
 		
 		if(memberType.equals(Constants.CONSUMER)){
+			purchaseList = dService.findpurchaseHistoriesByConsumerId(memberId, page);
 			ModelAndView modelAndView = new ModelAndView("purchaseHistory/consumerPurchaseHistory");
 			modelAndView.addObject("purchaseList", purchaseList);
 			return modelAndView;
 		}else if(memberType.equals(Constants.MAKER)){
+			purchaseList = dService.findpurchaseHistoriesByMakerId(memberId, page);
 			ModelAndView modelAndView = new ModelAndView("purchaseHistory/makerPurchaseHistory");
 			modelAndView.addObject("purchaseList", purchaseList);
 			return modelAndView;

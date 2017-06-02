@@ -62,8 +62,9 @@
 	                       <c:forEach var="purchaseHistory" items="${purchaseList}"
 	                                  varStatus="sts">
 	                        <tr>
-	                            <td class="text-center">
-	                            	<img src=${ctx }/views/images/img-10.jpg>
+	                            <td style="text-align: center">
+	                            	<%-- <img src=${ctx }/views/images/img-10.jpg> --%>
+	                            	${purchaseHistory.request.id }
 	                            </td>
 	                            <td style="text-align: center">
 									상품명 : ${purchaseHistory.request.title }<br>
@@ -75,7 +76,9 @@
 	                            </td>
 	                            <td class="text-center" style="text-align: center">
 	                           		${purchaseHistory.deliveryStatus}<br>
-	                           		<a href="" class="btn btn-sm btn-success">구매확정</a>
+	                           		<input class="deliveryBtn" type="button" 
+		                           			value="상품배송" class="btn btn-sm btn-success"
+		                           			data1 = "${purchaseHistory.id }">
 	                            </td>
 	                        </tr>
 	                       </c:forEach>
@@ -88,9 +91,56 @@
 </div>
 
 <%@ include file="/views/common/footer.jsp"%>
-<!-- JAVASCRIPTS -->
-<script src="../layout/scripts/jquery.min.js"></script>
-<script src="../layout/scripts/jquery.fitvids.min.js"></script>
-<script src="../layout/scripts/jquery.mobilemenu.js"></script>
+<script type="text/javascript">
+
+$(".deliveryBtn").click(function(){
+	var dom = $(this);
+	console.log(dom.attr("data1"))
+	createDeliveryModal(dom);
+});
+
+var createDeliveryModal = function(dom) {
+	var contentStr = "";
+
+	contentStr += "<form id='deliveryForm'>";
+	contentStr += "	<input id='btnData' type='hidden' name='id' value='" + dom.attr("data1") + "'>";
+	contentStr += "	<div class='invoiceNumber'>";
+	contentStr += "    	<label>메시지<textarea name='invoiceNumber' rows='1' style='width: 100%' placeholder='송장번호를 입력해주세요.'></textarea></label>";
+	contentStr += "	</div>";
+	contentStr += "	<div align='right'>";
+	contentStr += "		<button type='button' onclick='javascript:setInvoiceNumberToPurchaseHistory.registerInvoiceNumber()'>등록</button>";
+	contentStr += "    	<button type='reset' onclick='javascript:$.unblockUI();'>취소</button>";
+	contentStr += "	</div>";
+	contentStr += "</form>";
+	
+    $.blockUI({message : contentStr});
+};
+
+var setInvoiceNumberToPurchaseHistory = {
+	registerInvoiceNumber : function() {
+		$.ajax({
+			type: "post",
+			url: "${ctx }/deal/xml/purchaseHistory/delivery.do",
+			data: $('#deliveryForm').serialize(),	
+			dataType: "text",
+			success: function(text){
+						if(text === "true"){
+							alert("등록완료")
+							var dom = $('.deliveryBtn[data1 = '+ $('#btnData').val() +']');
+							console.log(dom)
+							dom.attr('value', '배송완료');
+							dom.attr('disabled', 'true');
+						}else{
+							alert("등록실패");
+						}
+						javascript:$.unblockUI();
+			},
+			error: function(xml){
+				console.log("실패 메시지 : \n" + xml.responseText)
+			}
+		});
+	},
+};
+</script>
 </body>
 </html>
