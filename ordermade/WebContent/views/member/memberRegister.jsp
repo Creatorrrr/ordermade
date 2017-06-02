@@ -85,8 +85,9 @@
 				</table>
 				<br>
 				<div align="center">
-					<input class="btn" type="reset" value="취소"> <input
-						class="btn btn-success" type="button" value="회원가입" onclick="javascript:memberController.registerMember()">
+					<input class="btn" type="reset" value="취소">
+					<input class="btn btn-success" type="button" value="회원가입" 
+						onclick="javascript:memberController.registerMember()">
 				</div>
 			</form>
 		</main>
