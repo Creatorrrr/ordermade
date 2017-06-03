@@ -63,42 +63,32 @@
 				<ul class="clear">
 					<li class=""><a href="${ctx }/">메인</a></li>
 					<li>
-						<a class="drop" href="#">상품</a> 
+						<a class="drop" href="${ctx }/product/ui/search.do">상품</a> 
 						<ul>
-							<li><a href="${ctx }/product/ui/search.do?page=1&category=FUNITURE">Furniture</a></li>
-							<li><a href="${ctx }/product/ui/search.do?page=1&category=ACCESSORY">Accessory</a></li>
-							<li><a href="${ctx }/product/ui/search.do?page=1&category=KITCHEN">Kitchen</a></li>
-							<li><a href="${ctx }/product/ui/search.do?page=1&category=DIGITAL">Digital</a></li>
-							<li><a href="${ctx }/product/ui/search.do?page=1&category=CLOTHING">Clothing</a></li>
-							<li><a href="${ctx }/product/ui/search.do?page=1&category=SPORT">Sport </a></li>
+						<c:forEach items="${categories}" var="category">
+							<li><a href="${ctx }/product/ui/search.do?category=${category.type}">${category.type }</a></li>
+						</c:forEach>
 						</ul>
 					</li>
-						
-						<%-- <c:forEach items="${products }" var="product">
-							<li><a class="btn btn-sm btn-success"
-								href="${ctx}/product//ajax/product/productid?productId=${product.id}">${product.title }</a>
-							</li>
-						</c:forEach> --%>
-					<li><a href="${ctx }/views/portfolio/portfolio.jsp">포트폴리오</a></li>
+					<li>
+						<a class="drop" href="${ctx }/portfolio/ui/search.do">포트폴리오</a>
+						<ul>
+						<c:forEach items="${categories }" var="category">
+							<li><a href="${ctx }/portfolio/ui/search.do?type=${category.type}">${category.type }</a></li>
+						</c:forEach>
+						</ul>
+					</li>
 					<c:if test="${sessionScope.loginId ne null}">
-						<li><a href="${ctx}/request/ui/myRequest.do">의뢰서</a></li>
-					</c:if>
-					<c:if test="${sessionScope.loginId eq null}">
 						<li><a href="${ctx}/request/ui/myRequest.do">의뢰서</a></li>
 					</c:if>
 					<c:choose>
 						<c:when test="${sessionScope.memberType eq 'C' }">
-							<li>
-								<a href="${ctx }/request/ui/consumerInviteList.do?page=1">참가 요청내역</a>
-							</li>
+							<li><a href="${ctx }/request/ui/consumerInviteList.do?page=1">참가 요청내역</a></li>
 						</c:when>
 						<c:when test="${sessionScope.memberType eq 'M' }">
-							<li>
-								<a href="${ctx }/request/ui/makerInviteList.do?page=1">참가 요청내역</a>
-							</li>
+							<li><a href="${ctx }/request/ui/makerInviteList.do?page=1">참가 요청내역</a></li>
 						</c:when>
 					</c:choose>
-					
 					<li><a href="${ctx}/member/myPage.do">마이 페이지</a></li>
 				</ul>
 			</nav>

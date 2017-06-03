@@ -415,7 +415,9 @@ public class ProductController {
 
 	@RequestMapping("ui/search.do")
 	public ModelAndView showSearchProductsUI(String category, String page) {
-		return new ModelAndView("product/productList")
+		if(category == null) category = Constants.CategoryType.values()[0] +"";
+		if(page == null) page = "1";
+		return new ModelAndView("product/search")
 				.addObject("categories",pService.findAllCategory())
 				.addObject("category", category)
 				.addObject("products", pService.findProductsByCategory(category, page));

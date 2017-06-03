@@ -50,12 +50,11 @@ ${head_body}
 		<div class="rounded">
 			<main class="container clear"> <!-- main body -->
 			<div class="sidebar one_third first">
-				<h6>Category</h6>
+				<h6>상품 카테고리</h6>
 				<nav class="sdb_holder">
 					<ul>
 						<c:forEach items="${categories}" var="category">
-							<li><a
-								href="${ctx }/product/ui/search.do?page=1&category=${category.type}">${category.type }</a></li>
+							<li><a href="${ctx }/product/ui/search.do?category=${category.type}">${category.type }</a></li>
 						</c:forEach>
 					</ul>
 				</nav>
@@ -63,20 +62,19 @@ ${head_body}
 
 			<div id="content" class="two_third">
 				<div class="content" align="center">
-					<h1 align="left">${category }상품페이지</h1>
+					<h1>[${category }] 상품페이지</h1>
 					<div align="right">
-						<select id="productSearchType" class="form-control"
-							style="display: inline-block">
+						<select id="productSearchType" class="form-control" style="display: inline-block">
 							<option value="title">제목</option>
 							<option value="makerName">제작자</option>
-						</select> <input id="productSearchKeyword" name="productSearchKeyword"
+						</select> 
+						<input id="productSearchKeyword" name="productSearchKeyword"
 							class="search-box-input" type="text" value=""
 							placeholder="Search Here" style="display: inline-block" />
 						<button id="productSearchBtn" class="fa fa-search" title="Search">
 							<em>Search</em>
 						</button>
-						<button id="imageSearchBtn" class="fa fa-search" title="Search"
-							onclick="javascript:createImageSearchModal()">
+						<button id="imageSearchBtn" class="fa fa-search" title="Search" onclick="javascript:createImageSearchModal()">
 							<em>Image Search</em>
 						</button>
 					</div>
@@ -117,6 +115,7 @@ ${head_body}
 						</div>
 					</c:forEach>
 				</div>
+				
 			</div>
 			</main>
 		</div>

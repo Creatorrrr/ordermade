@@ -17,17 +17,13 @@ ${box2 }
 
 				<div class="fl_right">
 					<form class="clear" method="post" action="#">
-						<input type="hidden" name="boardId" value="${boardId }"
-							class="form-control">
+						<input type="hidden" name="boardId" value="${boardId }" class="form-control">
 						<div>
 							<fieldset>
-								<select name="type" id="type" class="form-control"
-									style="display: inline-block;">
+								<select name="type" id="type" class="form-control" style="display: inline-block;">
 									<option value="id">제목</option>
 									<option value="name">내용</option>
-								</select> <input input name="search" class="search-box-input" type="text"
-									value="" placeholder="Search Here"
-									style="display: inline-block;" />
+								</select> <input input name="search" class="search-box-input" type="text" value="" placeholder="Search Here" style="display: inline-block;" />
 								<button class="fa fa-search" type="submit" title="Search">
 									<em>Search</em>
 								</button>
@@ -37,8 +33,7 @@ ${box2 }
 
 					<div style="float: right;">
 						<%-- <c:if test="${sessionScope.loginId ne null && boardId ne null}"> --%>
-						<a class="btn btn-sm btn-success"
-							href="${ctx}/product/ui/register.do">상품 등록</a>
+						<a class="btn btn-sm btn-success" href="${ctx}/product/ui/register.do">상품 등록</a>
 						<%-- </c:if> --%>
 					</div>
 

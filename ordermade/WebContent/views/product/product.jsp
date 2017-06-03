@@ -11,12 +11,11 @@ ${head_body}
 		<div class="rounded">
 			<main class="container clear"> <!-- main body -->
 			<div class="sidebar one_third first">
-				<h6>Category</h6>
+				<h6>상품 카테고리</h6>
 				<nav class="sdb_holder">
 					<ul>
 						<c:forEach items="${categories}" var="category">
-							<li><a
-								href="${ctx }/ajax/products/category.do?category=${category.type}">${category.type }</a></li>
+							<li><a href="${ctx }/ajax/products/category.do?category=${category.type}">${category.type }</a></li>
 						</c:forEach>
 					</ul>
 				</nav>
