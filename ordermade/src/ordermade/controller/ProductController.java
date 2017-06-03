@@ -232,7 +232,7 @@ public class ProductController {
 	public @ResponseBody Product findProductById(String productId) {
 		// Ajax 생산품 id 검색으로 생산품 출력
 
-		Product product = pService.findProductById("203");
+		Product product = pService.findProductById(productId);
 		return product;
 	}
 
