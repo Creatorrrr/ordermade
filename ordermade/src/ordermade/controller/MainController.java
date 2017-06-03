@@ -34,7 +34,7 @@ public class MainController {
 
 	@RequestMapping("/main.do")
 	public String showMainUI(){
-		return "redirect:/views/index.jsp";
+		return "redirect:/index.jsp";
 	}
 	
 	@RequestMapping(value="xml/categoryList.do", produces="application/xml")

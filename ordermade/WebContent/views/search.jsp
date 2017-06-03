@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/views/common/_html.jsp"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
-
-<%@ include file="/views/common/head.jsp"%>
+<%@ include file="/views/common/_common.jsp"%>
+${head_body}
+<%@ include file="/views/common/header.jsp"%>
 
 <div class="wrapper row3">
 	<div class="rounded">
@@ -30,3 +30,6 @@
 		</div>
 	</div>
 </div>
+
+</body>
+</html>

@@ -1,28 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath }" />
-<!-- TEST ========================================================================================== -->
-<!-- http://localhost:8080/ordermade/views/purchaseHistory/consumerPurchaseHistory.jsp -->
-<!-- http://localhost:8080/ordermade/deal/transaction.do -->
-<!DOCTYPE html>
-<html lang="ko">
-<!-- Header ========================================================================================== -->
-<head>
-<%@ include file="/views/common/head.jsp"%>
-</head>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/views/common/_html.jsp"%>
 <title>구매이력</title>
-<!-- Main Body ========================================================================================== -->
-<body>
-<div class="wrapper row3">
-	<div class="rounded">
-		<main class="container clear"> 
-		<!-- Navigation ================================================================================= -->
-		<div class="sidebar one_third first">
-			<%@ include file="/views/common/myPageNav.jsp"%>
-		</div>
+<%@ include file="/views/common/_common.jsp"%>
+
+${head_body}
+<%@ include file="/views/common/header.jsp"%>
+
+${box1 }
 		
-		<div id="content" class="two_third">
+			<%@ include file="/views/common/myPageNav.jsp"%>
+			
+${box2 }
+
+
 			<h1>구매이력</h1>
 			<div class="fl_right">
 				<form class="clear" method="post" action="${ctx }/deal/xml/searchPurchaseConsumerTitleList.do">
@@ -101,12 +91,7 @@
                        </c:forEach>
                    </tbody>
                </table>
-			</div>
-		</main>
-	</div>
-</div>
 
-<%@ include file="/views/common/footer.jsp"%>
 <script type="text/javascript">
 
 $(".purchaseBtn").click(function(){
@@ -147,5 +132,8 @@ var sendMoneyToMakerAccount = {
 	},
 };
 </script>
-</body>
-</html>
+
+
+${box3 }
+
+<%@ include file="/views/common/footer.jsp"%>

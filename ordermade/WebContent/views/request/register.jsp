@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/resources/common/_html.jsp"%>
+<%@ include file="/views/common/_html.jsp"%>
 <title>의뢰서 등록</title>
-<%@ include file="/resources/common/_common.jsp"%>
+<%@ include file="/views/common/_common.jsp"%>
 
 ${head_body}
-<%@ include file="/resources/common/header.jsp"%>
+<%@ include file="/views/common/header.jsp"%>
 
 ${box1 }
 		
@@ -155,4 +155,4 @@ ${box2 }
 
 ${box3 }
 
-<%@ include file="/resources/common/footer.jsp"%>
+<%@ include file="/views/common/footer.jsp"%>

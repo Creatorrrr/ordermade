@@ -1,14 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath }" />
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/views/common/_html.jsp"%>
 <title>상품 상세 정보</title>
+<%@ include file="/views/common/_common.jsp"%>
 
-<%@ include file="/views/common/common.jsp"%>
+
+
 <!-- <script type="text/javascript">
 	//html구조가 모두 include된 후 실행
 
@@ -96,8 +92,15 @@
 	})
 </script> -->
 
-</head>
-<body>
+
+
+
+${head_body}
+<%@ include file="/views/common/header.jsp"%>
+
+
+
+
 	<form id="form1" name="form1" onsubmit="return false;">
 		${product.id } <input type="hidden" id="productId" name="product.id"
 			value="${product.id }">
@@ -186,6 +189,7 @@
 			
 		});
 	</script> 
-</body>
-</html>
 
+${box3 }
+
+<%@ include file="/views/common/footer.jsp"%>

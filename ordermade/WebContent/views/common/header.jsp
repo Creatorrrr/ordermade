@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
 	<div class="wrapper row0">
 		<div id="topbar" class="clear">
 			<nav>
@@ -8,9 +9,10 @@
 					<c:choose>
 						<c:when test="${loginId eq null }">
 							<ul>
-								<li><a id="loginBtn" href="${ctx }/member/login.do">Login</a></li>
-								<li><a href="${ctx }/member/join.do"
-									class="btn btn-success">Sign up</a></li>
+								<li>
+									<a id="loginBtn" href="${ctx }/member/login.do">Login</a></li>
+								<li>
+								<a href="${ctx }/member/join.do" class="btn btn-success">Sign up</a></li>
 							</ul>
 						</c:when>
 						<c:otherwise>
@@ -31,9 +33,8 @@
 		<header id="header" class="clear">
 			<div id="logo" class="fl_left">
 				<h1>
-					<a href="${ctx }/views/index.jsp"><img
-						src="${ctx }/views/images/panda4.jpg"
-						style="width: 100px; height: 100px"> 판다</a>
+					<a href="${ctx }/">
+					<img src="${ctx }/views/images/panda4.jpg" style="width: 100px; height: 100px"> 판다</a>
 				</h1>
 				<p>다 판다</p>
 				<p>없으면 만들어서 판다</p>
@@ -60,46 +61,45 @@
 		<div class="rounded">
 			<nav id="mainav" class="clear">
 				<ul class="clear">
-					<li class=""><a href="${ctx }/views/index.jsp">Main</a></li>
-					<li class=""><a href="${ctx }/views/product/product.jsp">Product</a></li>
-					<%-- <li><a class="drop" href="#">category</a> 
-					<ul>
-							<li><a href="${ctx }/views/productList.jsp">Furniture</a></li>
-							<li><a href="${ctx }/pages/portfolio.html">Accessory</a></li>
-							<li><a href="${ctx }/pages/full-width.html">Kitchen</a></li>
-							<li><a href="${ctx }/pages/sidebar-left.html">Digital</a></li>
-							<li><a href="${ctx }/pages/sidebar-left-2.html">Clothing</a></li>
-							<li><a href="${ctx }/pages/sidebar-right.html">Sport</a></li>
-					</ul>
-					</li> --%>
+					<li class=""><a href="${ctx }/">메인</a></li>
+					<li>
+						<a class="drop" href="#">상품</a> 
+						<ul>
+							<li><a href="${ctx }/product/ui/search.do?page=1&category=FUNITURE">Furniture</a></li>
+							<li><a href="${ctx }/product/ui/search.do?page=1&category=ACCESSORY">Accessory</a></li>
+							<li><a href="${ctx }/product/ui/search.do?page=1&category=KITCHEN">Kitchen</a></li>
+							<li><a href="${ctx }/product/ui/search.do?page=1&category=DIGITAL">Digital</a></li>
+							<li><a href="${ctx }/product/ui/search.do?page=1&category=CLOTHING">Clothing</a></li>
+							<li><a href="${ctx }/product/ui/search.do?page=1&category=SPORT">Sport </a></li>
+						</ul>
+					</li>
 						
 						<%-- <c:forEach items="${products }" var="product">
 							<li><a class="btn btn-sm btn-success"
 								href="${ctx}/product//ajax/product/productid?productId=${product.id}">${product.title }</a>
 							</li>
 						</c:forEach> --%>
-						
-					<li><a href="${ctx }/views/portfolio/portfolio.jsp">Portfolio</a></li>
+					<li><a href="${ctx }/views/portfolio/portfolio.jsp">포트폴리오</a></li>
 					<c:if test="${sessionScope.loginId ne null}">
-						<li><a href="#">Request</a></li>
+						<li><a href="${ctx}/request/ui/myRequest.do">의뢰서</a></li>
 					</c:if>
 					<c:if test="${sessionScope.loginId eq null}">
-						<li><a href="${ctx}/member/myPage.do">Request</a></li>
+						<li><a href="${ctx}/request/ui/myRequest.do">의뢰서</a></li>
 					</c:if>
 					<c:choose>
 						<c:when test="${sessionScope.memberType eq 'C' }">
 							<li>
-								<a href="${ctx }/request/ui/consumerInviteList.do?page=1">Invite Request</a>
+								<a href="${ctx }/request/ui/consumerInviteList.do?page=1">참가 요청내역</a>
 							</li>
 						</c:when>
 						<c:when test="${sessionScope.memberType eq 'M' }">
 							<li>
-								<a href="${ctx }/request/ui/makerInviteList.do?page=1">Invite Request</a>
+								<a href="${ctx }/request/ui/makerInviteList.do?page=1">참가 요청내역</a>
 							</li>
 						</c:when>
 					</c:choose>
 					
-					<li><a href="${ctx}/member/myPage.do">my page</a></li>
+					<li><a href="${ctx}/member/myPage.do">마이 페이지</a></li>
 				</ul>
 			</nav>
 		</div>

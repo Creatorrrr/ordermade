@@ -1,51 +1,51 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath }" />
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<%@ include file="/views/common/head.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/views/common/_html.jsp"%>
+<title>나의 의뢰서</title>
+<%@ include file="/views/common/_common.jsp"%>
+	
+	<style type="text/css">
+	.productBox {
+		display: inline-block;
+		border-style: solid;
+		margin: 5px;
+		width: 45%;
+	}
+	
+	.productExplainBox {
+		display: inline-block;
+		width: 100%;
+	}
+	
+	.productExplainBox img {
+		width: 30%;
+	}
+	
+	.productExplainBox table {
+		display: inline-block;
+		float: right;
+		border-style: none;
+		width: 70%;
+		color: black;
+	}
+	
+	.productExplainBox table * {
+		border-style: none;
+	}
+	
+	.detailBtnBox {
+		width: 100%;
+	}
+	
+	.detailBtnBox input {
+		float: right;
+	}
+	</style>
+	
 
-<style type="text/css">
-.productBox {
-	display: inline-block;
-	border-style: solid;
-	margin: 5px;
-	width: 45%;
-}
+${head_body}
+<%@ include file="/views/common/header.jsp"%>
 
-.productExplainBox {
-	display: inline-block;
-	width: 100%;
-}
 
-.productExplainBox img {
-	width: 30%;
-}
-
-.productExplainBox table {
-	display: inline-block;
-	float: right;
-	border-style: none;
-	width: 70%;
-	color: black;
-}
-
-.productExplainBox table * {
-	border-style: none;
-}
-
-.detailBtnBox {
-	width: 100%;
-}
-
-.detailBtnBox input {
-	float: right;
-}
-</style>
-</head>
-<body>
 	<div class="wrapper row3">
 		<div class="rounded">
 			<main class="container clear"> <!-- main body -->
@@ -122,9 +122,7 @@
 		</div>
 	</div>
 
-	<%@ include file="/views/common/footer.jsp"%>
 
-</body>
 
 <script type="text/javascript">
 	//검색을 클릭하면 검색된 의뢰서 목록을 가져온다.
@@ -304,4 +302,8 @@
 	};
 </script>
 
-</html>
+
+
+${box3 }
+
+<%@ include file="/views/common/footer.jsp"%>

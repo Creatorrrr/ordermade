@@ -1,19 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath }" />
-<!DOCTYPE html>
-<html lang="ko">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/views/common/_html.jsp"%>
 <title>포트폴리오 상세페이지</title>
-<%@ include file="/views/common/head.jsp"%>
+<%@ include file="/views/common/_common.jsp"%>
 
-<div class="wrapper row3">
-	<div class="rounded">
-		<main class="container clear"> <!-- main body --> <%-- <div class="sidebar one_third first">
+${head_body}
+<%@ include file="/views/common/header.jsp"%>
+
+${box1 }
+		
 			<%@ include file="/views/common/myPageNav.jsp"%>
-		</div>
- --%>
-		<div id="content" class="two_third">
+			
+${box2 }
+
+
 			<div class="sdb_holder">
 				<h1>나의 포트폴리오 -${portfolio.title }</h1>
 				
@@ -45,20 +44,13 @@
 					<img class="imgr borderedbox"
 						src="${ctx }/portfolio/image.do?img=${portfolio.image}">
 					<br>
-			<%-- 	</c:forEach> --%>
+				<%-- </c:forEach> --%>
 				<p>
 					포트폴리오 내용 : <br>
 				</p>
 				<p>${portfolio.content }</p>
 			</div>
-			<br>
-		</div>
-		</main>
-	</div>
 
-
-	<%@ include file="/views/common/footer.jsp"%>
-	<!-- JAVASCRIPTS -->
 
 	<script type="text/javascript">
 		/* var portfolioController = {
@@ -79,7 +71,7 @@
 			}
 		}; */
 		
-/* 		  // 등록버튼 구현
+		/* 		  // 등록버튼 구현
 		 $("#modifyBtn").click(function(){
 			//if(checkIt()){
 				$.ajax({
@@ -103,5 +95,8 @@
 		
 	</script>
 
-	</body>
-</html>
+
+
+${box3 }
+
+<%@ include file="/views/common/footer.jsp"%>

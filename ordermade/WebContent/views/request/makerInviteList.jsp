@@ -1,26 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath }" />
-<!-- TEST ========================================================================================== -->
-<!-- http://localhost:8080/ordermade/views/request/makerInviteList.jsp -->
-<!-- http://localhost:8080/ordermade/request/ui/makerInviteList.do -->
-<!DOCTYPE html>
-<html lang="ko">
-<!-- Header ========================================================================================== -->
-<head>
-<%@ include file="/views/common/head.jsp"%>
-</head>
-<!-- Main Body ========================================================================================== -->
-<body>
-<div class="wrapper row3">
-	<div class="rounded">
-		<main class="container clear"> <!-- main body -->
-		<div class="sidebar one_third first">
-			<%@ include file="/views/common/myPageNav.jsp"%>
-		</div>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/views/common/_html.jsp"%>
+<title>참가요청내역</title>
+<%@ include file="/views/common/_common.jsp"%>
 
-		<div id="content" class="two_third">
+${head_body}
+<%@ include file="/views/common/header.jsp"%>
+
+${box1 }
+		
+			<%@ include file="/views/common/myPageNav.jsp"%>
+			
+${box2 }
+
+
 			<h1>참가요청내역</h1>
 			<div class="">
 				<table class="">
@@ -74,15 +66,8 @@
 	                   </tbody>
 	               </table>
 				</div>
-			</div>
-		</main>
-	</div>
-</div>
+
+
+${box3 }
 
 <%@ include file="/views/common/footer.jsp"%>
-<!-- JAVASCRIPTS -->
-<script src="../layout/scripts/jquery.min.js"></script>
-<script src="../layout/scripts/jquery.fitvids.min.js"></script>
-<script src="../layout/scripts/jquery.mobilemenu.js"></script>
-</body>
-</html>

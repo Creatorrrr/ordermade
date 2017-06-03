@@ -1,16 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath }" />
-<!DOCTYPE html>
-<html lang="ko">
-<!-- Header ========================================================================================== -->
-<head>
-<%@ include file="/views/common/head.jsp"%>
-</head>
-<title>회원가입</title>
-<!-- Main Body ========================================================================================== -->
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/views/common/_html.jsp"%>
+<title>회원 가입</title>
+<%@ include file="/views/common/_common.jsp"%>
+
+${head_body}
+<%@ include file="/views/common/header.jsp"%>
+
+
 
 <div class="wrapper row3">
 	<div class="rounded">
@@ -94,7 +90,8 @@
 	</div>
 </div>
 
-<%@ include file="/views/common/footer.jsp"%>
+
+
 
 <script type="text/javascript">
 $( document ).ready(function() {
@@ -187,5 +184,6 @@ var memberController = {
 };
 </script>
 
-</body>
-</html>
+${box3 }
+
+<%@ include file="/views/common/footer.jsp"%>
