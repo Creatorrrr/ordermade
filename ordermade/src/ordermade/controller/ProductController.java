@@ -167,6 +167,11 @@ public class ProductController {
 	@RequestMapping(value = "/review/register.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerReview(Review review, HttpServletRequest req) {
 		// Ajax 리뷰 등록후 화면유지
+		System.out.println(review.getTitle()+"*************");
+		System.out.println(review.getGrade()+"*************");
+		System.out.println(review.getContent()+"*************");
+		System.out.println(review.getProduct().getId());
+		
 		Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 		review.setConsumer(consumer);
 		if (!pService.registerReview(review)) {
@@ -179,9 +184,17 @@ public class ProductController {
 	@RequestMapping(value = "/review/modify.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyReviewById(Review review, HttpServletRequest req) {
 		// Ajax 리뷰 수정후 화면유지
+		
+		System.out.println(review.getId()+"*************");
+		System.out.println(review.getTitle()+"*************");
+		System.out.println(review.getGrade()+"*************");
+		System.out.println(review.getContent()+"*************");
+		System.out.println(review.getProduct().getId());
+		
+		
 		Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 		review.setConsumer(consumer);
-		if (!pService.registerReview(review)) {
+		if (!pService.modifyReviewById(review)) {
 			return "false";
 		} else {
 			return "true";
@@ -217,7 +230,8 @@ public class ProductController {
 	@RequestMapping(value = "xml/main/category/brandNew.do", produces = "application/xml")
 	public @ResponseBody Products findProductsByCategoryOrderByIdForMain(String category, String page) {
 		// Ajax 메인화면에서 히트 상품 종류 나옴
-		if(page == null || page == "") page = "1";
+		if (page == null || page == "")
+			page = "1";
 		List<Product> idProducts = pService.findProductsByCategoryOrderByIdForMain(category, page);
 
 		Products products = new Products();
@@ -231,8 +245,7 @@ public class ProductController {
 	@RequestMapping(value = "ajax/product/productId.do")
 	public @ResponseBody Product findProductById(String productId) {
 		// Ajax 생산품 id 검색으로 생산품 출력
-
-		Product product = pService.findProductById(productId);
+		Product product = pService.findProductById("1");
 		return product;
 	}
 
@@ -241,8 +254,9 @@ public class ProductController {
 		// Ajax 나의 생산품들 전체 출력
 
 		String makerId = (String) req.getSession().getAttribute("loginId");
-		if(page == null || page == "") page = "1";
-		
+		if (page == null || page == "")
+			page = "1";
+
 		List<Product> myProducts = pService.findProductsByMakerId(makerId, "1");
 
 		Products products = new Products();
@@ -316,15 +330,26 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/ajax/reviews/CP.do")
-	public @ResponseBody Reviews findReviewsByConsumerIdAndProductId(String page, String productId, String consumerId) {
+	public @ResponseBody Reviews findReviewsByConsumerIdAndProductId(String page, String productId, String consumerId,
+			HttpServletRequest req) {
 		// Ajax 생산품 아이디 그리고 내용으로 리뷰들 출력
 
-		List<Review> CPreview = pService.findReviewsByConsumerIdAndProductId(consumerId, productId, "1");
+		if (consumerId == null) {
+			String id = (String) req.getSession().getAttribute("loginId");
+			List<Review> CPreview = pService.findReviewsByConsumerIdAndProductId(id, productId, "1");
 
-		Reviews reviews = new Reviews();
-		reviews.setReviews(CPreview);
+			Reviews reviews = new Reviews();
+			reviews.setReviews(CPreview);
 
-		return reviews;
+			return reviews;
+		} else {
+			List<Review> CPreview = pService.findReviewsByConsumerIdAndProductId(consumerId, productId, "1");
+
+			Reviews reviews = new Reviews();
+			reviews.setReviews(CPreview);
+
+			return reviews;
+		}
 	}
 
 	// Review end
@@ -415,9 +440,7 @@ public class ProductController {
 
 	@RequestMapping("ui/search.do")
 	public ModelAndView showSearchProductsUI(String category, String page) {
-		return new ModelAndView("product/productList")
-				.addObject("categories",pService.findAllCategory())
-				.addObject("category", category)
-				.addObject("products", pService.findProductsByCategory(category, page));
+		return new ModelAndView("product/productList").addObject("categories", pService.findAllCategory())
+				.addObject("category", category).addObject("products", pService.findProductsByCategory(category, page));
 	}
 }

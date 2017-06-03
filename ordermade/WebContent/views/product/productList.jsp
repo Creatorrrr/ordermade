@@ -127,13 +127,13 @@
 </body>
 
 <script type="text/javascript">
-$(document).ready(function() {
+/* $(document).ready(function() {
 	$.ajax({
 		url:"${ctx}/main/xml/categoryList.do",
 		type:"get",
 		success:function
 	})
-})
+}) */
 	//검색을 클릭하면 검색된 의뢰서 목록을 가져온다.
 	$("#productSearchBtn").click(
 			function() {
