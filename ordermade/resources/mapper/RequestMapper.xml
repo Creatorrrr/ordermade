@@ -65,7 +65,7 @@
 	<select id="selectRequestById" parameterType="String" resultMap="requestMap">
 		<include refid="selectRequest"/>
 		FROM request
-		, (select (count(id)/${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) page from request)
+		, (select /*+INDEX_FES(table column) */ ceil(count(*)/${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) page from request)
 		WHERE id = #{id}
 	</select>
 	

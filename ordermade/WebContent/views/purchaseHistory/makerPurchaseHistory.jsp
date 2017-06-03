@@ -54,7 +54,7 @@
 	                   </tr>
 	                   </thead>
 	                   <tbody>
-	                   	<c:if test="${empty purchaseList}">
+	                   		<c:if test="${empty purchaseList}">
 	                        <tr>
 	                            <td style="text-align: center" colspan="5" class="text-center">이력이 존재하지 않습니다.</td>
 	                        </tr>
@@ -76,9 +76,13 @@
 	                            </td>
 	                            <td class="text-center" style="text-align: center">
 	                           		${purchaseHistory.deliveryStatus}<br>
-	                           		<input class="deliveryBtn" type="button" 
+	                           		<c:if test="${purchaseHistory.deliveryStatus eq '배송중' }">
+	                           			<input class="deliveryBtn" type="button" 
 		                           			value="상품배송" class="btn btn-sm btn-success"
 		                           			data1 = "${purchaseHistory.id }">
+                           			</c:if>
+                           			<c:if test="${purchaseHistory.deliveryStatus eq '배송완료' }">
+                           			</c:if>
 	                            </td>
 	                        </tr>
 	                       </c:forEach>
