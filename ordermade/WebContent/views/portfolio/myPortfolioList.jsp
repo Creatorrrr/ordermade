@@ -33,14 +33,15 @@
 							<em>Search</em>
 						</button>
 					<!-- </form> -->
-				</div>
 				
+					<br>
 					<div style="float: right;">
 						<c:if test="${sessionScope.loginId ne null && makerId ne null}">
 							<a class="btn btn-sm btn-success"
 								href="${ctx}/portfolio/ui/register.do">포트폴리오 등록</a>
 						</c:if>
 					</div>
+				</div>
 				<br>
 
 				<ul class="nospace listing">
