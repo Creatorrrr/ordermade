@@ -1,17 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/resources/common/_html.jsp"%>
-<title>의뢰서 수정</title>
-<%@ include file="/resources/common/_common.jsp"%>
+<%@ include file="/views/common/_html.jsp"%>
+<title>의뢰서 검색</title>
+<%@ include file="/views/common/_common.jsp"%>
+
+	<style type="text/css">
+		.requestBox {
+			display:inline-block;
+			border-style:solid;
+			margin:5px;
+			width:100%;
+		}
+		.requestBox input {
+			float:right;
+			margin:5px;
+		}
+		.requestBox table {
+			color:black;
+		}
+	</style>
 
 ${head_body}
-<%@ include file="/resources/common/header.jsp"%>
+
+<%@ include file="/views/common/header.jsp"%>
 
 ${box1 }
 		
 			<%@ include file="/views/common/myPageNav.jsp"%>
 			
 ${box2 }
-
+	
 			<h1>의뢰서 수정 페이지</h1>
 			<br>
 			<form action="${ctx}/request/xml/modify.do" method="post" id="form1" name="form1" onsubmit="return checkIt()">
@@ -49,6 +66,8 @@ ${box2 }
 					<input class="btn btn-success" type="button" id="btn" value="저장하기">
 				</div>
 			</form>
+			
+			
 			
 	<script type="text/javaScript">
 
@@ -143,4 +162,4 @@ ${box2 }
 
 ${box3 }
 
-<%@ include file="/resources/common/footer.jsp"%>
+<%@ include file="/views/common/footer.jsp"%>

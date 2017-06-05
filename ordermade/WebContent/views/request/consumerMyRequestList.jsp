@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/resources/common/_html.jsp"%>
+<%@ include file="/views/common/_html.jsp"%>
 <title>나의 의뢰서</title>
-<%@ include file="/resources/common/_common.jsp"%>
+<%@ include file="/views/common/_common.jsp"%>
 
 ${head_body}
-<%@ include file="/resources/common/header.jsp"%>
+<%@ include file="/views/common/header.jsp"%>
 
 ${box1 }
 		
@@ -74,7 +74,7 @@ ${box2 }
 
 			
 			//공개 설정 버튼 구현 
-			$(".boundBtn").click(function(){
+			$("#resultBox").on('click','.boundBtn', function(){
 				var requestId = $(this).parent().attr("data");
 				var bound = ($(this).text() == "비공개") ? 1 : 0;
 				console.log($(this).text() + bound);
@@ -292,4 +292,4 @@ ${box2 }
 
 ${box3 }
 
-<%@ include file="/resources/common/footer.jsp"%>
+<%@ include file="/views/common/footer.jsp"%>

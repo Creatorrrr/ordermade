@@ -230,8 +230,7 @@ public class ProductController {
 	@RequestMapping(value = "xml/main/category/brandNew.do", produces = "application/xml")
 	public @ResponseBody Products findProductsByCategoryOrderByIdForMain(String category, String page) {
 		// Ajax 메인화면에서 히트 상품 종류 나옴
-		if (page == null || page == "")
-			page = "1";
+		if(page == null || page == "") page = "1";
 		List<Product> idProducts = pService.findProductsByCategoryOrderByIdForMain(category, page);
 
 		Products products = new Products();
@@ -254,9 +253,8 @@ public class ProductController {
 		// Ajax 나의 생산품들 전체 출력
 
 		String makerId = (String) req.getSession().getAttribute("loginId");
-		if (page == null || page == "")
-			page = "1";
-
+		if(page == null || page == "") page = "1";
+		
 		List<Product> myProducts = pService.findProductsByMakerId(makerId, "1");
 
 		Products products = new Products();
@@ -440,7 +438,11 @@ public class ProductController {
 
 	@RequestMapping("ui/search.do")
 	public ModelAndView showSearchProductsUI(String category, String page) {
-		return new ModelAndView("product/productList").addObject("categories", pService.findAllCategory())
-				.addObject("category", category).addObject("products", pService.findProductsByCategory(category, page));
+		if(category == null) category = Constants.CategoryType.values()[0] +"";
+		if(page == null) page = "1";
+		return new ModelAndView("product/productList")
+				.addObject("categories",pService.findAllCategory())
+				.addObject("category", category)
+				.addObject("products", pService.findProductsByCategory(category, page));
 	}
 }

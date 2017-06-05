@@ -7,7 +7,6 @@
 <mapper namespace="ordermade.store.mapper.CategoryMapper">
 
 	<select id="selectAllCategory" resultType="Category">
-		SELECT TYPE
-		FROM CATEGORY
+		SELECT * FROM CATEGORY
 	</select>
 </mapper>

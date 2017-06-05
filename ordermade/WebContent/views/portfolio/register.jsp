@@ -1,20 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath }" />
-<!DOCTYPE html>
-<html lang="ko">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/views/common/_html.jsp"%>
 <title>포트폴리오 등록</title>
-<%@ include file="/views/common/head.jsp"%>
+<%@ include file="/views/common/_common.jsp"%>
 
-<div class="wrapper row3">
-	<div class="rounded">
-		<main class="container clear">
-		<div class="sidebar one_third first">
+${head_body}
+<%@ include file="/views/common/header.jsp"%>
+
+${box1 }
+		
 			<%@ include file="/views/common/myPageNav.jsp"%>
-		</div>
+			
+${box2 }
 
-		<div id="content" class="two_third">
+
 			<h1>포트폴리오 등록</h1>
 			<br>
 			<form action="${ctx }/portfolio/xml/register.do" method="post" enctype="multipart/form-data"
@@ -48,12 +46,8 @@
 				</div>
 			</form>
 			<br>
-		</div>
-		</main>
-	</div>
-</div>
 
-<%@ include file="/views/common/footer.jsp"%>
+
 
 <script type="text/javaScript">
 
@@ -139,5 +133,8 @@ $(document).ready(function(){
 });
 
 </script>
-</body>
-</html>
+
+
+${box3 }
+
+<%@ include file="/views/common/footer.jsp"%>

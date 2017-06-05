@@ -1,26 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath }" />
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/views/common/_html.jsp"%>
+<title>마이 페이지</title>
+<%@ include file="/views/common/_common.jsp"%>
 
-<!DOCTYPE html>
-<html lang="ko">
-<!-- bxSlider CSS file -->
-<link href="${ctx }/views/css/jquery.bxslider.css" rel="stylesheet" />
-<!-- Header ========================================================================================== -->
-<head>
-<%@ include file="/views/common/head.jsp"%>
-</head>
-<title>My Page</title>
-<!-- Main Body ========================================================================================== -->
-<body>								
-<div class="wrapper row3">
-	<div class="rounded">
-		<main class="container clear"> <!-- main body -->
-		<div class="sidebar one_third first">
+${head_body}
+<%@ include file="/views/common/header.jsp"%>
+
+${box1 }
+		
 			<%@ include file="/views/common/myPageNav.jsp"%>
-		</div>
-		<div id="content" class="two_third">
+			
+${box2 }
+
 			<ul class="nospace listing">
 				<li class="clear">
 					<div class="content" align="left">
@@ -80,14 +71,9 @@
 					</table>
 				</div>
 				</ul>
-			</div>
-		</main>
-	</div>
-</div>
 
-<%@ include file="/views/common/footer.jsp"%>
-<!-- bxSlider JavaScript file -->
-<script src="${ctx }/views/js/jquery.bxslider.min.js"></script>
+
+
 <script type="text/javascript">
 // append portfolio and product on startup
 $(document).ready(function() {
@@ -198,5 +184,7 @@ $( '#nextProductBtn' ).on( 'click', function () {
 } );
 </script>
 
-</body>
-</html>
+
+${box3 }
+
+<%@ include file="/views/common/footer.jsp"%>

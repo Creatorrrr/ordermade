@@ -1,10 +1,12 @@
-<%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath }" />
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/views/common/_html.jsp"%>
+<title></title>
+<%@ include file="/views/common/_common.jsp"%>
 
-<%@ include file="common/head.jsp"%>
+${head_body}
+<%@ include file="/views/common/header.jsp"%>
+
+
 
 <div class="wrapper row3">
 	<div class="rounded">
@@ -108,11 +110,6 @@
 </script>
 
 
-<%@ include file="common/footer.jsp"%>
+${box3 }
 
-<!-- JAVASCRIPTS -->
-<script src="../layout/scripts/jquery.min.js"></script>
-<script src="../layout/scripts/jquery.fitvids.min.js"></script>
-<script src="../layout/scripts/jquery.mobilemenu.js"></script>
-</body>
-</html>
+<%@ include file="/views/common/footer.jsp"%>
