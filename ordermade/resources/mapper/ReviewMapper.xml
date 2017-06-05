@@ -40,18 +40,8 @@
 		<selectKey keyProperty="id" resultType="String" order="BEFORE">
 			SELECT review_seq.nextval FROM dual
 		</selectKey>
-		INSERT INTO review(id,
-		title,
-		content,
-		grade,
-		product_id,
-		consumer_id)
-		VALUES(#{id},
-		#{title},
-		#{content},
-		#{grade},
-		#{product.id},
-		#{consumer.id})
+		INSERT INTO review(id,title,content,grade,product_id,consumer_id)
+		VALUES(#{id},#{title},#{content},#{grade},#{product.id},#{consumer.id})
 	</insert>
 
 	<update id="updateReviewById" parameterType="Review">
@@ -80,6 +70,7 @@
 		WHERE product_id = #{productId})
 		WHERE rnum BETWEEN #{begin}
 		AND #{end}
+		ORDER BY id ASC
 	</select>
 
 	<!-- For ProductMapper - Review Association -->

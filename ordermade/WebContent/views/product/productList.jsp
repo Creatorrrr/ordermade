@@ -53,7 +53,7 @@
 				<h6>Category</h6>
 				<nav class="sdb_holder">
 					<ul>
-						<c:forEach items="categories" var="category">
+						<c:forEach items="${categories}" var="category">
 							<li><a
 								href="${ctx }/product/ui/search.do?page=1&category=${category.type}">${category.type }</a></li>
 						</c:forEach>
@@ -127,6 +127,13 @@
 </body>
 
 <script type="text/javascript">
+/* $(document).ready(function() {
+	$.ajax({
+		url:"${ctx}/main/xml/categoryList.do",
+		type:"get",
+		success:function
+	})
+}) */
 	//검색을 클릭하면 검색된 의뢰서 목록을 가져온다.
 	$("#productSearchBtn").click(
 			function() {

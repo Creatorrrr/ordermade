@@ -18,6 +18,9 @@
 <script src="${ctx }/views/js/jquery.bxslider.min.js"></script>
 <script src="${ctx }/views/js/jquery.uploadfile.min.js"></script>
 <script src="${ctx }/views/vendor/ckeditor/ckeditor.js"></script>
+<script src="${ctx }/views/js/jquery.validate.min.js"></script>
+<script src="${ctx }/views/js/additional-methods.min.js"></script>
+<script src="${ctx }/views/js/messages_ko.min.js"></script>
 
 <body id="top">
 	<div class="wrapper row0">
