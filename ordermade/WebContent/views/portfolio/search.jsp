@@ -3,44 +3,6 @@
 <title>포트폴리오</title>
 <%@ include file="/views/common/_common.jsp"%>
 	
-	<style type="text/css">
-	.portfolioBox {
-		display: inline-block;
-		border-style: solid;
-		margin: 5px;
-		width: 45%;
-	}
-	
-	.portfolioExplainBox {
-		display: inline-block;
-		width: 100%;
-	}
-	
-	.portfolioExplainBox img {
-		width: 30%;
-	}
-	
-	.portfolioExplainBox table {
-		display: inline-block;
-		float: right;
-		border-style: none;
-		width: 70%;
-		color: black;
-	}
-	
-	.portfolioExplainBox table * {
-		border-style: none;
-	}
-	
-	.detailBtnBox {
-		width: 100%;
-	}
-	
-	.detailBtnBox input {
-		float: right;
-	}
-	</style>
-	
 ${head_body}
 <%@ include file="/views/common/header.jsp"%>
 
@@ -76,14 +38,13 @@ ${head_body}
 					</form>
 				</div>
 				
-				<button class="fa fa-search" name="" type="submit" title="Search">Image Search</button>
 			</div>
 			
 						
-			<div id="portfolioSearchResult">
+			<div id="listSearchResult">
 				<c:forEach items="${portfolios }" var="portfolio">
-					<div class='portfolioBox'>
-						<div class="portfolioExplainBox">
+					<div class='listBox'>
+						<div class="listExplainBox">
 							<img src="${ctx }/portfolio/image.do?img=${portfolio.image}">
 							<table>
 								<tr>

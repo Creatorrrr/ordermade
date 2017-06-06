@@ -3,45 +3,6 @@
 <title>나의 의뢰서</title>
 <%@ include file="/views/common/_common.jsp"%>
 	
-	<style type="text/css">
-	.productBox {
-		display: inline-block;
-		border-style: solid;
-		margin: 5px;
-		width: 45%;
-	}
-	
-	.productExplainBox {
-		display: inline-block;
-		width: 100%;
-	}
-	
-	.productExplainBox img {
-		width: 30%;
-	}
-	
-	.productExplainBox table {
-		display: inline-block;
-		float: right;
-		border-style: none;
-		width: 70%;
-		color: black;
-	}
-	
-	.productExplainBox table * {
-		border-style: none;
-	}
-	
-	.detailBtnBox {
-		width: 100%;
-	}
-	
-	.detailBtnBox input {
-		float: right;
-	}
-	</style>
-	
-
 ${head_body}
 <%@ include file="/views/common/header.jsp"%>
 
@@ -80,10 +41,10 @@ ${head_body}
 					</div>
 				</div>
 				
-				<div id="productSearchResult">
+				<div id="listSearchResult">
 					<c:forEach items="${products }" var="product">
-						<div class='productBox'>
-							<div class="productExplainBox">
+						<div class='listBox'>
+							<div class="listExplainBox">
 								<img src="${ctx }/product/image.do?img=${product.image}">
 								<table>
 									<tr>

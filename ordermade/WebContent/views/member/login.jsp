@@ -10,6 +10,7 @@ ${head_body}
 
 <div class="wrapper row3">
 	<div class="rounded">
+		<div  id="loginBox">
 		<main class="container clear">
 			<h1>로그인</h1>
 			<form id="loginForm">
@@ -32,6 +33,7 @@ ${head_body}
 				</div>
 			</form>
 		</main>
+		</div>
 	</div>
 </div>
 

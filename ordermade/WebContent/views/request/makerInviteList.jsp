@@ -14,8 +14,8 @@ ${box2 }
 
 
 			<h1>참가요청내역</h1>
-			<div class="">
-				<table class="">
+			<div class="table2">
+				<table class="table">
 	                   <colgroup>
 	                       <col width="110"/>
 	                       <col width="120"/>

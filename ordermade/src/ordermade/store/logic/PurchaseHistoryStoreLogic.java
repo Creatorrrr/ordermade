@@ -104,6 +104,7 @@ public class PurchaseHistoryStoreLogic implements PurchaseHistoryStore {
 		List<PurchaseHistory> list = null;
 		
 		try {
+			System.out.println(makerId);
 			PurchaseHistoryMapper mapper = session.getMapper(PurchaseHistoryMapper.class);
 			list = mapper.selectPurchaseHistoriesByMakerId(makerId, page);
 		} finally {

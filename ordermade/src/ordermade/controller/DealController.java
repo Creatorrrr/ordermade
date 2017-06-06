@@ -119,24 +119,23 @@ public class DealController {
 	// http://localhost:8080/ordermade/deal/ui/transaction.do
 	@RequestMapping(value="ui/transaction.do", method=RequestMethod.GET)
 	public ModelAndView showPurchaseHistoryUI(String page, HttpSession session){
+		
 		String memberType = (String)session.getAttribute("memberType");
 		String memberId = (String)session.getAttribute("loginId");
+		
 		if(page == null || page == "") page = "1";
 		List<PurchaseHistory> purchaseList = new ArrayList<>();
+		ModelAndView modelAndView = null;
 		
 		if(memberType.equals(Constants.CONSUMER)){
 			purchaseList = dService.findpurchaseHistoriesByConsumerId(memberId, page);
-			ModelAndView modelAndView = new ModelAndView("purchaseHistory/consumerPurchaseHistory");
-			modelAndView.addObject("purchaseList", purchaseList);
-			return modelAndView;
+			modelAndView = new ModelAndView("purchaseHistory/consumerPurchaseHistory");
 		}else if(memberType.equals(Constants.MAKER)){
 			purchaseList = dService.findpurchaseHistoriesByMakerId(memberId, page);
-			ModelAndView modelAndView = new ModelAndView("purchaseHistory/makerPurchaseHistory");
-			modelAndView.addObject("purchaseList", purchaseList);
-			return modelAndView;
-		}else{
-			throw new RuntimeException("No such Information");
+			modelAndView = new ModelAndView("purchaseHistory/makerPurchaseHistory");
 		}
+		modelAndView.addObject("purchaseList", purchaseList);
+		return modelAndView;
 	}
 	
 	// XML for Mobile
