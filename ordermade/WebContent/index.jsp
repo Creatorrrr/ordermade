@@ -13,7 +13,7 @@ ${head_body}
 		<div class="group btmspace-30">
 
 			<!-- Middle Column -->
-			<div class="one_half">
+			<div>
 
 				<h2>인기 상품</h2>
 				<div  id="HitsProductImages"></div>
@@ -77,7 +77,7 @@ ${head_body}
 $(document).ready(function(){
 	$.ajax({
 		type : "get",
-		url : "${ctx }/product/xml/main/category/hit.do?category=가구&page=4",
+		url : "${ctx }/product/xml/main/category/hit.do?category=FUNITURE&page=4",
 		dataType : "xml",
 		success : function(xml) {
 				console.log("------load Success-----")
@@ -87,7 +87,7 @@ $(document).ready(function(){
 				$("#HitsProductImages").empty();
 				if(listLength){
 					var contentStr = "";
-					contentStr += "<ul class='nospace listing' style='width: 195%;'>";
+					contentStr += "<ul class='nospace listing' style='width: 100%;'>";
 					contentStr +=    "<li class='clear'>";
 					contentStr +=			"<table>";
 					contentStr +=				"<tr>";
@@ -106,7 +106,7 @@ $(document).ready(function(){
 	
 	$.ajax({
 		type : "get",
-		url : "${ctx }/product/xml/main/category/brandNew.do?category=가구&page=4",
+		url : "${ctx }/product/xml/main/category/brandNew.do?category=FUNITURE&page=4",
 		dataType : "xml",
 		success : function(xml) {
 				console.log("------load Success-----")
@@ -116,7 +116,7 @@ $(document).ready(function(){
 				$("#BrandNewProductImages").empty();
 				if(listLength){
 					var contentStr = "";
-					contentStr += "<ul class='nospace listing' style='width: 195%;'>";
+					contentStr += "<ul class='nospace listing' style='width: 100%;'>";
 					contentStr +=    "<li class='clear'>";
 					contentStr +=			"<table>";
 					contentStr +=				"<tr>";
@@ -150,7 +150,7 @@ var mainImageController = {
 };
 
 //main slider setting
-var pfSlider = $( '#HitsProductSlider' ).bxSlider( {
+var pfSlider = $( '#HitsProductImages' ).bxSlider( {
     mode: 'horizontal',// 가로 방향 수평 슬라이드
     speed: 500,        // 이동 속도를 설정
     pager: false,      // 현재 위치 페이징 표시 여부 설정
@@ -178,7 +178,7 @@ $( '#nextPfBtn' ).on( 'click', function () {
 } );
 
 //product slider setting
-var productSlider = $( '#BrandNewProductSlider' ).bxSlider( {
+var productSlider = $( '#BrandNewProductImages' ).bxSlider( {
     mode: 'horizontal',// 가로 방향 수평 슬라이드
     useCSS: false,
     speed: 500,        // 이동 속도를 설정

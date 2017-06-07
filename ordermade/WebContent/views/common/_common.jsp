@@ -15,9 +15,9 @@
 <script src="${ctx }/resources/js/jquery.bxslider.min.js"></script>
 <script src="${ctx }/resources/js/jquery.uploadfile.min.js"></script>
 <script src="${ctx }/resources/js/vendor/ckeditor/ckeditor.js"></script>
-<script src="${ctx }/resources/js/jquery.validate.min.js"></script>
+<%-- <script src="${ctx }/resources/js/jquery.validate.min.js"></script>
 <script src="${ctx }/resources/js/additional-methods.min.js"></script>
-<script src="${ctx }/resources/js/messages_ko.min.js"></script>
+<script src="${ctx }/resources/js/messages_ko.min.js"></script> --%>
 
 <style type="text/css">
 
