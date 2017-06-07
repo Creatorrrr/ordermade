@@ -110,6 +110,7 @@ ${head_body}
 							<input type="hidden" id="title" name="title" value="${review.title }">
 							<input type="hidden" id="content" name="content" value="${review.content }">
 							<input type="hidden" id="grade" name="grade" value="${review.grade }">
+							<input type="hidden" id="userId" name="consumer.id" value="${review.consumer.id }">
 							<table class="table" style="font-size: 13px; padding: 20px;">
 								<tr>
 									<td>작성자 : "form${review.id }"</td>

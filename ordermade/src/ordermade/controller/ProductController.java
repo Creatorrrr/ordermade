@@ -189,6 +189,7 @@ public class ProductController {
 		System.out.println(review.getGrade() + "*************");
 		System.out.println(review.getContent() + "*************");
 		System.out.println(review.getProduct().getId());
+		System.out.println(review.getConsumer().getId());
 
 			Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 			review.setConsumer(consumer);
