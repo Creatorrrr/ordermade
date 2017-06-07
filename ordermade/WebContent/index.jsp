@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/views/common/_html.jsp"%>
-<title>의뢰서 등록</title>
+<title>1:1 매칭 서비스</title>
 <%@ include file="/views/common/_common.jsp"%>
 
 ${head_body}

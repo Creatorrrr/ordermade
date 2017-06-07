@@ -30,10 +30,8 @@ ${box2 }
 						</select> 
 						<input id="portfolioSearch" name="portfolioSearch" class="form-control"  type="text" value=""
 							placeholder="Search Here" style="display: inline-block" />
-						<button id="portfolioSearchBtn" class="btn btn-default" onclick="javascript:portfolioController.getMyPortfoliosByTitle()">검색</button>
+						<button id="portfolioSearchBtn" class="btn btn-default" type="button" onclick="javascript:portfolioController.getMyPortfoliosByTitle()">검색</button>
 					</form>
-				
-
 				</div>
 				</br></br></br>
 
@@ -121,11 +119,11 @@ $("#portfolioSearchBtn").click(function() {
 				var content = "";
 				
 				content += "<div class='portfolioList'>";
-				content += 	"<table>";
-				content += 		"<tr>";
-				content += 			"<td>조건에 해당하는 상품이 없습니다.</td>";
-				content += 		"</tr>";
-				content += 	"</table>";
+				content += "	<table class='table'>";
+				content += "		<tr>";
+				content += "			<td>조건에 해당하는 상품이 없습니다.</td>";
+				content += "		</tr>";
+				content += "	</table>";
 				content += "</div>";
 
 				return content;
