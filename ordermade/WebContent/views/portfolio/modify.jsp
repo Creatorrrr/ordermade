@@ -41,8 +41,8 @@ ${box2 }
 					</table>
 					<div>
 						<input type="hidden" name="id" value="${portfolio.id }">
-						<input class="btn btn-success" type="button" id="modifyBtn" value="등록">
-						&nbsp; <input type="reset" value="취소">
+						<input class="btn btn-success" type="button" id="modifyBtn" value="등록">&nbsp; 
+						<input type="reset" class="btn btn-default" value="취소">
 					</div>
 				</form>
 				<br>

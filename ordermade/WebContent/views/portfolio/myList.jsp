@@ -14,36 +14,33 @@ ${box2 }
 
 
 				<h1 align="left">나의 포트폴리오</h1>
-				<!-- <div class="content" align="center"> -->
-				<div style="float: right">
-					<!-- <form id="portfolioSearch" > -->
-						<select id="selectPortfolio" class="form-control"
-							style="display: inline-block">
+				
+				<div class="fl_left">
+					<c:if test="${sessionScope.loginId ne null && makerId ne null}">
+						<a class="btn btn-success"
+							href="${ctx}/portfolio/ui/register.do">포트폴리오 등록</a>
+					</c:if>
+				</div>
+				
+				<div class="fl_right" >
+					<form class="navbar-form text-center" id="portfolioSearch"  method="post" action="#" role="search">
+						<select id="selectPortfolio" class="form-control" style="display: inline-block">
 							<option value="title">제목</option>
 							<option value="content">내용</option>
-						</select> <input id="portfolioSearch" name="portfolioSearch"
-							class="search-box-input" type="text" value=""
+						</select> 
+						<input id="portfolioSearch" name="portfolioSearch" class="form-control"  type="text" value=""
 							placeholder="Search Here" style="display: inline-block" />
-						<button id="portfolioSearchBtn" class="fa fa-search" type="button"
-							title="검색" onclick="javascript:portfolioController.getMyPortfoliosByTitle()">
-							<em>Search</em>
-						</button>
-					<!-- </form> -->
+						<button id="portfolioSearchBtn" class="btn btn-default" onclick="javascript:portfolioController.getMyPortfoliosByTitle()">검색</button>
+					</form>
 				
-					<br>
-					<div style="float: right;">
-						<c:if test="${sessionScope.loginId ne null && makerId ne null}">
-							<a class="btn btn-sm btn-success"
-								href="${ctx}/portfolio/ui/register.do">포트폴리오 등록</a>
-						</c:if>
-					</div>
-				</div>
-				<br>
 
-				<ul class="nospace listing">
-					<li class="clear">
+				</div>
+				</br></br></br>
+
+				<ul class="nospace listing" style="margin-top:20px; ">
+
 					<div id="portfolioResult">
-					<c:forEach items="${portfolios }" var="portfolio">
+						<c:forEach items="${portfolios }" var="portfolio">
 							<div class="portfolioList">
 								<table class="table">
 									<tr>
@@ -59,7 +56,8 @@ ${box2 }
 									</tr>
 								</table>
 							</div>
-						</c:forEach></div></li>
+						</c:forEach>
+					</div>
 				</ul>
 
 

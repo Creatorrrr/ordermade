@@ -49,8 +49,7 @@ ${box2 }
 					</tr>
 				</table>
 				<div align="center">
-					<input class="btn" type="reset" value="취소하기"
-						onclick="javascript:window.location='${ctx }/post/list.do?boardId=${boardId }'">
+					<input class="btn btn-default" type="reset" value="취소하기" onclick="javascript:window.location='${ctx }/post/list.do?boardId=${boardId }'">
 					<input id="registBtn" class="btn btn-success" type="button" value="등록하기">
 				</div>
 			</form>

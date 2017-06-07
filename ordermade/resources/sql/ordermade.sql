@@ -157,15 +157,14 @@ CREATE SEQUENCE tag_seq START WITH 1 INCREMENT BY 1;
 --INSERT INTO category(type) VALUES ('CLOTHING');
 --INSERT INTO category(type) VALUES ('SPORT');
 
-INSERT INTO category(type) VALUES ('뷰티');
-INSERT INTO category(type) VALUES ('휴대폰케이스');
+INSERT INTO category(type) VALUES ('가구');
 INSERT INTO category(type) VALUES ('가방');
-INSERT INTO category(type) VALUES ('파우치');
+INSERT INTO category(type) VALUES ('뷰티');
+INSERT INTO category(type) VALUES ('신발');
 INSERT INTO category(type) VALUES ('악세사리');
 INSERT INTO category(type) VALUES ('의류');
 INSERT INTO category(type) VALUES ('지갑');
-INSERT INTO category(type) VALUES ('신발');
-INSERT INTO category(type) VALUES ('가구');
-
+INSERT INTO category(type) VALUES ('파우치');
+INSERT INTO category(type) VALUES ('휴대폰케이스');
 
 COMMIT;

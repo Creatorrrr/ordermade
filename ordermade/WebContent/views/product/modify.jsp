@@ -54,10 +54,8 @@ ${box2 }
 					<div align="center">
 						<input type="hidden" name="hit" value="${product.hit }"> 
 						<input type="hidden" name="id" value="${product.id }">
-						<input class="btn" type="reset" value="취소하기"
-							onclick="javascript:window.location='${ctx }/post/list.do?boardId=${boardId }'">
-						<input id="modifyBtn" class="btn btn-success" type="button"
-							value="수정하기">
+						<input class="btn btn-default" type="reset" value="취소하기" onclick="javascript:window.location='${ctx }/post/list.do?boardId=${boardId }'">
+						<input id="modifyBtn" class="btn btn-success" type="button" value="수정하기">
 					</div>
 				</form>
 				<br>
