@@ -112,7 +112,7 @@ var getProducts = function(page) {
 		type : "get",
 		dataType : "xml",
 		success : function(xml) {
-				var xmlData = $(xml).find("product");
+				var xmlData = $(xml).find("products>product");
 				var listLength = xmlData.length;
 				$("#BrandNewProducts").empty();
 				if (listLength) {

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link href="${ctx }/resources/css/humen/bootstrap.css" rel="stylesheet">
+<script src="${ctx }/resources/js/bootstrap.min.js"></script>
 
 <link href="${ctx }/resources/css/layout.css" rel="stylesheet" type="text/css" media="all">
 <link href="${ctx }/resources/css/framework.css" rel="stylesheet" type="text/css" media="all">
@@ -16,7 +17,8 @@
 <script src="${ctx }/resources/js/jquery.bxslider.min.js"></script>
 <script src="${ctx }/resources/js/jquery.uploadfile.min.js"></script>
 <script src="${ctx }/resources/js/vendor/ckeditor/ckeditor.js"></script>
-<script src="${ctx }/resources/js/js_simplePagination/jquery.simplePagination.js"></script>	
+
+<script src="${ctx }/resources/js/js_simplePagination/jquery.simplePagination.js"></script>
 <%-- <script src="${ctx }/resources/js/jquery.validate.min.js"></script>
 <script src="${ctx }/resources/js/additional-methods.min.js"></script>
 <script src="${ctx }/resources/js/messages_ko.min.js"></script> --%>
@@ -45,4 +47,7 @@ input.btn {display:inline!important;}
 #header {background: #ccc;}
 a:hover{ text-decoration:none;}
 select { padding: 10px;}
+#tabBox {width: 85%; float: left;}
+#tabBox button{width: 33%;margin-bottom: 10px;}
+.request_table{border:1px solid #ccc; margin:2px; width:48%; display: inline-block;}
 </style>

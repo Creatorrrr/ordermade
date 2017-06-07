@@ -55,10 +55,12 @@ ${box2 }
 							<th><label>고객/사업자</label></th>
 							<td>
 								<input type="radio" name="memberType" id="memberTypeC" value="C" 
-								<c:if test="${member.memberType eq 'C'}">checked="checked"</c:if>>
+								<c:if test="${member.memberType eq 'C'}">checked="checked"</c:if>
+								<c:if test="${member.memberType eq 'M'}">disabled="disabled"</c:if> >
 								<label for="memberTypeC">고객</label>
 								<input type="radio" name="memberType" id="memberTypeM" value="M"
-								<c:if test="${member.memberType eq 'M'}">checked="checked"</c:if>>
+								<c:if test="${member.memberType eq 'M'}">checked="checked"</c:if>
+								<c:if test="${member.memberType eq 'C'}">disabled="disabled"</c:if> >
 								<label for="memberTypeM">사업자</label>
 							</td>
 							
@@ -79,7 +81,7 @@ ${box2 }
 					</table>
 					<br>
 					<div align="center">
-						<input class="btn" type="reset" value="취소">
+						<input class="btn btn-default" type="reset" value="취소">
 						<input class="btn btn-success" type="button" value="수정" onclick="javascript:memberController.modifyMember()">
 					</div>
 				</form>
@@ -95,18 +97,18 @@ $( document ).ready(function() {
 $(function() {
 	$("#modifyForm").validate({
 		rules : {
-			id : "required",
+			//id : "required",
 			name : {
 				required : true,
 				minlength : 2
 			},
 			password : {
 				required : true,
-				minlength : 5
+				minlength : 3
 			},
 			password2 : {
 				required : true,
-				minlength : 5,
+				minlength : 3,
 				equalTo : "#password"
 			},
 			email : {
@@ -115,7 +117,7 @@ $(function() {
 			}
 		},
 		messages : {
-			id : "ID를 입력해주세요.",
+			//id : "ID를 입력해주세요.",
 			name : "이름을 입력해주세요.",
 			password : {
 				required : "비밀번호를 입력해주세요.",
@@ -128,9 +130,6 @@ $(function() {
 			},
 			email : {
 				required : "이메일을 입력해주세요."
-			},
-			memberType : {
-				required : "회원 종류를 선택해 주세요."
 			}
 		}
 	});
