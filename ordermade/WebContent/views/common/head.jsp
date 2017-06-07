@@ -18,9 +18,9 @@
 <script src="${ctx }/views/js/jquery.bxslider.min.js"></script>
 <script src="${ctx }/views/js/jquery.uploadfile.min.js"></script>
 <script src="${ctx }/views/vendor/ckeditor/ckeditor.js"></script>
-<script src="${ctx }/views/js/jquery.validate.min.js"></script>
+<%-- <script src="${ctx }/views/js/jquery.validate.min.js"></script>
 <script src="${ctx }/views/js/additional-methods.min.js"></script>
-<script src="${ctx }/views/js/messages_ko.min.js"></script>
+<script src="${ctx }/views/js/messages_ko.min.js"></script> --%>
 
 <body id="top">
 	<div class="wrapper row0">
@@ -99,7 +99,7 @@
 								href="${ctx}/product//ajax/product/productid?productId=${product.id}">${product.title }</a>
 							</li>
 						</c:forEach> --%>
-					<li><a href="${ctx }/views/portfolio/portfolio.jsp">Portfolio</a></li>
+					<li><a href="${ctx }/portfolio/ui/search.do?type=FUNITURE">Portfolio</a></li>
 					<c:if test="${sessionScope.loginId ne null}">
 						<li><a href="${ctx}/request/ui/myRequest.do">Request</a></li>
 					</c:if>

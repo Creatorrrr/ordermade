@@ -112,7 +112,7 @@ public class PortfolioStoreLogic implements PortfolioStore {
 		map.put("end", end);
 		try {
 			PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
-			pList = mapper.selectPortfoliosByMakerId(map);
+			pList = mapper.selectPortfoliosByMakerIdAndTitle(map);
 		}finally {
 			session.close();
 		}
@@ -133,7 +133,7 @@ public class PortfolioStoreLogic implements PortfolioStore {
 		map.put("end", end);
 		try {
 			PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
-			pList = mapper.selectPortfoliosByMakerId(map);
+			pList = mapper.selectPortfoliosByCategory(map);
 		}finally {
 			session.close();
 		}
