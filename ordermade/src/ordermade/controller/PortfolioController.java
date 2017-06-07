@@ -167,7 +167,7 @@ public class PortfolioController {
 		List<Portfolio> portfolios = pService.findPortfoliosByMakerId(makerId, "1");
 		model.addAttribute("portfolios",portfolios);
 		model.addAttribute("makerId",makerId);
-		return "/portfolio/myPortfolioList";
+		return "portfolio/myList";
 		
 		
 //		if (pService.removePortfolio(id)) {
@@ -177,9 +177,6 @@ public class PortfolioController {
 //		}
 	} // test http://localhost:8080/ordermade/portfolio/xml/remove.do?id=10
 
-	
-	
-	
 	// ----------web -> html
 
 	@RequestMapping(value = "ui/register.do", method = RequestMethod.GET)
@@ -200,7 +197,6 @@ public class PortfolioController {
 
 	} // test http://localhost:8080/ordermade/portfolio/ui/register.do
 
-	
 	@RequestMapping(value = "ui/modify.do", method = RequestMethod.GET)
 	public ModelAndView showEditPortfolioUI(String id, HttpSession session) {
 		
@@ -215,7 +211,6 @@ public class PortfolioController {
 		return modelAndView;
 	} // test http://localhost:8080/ordermade/portfolio/ui/modify.do?id=7
 
-	
 	@RequestMapping(value = "ui/detail.do", method = RequestMethod.GET)
 	public ModelAndView showDetailPortfolioUI(String id) {
 		
@@ -229,20 +224,16 @@ public class PortfolioController {
 
 	} // test http://localhost:8080/ordermade/portfolio/ui/detail.do?id=7
 
-	
 	@RequestMapping(value = "ui/search.do", method = RequestMethod.GET)
-	public ModelAndView showSearchPortfolioUI(String type, String page) {
-		if(type == null) type = Constants.CategoryType.values()[0] +"";
-		if(page == null) page = "1";
-		List<Portfolio> portfolios = pService.findPortfoliosByCategory(type, page);
+	public ModelAndView showSearchPortfolioUI(String type) {
+		// if(type==null) type = "aa";//
+		List<Portfolio> portfolios = pService.findPortfoliosByCategory(type, "1");
 
-		return new ModelAndView("portfolio/search")
-			.addObject("categories", pdService.findAllCategory())
-			.addObject("category", type)
-			.addObject("portfolios", portfolios);
-	} // test http://localhost:8080/ordermade/portfolio/ui/search.do?type=뷰티
+		ModelAndView modelAndView = new ModelAndView("portfolio/myPortfolioList");
+		modelAndView.addObject("portfolios", portfolios);
+		return modelAndView;
+	} // test http://localhost:8080/ordermade/portfolio/ui/search.do?type=aa
 
-	
 	@RequestMapping(value = "ui/mylist.do", method = RequestMethod.GET)
 	public ModelAndView showMyPortfolioListUI(String page, HttpServletRequest req) { // String
 																		// page
@@ -260,9 +251,6 @@ public class PortfolioController {
 		return modelAndView;
 	}
 
-	
-	
-	
 	// ----------mobile ->xml
 
 	@RequestMapping(value = "xml/search.do", produces = "application/xml")
@@ -297,6 +285,7 @@ public class PortfolioController {
 		
 		String makerId = (String) session.getAttribute("loginId");
 		System.out.println("@@@@@@@@@@@" + makerId);
+		
 		List<Portfolio> pList = pService.findPortfoliosByMakerIdAndTitle(makerId, title, page);
 		Portfolios portfolios = new Portfolios();
 		portfolios.setPortfolios(pList);
@@ -319,6 +308,13 @@ public class PortfolioController {
 	public void getProductImage(String img, HttpServletResponse resp) {
 		File image = new File(Constants.IMAGE_PATH+img);
 		//System.out.println(img+"img");
+		
+		try {//test
+			System.out.println(image.getCanonicalPath());
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}//--/test
+
 		if(!image.exists()){
 			throw new RuntimeException("No product image");
 		}
