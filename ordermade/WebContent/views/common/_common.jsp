@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link href="${ctx }/resources/css/humen/bootstrap.css" rel="stylesheet">
-<script src="${ctx }/resources/js/bootstrap.min.js"></script>
+
 
 <link href="${ctx }/resources/css/layout.css" rel="stylesheet" type="text/css" media="all">
 <link href="${ctx }/resources/css/framework.css" rel="stylesheet" type="text/css" media="all">
@@ -18,6 +18,7 @@
 <script src="${ctx }/resources/js/jquery.uploadfile.min.js"></script>
 <script src="${ctx }/resources/js/vendor/ckeditor/ckeditor.js"></script>
 
+<script src="${ctx }/resources/js/bootstrap.min.js"></script>
 <script src="${ctx }/resources/js/js_simplePagination/jquery.simplePagination.js"></script>
 <%-- <script src="${ctx }/resources/js/jquery.validate.min.js"></script>
 <script src="${ctx }/resources/js/additional-methods.min.js"></script>

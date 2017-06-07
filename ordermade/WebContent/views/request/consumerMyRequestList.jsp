@@ -56,9 +56,6 @@ ${box2 }
 				
 				
 				<!-- 페이지 구현  -->
-
-				<link href="${ctx }/resources/js/js_simplePagination/simplePagination.css" rel="stylesheet" type="text/css">
-				<script src="${ctx }/resources/js/js_simplePagination/jquery.simplePagination.js"></script>	
 				<li><div id = "pagination"></div></li>
 
 
@@ -207,34 +204,7 @@ ${box2 }
 						pagination(pageNum);
 						//console.log(list.size());
 						list.each(function(){
-							/* console.log($('>id',this).text());
-							console.log($('>title',this).text());
-							console.log($('>consumer>id',this).text());
-							 */
 							 
-							 /* 
-							 	<div class="fl_left"><b style="padding: 20px 0 0 10px;font-size: 20px;">No: ${request.id }</b></div>
-								<div class="fl_right" style="padding: 4px;">
-									<c:choose>
-										<c:when test='${request.bound eq "PRIVATE" }'><button class="boundBtn btn btn-xs btn-success">비공개</button></c:when>
-										<c:otherwise><button class="boundBtn btn btn-xs btn-success">공개</button></c:otherwise>
-									</c:choose>
-									<button class="modifyBtn btn btn-xs btn-warning">수정</button>
-									<button class="deleteBtn btn btn-xs btn-default">삭제</button>
-								</div>
-								<table>
-									
-									<tr><td>의뢰 명 : ${request.title}</td></tr>
-									<c:choose>
-										<c:when test='${request.maker.id ne null }'><tr><td>의뢰자 : ${request.maker.id }</td></tr></c:when>
-										<c:otherwise><tr><td>의뢰자 : 없음</td></td></c:otherwise>
-									</c:choose>
-									<tr><td>의뢰 내용 : ${request.content }</td></tr>
-									<tr><td>제작항목 : ${request.category }</td></tr>
-									<tr><td>희망 가격 : ${request.hopePrice }</td></tr>
-								</table>
-							 */
-							
 							var makerId = $(">maker>id",this).text();
 							var bound = $(">bound",this).text();
 							
@@ -243,7 +213,7 @@ ${box2 }
 								rs+='<div class="fl_left"><b style="padding: 20px 0 0 10px;font-size: 20px;">No : '+ $(">id",this).text() +'</b></div>';
 								rs+='<div class="fl_right" style="padding: 4px;">';
 								
-								if(bound == null){
+								if(bound == "PRIVATE"){
 									rs+='	<button class="boundBtn btn btn-xs btn-success">비공개</button>';
 								}else{
 									rs+='	<button class="boundBtn btn btn-xs btn-success">공개</button>';
