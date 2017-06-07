@@ -17,44 +17,43 @@ ${box2 }
 			<ul class="nospace listing">
 				<li class="clear">
 
-					<div class="content" align="center">
+					<div class="fl_right">
 						<h1 align="left">나의 의뢰서</h1>
-						<table class="table">
-							<tr>
-								<td><button id="tab1">모든 의뢰서</button></td>
-								<td><button id="tab2">진행중</button></td>
-								<td><button id="tab3">완료</button></td>
-							</tr>
-						</table>
+						<button id="registerBtn" class="btn btn-success">의뢰서 등록</button>
+						<div class="btn-group btn-group-justified" id="tabBox">
+							<button id="tab1" class="btn btn-default">모든 의뢰서</button>
+							<button id="tab2" class="btn btn-default">진행중</button>
+							<button id="tab3" class="btn btn-default">완료</button>
+						</div>
 					</div>
 					<div id="resultBox">
 					<c:forEach items="${requests }" var="request" varStatus="status">
-						<div class="request_table" data="${request.id }" page="${request.page }">
-								<div class="imgl borderedbox">
-									<img src="${ctx }/views/images/img-10.jpg" />
+						<div class="request_table" data="${request.id }" page="${request.page }" >
+								<div class="fl_left"><b style="padding: 20px 0 0 10px;font-size: 20px;">No: ${request.id }</b></div>
+								<div class="fl_right" style="padding: 4px;">
+									<c:choose>
+										<c:when test='${request.bound eq "PRIVATE" }'><button class="boundBtn btn btn-xs btn-success">비공개</button></c:when>
+										<c:otherwise><button class="boundBtn btn btn-xs btn-success">공개</button></c:otherwise>
+									</c:choose>
+									<button class="modifyBtn btn btn-xs btn-warning">수정</button>
+									<button class="deleteBtn btn btn-xs btn-default">삭제</button>
 								</div>
-							
-								<p>의뢰번호: ${request.id }</p>
-								<p>의뢰 명 : ${request.title}</p>
-								<c:choose>
-									<c:when test='${request.maker.id ne null }'><p>의뢰자 : ${request.maker.id }</p></c:when>
-									<c:otherwise><p>의뢰자 : 없음</p></c:otherwise>
-								</c:choose>
-								<p>의뢰 내용 : ${request.content }</p>
-								<p>제작항목 : ${request.category }</p>
-								<p>희망 가격 : ${request.hopePrice }</p>
-								<c:choose>
-									<c:when test='${request.bound eq "PRIVATE" }'><button class="boundBtn">비공개</button></c:when>
-									<c:otherwise><button class="boundBtn">공개</button></c:otherwise>
-								</c:choose>
-								<button class="modifyBtn">수정</button>
-								<button class="deleteBtn">삭제</button>
-							
+								<table>
+									
+									<tr><td>의뢰 명 : ${request.title}</td></tr>
+									<c:choose>
+										<c:when test='${request.maker.id ne null }'><tr><td>의뢰자 : ${request.maker.id }</td></tr></c:when>
+										<c:otherwise><tr><td>의뢰자 : 없음</td></td></c:otherwise>
+									</c:choose>
+									<tr><td>의뢰 내용 : ${request.content }</td></tr>
+									<tr><td>제작항목 : ${request.category }</td></tr>
+									<tr><td>희망 가격 : ${request.hopePrice }</td></tr>
+								</table>
 						</div>
 					</c:forEach>
 					</div>
 				</li>
-				<li><button id="registerBtn">의뢰서 추가</button></li>
+				
 				
 				<!-- 페이지 구현  -->
 
@@ -75,9 +74,10 @@ ${box2 }
 			
 			//공개 설정 버튼 구현 
 			$("#resultBox").on('click','.boundBtn', function(){
-				var requestId = $(this).parent().attr("data");
+				var requestId = $(this).parent().parent().attr("data");
 				var bound = ($(this).text() == "비공개") ? 1 : 0;
-				console.log($(this).text() + bound);
+				console.log(requestId);
+				//console.log($(this).text() + bound);
 				$.ajax({
 					url : '${ctx}/request/xml/modifyBound.do?bound='+bound+'&requestId='+requestId,
 					type : "get",
@@ -86,13 +86,13 @@ ${box2 }
 						if(bound==1){
 							console.log('--------');
 							if(data=="true"){
-								$('div[data='+requestId+']>.boundBtn').text("공개");
+								$('div[data='+requestId+'] .boundBtn').text("공개");
 							}else{
 								alert("비공개 설정이 실패하였습니다.");
 							}
 						}else if(bound==0){
 							if(data=="true"){
-								$('div[data='+requestId+']>.boundBtn').text("비공개");
+								$('div[data='+requestId+'] .boundBtn').text("비공개");
 							}else{
 								alert("공개 설정이 실패하였습니다.");
 							}
@@ -107,14 +107,14 @@ ${box2 }
 			
 			//수정 버튼 구현
 			$("#resultBox").on('click','.modifyBtn',function(){
-				var requestId = $(this).parent().attr("data");
+				var requestId = $(this).parent().parent().attr("data");
 				window.location.href = "${ctx}/request/ui/modify.do?requestId="+requestId;
 			});
 			
 			
 			//삭제 버튼 구현 
 			$("#resultBox").on('click','.deleteBtn',function(){
-				var thisOne = $(this).parent();
+				var thisOne = $(this).parent().parent();
 				var requestId = thisOne.attr("data");
 				
 				if(confirm("삭제 하시겠습니까?")){
@@ -211,37 +211,58 @@ ${box2 }
 							console.log($('>title',this).text());
 							console.log($('>consumer>id',this).text());
 							 */
-							
+							 
+							 /* 
+							 	<div class="fl_left"><b style="padding: 20px 0 0 10px;font-size: 20px;">No: ${request.id }</b></div>
+								<div class="fl_right" style="padding: 4px;">
+									<c:choose>
+										<c:when test='${request.bound eq "PRIVATE" }'><button class="boundBtn btn btn-xs btn-success">비공개</button></c:when>
+										<c:otherwise><button class="boundBtn btn btn-xs btn-success">공개</button></c:otherwise>
+									</c:choose>
+									<button class="modifyBtn btn btn-xs btn-warning">수정</button>
+									<button class="deleteBtn btn btn-xs btn-default">삭제</button>
+								</div>
+								<table>
+									
+									<tr><td>의뢰 명 : ${request.title}</td></tr>
+									<c:choose>
+										<c:when test='${request.maker.id ne null }'><tr><td>의뢰자 : ${request.maker.id }</td></tr></c:when>
+										<c:otherwise><tr><td>의뢰자 : 없음</td></td></c:otherwise>
+									</c:choose>
+									<tr><td>의뢰 내용 : ${request.content }</td></tr>
+									<tr><td>제작항목 : ${request.category }</td></tr>
+									<tr><td>희망 가격 : ${request.hopePrice }</td></tr>
+								</table>
+							 */
 							
 							var makerId = $(">maker>id",this).text();
 							var bound = $(">bound",this).text();
 							
-							var rs='<div class="request_table" data="'+ $(">id",this).text() +'" page="'+ pageNum +'" >'
-								+'<div class="imgl borderedbox">'
-								+'	<img src="${ctx}/views/images/img-10.jpg" />'
-								+'</div>'
-								+'<p>의뢰번호 : '+ $(">id",this).text() +'</p>';
-								+'<p>의뢰 명 : '+ $(">title",this).text() +'</p>';
+							var rs = '<div class="request_table" data="'+ $(">id",this).text() +'" page="'+ pageNum +'" >';
+
+								rs+='<div class="fl_left"><b style="padding: 20px 0 0 10px;font-size: 20px;">No : '+ $(">id",this).text() +'</b></div>';
+								rs+='<div class="fl_right" style="padding: 4px;">';
 								
-							if(makerId == null || makerId==""){
-								rs+='<p>의뢰자 : 없음 </p>';
-							}else{
-								rs+='<p>의뢰자 : '+ makerId +' </p>';
-							}
-							
-							rs+='<p>의뢰 내용 : '+ $(">content",this).text() +' </p>'
-								+'<p>제작항목 : '+ $(">category",this).text() +' </p>'
-								+'<p>희망 가격 : '+ $(">hopePrice",this).text() +' </p>';
+								if(bound == null){
+									rs+='	<button class="boundBtn btn btn-xs btn-success">비공개</button>';
+								}else{
+									rs+='	<button class="boundBtn btn btn-xs btn-success">공개</button>';
+								}
 								
-							if(bound == null){
-								rs+='	<button class="boundBtn">비공개</button>';
-							}else{
-								rs+='	<button class="boundBtn">공개</button>';
-							}
-							
-							rs+='<button class="modifyBtn">수정</button>'
-								+'<button class="deleteBtn">삭제</button>'
-								+'</div>'; 
+								rs+='<button class="modifyBtn btn btn-xs btn-warning">수정</button>';
+								rs+='<button class="deleteBtn btn btn-xs btn-default">삭제</button>';
+								rs+='</div><table><tr><td>의뢰 명 : '+ $(">title",this).text() +'</td></tr>';
+									
+								if(makerId == null || makerId==""){
+									rs+='<tr><td>의뢰자 : 없음 </td></tr>';
+								}else{
+									rs+='<tr><td>의뢰자 : '+ makerId +' </td></tr>';
+								}
+								
+								rs+='<tr><td>의뢰 내용 : '+ $(">content",this).text() +'  </td></tr>';
+								rs+='<tr><td>제작항목 : '+ $(">category",this).text() +'  </td></tr>';
+								rs+='<tr><td>희망 가격 : '+ $(">hopePrice",this).text() +'  </td></tr>';
+								rs+='</table></div>'; 
 							$('#resultBox').append(rs);
 							//console.log(rs);
 							
@@ -254,12 +275,17 @@ ${box2 }
 				});
 			}
 			
+			$('#tab1').addClass("btn-primary");
 			
 			//모든 의뢰서 탭구현
 			$('#tab1').click(function(){
 				if(status != 'tab1'){
 					tab1('searchMyRequests');
 					status = 'tab1';
+					
+					$('#tab1').addClass("btn-primary").removeClass('btn-default');
+					$('#tab2').removeClass("btn-primary").addClass('btn-default');
+					$('#tab3').removeClass("btn-primary").addClass('btn-default');
 				}
 			});
 
@@ -269,6 +295,9 @@ ${box2 }
 				if(status != 'tab2'){
 					tab1('searchMyRequestsWithMaker');
 					status = 'tab2';
+					$('#tab2').addClass("btn-primary").removeClass('btn-default');
+					$('#tab1').removeClass("btn-primary").addClass('btn-default');
+					$('#tab3').removeClass("btn-primary").addClass('btn-default');
 				}
 			});
 			
@@ -278,6 +307,9 @@ ${box2 }
 				if(status != 'tab3'){
 					tab1('searchMyRequestsWithPayment');
 					status = 'tab3';
+					$('#tab3').addClass("btn-primary").removeClass('btn-default');
+					$('#tab1').removeClass("btn-primary").addClass('btn-default');
+					$('#tab2').removeClass("btn-primary").addClass('btn-default');
 				}
 			});
 			

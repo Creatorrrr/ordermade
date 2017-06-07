@@ -23,12 +23,12 @@ ${head_body}
 					<tr>
 						<th>Password</th>
 						<td><input id="password" name="password" class="form-control"
-							type="password" value="" placeholder="비밀번호를 입력해주세요."></td>
+							type="password" value="" placeholder="비밀번호를 입력해주세요." onkeydown="if(event.keyCode==13) memberController.loginMember();"></td>
 					</tr>
 				</table>
 				<br>
 				<div align="center">
-					<input class="btn btn-success" type="button" value="로그인" onclick="javascript:memberController.loginMember()">
+					<input class="btn btn-success" type="button" value="로그인" onclick="memberController.loginMember()">
 					<input class="btn" type="reset" value="취소"> 
 				</div>
 			</form>
