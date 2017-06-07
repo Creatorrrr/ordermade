@@ -38,8 +38,7 @@ ${box2 }
 	                            <td style="text-align: center" colspan="5" class="text-center"> 내역이 존재하지 않습니다.</td>
 	                        </tr>
 	                       </c:if>
-	                       <c:forEach var="inviteRequest" items="${inviteRequests}"
-	                                  varStatus="sts">
+	                       <c:forEach var="inviteRequest" items="${inviteRequests}"  varStatus="sts">
 	                        <tr>
 	                            <td class="" style="text-align: center">
 	                            	${sts.count }
@@ -57,9 +56,7 @@ ${box2 }
 	                            	<!-- 수락 ajax 구현 -->
 	                           		<input type="button" value="수락" style="display: inline-block;">
 	                           		<!-- 거절 ajax 구현 -->
-	                           		<span>
-	                           		<input type="button" value="거절" style="display: inline-block;">
-	                           		</span>
+	                           		<span><input type="button" value="거절" style="display: inline-block;"></span>
 	                            </td>
 	                        </tr>
 	                       </c:forEach>

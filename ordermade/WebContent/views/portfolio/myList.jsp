@@ -41,11 +41,11 @@ ${box2 }
 
 					<div id="portfolioResult">
 						<c:forEach items="${portfolios }" var="portfolio">
-							<div class="portfolioList">
-								<table class="table">
+							<div class="portfolioList" style="display:inline-block; padding-right: 10px;">
+								<table class="table" style="width:210px;">
 									<tr>
 										<div class="imgl borderedbox">
-											<img src="${ctx }/portfolio/image.do?img=${portfolio.image}" />
+											<img src="${ctx }/portfolio/image.do?img=${portfolio.image}" style="width:100px;"  />
 										</div>
 									</tr>
 									<tr class="nospace btmspace-15">

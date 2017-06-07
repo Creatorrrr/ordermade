@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/views/common/_html.jsp"%>
-
+<title>거래 이력</title>
 <%@ include file="/views/common/_common.jsp"%>
 
 ${head_body}
@@ -13,25 +13,19 @@ ${box1 }
 ${box2 }
 
 
-			<h1>거래이력</h1>
+				<h1>거래 이력</h1>
 				<div class="fl_right">
-					<form class="clear" method="post" action="#">
-						<div>
-							<fieldset>
+					<form class="navbar-form text-center"  method="post" action="#">
 								<select name="type" id="type" class="form-control" style="display:inline-block">
 									<option value="id">의뢰서 제목</option>
 									<option value="name">아이디</option>
 								</select> 
-								<input name="requestTitle" class="search-box-input" type="text"
+								<input name="requestTitle" class="form-control" type="text"
 									value="" placeholder="Search Here" style="display:inline-block"/>
-								<button class="fa fa-search" type="submit" title="Search">
-								</button>
-							</fieldset>
-						</div>
+								<button class="fa fa-search btn btn-default" title="Search">검색</button>
 					</form>
 				</div>
 				<p>
-				<div class="">
 					<table class="">
 	                   <colgroup>
 	                       <col width="170"/>
@@ -53,8 +47,7 @@ ${box2 }
 	                            <td style="text-align: center" colspan="5" class="text-center">이력이 존재하지 않습니다.</td>
 	                        </tr>
 	                       </c:if>
-	                       <c:forEach var="purchaseHistory" items="${purchaseList}"
-	                                  varStatus="sts">
+	                       <c:forEach var="purchaseHistory" items="${purchaseList}"  varStatus="sts">
 	                        <tr>
 	                            <td style="text-align: center">
 	                            	<%-- <img src=${ctx }/views/images/img-10.jpg> --%>
@@ -82,7 +75,7 @@ ${box2 }
 	                       </c:forEach>
 	                   </tbody>
 	               </table>
-				</div>
+				
 
 
 

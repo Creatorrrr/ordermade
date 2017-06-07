@@ -41,7 +41,6 @@ input.btn {display:inline!important;}
 .listExplainBox tbody, {background:#ccc;}
 .listBox td, {padding:0 10px;}
 #header {background: #ccc;}
-
 a:hover{ text-decoration:none;}
 select { padding: 10px;}
 </style>

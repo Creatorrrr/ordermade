@@ -17,19 +17,14 @@ ${box2 }
 
 			<h1>구매이력</h1>
 			<div class="fl_right">
-				<form class="clear" method="post" action="${ctx }/deal/xml/searchPurchaseConsumerTitleList.do">
-					<div>
-						<fieldset>
-							<select name="type" id="type" class="form-control" style="display:inline-block">
-								<option value="id">의뢰서 제목</option>
-								<option value="name">아이디</option>
-							</select> 
-							<input name="requestTitle" class="search-box-input" type="text"
-								value="" placeholder="Search Here" style="display:inline-block" />
-							<button class="fa fa-search" type="submit" title="Search">
-							</button>
-						</fieldset>
-					</div>
+				<form  class="navbar-form text-center" method="post" action="${ctx }/deal/xml/searchPurchaseConsumerTitleList.do">
+					<select name="type" id="type" class="form-control" style="display:inline-block">
+						<option value="id">의뢰서 제목</option>
+						<option value="name">아이디</option>
+					</select> 
+					<input name="requestTitle" class="form-control" type="text" value="" 
+						placeholder="Search Here" style="display:inline-block" />
+					<button class="fa fa-search btn btn-default" title="Search">검색</button>
 				</form>
 			</div>
 			<p>
@@ -84,8 +79,7 @@ ${box2 }
 			                        		data7 = "${purchaseHistory.payment }">
 		                        	</c:if>
 		                        	<c:if test="${purchaseHistory.payment eq true}">
-		                        		<input class="" type="button" 
-		                           			value="구매완료" class="btn btn-sm btn-success" disabled>
+		                        		<input class="" type="button" value="구매완료" class="btn btn-sm btn-success" disabled>
 		                        	</c:if>
 	                            </td>
 	                        </tr>

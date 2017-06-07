@@ -18,7 +18,7 @@
 								<a href="${ctx }/member/join.do" class="btn btn-success">회원가입</a>
 						</c:when>
 						<c:otherwise>
-							<span class="glyphicon glyphicon-user"></span>
+							
 							<b>${loginId}</b>님 환영합니다. 
 							<a href="${ctx }/member/logout.do" class="btn btn-success">로그아웃</a>
 							<a href="${ctx}/member/myPage.do" class="btn btn-success">회원정보</a>

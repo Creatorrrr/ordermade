@@ -19,11 +19,9 @@ ${box2 }
 
 			<div class="content" align="center">
 				<h1 align="left">받은 의뢰서</h1>
-				<table class="table">
-					<tr>
-						<td><button id="tab2">진행중</button></td>
-						<td><button id="tab3">완료</button></td>
-					</tr>
+				<table class="btn-group btn-group-justified">
+					<button id="tab2" class="btn btn-default">진행중</button>
+					<button id="tab3" class="btn btn-default">완료</button>
 				</table>
 			</div>
 			<div id="resultBox">
@@ -50,7 +48,7 @@ ${box2 }
 			</c:forEach>
 			</div>
 		</li>
-		<li><button id="registerBtn">의뢰서 추가</button></li>
+		<li><button id="registerBtn" class="btn btn-success">의뢰서 추가</button></li>
 		
 		<!-- 페이지 구현  -->
 

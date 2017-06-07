@@ -42,9 +42,9 @@ ${box2 }
 
 				</div>
 				</br></br></br>
-				<ul class="nospace listing" style="margin-top:20px; ">
+				<div class="nospace listing" style="margin-top:20px; ">
 					<c:forEach items="${ products }" var="product">
-						<li style="display:inline-block; padding-right: 10px;">
+						<div style="display:inline-block; padding-right: 10px;">
 							<table class="table" style="width:210px;">
 								<tr>
 									<div class="imgl borderedbox">
@@ -62,10 +62,10 @@ ${box2 }
 									<td class="creatorId">${product.price}원</td>
 								</tr>
 							</table>
-						</li>
+						</div>
 					</c:forEach>
-					<li></li>
-				</ul>
+					
+				</div>
 
 ${box3 }
 
