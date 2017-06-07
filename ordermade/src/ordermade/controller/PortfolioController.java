@@ -235,7 +235,7 @@ public class PortfolioController {
 		if(type == null) type = Constants.CategoryType.values()[0] +"";
 		if(page == null) page = "1";
 		List<Portfolio> portfolios = pService.findPortfoliosByCategory(type, page);
-
+		
 		return new ModelAndView("portfolio/search")
 			.addObject("categories", pdService.findAllCategory())
 			.addObject("category", type)
@@ -272,8 +272,8 @@ public class PortfolioController {
 		//String makerId = "user1";
 //		if (page == null)
 //			page = "1";
-		List<Portfolio> pList = pService.findPortfoliosByMakerId(makerId, "1");
 		
+		List<Portfolio> pList = pService.findPortfoliosByMakerId(makerId, "1");
 		Portfolios portfolios = new Portfolios();
 		portfolios.setPortfolios(pList);
 		

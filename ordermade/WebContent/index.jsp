@@ -165,18 +165,6 @@ var pfSlider = $( '#HitsProductImages' ).bxSlider( {
     captions: true     // 캡션 노출 여부
 } );
 
-//이전 버튼을 클릭하면 이전 슬라이드로 전환
-$( '#prevPfBtn' ).on( 'click', function () {
-	pfSlider.goToPrevSlide();  //이전 슬라이드 배너로 이동
-    return false;              //<a>에 링크 차단
-} );
-
-//다음 버튼을 클릭하면 다음 슬라이드로 전환
-$( '#nextPfBtn' ).on( 'click', function () {
-	pfSlider.goToNextSlide();  //다음 슬라이드 배너로 이동
-    return false;
-} );
-
 //product slider setting
 var productSlider = $( '#BrandNewProductImages' ).bxSlider( {
     mode: 'horizontal',// 가로 방향 수평 슬라이드
