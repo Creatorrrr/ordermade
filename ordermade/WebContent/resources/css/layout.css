@@ -10,7 +10,7 @@ File: Layout CSS
 
 @import url("fontawesome-4.2.0.min.css");
 @import url("../js/nivo-lightbox/nivo-lightbox.min.css");
-@import url("framework.css");
+/* @import url("framework.css"); */
 
 
 /* Rows
@@ -280,7 +280,6 @@ label span{color:#FF0000; background-color:inherit;}
 
 
 /* Rows */
-.row0, .row0 a{color:#F9F9F9; background-color:#06213F;}
 .row1{color:#979797; background-color:#06213F;}
 .row1 a{color:#F9F9F9; background-color:inherit;}
 .row2, .row2 a{color:#06213F; background-color:inherit;}
@@ -289,8 +288,6 @@ label span{color:#FF0000; background-color:inherit;}
 .row5, .row5 a{color:#55ABDA; background-color:#06213F;}
 
 
-/* Top Bar */
-#topbar li{border-color:#FFFFFF;}
 
 
 /* Header */

@@ -1,43 +1,30 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath }" />
-<!-- TEST ========================================================================================== -->
-<!-- http://localhost:8080/ordermade/views/purchaseHistory/consumerPurchaseHistory.jsp -->
-<!-- http://localhost:8080/ordermade/deal/transaction.do -->
-<!DOCTYPE html>
-<html lang="ko">
-<!-- Header ========================================================================================== -->
-<head>
-<%@ include file="/views/common/head.jsp"%>
-</head>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/views/common/_html.jsp"%>
+<link href="${ctx }/resources/js/js_simplePagination/simplePagination.css" rel="stylesheet" type="text/css">
+<script src="${ctx }/resources/js/js_simplePagination/jquery.simplePagination.js"></script>
 <title>구매이력</title>
-<!-- Main Body ========================================================================================== -->
-<body>
-<div class="wrapper row3">
-	<div class="rounded">
-		<main class="container clear"> 
-		<!-- Navigation ================================================================================= -->
-		<div class="sidebar one_third first">
-			<%@ include file="/views/common/myPageNav.jsp"%>
-		</div>
+<%@ include file="/views/common/_common.jsp"%>
+
+${head_body}
+<%@ include file="/views/common/header.jsp"%>
+
+${box1 }
 		
-		<div id="content" class="two_third">
+			<%@ include file="/views/common/myPageNav.jsp"%>
+			
+${box2 }
+
+
 			<h1>구매이력</h1>
 			<div class="fl_right">
-				<form class="clear" method="post" action="${ctx }/deal/xml/searchPurchaseConsumerTitleList.do">
-					<div>
-						<fieldset>
-							<select name="type" id="type" class="form-control" style="display:inline-block">
-								<option value="id">의뢰서 제목</option>
-								<option value="name">아이디</option>
-							</select> 
-							<input name="requestTitle" class="search-box-input" type="text"
-								value="" placeholder="Search Here" style="display:inline-block" />
-							<button class="fa fa-search" type="submit" title="Search">
-							</button>
-						</fieldset>
-					</div>
+				<form  class="navbar-form text-center" method="post" action="${ctx }/deal/xml/searchPurchaseConsumerTitleList.do">
+					<select name="type" id="type" class="form-control" style="display:inline-block">
+						<option value="id">의뢰서 제목</option>
+						<option value="name">아이디</option>
+					</select> 
+					<input name="requestTitle" class="form-control" type="text" value="" 
+						placeholder="Search Here" style="display:inline-block" />
+					<button class="fa fa-search btn btn-default" title="Search">검색</button>
 				</form>
 			</div>
 			<p>
@@ -64,7 +51,7 @@
                        </c:if>
                        <c:forEach var="purchaseHistory" items="${purchaseList}"
                                   varStatus="sts">
-                          
+                          <div class="purchaseTable" page="${purchaseHistory.page }">
 	                        <tr>
 	                            <td class="text-center" style="text-align: center">
 	                            	<%-- <img src=${ctx }/views/images/img-10.jpg> --%>
@@ -92,22 +79,53 @@
 			                        		data7 = "${purchaseHistory.payment }">
 		                        	</c:if>
 		                        	<c:if test="${purchaseHistory.payment eq true}">
-		                        		<input class="" type="button" 
-		                           			value="구매완료" class="btn btn-sm btn-success" disabled>
+		                        		<input class="" type="button" value="구매완료" class="btn btn-sm btn-success" disabled>
 		                        	</c:if>
 	                            </td>
 	                        </tr>
-	                        
+	                      </div>
                        </c:forEach>
                    </tbody>
                </table>
-			</div>
-		</main>
-	</div>
-</div>
+              		 <div id="pagination">페이지 위치</div>
 
-<%@ include file="/views/common/footer.jsp"%>
 <script type="text/javascript">
+$(document).ready(function(){
+	// 페이지수 얻음
+	pagination($($('.purchaseTable').get(0)).attr("page"));
+	var pageNum = $($('.purchaseTable').get(0)).attr("page");
+	console.log($($('.purchaseTable').get(0)).attr("page"));
+	// simplePagination //http://flaviusmatis.github.io/simplePagination.js
+	function pagination(pageNum){
+		// URL 현재 페이지 값 얻어오기
+		var urlPageNum = location.search;
+		var list = urlPageNum.match(/[^\d]+/g);
+		thisPage = 1;
+		if ( list != null) {
+			for ( i = 0 ; i < list.length; i++ ){
+				if ( list[i].indexOf('page=') == 1){
+					var temp = urlPageNum.match(/\d+/g);
+					if( temp != null ) thisPage = temp[i];
+					console.log("this Page is :" + thisPage);
+				}
+			}
+		}
+	}
+	
+	$('#pagination').pagination({
+		items: pageNum,	// 게시글 수
+		itemOnPage: 7,	// 한 페이지에 보여주 게시글 수
+		currentPage: thisPage, // 초기에 보여주는 페이지
+		cssStyle: 'light-theme', 
+		hrefTextPrefix: '#page=', // href 속성에 사용되는 문자열
+		prevText: '', // 이전버튼 텍스트
+		nextText: '', // 다음버튼 텍스트
+		onPageClick: function ( page, evt) {
+			location.href = "${ctx }/deal/ui/transaction.do?page=" + page;
+		}
+	});
+	
+});
 
 $(".purchaseBtn").click(function(){
 	var dom = $(this);
@@ -147,5 +165,8 @@ var sendMoneyToMakerAccount = {
 	},
 };
 </script>
-</body>
-</html>
+
+
+${box3 }
+
+<%@ include file="/views/common/footer.jsp"%>

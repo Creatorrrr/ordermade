@@ -1,16 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath }" />
-<!DOCTYPE html>
-<html lang="ko">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/views/common/_html.jsp"%>
 <title>상품 상세페이지</title>
-<head>
-<%@ include file="/views/common/head.jsp"%>
-</head>
-<body>
-	<div class="wrapper row3">
-		<div class="rounded">
+<%@ include file="/views/common/_common.jsp"%>
+
+${head_body}
+<%@ include file="/views/common/header.jsp"%>
+
+
+
+<div class="wrapper row3">
+	<div class="rounded">
 
 			<div id="contents" class="two_third first">
 				<div class="sdb_holder">
@@ -121,7 +120,7 @@
 							</table>
 							<c:if test="${sessionScope.loginId eq review.consumer.id }">
 								<input type="button" value="수정"
-									onclick="javascript:updateReview(${review.id})">
+									onclick="javascript:beforeUpdateReview(${review.id})">
 								<input type="button" value="삭제"
 									onclick="javascript:deleteReview(${review.id})">
 							</c:if>
@@ -164,7 +163,9 @@
 						<li><p>제작자 아이디 : ${product.maker.id }</p></li>
 						<li><p>제작자 소개 : ${product.maker.introduce }</p></li>
 						<li><p></p></li>
-						<li><a href="${ctx }/member/myPage.do?makerId=${product.maker.id }">프로필 바로가기</a></li>
+						<li><a
+							href="${ctx }/member/myPage.do?makerId=${product.maker.id }">프로필
+								바로가기</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -173,10 +174,9 @@
 		</div>
 	</div>
 
-	<%@ include file="/views/common/footer.jsp"%>
 
-	<!-- JAVASCRIPTS -->
-	<script type="text/javascript">
+
+<script type="text/javascript">
 function deleteProduct(productId) {
 	$.ajax({
 		url:"${ctx}/product/xml/remove.do?id="+productId,
@@ -193,7 +193,7 @@ function reviewRegister(){
 	$.ajax({
 		url:"${ctx}/product/review/register.do",
 		type:"post",
-		data:$('#form2').serialize(),
+		data: $('#form2').serialize(),
 		dataType : "text",
 		success : function(data) {
 			if(data=="true"){
@@ -203,9 +203,80 @@ function reviewRegister(){
 	});
 }
 
-function updateReview(data) {
-	
-}
+ function beforeUpdateReview(reviewId) {
+	 console.log(reviewId)
+	 var updateReview = reviewId;
+	 var productid = $("#productId").val();
+	$.ajax({
+		url:"${ctx}/product/ajax/product/productId.do?productId",
+		type:"get",
+		data:{
+			productId : $("#productId").val()
+		},
+		success : function(xml) {
+			console.log(xml);
+				var list =  $(xml).find("reviews");
+				var listLength = list.length;
+				var html = "";
+			list.each(function(){
+			 	if(updateReview!=$(">id",this).text()) {
+				html += '<table>';
+				html += 		"<tr>";
+				html += 			"<td>작성자 : </td>";
+				html += 		     "<td>" +$(">consumer>id",this).text()+ "</td>";
+				html += 		"</tr>";
+				html += 		"<tr>";
+				html += 			"<td>제목 : </td>";
+				html += 		     "<td>" +$(">title",this).text()+ "</td>";
+				html += 		"</tr>";
+				html += 		"<tr>";
+				html += 			"<td>내용 : </td>";
+				html += 		     "<td>" +$(">content",this).text()+ "</td>";
+				html += 		"</tr>";
+				html += '</table>';
+				html += "<input type='button' value='수정' onclick='javascript:updateReview("+$(">id",this).text()+")'>";
+				html += "<input type='button' value='삭제' onclick='javascript:deleteReview("+$(">id",this).text()+")'>";
+			 	} else if(updateReview==$(">id",this).text()){
+			 	html +=	"<form id='form3' onsubmit='return false;'>";
+			 	html +=		"<div class='one_third first'>";
+			 	html +=		"<label for='title'>제목 <span>*</span></label> <input type='text' id='title' name='title' value='"+$(">title",this).text()+"' size='22'>";
+			 	html +=		"</div>";
+				html +=	"<div class='one_third'>";
+				html +=		"<label for='grade'>평점<span>*</span></label> <input type='text' id='grade' name='grade' value='"+$(">grade",this).text()+"' size='22'>";
+				html +=	"</div>";
+				html +=	"<div class='block clear'>";
+				html +=	"<label for='content'>후기</label>";
+				html +=	"<textarea id='content' name='content'  cols='55' rows='7' >"+$(">content",this).text()+"</textarea>";
+				html +=	"</div>";
+				html +=	"<div>";
+				html += "<input type='hidden' name='product.id' value='"+${product.id}+"'>";
+			 	html +=	"<input type='hidden' id='id' name='id' value='"+$(">id",this).text()+"'>";
+				html +=	"<input type='button' onclick='javascript:afterUpdateReview("+${product.id}+")' value='수정 확인'>" ;
+				html +=	"<input type='button' onclick='javascript:Reviews("+${product.id}+")' value='취소'>"; 
+				html +=	"</div>";
+				html += "</form>";
+			 	}
+			});
+			$("#reiewList").empty();
+			$("#reiewList").append(html);
+		}
+	});
+} 
+ 
+  function afterUpdateReview(productId){
+	 console.log(productId+"afterUpdateReview")
+	 var productSS = productId;
+	 $.ajax({
+		 url:"${ctx}/product/review/modify.do",
+		 type:"post",
+		 data: $('#form3').serialize(),
+		 success:function(data){
+			 if(data=="true"){
+				 javascript:Reviews(productSS);
+			 }
+		 }
+	 });
+}  
  function deleteReview(data) {
 	$.ajax({
 		url:"${ctx}/product/review/remove.do?id="+data,
@@ -271,6 +342,7 @@ var displayReviews = function(xml) {
 		var list =  $(xml).find("reviews>")
 	}
 	var listLength = list.length;
+	console.log(listLength)
 	var html = "";
 	list.each(function(){
 		html += '<table>';
@@ -287,9 +359,8 @@ var displayReviews = function(xml) {
 		html += 		     "<td>" +$(">content",this).text()+ "</td>";
 		html += 		"</tr>";
 		html += '</table>';
-		html += "<input type='button' value='수정'>";
+		html += "<input type='button' value='수정' onclick='javascript:beforeUpdateReview("+$(">id",this).text()+")'>";
 		html += "<input type='button' value='삭제' onclick='javascript:deleteReview("+$(">id",this).text()+")'>";
-		
 	});
 	$("#reiewList").empty();
 	$("#reiewList").append(html);
@@ -298,5 +369,6 @@ var displayReviews = function(xml) {
 	$("#content").val("");
 }
 </script>
-</body>
-</html>
+
+
+<%@ include file="/views/common/footer.jsp"%>

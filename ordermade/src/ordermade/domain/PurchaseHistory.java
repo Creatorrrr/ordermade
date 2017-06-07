@@ -20,6 +20,7 @@ public class PurchaseHistory {
 	private int charge;
 	private String deliveryStatus;
 	private String payment;
+	private String page;
 	
 	public String getId() {
 		return id;
@@ -87,10 +88,20 @@ public class PurchaseHistory {
 	public void setPayment(String payment) {
 		this.payment = payment;
 	}
+	public String getPage() {
+		return page;
+	}
+	public void setPage(String page) {
+		this.page = page;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "PurchaseHistory [id=" + id + ", maker=" + maker + ", consumer=" + consumer + ", request=" + request
 				+ ", orderDate=" + orderDate + ", invoiceNumber=" + invoiceNumber + ", charge=" + charge
-				+ ", deliveryStatus=" + deliveryStatus + ", payment=" + payment + "]";
+				+ ", deliveryStatus=" + deliveryStatus + ", payment=" + payment + ", page=" + page + "]";
 	}
+	
 }

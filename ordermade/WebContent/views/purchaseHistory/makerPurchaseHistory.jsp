@@ -1,43 +1,31 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath }" />
-<!DOCTYPE html>
-<html lang="ko">
-<!-- Header ========================================================================================== -->
-<head>
-<%@ include file="/views/common/head.jsp"%>
-</head>
-<title>거래이력</title>
-<!-- Main Body ========================================================================================== -->
-<body>
-<div class="wrapper row3">
-	<div class="rounded">
-		<main class="container clear"> <!-- main body -->
-		<div class="sidebar one_third first">
-			<%@ include file="/views/common/myPageNav.jsp"%>
-		</div>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/views/common/_html.jsp"%>
+<title>거래 이력</title>
+<%@ include file="/views/common/_common.jsp"%>
 
-		<div id="content" class="two_third">
-			<h1>거래이력</h1>
+${head_body}
+<%@ include file="/views/common/header.jsp"%>
+
+${box1 }
+		
+			<%@ include file="/views/common/myPageNav.jsp"%>
+			
+${box2 }
+
+
+				<h1>거래 이력</h1>
 				<div class="fl_right">
-					<form class="clear" method="post" action="#">
-						<div>
-							<fieldset>
+					<form class="navbar-form text-center"  method="post" action="#">
 								<select name="type" id="type" class="form-control" style="display:inline-block">
 									<option value="id">의뢰서 제목</option>
 									<option value="name">아이디</option>
 								</select> 
-								<input name="requestTitle" class="search-box-input" type="text"
+								<input name="requestTitle" class="form-control" type="text"
 									value="" placeholder="Search Here" style="display:inline-block"/>
-								<button class="fa fa-search" type="submit" title="Search">
-								</button>
-							</fieldset>
-						</div>
+								<button class="fa fa-search btn btn-default" title="Search">검색</button>
 					</form>
 				</div>
 				<p>
-				<div class="">
 					<table class="">
 	                   <colgroup>
 	                       <col width="170"/>
@@ -54,13 +42,12 @@
 	                   </tr>
 	                   </thead>
 	                   <tbody>
-	                   	<c:if test="${empty purchaseList}">
+	                   		<c:if test="${empty purchaseList}">
 	                        <tr>
 	                            <td style="text-align: center" colspan="5" class="text-center">이력이 존재하지 않습니다.</td>
 	                        </tr>
 	                       </c:if>
-	                       <c:forEach var="purchaseHistory" items="${purchaseList}"
-	                                  varStatus="sts">
+	                       <c:forEach var="purchaseHistory" items="${purchaseList}"  varStatus="sts">
 	                        <tr>
 	                            <td style="text-align: center">
 	                            	<%-- <img src=${ctx }/views/images/img-10.jpg> --%>
@@ -76,21 +63,22 @@
 	                            </td>
 	                            <td class="text-center" style="text-align: center">
 	                           		${purchaseHistory.deliveryStatus}<br>
-	                           		<input class="deliveryBtn" type="button" 
+	                           		<c:if test="${purchaseHistory.deliveryStatus eq '배송중' }">
+	                           			<input class="deliveryBtn" type="button" 
 		                           			value="상품배송" class="btn btn-sm btn-success"
 		                           			data1 = "${purchaseHistory.id }">
+                           			</c:if>
+                           			<c:if test="${purchaseHistory.deliveryStatus eq '배송완료' }">
+                           			</c:if>
 	                            </td>
 	                        </tr>
 	                       </c:forEach>
 	                   </tbody>
 	               </table>
-				</div>
-			</div>
-		</main>
-	</div>
-</div>
+				
 
-<%@ include file="/views/common/footer.jsp"%>
+
+
 <script type="text/javascript">
 
 $(".deliveryBtn").click(function(){
@@ -142,5 +130,7 @@ var setInvoiceNumberToPurchaseHistory = {
 	},
 };
 </script>
-</body>
-</html>
+
+${box3 }
+
+<%@ include file="/views/common/footer.jsp"%>

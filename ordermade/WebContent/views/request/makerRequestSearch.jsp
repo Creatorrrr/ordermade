@@ -1,9 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath }" />
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/views/common/_html.jsp"%>
+<title>의뢰서 검색</title>
+<%@ include file="/views/common/_common.jsp"%>
 
-<%@ include file="/views/common/head.jsp"%>
+${head_body}
+<%@ include file="/views/common/header.jsp"%>
 
 <style type="text/css">
 	.requestBox {
@@ -21,45 +22,41 @@
 	}
 </style>
 
-<div class="wrapper row3">
-	<div class="rounded">
-		<main class="container clear"> <!-- main body -->
-			<div class="sidebar one_third first">
-				<%@ include file="/views/common/myPageNav.jsp"%>
-			</div>
-			<div id="content" class="two_third">
-				<div class="content" align="center">
-					<h1 align="left">의뢰서 검색</h1>
-					<div style="float:right">
-						<select id="requestSearchType" class="form-control" style="display:inline-block">
-							<option value="title">제목</option>
-							<option value="content">내용</option>
-						</select>
-						<input id="requestSearchKeyword" name="requestSearchKeyword" class="search-box-input"
-							type="text" value="" placeholder="Search Here" style="display:inline-block"/>
-						<button id="requestSearchBtn" class="fa fa-search" title="Search">
-							<em>Search</em>
-						</button>
-					</div>
-				</div> <%-- <c:forEach items="${ box_list }" var="literature"> --%>
-				
-				<div align="left">
-					<button onclick="javascript:requestController.getRequestsByBound(1);">모든 의뢰서</button>
-					<button onclick="javascript:requestController.getMyInviteRequestsForMaker(1);">내가 보낸 의뢰서</button>
-				</div>
-				
-				<div id="requestSearchResult">
-					<!-- requests from server -->
-				</div>
-			</div>
-		</main>
+
+${box1 }
+		
+	<%@ include file="/views/common/myPageNav.jsp"%>
+			
+${box2 }
+	
+
+	<div class="content" align="center">
+		<h1 align="left">의뢰서 검색</h1>
+		<div style="float:right">
+			<select id="requestSearchType" class="form-control" style="display:inline-block">
+				<option value="title">제목</option>
+				<option value="content">내용</option>
+			</select>
+			<input id="requestSearchKeyword" name="requestSearchKeyword" class="search-box-input"
+				type="text" value="" placeholder="Search Here" style="display:inline-block"/>
+			<button id="requestSearchBtn" class="fa fa-search" title="Search">
+				<em>Search</em>
+			</button>
+		</div>
+	</div> <%-- <c:forEach items="${ box_list }" var="literature"> --%>
+	
+	<div align="left">
+		<button onclick="javascript:requestController.getRequestsByBound(1);">모든 의뢰서</button>
+		<button onclick="javascript:requestController.getMyInviteRequestsForMaker(1);">내가 보낸 의뢰서</button>
 	</div>
-</div>
+	
+	<!-- requests from server -->
+	<div id="requestSearchResult"></div>
 
-<%@ include file="/views/common/footer.jsp"%>
 
-</body>
+
 <script type="text/javascript">	
+
 $(document).ready(function() {
 	requestController.getRequestsByBound(1);
 	//requestController.getRequestsByBoundAndTitle(1,1);	// test
@@ -250,4 +247,7 @@ var requestController = {
 };
 </script>
 
-</html>
+
+${box3 }
+
+<%@ include file="/views/common/footer.jsp"%>

@@ -35,7 +35,8 @@ img{width:auto; max-width:100%; height:auto; margin:0; padding:0; border:none; l
 
 /* Fonts
 --------------------------------------------------------------------------------------------------------------- */
-body, h1, h2, h3, h4, h5, h6, .heading{font-family:Georgia, "Times New Roman", Times, serif;}
+/* body, h1, h2, h3, h4, h5, h6,  */
+.heading{font-family:Georgia, "Times New Roman", Times, serif;}
 
 
 /* Forms
@@ -70,9 +71,9 @@ address, article, aside, figcaption, figure, footer, header, main, nav, section{
 .first{margin-left:0; clear:left;}
 
 .one_quarter{width:22.69938650306748%;}
-.one_third{width:31.28834355828221%;}
+.one_third{width:21.28834355828221%;}
 .one_half, .two_quarter{width:48.46625766871166%;}
-.two_third{width:65.6441717791411%;}
+.two_third{width:75.6441717791411%;}
 .three_quarter{width:74.23312883435584%;}
 
 

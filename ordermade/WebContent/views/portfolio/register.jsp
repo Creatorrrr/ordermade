@@ -1,24 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath }" />
-<!DOCTYPE html>
-<html lang="ko">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/views/common/_html.jsp"%>
 <title>포트폴리오 등록</title>
-<%@ include file="/views/common/head.jsp"%>
+<%@ include file="/views/common/_common.jsp"%>
 
-<div class="wrapper row3">
-	<div class="rounded">
-		<main class="container clear">
-		<div class="sidebar one_third first">
+${head_body}
+<%@ include file="/views/common/header.jsp"%>
+
+${box1 }
+		
 			<%@ include file="/views/common/myPageNav.jsp"%>
-		</div>
+			
+${box2 }
 
-		<div id="content" class="two_third">
+
 			<h1>포트폴리오 등록</h1>
 			<br>
 			<form action="${ctx }/portfolio/xml/register.do" method="post" enctype="multipart/form-data"
-				name="pRegister"id="pRegister" onsubmit="return checkIt()">
+				name="pRegister"id="pRegister" onsubmit="return checkIt()" >
 				<%--  <input name="makerId" type="hidden" value="${makerId}">  --%>
 				<table class="table">
 					<tr>
@@ -27,13 +25,11 @@
 					</tr>
 					<tr>
 						<th>포트폴리오 명 <span>*</span></th>
-						<td><input id="title" name="title" class="form-control"
-							type="text" value=""></td>
+						<td><input id="title" name="title" class="form-control" type="text" value=""></td>
 					<tr>
 					<tr>
 						<th>표지 이미지</th>
-						<td><input id="image" name="image" class="btn btn-success"
-							type="file" value="찾아보기"></td>
+						<td><input id="image" name="image" class="btn btn-success" type="file" value="찾아보기"></td>
 					<tr>
 					<tr>
 						<th>포트폴리오 내용 <span>*</span></th>
@@ -42,18 +38,13 @@
 					</tr>
 				</table>
 				<div>
-					<input id="registBtn" name="registBtn" class="btn btn-success"
-						type="button" value="등록하기"> &nbsp; <input name="reset"
-						type="reset" value="취소">
+					<input id="registBtn" name="registBtn" class="btn btn-success" type="button" value="등록하기"> &nbsp; 
+					<input name="reset" class="btn btn-default" type="reset" value="취소">
 				</div>
 			</form>
 			<br>
-		</div>
-		</main>
-	</div>
-</div>
 
-<%@ include file="/views/common/footer.jsp"%>
+
 
 <script type="text/javaScript">
 
@@ -65,7 +56,7 @@ $(document).ready(function(){
 		dataType : "xml",
 		success : function(xml) {
 			var categoryId = "${categoryId}";
-			var rs = '<select name="category" id="category" class="form-control">';
+			var rs = '<select name="category" id="category" class="form-control" style="display:inline-block">';
 			var list = $(xml).find("category > type");
 			console.log(list.size());
 			list.each(function(){
@@ -139,5 +130,8 @@ $(document).ready(function(){
 });
 
 </script>
-</body>
-</html>
+
+
+${box3 }
+
+<%@ include file="/views/common/footer.jsp"%>

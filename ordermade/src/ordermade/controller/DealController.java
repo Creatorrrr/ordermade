@@ -41,6 +41,7 @@ public class DealController {
 		String memberId = (String)session.getAttribute("loginId");
 		boolean checkPurchase = false;
 		boolean checkAccount = false;
+		purchaseHistory.setDeliveryStatus("배송중");
 		checkPurchase = dService.registerPurchaseHistory(purchaseHistory);
 		
 		System.out.println("------data : "+purchaseHistory.toString());
@@ -104,6 +105,7 @@ public class DealController {
 			PurchaseHistory purchaseHistory = dService.findPurchseHistoryById(id);
 			System.out.println("-------data : "+purchaseHistory.toString());
 			purchaseHistory.setInvoiceNumber(invoiceNumber);
+			purchaseHistory.setDeliveryStatus("배송완료");
 			System.out.println("-------data2 : "+purchaseHistory.toString());
 			checkPurchase = dService.modifyPurchaseHistoryById(purchaseHistory);
 //		}
@@ -114,27 +116,26 @@ public class DealController {
 	
 	// UI For WEB
 	
-	// http://localhost:8080/ordermade/deal/transaction.do
+	// http://localhost:8080/ordermade/deal/ui/transaction.do
 	@RequestMapping(value="ui/transaction.do", method=RequestMethod.GET)
 	public ModelAndView showPurchaseHistoryUI(String page, HttpSession session){
+		
 		String memberType = (String)session.getAttribute("memberType");
 		String memberId = (String)session.getAttribute("loginId");
+		
 		if(page == null || page == "") page = "1";
 		List<PurchaseHistory> purchaseList = new ArrayList<>();
+		ModelAndView modelAndView = null;
 		
 		if(memberType.equals(Constants.CONSUMER)){
 			purchaseList = dService.findpurchaseHistoriesByConsumerId(memberId, page);
-			ModelAndView modelAndView = new ModelAndView("purchaseHistory/consumerPurchaseHistory");
-			modelAndView.addObject("purchaseList", purchaseList);
-			return modelAndView;
+			modelAndView = new ModelAndView("purchaseHistory/consumerPurchaseHistory");
 		}else if(memberType.equals(Constants.MAKER)){
 			purchaseList = dService.findpurchaseHistoriesByMakerId(memberId, page);
-			ModelAndView modelAndView = new ModelAndView("purchaseHistory/makerPurchaseHistory");
-			modelAndView.addObject("purchaseList", purchaseList);
-			return modelAndView;
-		}else{
-			throw new RuntimeException("No such Information");
+			modelAndView = new ModelAndView("purchaseHistory/makerPurchaseHistory");
 		}
+		modelAndView.addObject("purchaseList", purchaseList);
+		return modelAndView;
 	}
 	
 	// XML for Mobile
@@ -145,7 +146,7 @@ public class DealController {
 	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesForConsumer(String page, HttpSession session){
 		// session에서 회원ID 가져오기
 		String consumerId = (String)session.getAttribute("loginId");
-		page = "1";
+		if(page == null || page == "") page = "1";
 		List<PurchaseHistory> purchaseConsumerList = dService.findpurchaseHistoriesByConsumerId(consumerId, page);
 		PurchaseHistories purchaseHistories = new PurchaseHistories();
 		purchaseHistories.setPurchaseList(purchaseConsumerList);
@@ -156,7 +157,7 @@ public class DealController {
 	@RequestMapping(value="xml/searchPurchaseConsumerTitleList.do", method=RequestMethod.POST, produces="application/xml")
 	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesByRequestTitleForConsumer(String requestTitle, String consumerId, String page, HttpSession session){
 		consumerId = "user1";
-		page = "1";
+		if(page == null || page == "") page = "1";
 		List<PurchaseHistory> purchaseConsumerTitleList = dService.findpurchaseHistoriesByConsumerIdAndRequestTitle(consumerId, requestTitle, page);
 		PurchaseHistories purchaseHistories = new PurchaseHistories();
 		purchaseHistories.setPurchaseList(purchaseConsumerTitleList);
@@ -165,9 +166,9 @@ public class DealController {
 	
 	// http://localhost:8080/ordermade/deal/xml/searchPurchaseMakerList.do
 	@RequestMapping(value="xml/searchPurchaseMakerList.do", produces="application/xml")
-	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesForMaker(String makerId, HttpSession session){
+	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesForMaker(String makerId, String page, HttpSession session){
 		makerId = "";
-		String page = "1";
+		if(page == null || page == "") page = "1"; // String page 추가 17/06/03 11:58am By MBS
 		List<PurchaseHistory> purchaseMakerList = dService.findpurchaseHistoriesByMakerId(makerId, page);
 		PurchaseHistories purchaseHistories = new PurchaseHistories();
 		purchaseHistories.setPurchaseList(purchaseMakerList);
@@ -179,7 +180,7 @@ public class DealController {
 	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesByRequestTitleForMaker(String requestTitle, String makerId, String page, HttpSession session){
 		makerId="";
 		requestTitle = "";
-		page = "1";
+		if(page == null || page == "") page = "1";
 		List<PurchaseHistory> purchaseMakerTitleList = dService.findpurchaseHistoriesByMakerIdAndRequestTitle(makerId, requestTitle, page);
 		PurchaseHistories purchaseHistories = new PurchaseHistories();
 		purchaseHistories.setPurchaseList(purchaseMakerTitleList);

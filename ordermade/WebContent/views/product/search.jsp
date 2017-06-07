@@ -2,58 +2,20 @@
 <%@ include file="/views/common/_html.jsp"%>
 <title>나의 의뢰서</title>
 <%@ include file="/views/common/_common.jsp"%>
-
-<style type="text/css">
-.productBox {
-	display: inline-block;
-	border-style: solid;
-	margin: 5px;
-	width: 45%;
-}
-
-.productExplainBox {
-	display: inline-block;
-	width: 100%;
-}
-
-.productExplainBox img {
-	width: 30%;
-}
-
-.productExplainBox table {
-	display: inline-block;
-	float: right;
-	border-style: none;
-	width: 70%;
-	color: black;
-}
-
-.productExplainBox table * {
-	border-style: none;
-}
-
-.detailBtnBox {
-	width: 100%;
-}
-
-.detailBtnBox input {
-	float: right;
-}
-</style>
-
+	
 ${head_body}
 <%@ include file="/views/common/header.jsp"%>
+
 
 	<div class="wrapper row3">
 		<div class="rounded">
 			<main class="container clear"> <!-- main body -->
 			<div class="sidebar one_third first">
-				<h6>Category</h6>
+				<h6>상품 카테고리</h6>
 				<nav class="sdb_holder">
 					<ul>
 						<c:forEach items="${categories}" var="category">
-							<li><a
-								href="${ctx }/product/ui/search.do?page=1&category=${category.type}">${category.type }</a></li>
+							<li><a href="${ctx }/product/ui/search.do?category=${category.type}">${category.type }</a></li>
 						</c:forEach>
 					</ul>
 				</nav>
@@ -61,29 +23,26 @@ ${head_body}
 
 			<div id="content" class="two_third">
 				<div class="content" align="center">
-					<h1 align="left">${category }상품페이지</h1>
-					<div align="right">
-						<select id="productSearchType" class="form-control"
-							style="display: inline-block">
-							<option value="title">제목</option>
-							<option value="makerName">제작자</option>
-						</select> <input id="productSearchKeyword" name="productSearchKeyword"
-							class="search-box-input" type="text" value=""
-							placeholder="Search Here" style="display: inline-block" />
-						<button id="productSearchBtn" class="fa fa-search" title="Search">
-							<em>Search</em>
-						</button>
-						<button id="imageSearchBtn" class="fa fa-search" title="Search"
-							onclick="javascript:createImageSearchModal()">
-							<em>Image Search</em>
-						</button>
+					<h1>[${category }] 상품페이지</h1>
+					<div class="right">
+						<form class="navbar-form text-right" method="post" action="#" >
+							<select id="productSearchType" class="form-control" style="display: inline-block">
+								<option value="title">제목</option>
+								<option value="makerName">제작자</option>
+							</select> 
+							<input id="productSearchKeyword" name="productSearchKeyword"
+								class="form-control" type="text" value=""
+								placeholder="Search Here" style="display: inline-block" />
+							<button id="productSearchBtn" class="fa fa-search btn btn-default" title="Search">검색</button>
+							<button id="imageSearchBtn" class="fa fa-search btn btn-default" title="Search" onclick="javascript:createImageSearchModal()">이미지 검색</button>
+						</form>
 					</div>
 				</div>
 				
-				<div id="productSearchResult">
+				<div id="listSearchResult">
 					<c:forEach items="${products }" var="product">
-						<div class='productBox'>
-							<div class="productExplainBox">
+						<div class='listBox'>
+							<div class="listExplainBox">
 								<img src="${ctx }/product/image.do?img=${product.image}">
 								<table>
 									<tr>
@@ -109,26 +68,21 @@ ${head_body}
 								</table>
 							</div>
 							<div class="detailBtnBox">
-								<input type='button' value='자세히보기'
+								<input type='button' value='자세히보기' class="btn btn-success"
 									onclick="javascript:location.href='${ctx}/product/ui/detail.do?id=${product.id}'">
 							</div>
 						</div>
 					</c:forEach>
 				</div>
+				
 			</div>
 			</main>
 		</div>
 	</div>
 
 
+
 <script type="text/javascript">
-/* $(document).ready(function() {
-	$.ajax({
-		url:"${ctx}/main/xml/categoryList.do",
-		type:"get",
-		success:function
-	})
-}) */
 	//검색을 클릭하면 검색된 의뢰서 목록을 가져온다.
 	$("#productSearchBtn").click(
 			function() {
@@ -305,6 +259,7 @@ ${head_body}
 		}
 	};
 </script>
+
 
 
 ${box3 }

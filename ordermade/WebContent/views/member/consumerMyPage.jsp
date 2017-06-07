@@ -1,24 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath }" />
-<!DOCTYPE html>
-<html lang="ko">
-<!-- Header ========================================================================================== -->
-<head>
-<%@ include file="/views/common/head.jsp"%>
-</head>
-<title>My Page</title>
-<!-- Main Body ========================================================================================== -->
-<body>
-<div class="wrapper row3">
-	<div class="rounded">
-		<main class="container clear"> <!-- main body -->
-		<div class="sidebar one_third first">
-			<%@ include file="/views/common/myPageNav.jsp"%>
-		</div>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/views/common/_html.jsp"%>
+<title>마이 페이지</title>
+<%@ include file="/views/common/_common.jsp"%>
 
-		<div id="content" class="two_third">
+${head_body}
+<%@ include file="/views/common/header.jsp"%>
+
+${box1 }
+		
+			<%@ include file="/views/common/myPageNav.jsp"%>
+			
+${box2 }
+
+
+
 			<ul class="nospace listing">
 				<li class="clear">
 					<h1>${member.id}님의 정보</h1>
@@ -45,12 +40,8 @@
 					</div>
 				</li>
 			</ul>
-		</div>
-		</main>
-	</div>
-</div>
+
+
+${box3 }
 
 <%@ include file="/views/common/footer.jsp"%>
-
-</body>
-</html>

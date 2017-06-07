@@ -13,25 +13,6 @@
   		<association property="maker" column="maker_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member" jdbcType="VARCHAR" />
 		<collection property="tags" column="id" ofType="Tag" select="ordermade.store.mapper.TagMapper.selectTagsByPortfolioId" javaType="ArrayList" jdbcType="VARCHAR"/> 
   	</resultMap>
-  	
-  	<sql id="selectPortfolio">
-		SELECT id,
-		title,
-		content,
-		type,
-		image,
-		maker_id
-	</sql>
-
-	<sql id="selectPortfolioWithRowNum">
-		SELECT rownum rnum,
-		id,
-		title,
-		content,
-		type,
-		image,
-		maker_id
-	</sql>
   
   	<insert id="insertPortfolio" parameterType="Portfolio">
   		<selectKey resultType="String" keyProperty="id" order="BEFORE">
@@ -52,41 +33,34 @@
   		WHERE id=#{id}
   	</delete>
   
-  	<select id="selectPortfolioById" parameterType="String" resultMap="portfolioMap">
-  		<include refid="selectPortfolio" />
+  	<select id="selectPortfolioById" parameterType="java.util.Map" resultMap="portfolioMap">
+  		SELECT id, title, type, content, maker_id, image 
   		FROM portfolio 
   		WHERE id=#{id}
   	</select>
   
-  	<select id="selectPortfoliosByMakerId" parameterType="HashMap" resultMap="portfolioMap">
-  		<include refid="selectPortfolio" />
-		FROM (<include refid="selectPortfolioWithRowNum" />
-				FROM portfolio
-				WHERE maker_id = #{makerId}
-				ORDER BY id DESC)
-				WHERE rnum BETWEEN #{begin} AND #{end}
-  	</select>
+  	<select id="selectPortfoliosByMakerId" parameterType="java.util.Map" resultMap="portfolioMap">
+		select * from (
+			select rownum limitNum, A.* from portfolio A where maker_id=#{makerId}
+			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE}) order by A.id desc
+		) where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE})
 
-  	
-  	<select id="selectPortfoliosByMakerIdAndTitle" parameterType="HashMap" resultMap="portfolioMap">
-  		<include refid="selectPortfolio"/>
-  		FROM (<include refid="selectPortfolioWithRowNum"/>
-  				FROM portfolio
-  				WHERE maker_id = #{makerId} AND title LIKE '%{title}%'
-  				ORDER BY id DESC)
-  		WHERE rnum BETWEEN #{begin} AND #{end}		
   	</select>
   	
-
-    <select id="selectPortfoliosByCategory" parameterType="HashMap" resultMap="portfolioMap">
-		<include refid="selectPortfolio" />
-		FROM (<include refid="selectPortfolioWithRowNum" />
-				FROM portfolio
-				WHERE type = #{category}
-				ORDER BY id DESC)
-				WHERE rnum BETWEEN #{begin} AND #{end}
+  
+  	<select id="selectPortfoliosByMakerIdAndTitle" parameterType="java.util.Map" resultMap="portfolioMap">
+  		select * from (
+			select rownum limitNum, A.* from portfolio A where maker_id=#{makerId} and title like '%${title}%'
+			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE}) order by A.id desc
+		) where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE})
   	</select>
-  	
+  
+    <select id="selectPortfoliosByCategory" parameterType="java.util.Map" resultMap="portfolioMap">
+		select * from (
+			select rownum limitNum, A.* from portfolio A where type=#{category}
+			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE}) order by A.id desc
+		) where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PORTFOLIO_ROW_SIZE})
+  	</select>
   	
   	<select id="selectPortfoliosByTags" parameterType="List" resultMap="portfolioMap">
 		SELECT DISTINCT portfolio.id, portfolio.title, portfolio.content, portfolio.type, portfolio.image, portfolio.maker_id

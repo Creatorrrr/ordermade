@@ -167,6 +167,11 @@ public class ProductController {
 	@RequestMapping(value = "/review/register.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerReview(Review review, HttpServletRequest req) {
 		// Ajax 리뷰 등록후 화면유지
+		System.out.println(review.getTitle()+"*************");
+		System.out.println(review.getGrade()+"*************");
+		System.out.println(review.getContent()+"*************");
+		System.out.println(review.getProduct().getId());
+		
 		Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 		review.setConsumer(consumer);
 		if (!pService.registerReview(review)) {
@@ -179,9 +184,17 @@ public class ProductController {
 	@RequestMapping(value = "/review/modify.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyReviewById(Review review, HttpServletRequest req) {
 		// Ajax 리뷰 수정후 화면유지
+		
+		System.out.println(review.getId()+"*************");
+		System.out.println(review.getTitle()+"*************");
+		System.out.println(review.getGrade()+"*************");
+		System.out.println(review.getContent()+"*************");
+		System.out.println(review.getProduct().getId());
+		
+		
 		Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 		review.setConsumer(consumer);
-		if (!pService.registerReview(review)) {
+		if (!pService.modifyReviewById(review)) {
 			return "false";
 		} else {
 			return "true";
@@ -231,8 +244,7 @@ public class ProductController {
 	@RequestMapping(value = "ajax/product/productId.do")
 	public @ResponseBody Product findProductById(String productId) {
 		// Ajax 생산품 id 검색으로 생산품 출력
-
-		Product product = pService.findProductById("203");
+		Product product = pService.findProductById("1");
 		return product;
 	}
 
@@ -316,15 +328,26 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/ajax/reviews/CP.do")
-	public @ResponseBody Reviews findReviewsByConsumerIdAndProductId(String page, String productId, String consumerId) {
+	public @ResponseBody Reviews findReviewsByConsumerIdAndProductId(String page, String productId, String consumerId,
+			HttpServletRequest req) {
 		// Ajax 생산품 아이디 그리고 내용으로 리뷰들 출력
 
-		List<Review> CPreview = pService.findReviewsByConsumerIdAndProductId(consumerId, productId, "1");
+		if (consumerId == null) {
+			String id = (String) req.getSession().getAttribute("loginId");
+			List<Review> CPreview = pService.findReviewsByConsumerIdAndProductId(id, productId, "1");
 
-		Reviews reviews = new Reviews();
-		reviews.setReviews(CPreview);
+			Reviews reviews = new Reviews();
+			reviews.setReviews(CPreview);
 
-		return reviews;
+			return reviews;
+		} else {
+			List<Review> CPreview = pService.findReviewsByConsumerIdAndProductId(consumerId, productId, "1");
+
+			Reviews reviews = new Reviews();
+			reviews.setReviews(CPreview);
+
+			return reviews;
+		}
 	}
 
 	// Review end
@@ -415,7 +438,9 @@ public class ProductController {
 
 	@RequestMapping("ui/search.do")
 	public ModelAndView showSearchProductsUI(String category, String page) {
-		return new ModelAndView("product/productList")
+		if(category == null) category = Constants.CategoryType.values()[0] +"";
+		if(page == null) page = "1";
+		return new ModelAndView("product/search")
 				.addObject("categories",pService.findAllCategory())
 				.addObject("category", category)
 				.addObject("products", pService.findProductsByCategory(category, page));

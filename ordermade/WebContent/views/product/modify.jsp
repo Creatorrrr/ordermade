@@ -1,24 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath }" />
-<!DOCTYPE html>
-<html lang="ko">
-<!-- Header ========================================================================================== -->
-<head>
-<%@ include file="/views/common/head.jsp"%>
-</head>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/views/common/_html.jsp"%>
 <title>상품 수정페이지</title>
-<!-- Main Body ========================================================================================== -->
-<body>
-	<div class="wrapper row3">
-		<div class="rounded">
-			<main class="container clear"> <!-- main body -->
-			<div class="sidebar one_third first">
-				<%@ include file="/views/common/myPageNav.jsp"%>
-			</div>
+<%@ include file="/views/common/_common.jsp"%>
 
-			<div id="content" class="two_third">
+${head_body}
+<%@ include file="/views/common/header.jsp"%>
+
+${box1 }
+		
+			<%@ include file="/views/common/myPageNav.jsp"%>
+			
+${box2 }
+
+
 
 				<h1>상품 수정페이지</h1>
 				<br>
@@ -60,20 +54,13 @@
 					<div align="center">
 						<input type="hidden" name="hit" value="${product.hit }"> 
 						<input type="hidden" name="id" value="${product.id }">
-						<input class="btn" type="reset" value="취소하기"
-							onclick="javascript:window.location='${ctx }/post/list.do?boardId=${boardId }'">
-						<input id="modifyBtn" class="btn btn-success" type="button"
-							value="수정하기">
+						<input class="btn btn-default" type="reset" value="취소하기" onclick="javascript:window.location='${ctx }/post/list.do?boardId=${boardId }'">
+						<input id="modifyBtn" class="btn btn-success" type="button" value="수정하기">
 					</div>
 				</form>
 				<br>
 
-			</div>
-			</main>
-		</div>
-	</div>
 
-	<%@ include file="/views/common/footer.jsp"%>
 
 	<script type="text/javaScript">
 		$(document)
@@ -122,68 +109,63 @@
 										}
 									});
 
-							// 등록버튼 구현
-							$("#modifyBtn")
-									.click(
-											function() {
-												var data = new FormData(
-														$('#productModify')[0]);
-												if (checkIt()) {
-													$
-															.ajax({
-																// 보낼 때
-																type : "post",
-																enctype : 'multipart/form-data',
-																url : "${ctx}/product/xml/modify.do",
-																data : data,
-																processData : false,
-																contentType : false,
-																cache : false,
-																// 받을 때 
-																dataType : "text",
-																success : function(
-																		resultData) {
-																	if (resultData == "true") {
-																		location.href = "${ctx}/product/ui/myProducts.do"
-																	}
-																},
-																error : function(
-																		xml) {
-																	console
-																			.log("실패 메시지 :\n"
-																					+ xml.responseText);
-																}
-															});
-												}
-											});
-
-							//필수 입력값 체크
-							function checkIt() {
-
-								var pModify = document.productModify;
-
-								if (!pModify.productTitle.value) {
-									alert("상품명을 입력하세요");
-									return false;
+		// 등록버튼 구현
+		$("#modifyBtn").click(
+				function() {
+					var data = new FormData( $('#productModify')[0] );
+					if (checkIt()) {
+						$.ajax({
+							// 보낼 때
+							type : "post",
+							enctype : 'multipart/form-data',
+							url : "${ctx}/product/xml/modify.do",
+							data : data,
+							processData : false,
+							contentType : false,
+							cache : false,
+							// 받을 때 
+							dataType : "text",
+							success : function(resultData) {
+								if (resultData == "true") {
+									location.href = "${ctx}/product/ui/myProducts.do"
 								}
-
-								if (!pModify.productContent.value) {
-									alert("내용을 입력하세요");
-									return false;
-								}
-
-								if (!pModify.price.value) {
-									alert("금액을 입력하세요");
-									return false;
-								}
-
-								if (!pModify.period.value) {
-									alert("기간을 입력하세요");
-									return false;
-								}
-								return true;
+							},
+							error : function(xml) {
+								console.log("실패 메시지 :\n"+ xml.responseText);
 							}
 						});
+					}
+				});
+
+			//필수 입력값 체크
+			function checkIt() {
+
+				var pModify = document.productModify;
+
+				if (!pModify.productTitle.value) {
+					alert("상품명을 입력하세요");
+					return false;
+				}
+
+				if (!pModify.productContent.value) {
+					alert("내용을 입력하세요");
+					return false;
+				}
+
+				if (!pModify.price.value) {
+					alert("금액을 입력하세요");
+					return false;
+				}
+
+				if (!pModify.period.value) {
+					alert("기간을 입력하세요");
+					return false;
+				}
+				return true;
+			}
+		});
 	</script>
-</body>
-</html>
+
+${box3 }
+
+<%@ include file="/views/common/footer.jsp"%>
