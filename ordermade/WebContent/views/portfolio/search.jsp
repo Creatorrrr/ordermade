@@ -25,16 +25,14 @@ ${head_body}
 			<div class="content" align="center">
 				<h1>[${category }] 포트폴리오 페이지</h1>
 				<div class="right">
-					<form method="post" action="#" >
+					<form class="navbar-form text-right" method="post" action="#" >
 						<select name="type" id="type" class="form-control" style="display:inline-block">
 							<option value="title">제목</option>
 							<option value="makerName">제작자</option>
 						</select> 
-						<input input name="search" class="search-box-input" type="text"
+						<input input name="search" class="form-control" type="text"
 							value="" placeholder="Search Here" style="display:inline-block"/>
-						<button class="fa fa-search" type="submit" title="Search">
-							<em>Search</em>
-						</button>
+						<button class="fa fa-search btn btn-default"  title="Search">검색</button>
 					</form>
 				</div>
 				
@@ -45,8 +43,13 @@ ${head_body}
 				<c:forEach items="${portfolios }" var="portfolio">
 					<div class='listBox'>
 						<div class="listExplainBox">
-							<img src="${ctx }/portfolio/image.do?img=${portfolio.image}">
-							<table>
+						<div style="padding: 5px;">
+							<div>
+								<img src="${ctx }/portfolio/image.do?img=${portfolio.image}" style="width: 80px;"><br>
+								<input type='button' value='자세히보기'  class="btn btn-success"
+									onclick="javascript:location.href='${ctx}/portfolio/ui/detail.do?id=${portfolio.id}'">
+							</div>
+							<table style="background: #ccc;">
 								<tr>
 									<td>포트폴리오 명 :</td>
 									<td>${portfolio.title }</td>
@@ -68,7 +71,7 @@ ${head_body}
 							</table>
 						</div>
 						<div class="detailBtnBox">
-							<input type='button' value='자세히보기' onclick="javascript:location.href='${ctx}/portfolio/ui/detail.do?id=${portfolio.id}'">
+							
 						</div>
 					</div>
 				</c:forEach>

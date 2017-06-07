@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<link href="${ctx }/resources/css/humen/bootstrap.css" rel="stylesheet">
 
 <link href="${ctx }/resources/css/layout.css" rel="stylesheet" type="text/css" media="all">
 <link href="${ctx }/resources/css/framework.css" rel="stylesheet" type="text/css" media="all">
@@ -30,15 +31,16 @@
 
 .table th{width: 150px;}
 .table td input, .table td textarea, .table select {width:100%;}
-.table td select{height:20px;}
+
 .table label, .table td input[type=radio] {display:inline;width:auto;}
 #content .content h1{text-align:left;}
-.table tbody td{border: 1px solid #ccc !important;}
+.table td{border-top: 1px solid #ccc !important;}
 #loginBox, #registerBox {width: 70%; margin: 0 auto;}
 input.btn {display:inline!important;}
 .listBox {border: 1px solid #ccc;}
 .listExplainBox tbody, {background:#ccc;}
 .listBox td, {padding:0 10px;}
-
-
+#header {background: #ccc;}
+a:hover{ text-decoration:none;}
+select { padding: 10px;}
 </style>

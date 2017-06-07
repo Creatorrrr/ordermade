@@ -24,20 +24,18 @@ ${head_body}
 			<div id="content" class="two_third">
 				<div class="content" align="center">
 					<h1>[${category }] 상품페이지</h1>
-					<div align="right">
-						<select id="productSearchType" class="form-control" style="display: inline-block">
-							<option value="title">제목</option>
-							<option value="makerName">제작자</option>
-						</select> 
-						<input id="productSearchKeyword" name="productSearchKeyword"
-							class="search-box-input" type="text" value=""
-							placeholder="Search Here" style="display: inline-block" />
-						<button id="productSearchBtn" class="fa fa-search" title="Search">
-							<em>Search</em>
-						</button>
-						<button id="imageSearchBtn" class="fa fa-search" title="Search" onclick="javascript:createImageSearchModal()">
-							<em>Image Search</em>
-						</button>
+					<div class="right">
+						<form class="navbar-form text-right" method="post" action="#" >
+							<select id="productSearchType" class="form-control" style="display: inline-block">
+								<option value="title">제목</option>
+								<option value="makerName">제작자</option>
+							</select> 
+							<input id="productSearchKeyword" name="productSearchKeyword"
+								class="form-control" type="text" value=""
+								placeholder="Search Here" style="display: inline-block" />
+							<button id="productSearchBtn" class="fa fa-search btn btn-default" title="Search">검색</button>
+							<button id="imageSearchBtn" class="fa fa-search btn btn-default" title="Search" onclick="javascript:createImageSearchModal()">이미지 검색</button>
+						</form>
 					</div>
 				</div>
 				
@@ -70,7 +68,7 @@ ${head_body}
 								</table>
 							</div>
 							<div class="detailBtnBox">
-								<input type='button' value='자세히보기'
+								<input type='button' value='자세히보기' class="btn btn-success"
 									onclick="javascript:location.href='${ctx}/product/ui/detail.do?id=${product.id}'">
 							</div>
 						</div>

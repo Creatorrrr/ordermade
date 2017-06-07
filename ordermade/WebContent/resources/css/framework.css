@@ -35,7 +35,8 @@ img{width:auto; max-width:100%; height:auto; margin:0; padding:0; border:none; l
 
 /* Fonts
 --------------------------------------------------------------------------------------------------------------- */
-body, h1, h2, h3, h4, h5, h6, .heading{font-family:Georgia, "Times New Roman", Times, serif;}
+/* body, h1, h2, h3, h4, h5, h6,  */
+.heading{font-family:Georgia, "Times New Roman", Times, serif;}
 
 
 /* Forms

@@ -24,7 +24,7 @@
 				<li><a href="${ctx }/request/ui/makerInviteList.do?page=1">참가요청내역 </a></li>
 			</c:when>
 		</c:choose>
-		<li><a onclick="deleteBtn();" class="btn btn-warning">회원탈퇴 </a></li>
+		<li><a onclick="deleteBtn();">회원탈퇴 </a></li>
 	</ul>
 </nav>
 

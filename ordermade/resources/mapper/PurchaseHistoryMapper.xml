@@ -60,7 +60,7 @@
 			select rownum limitNum, A.* from purchase_history A where maker_id=#{makerId}
 			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) order by A.id desc)
 			, (select /*+INDEX_FES(table column) */ ceil(count(*)/${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) page from purchase_history WHERE maker_id=#{makerId} )
-		) where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
+		 where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
   	</select>
   	
   	<select id="selectPurchaseHistoriesByMakerIdAndRequestTitle" parameterType="java.util.Map" resultMap="purchaseHistoryMap">

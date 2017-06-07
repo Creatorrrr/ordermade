@@ -7,44 +7,6 @@ ${head_body}
 <%@ include file="/views/common/header.jsp"%>
 
 
-<!--Main Image-->
-<div class="wrapper">
-	<div id="slider">
-		<div id="slide-wrapper" class="rounded clear">
-			<figure id="slide-1">
-				<a class="view" href="#"><img
-					src="${ctx }/views/images/demo/slider/pp.jpg" alt=""></a>
-			</figure>
-			<figure id="slide-2">
-				<a class="view" href="#"><img
-					src="${ctx }/views/images/demo/slider/2.png" alt=""></a>
-			</figure>
-			<figure id="slide-3">
-				<a class="view" href="#"><img
-					src="${ctx }/views/images/demo/slider/3.png" alt=""></a>
-			</figure>
-			<figure id="slide-4">
-				<a class="view" href="#"><img
-					src="${ctx }/views/images/demo/slider/4.png" alt=""></a>
-			</figure>
-			<figure id="slide-5">
-				<a class="view" href="#"><img
-					src="${ctx }/views/images/demo/slider/5.png" alt=""></a>
-			</figure>
-			<ul id="slide-tabs">
-				<li><a href="${ctx }#slide-1">A</a></li>
-				<li><a href="${ctx }#slide-2">B</a></li>
-				<li><a href="${ctx }#slide-3">C</a></li>
-				<li><a href="${ctx }#slide-4">D</a></li>
-				<li><a href="${ctx }#slide-5">E</a></li>
-			</ul>
-		</div>
-	</div>
-</div>
-<!--Main Image End  -->
-
-
-
 <div class="wrapper row3">
 	<div class="rounded">
 		<main class="container clear"> <!-- main body -->
@@ -54,49 +16,40 @@ ${head_body}
 			<div class="one_half">
 
 				<h2>인기 상품</h2>
-				<ul class="nospace listing" style="width: 195%;">
+				<div  id="HitsProductImages"></div>
+				<%-- <ul class="nospace listing" style="width: 195%;">
 					<li class="clear">
 						<div class="content" align="center">
-							<ul id="HitsProductSlider">
-								<!-- images from ajax (sample under) -->
-								<li><img src="${ctx }/views/images/image/cat1.jpg"></li>
-								<li><img src="${ctx }/views/images/image/cat1.jpg"></li>
-								<li><img src="${ctx }/views/images/image/cat1.jpg"></li>
-								<li><img src="${ctx }/views/images/image/cat1.jpg"></li>
-								<li><img src="${ctx }/views/images/image/cat1.jpg"></li>
-								<li><img src="${ctx }/views/images/image/cat1.jpg"></li>
-							</ul>
-							<%-- <a href="#" id="prevPfBtn">
-				                <img src="${ctx }/views/images/bul_prev.png" alt="이전">
-				            </a>
-				            <a href="#" id="nextPfBtn">
-				                <img src="${ctx }/views/images/bul_next.png" alt="다음">
-				            </a> --%>
+							<table>
+								<tr>
+									<td><img src="${ctx }/views/images/image/cat1.jpg">
+									<span>가격 : </span><br><span>상품 :</span></td>
+									<td><img src="${ctx }/views/images/image/cat1.jpg">
+									<span>가격 : </span><br><span>상품 :</span></td>
+									<td><img src="${ctx }/views/images/image/cat1.jpg">
+									<span>가격 : </span><br><span>상품 :</span></td>
+									<td><img src="${ctx }/views/images/image/cat1.jpg">
+									<span>가격 : </span><br><span>상품 :</span></td>
+								</tr>
+							</table>
 						</div> 
 					</li>
-				</ul>
+				</ul> --%>
 				<p>
 				<h3>최신 상품</h3>
-				<ul class="nospace listing" style="width: 195%;">
-					<li class="clear">
-							<ul id="BrandNewProductSlider">
-								<!-- images from ajax (sample under) -->
-								<li><img src="${ctx }/product/image.do?img=baduk.jpg"></li>
-								<li><img src="${ctx }/product/image.do?img=error4.PNG"></li>
-								<li><img src="${ctx }/product/image.do?img=baduk1.jpg"></li>
-								<li><img src="${ctx }/product/image.do?img=error4.PNG"></li>
-								<li><img src="${ctx }/product/image.do?img=baduk2.jpg"></li>
-							</ul>
-							<%-- <a href="#" id="prevPfBtn">
-				                <img src="${ctx }/views/images/bul_prev.png" alt="이전">
-				            </a>
-				            <a href="#" id="nextPfBtn">
-				                <img src="${ctx }/views/images/bul_next.png" alt="다음">
-				            </a> --%>
-					</li>
-				</ul>
-				<!-- <div id="HitsProductImages">
-				</div> -->
+					<div  id="BrandNewProductImages"></div>
+						<%-- <table>
+							<tr>
+								<td><img src="${ctx }/views/images/image/cat1.jpg">
+								<span>가격 : </span><br><span>상품 :</span></td>
+								<td><img src="${ctx }/views/images/image/cat1.jpg">
+								<span>가격 : </span><br><span>상품 :</span></td>
+								<td><img src="${ctx }/views/images/image/cat1.jpg">
+								<span>가격 : </span><br><span>상품 :</span></td>
+								<td><img src="${ctx }/views/images/image/cat1.jpg">
+								<span>가격 : </span><br><span>상품 :</span></td>
+							</tr>
+						</table> --%>
 			</div>
 			<!-- / Middle Column -->
 		</div>
@@ -124,7 +77,7 @@ ${head_body}
 $(document).ready(function(){
 	$.ajax({
 		type : "get",
-		url : "${ctx }/product/xml/main/category/hit.do?category=Digital&page=5",
+		url : "${ctx }/product/xml/main/category/hit.do?category=가구&page=4",
 		dataType : "xml",
 		success : function(xml) {
 				console.log("------load Success-----")
@@ -136,14 +89,45 @@ $(document).ready(function(){
 					var contentStr = "";
 					contentStr += "<ul class='nospace listing' style='width: 195%;'>";
 					contentStr +=    "<li class='clear'>";
-					contentStr +=			"<ul id='BrandNewProductSlider'>";
+					contentStr +=			"<table>";
+					contentStr +=				"<tr>";
 					$(xmlData).each(function() {
 						contentStr += mainImageController.makeImage(this);
 					});
-					contentStr += 			"</ul>";
+					contentStr +=				"</tr>";
+					contentStr += 			"</table>";
 					contentStr +=	  "</li>"
 					contentStr += "</ul>"
 					$("#HitsProductImages").append(contentStr);
+				}
+				console.log(contentStr)
+		}		
+	});
+	
+	$.ajax({
+		type : "get",
+		url : "${ctx }/product/xml/main/category/brandNew.do?category=가구&page=4",
+		dataType : "xml",
+		success : function(xml) {
+				console.log("------load Success-----")
+				var xmlData = $(xml).find("products>product");
+				var listLength = xmlData.length;
+				console.log(listLength)
+				$("#BrandNewProductImages").empty();
+				if(listLength){
+					var contentStr = "";
+					contentStr += "<ul class='nospace listing' style='width: 195%;'>";
+					contentStr +=    "<li class='clear'>";
+					contentStr +=			"<table>";
+					contentStr +=				"<tr>";
+					$(xmlData).each(function() {
+						contentStr += mainImageController.makeImage(this);
+					});
+					contentStr +=				"</tr>";
+					contentStr += 			"</table>";
+					contentStr +=	  "</li>"
+					contentStr += "</ul>"
+					$("#BrandNewProductImages").append(contentStr);
 				}
 				console.log(contentStr)
 		}		
@@ -155,12 +139,14 @@ var mainImageController = {
 		makeImage : function(xml) {
 			var content = "";
 			
-			content += "<li><img src=\"${ctx }/product/image.do?img=";
-			content += 		$(xml).find("product>image").text() +"\"></li>";
+			content += "<td style='width : 100px'><img src=\"${ctx }/product/image.do?img=";
+			content += 		$(xml).find("product>image").text() +"\">";
+			content +=		"<span>상품정보 : " + $(xml).find("product>content").text();
+			content += 			"</span><br><span>" + $(xml).find("product>price").text();
+			content += 				"</span></td>"
 			
 			return content;
 		}
-
 };
 
 //main slider setting
