@@ -234,8 +234,10 @@ function reviewRegister(){
 				html += 		     "<td>" +$(">content",this).text()+ "</td>";
 				html += 		"</tr>";
 				html += '</table>';
+				html += "<c:if test="+${$(">consumer>id>id",this).text() eq sessionScope.loginId}+">";
 				html += "<input type='button' value='수정' onclick='javascript:updateReview("+$(">id",this).text()+")'>";
 				html += "<input type='button' value='삭제' onclick='javascript:deleteReview("+$(">id",this).text()+")'>";
+				html += "</c:if>";
 			 	} else if(updateReview==$(">id",this).text()){
 			 	html +=	"<form id='form3' onsubmit='return false;'>";
 			 	html +=		"<div class='one_third first'>";
@@ -359,8 +361,10 @@ var displayReviews = function(xml) {
 		html += 		     "<td>" +$(">content",this).text()+ "</td>";
 		html += 		"</tr>";
 		html += '</table>';
+		html += "<c:if test="+${$(">consumer>id>id",this).text() eq sessionScope.loginId}+">";
 		html += "<input type='button' value='수정' onclick='javascript:beforeUpdateReview("+$(">id",this).text()+")'>";
 		html += "<input type='button' value='삭제' onclick='javascript:deleteReview("+$(">id",this).text()+")'>";
+		html += "</c:if>";
 	});
 	$("#reiewList").empty();
 	$("#reiewList").append(html);
