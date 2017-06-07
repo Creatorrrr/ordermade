@@ -5,6 +5,7 @@
 <link href="${ctx }/resources/css/framework.css" rel="stylesheet" type="text/css" media="all">
 <link href="${ctx }/resources/css/jquery.bxslider.min.css" rel="stylesheet" />
 <link href="${ctx }/resources/css/uploadfile.css" rel="stylesheet">
+<link href="${ctx }/resources/js/js_simplePagination/simplePagination.css" rel="stylesheet" type="text/css">
 
 <script src="${ctx }/resources/js/jquery.min.js"></script><%-- <script src="${ctx}/resources/js/jquery-2.1.3.js"> --%>
 <script src="${ctx }/resources/js/jquery.fitvids.min.js"></script>
@@ -15,6 +16,7 @@
 <script src="${ctx }/resources/js/jquery.bxslider.min.js"></script>
 <script src="${ctx }/resources/js/jquery.uploadfile.min.js"></script>
 <script src="${ctx }/resources/js/vendor/ckeditor/ckeditor.js"></script>
+<script src="${ctx }/resources/js/js_simplePagination/jquery.simplePagination.js"></script>	
 <%-- <script src="${ctx }/resources/js/jquery.validate.min.js"></script>
 <script src="${ctx }/resources/js/additional-methods.min.js"></script>
 <script src="${ctx }/resources/js/messages_ko.min.js"></script> --%>

@@ -35,7 +35,7 @@ ${box2 }
 	                   </colgroup>
 	                   <thead>
 	                   <tr>
-	                       <td class="" style="text-align: center">상품이미지</td>
+	                       <td class="" style="text-align: center">구매자 ID</td>
 	                       <td class="" style="text-align: center">구매상품 정보</td>
 	                       <td class="" style="text-align: center">구매일자</td>
 	                       <td class="" style="text-align: center">진행상태</td>
@@ -51,7 +51,7 @@ ${box2 }
 	                        <tr>
 	                            <td style="text-align: center">
 	                            	<%-- <img src=${ctx }/views/images/img-10.jpg> --%>
-	                            	${purchaseHistory.request.id }
+	                            	${purchaseHistory.consumer.id }
 	                            </td>
 	                            <td style="text-align: center">
 									상품명 : ${purchaseHistory.request.title }<br>
@@ -64,9 +64,8 @@ ${box2 }
 	                            <td class="text-center" style="text-align: center">
 	                           		${purchaseHistory.deliveryStatus}<br>
 	                           		<c:if test="${purchaseHistory.deliveryStatus eq '배송중' }">
-	                           			<input class="deliveryBtn" type="button" 
-		                           			value="상품배송" class="btn btn-sm btn-success"
-		                           			data1 = "${purchaseHistory.id }">
+	                           			<div align="center"><input class="deliveryBtn" type="button"
+		                           			value="상품배송" data1 = "${purchaseHistory.id }"></div>
                            			</c:if>
                            			<c:if test="${purchaseHistory.deliveryStatus eq '배송완료' }">
                            			</c:if>
@@ -75,11 +74,45 @@ ${box2 }
 	                       </c:forEach>
 	                   </tbody>
 	               </table>
-				
-
-
+					<div id="makerPagination">페이지 위치</div>
 
 <script type="text/javascript">
+$(document).ready(function(){
+	// 페이지수 얻음
+	pagination($($('.purchaseTable').get(0)).attr("page"));
+	var pageNum = $($('.purchaseTable').get(0)).attr("page");
+	console.log($($('.purchaseTable').get(0)).attr("page"));
+	// simplePagination 
+	//http://flaviusmatis.github.io/simplePagination.js
+	function pagination(pageNum){
+		// URL 현재 페이지 값 얻어오기
+		var urlPageNum = location.search;
+		var list = urlPageNum.match(/[^\d]+/g);
+		thisPage = 1;
+		if ( list != null) {
+			for ( i = 0 ; i < list.length; i++ ){
+				if ( list[i].indexOf('page=') == 1){
+					var temp = urlPageNum.match(/\d+/g);
+					if( temp != null ) thisPage = temp[i];
+					console.log("this Page is :" + thisPage);
+				}
+			}
+		}
+	}
+	
+	$('#makerPagination').pagination({
+		items: pageNum,	// 게시글 수
+		itemOnPage: 7,	// 한 페이지에 보여주 게시글 수
+		currentPage: thisPage, // 초기에 보여주는 페이지
+		cssStyle: 'light-theme', 
+		hrefTextPrefix: '#page=', // href 속성에 사용되는 문자열
+		prevText: '', // 이전버튼 텍스트
+		nextText: '', // 다음버튼 텍스트
+		onPageClick: function ( page, evt) {
+			location.href = "${ctx }/deal/ui/transaction.do?page=" + page;
+			}
+		});
+});
 
 $(".deliveryBtn").click(function(){
 	var dom = $(this);
