@@ -23,9 +23,9 @@ ${head_body}
 
 			<div id="content" class="two_third">
 				<div class="content" align="center">
-					<h1>[${category }] 상품페이지</h1>
+					<h1 id="productCategory">[${category }] 상품페이지</h1>
 					<div class="right">
-						<form class="navbar-form text-right" method="post" action="#" >
+						<form class="navbar-form text-right">
 							<select id="productSearchType" class="form-control" style="display: inline-block">
 								<option value="title">제목</option>
 								<option value="makerName">제작자</option>
@@ -33,8 +33,8 @@ ${head_body}
 							<input id="productSearchKeyword" name="productSearchKeyword"
 								class="form-control" type="text" value=""
 								placeholder="Search Here" style="display: inline-block" />
-							<button id="productSearchBtn" class="fa fa-search btn btn-default" title="Search">검색</button>
-							<button id="imageSearchBtn" class="fa fa-search btn btn-default" title="Search" onclick="javascript:createImageSearchModal()">이미지 검색</button>
+							<button id="productSearchBtn" class="fa fa-search btn btn-default" type="button" title="Search">검색</button>
+							<button id="imageSearchBtn" class="fa fa-search btn btn-default" type="button" title="Search" onclick="javascript:createImageSearchModal();">이미지 검색</button>
 						</form>
 					</div>
 				</div>
@@ -89,11 +89,9 @@ ${head_body}
 				var type = $("#productSearchType option:selected").val();
 				var keyword = $("#productSearchKeyword");
 				if (type === "title") {
-					productController.getProductsByCategoryAndTitle(1, keyword
-							.val());
+					productController.getProductsByCategoryAndTitle(1, keyword.val());
 				} else if (type === "makerName") {
-					productController.getProductsByCategoryAndMakerName(1,
-							keyword.val());
+					productController.getProductsByCategoryAndMakerName(1, keyword.val());
 				}
 				keyword.val("");
 			});
@@ -114,6 +112,7 @@ ${head_body}
 			acceptFiles : "image/*",
 			fileName : "image",
 			multiple : false,
+			dragdropWidth:"100%",
 			maxFileCount : 1,
 			returnType : "text",
 			onSuccess : function(files, data, xhr, pd) {
@@ -138,15 +137,15 @@ ${head_body}
 				success : function(xml) {
 					var xmlData = $(xml).find("product");
 					var listLength = xmlData.length;
-					$("#productSearchResult").empty();
+					$("#listSearchResult").empty();
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function() {
 							contentStr += productController.makeContent(this);
 						});
-						$("#productSearchResult").append(contentStr);
+						$("#listSearchResult").append(contentStr);
 					} else {
-						$("#productSearchResult").append(
+						$("#listSearchResult").append(
 								productController.makeContentForEmpty());
 					}
 				}
@@ -162,15 +161,15 @@ ${head_body}
 				success : function(xml) {
 					var xmlData = $(xml).find("product");
 					var listLength = xmlData.length;
-					$("#productSearchResult").empty();
+					$("#listSearchResult").empty();
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function() {
 							contentStr += productController.makeContent(this);
 						});
-						$("#productSearchResult").append(contentStr);
+						$("#listSearchResult").append(contentStr);
 					} else {
-						$("#productSearchResult").append(
+						$("#listSearchResult").append(
 								productController.makeContentForEmpty());
 					}
 				}
@@ -185,15 +184,16 @@ ${head_body}
 				success : function(xml) {
 					var xmlData = $(xml).find("product");
 					var listLength = xmlData.length;
-					$("#productSearchResult").empty();
+					$("#listSearchResult").empty();
+					$("#productCategory").html("[이미지 검색] 상품페이지");
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function() {
 							contentStr += productController.makeContent(this);
 						});
-						$("#productSearchResult").append(contentStr);
+						$("#listSearchResult").append(contentStr);
 					} else {
-						$("#productSearchResult").append(
+						$("#listSearchResult").append(
 								productController.makeContentForEmpty());
 					}
 				}
@@ -203,8 +203,8 @@ ${head_body}
 		makeContent : function(xml) {
 			var content = "";
 
-			content += "<div class='productBox'>";
-			content += "	<div class='productExplainBox'>";
+			content += "<div class='listBox'>";
+			content += "	<div class='listExplainBox'>";
 			content += "		<img src='${ctx }/product/image.do?img="
 					+ $(xml).find("product>image").text() + "'>";
 			content += "		<table>";

@@ -19,10 +19,10 @@ ${box2 }
 
 			<div class="content" align="center">
 				<h1 align="left">받은 의뢰서</h1>
-				<table class="btn-group btn-group-justified">
+				<div class="btn-group btn-group-justified">
 					<button id="tab2" class="btn btn-default">진행중</button>
 					<button id="tab3" class="btn btn-default">완료</button>
-				</table>
+				</div>
 			</div>
 			<div id="resultBox">
 			<c:forEach items="${requests }" var="request" varStatus="status">
@@ -48,8 +48,7 @@ ${box2 }
 			</c:forEach>
 			</div>
 		</li>
-		<li><button id="registerBtn" class="btn btn-success">의뢰서 추가</button></li>
-		
+	
 		<!-- 페이지 구현  -->
 
 		<link href="${ctx }/resources/js/js_simplePagination/simplePagination.css" rel="stylesheet" type="text/css">

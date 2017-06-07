@@ -39,8 +39,8 @@ ${box2 }
 					<tr>
 						<th>공개 여부</th>
 						<td>
-							<input type="radio" name="bound" id="boundPublic" value="PUBLIC"><label for="boundPublic">공개</label>
-							<input type="radio" name="bound" id="boundPrivate" value="PRIVATE" checked="checked"><label for="boundPrivate">비공개</label>
+							<input type="radio" name="bound" id="boundPublic" value="1"><label for="boundPublic">공개</label>
+							<input type="radio" name="bound" id="boundPrivate" value="0" checked="checked"><label for="boundPrivate">비공개</label>
 						</td>
 					</tr>
 				</table>

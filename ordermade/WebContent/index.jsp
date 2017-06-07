@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/views/common/_html.jsp"%>
-<title>의뢰서 등록</title>
+<title>1:1 매칭 서비스</title>
 <%@ include file="/views/common/_common.jsp"%>
 
 ${head_body}
@@ -13,7 +13,7 @@ ${head_body}
 		<div class="group btmspace-30">
 
 			<!-- Middle Column -->
-			<div class="one_half">
+			<div>
 
 				<h2>인기 상품</h2>
 				<div  id="HitsProductImages"></div>
@@ -77,7 +77,7 @@ ${head_body}
 $(document).ready(function(){
 	$.ajax({
 		type : "get",
-		url : "${ctx }/product/xml/main/category/hit.do?category=가구&page=4",
+		url : "${ctx }/product/xml/main/category/hit.do?category=FUNITURE&page=4",
 		dataType : "xml",
 		success : function(xml) {
 				console.log("------load Success-----")
@@ -87,7 +87,7 @@ $(document).ready(function(){
 				$("#HitsProductImages").empty();
 				if(listLength){
 					var contentStr = "";
-					contentStr += "<ul class='nospace listing' style='width: 195%;'>";
+					contentStr += "<ul class='nospace listing' style='width: 100%;'>";
 					contentStr +=    "<li class='clear'>";
 					contentStr +=			"<table>";
 					contentStr +=				"<tr>";
@@ -106,7 +106,7 @@ $(document).ready(function(){
 	
 	$.ajax({
 		type : "get",
-		url : "${ctx }/product/xml/main/category/brandNew.do?category=가구&page=4",
+		url : "${ctx }/product/xml/main/category/brandNew.do?category=FUNITURE&page=4",
 		dataType : "xml",
 		success : function(xml) {
 				console.log("------load Success-----")
@@ -116,7 +116,7 @@ $(document).ready(function(){
 				$("#BrandNewProductImages").empty();
 				if(listLength){
 					var contentStr = "";
-					contentStr += "<ul class='nospace listing' style='width: 195%;'>";
+					contentStr += "<ul class='nospace listing' style='width: 100%;'>";
 					contentStr +=    "<li class='clear'>";
 					contentStr +=			"<table>";
 					contentStr +=				"<tr>";
@@ -150,7 +150,7 @@ var mainImageController = {
 };
 
 //main slider setting
-var pfSlider = $( '#HitsProductSlider' ).bxSlider( {
+var pfSlider = $( '#HitsProductImages' ).bxSlider( {
     mode: 'horizontal',// 가로 방향 수평 슬라이드
     speed: 500,        // 이동 속도를 설정
     pager: false,      // 현재 위치 페이징 표시 여부 설정
@@ -165,20 +165,8 @@ var pfSlider = $( '#HitsProductSlider' ).bxSlider( {
     captions: true     // 캡션 노출 여부
 } );
 
-//이전 버튼을 클릭하면 이전 슬라이드로 전환
-$( '#prevPfBtn' ).on( 'click', function () {
-	pfSlider.goToPrevSlide();  //이전 슬라이드 배너로 이동
-    return false;              //<a>에 링크 차단
-} );
-
-//다음 버튼을 클릭하면 다음 슬라이드로 전환
-$( '#nextPfBtn' ).on( 'click', function () {
-	pfSlider.goToNextSlide();  //다음 슬라이드 배너로 이동
-    return false;
-} );
-
 //product slider setting
-var productSlider = $( '#BrandNewProductSlider' ).bxSlider( {
+var productSlider = $( '#BrandNewProductImages' ).bxSlider( {
     mode: 'horizontal',// 가로 방향 수평 슬라이드
     useCSS: false,
     speed: 500,        // 이동 속도를 설정
