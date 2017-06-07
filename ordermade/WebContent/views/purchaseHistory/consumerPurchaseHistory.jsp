@@ -37,7 +37,7 @@ ${box2 }
                    </colgroup>
                    <thead>
                    <tr>
-                       <td class="" style="text-align: center">상품이미지</td>
+                       <td class="" style="text-align: center">판매자 ID</td>
                        <td class="" style="text-align: center">구매상품 정보</td>
                        <td class="" style="text-align: center">구매일자</td>
                        <td class="" style="text-align: center">진행상태</td>
@@ -55,7 +55,7 @@ ${box2 }
 	                        <tr>
 	                            <td class="text-center" style="text-align: center">
 	                            	<%-- <img src=${ctx }/views/images/img-10.jpg> --%>
-	                            	${purchaseHistory.request.id }
+	                            	${purchaseHistory.maker.id }
 	                            </td>
 	                            <td style="text-align: center">
 									상품명 : ${purchaseHistory.request.title }<br>
@@ -68,7 +68,7 @@ ${box2 }
 	                            <td class="text-center" style="text-align: center">
 	                           		${purchaseHistory.deliveryStatus}<br>
 	                           		<c:if test="${purchaseHistory.payment eq false}">
-		                           		<input class="purchaseBtn" type="button" 
+		                           		<div align="center"><input class="purchaseBtn" type="button" 
 		                           			value="구매확정" class="btn btn-sm btn-success"
 		                           			data1 = "${purchaseHistory.id }"
 			                        		data2 = "${purchaseHistory.request.id }"
@@ -76,10 +76,11 @@ ${box2 }
 			                        		data4 = "${purchaseHistory.maker.id }"
 			                        		data5 = "${purchaseHistory.invoiceNumber }"
 			                        		data6 = "${purchaseHistory.deliveryStatus }"
-			                        		data7 = "${purchaseHistory.payment }">
+			                        		data7 = "${purchaseHistory.payment }"></div>
 		                        	</c:if>
 		                        	<c:if test="${purchaseHistory.payment eq true}">
-		                        		<input class="" type="button" value="구매완료" class="btn btn-sm btn-success" disabled>
+		                        		<div align="center"><input class="" type="button" 
+		                        		value="구매완료" class="btn btn-sm btn-success" disabled></div>
 		                        	</c:if>
 	                            </td>
 	                        </tr>
@@ -87,7 +88,7 @@ ${box2 }
                        </c:forEach>
                    </tbody>
                </table>
-              		 <div id="pagination">페이지 위치</div>
+          		<div id="pagination">페이지 위치</div>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -95,7 +96,8 @@ $(document).ready(function(){
 	pagination($($('.purchaseTable').get(0)).attr("page"));
 	var pageNum = $($('.purchaseTable').get(0)).attr("page");
 	console.log($($('.purchaseTable').get(0)).attr("page"));
-	// simplePagination //http://flaviusmatis.github.io/simplePagination.js
+	// simplePagination 
+	//http://flaviusmatis.github.io/simplePagination.js
 	function pagination(pageNum){
 		// URL 현재 페이지 값 얻어오기
 		var urlPageNum = location.search;
