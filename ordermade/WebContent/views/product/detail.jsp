@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ include file="/views/common/_html.jsp"%>
 <title>상품 상세페이지</title>
 <%@ include file="/views/common/_common.jsp"%>
@@ -11,105 +12,111 @@ ${head_body}
 <div class="wrapper row3">
 	<div class="rounded">
 
-			<div id="contents" class="two_third first">
-				<div class="sdb_holder">
-					<h1>상품페이지-${product.title }</h1>
+		<div id="contents" class="two_third first">
+			<div class="sdb_holder">
+				<h1>상품페이지-${product.title }</h1>
 
-					<c:if test="${sessionScope.loginId ne null}">
-						<c:if test="${product.maker.id eq sessionScope.loginId}">
-							<!--본인이 작성한 글만 수정 삭제 가능하도록   -->
-							<div align="center">
-								<%-- <input class="btn btn-warning" type="button" value="삭제"
+				<c:if test="${sessionScope.loginId ne null}">
+					<c:if test="${product.maker.id eq sessionScope.loginId}">
+						<!--본인이 작성한 글만 수정 삭제 가능하도록   -->
+						<div align="center">
+							<%-- <input class="btn btn-warning" type="button" value="삭제"
 								onclick="javascript:window.location='${ctx }/product/delete.do?productId=${product.id}'"> --%>
-								<input class="btn btn-warning" type="button" value="삭제"
-									onclick="javascript:deleteProduct(${product.id})"> <input
-									class="btn btn-warning" type="button" value="수정"
-									onclick="location.href='${ctx}/product/ui/modify.do?id=${product.id}';">
-							</div>
-						</c:if>
-					</c:if>
-					<br>
-					<!-- <img class="imgr borderedbox"
-				src="images/demo/slider/pp.jpg" alt=""> -->
-					<p>Aliquatjusto quisque nam consequat doloreet vest orna partur
-						scetur portortis nam. Metadipiscing eget facilis elit sagittis
-						felisi eger id justo maurisus convallicitur.</p>
-				</div>
-				<br>
-				<%-- <c:forEach items="${ box_list }" var="literature"> --%>
-				<div align="center">
-					<img src="${ctx }/product/image.do?img=${product.image}" />
-				</div>
-				<br>
-				<%--  </c:forEach>--%>
-
-				<!-- 확인</main>  -->
-
-				<p>${product.content }</p>
-
-				<div class="scrollable">
-					<table>
-					</table>
-				</div>
-
-				<div id="reviews">
-					<h2>상품 후기</h2>
-					<form class="clear">
-						<div>
-							<input type="button" onclick="javascript:Reviews(${product.id})"
-								value="전체 댓글"> <input type="button"
-								onclick="javascript:myReview(1,${product.id})" value="내가 작성한 댓글">
-							<fieldset>
-								<select name="type" id="type" class="form-control">
-									<option value="id">아이디</option>
-									<option value="title">제목</option>
-								</select> <input id="searchBar" name="searchBar" class="search-box-input"
-									type="text" value="" placeholder="Search Here" /> <input
-									type="button" onclick="javascript:TCReview()" value="검색">
-							</fieldset>
+							<input class="btn btn-warning" type="button" value="삭제"
+								onclick="javascript:deleteProduct(${product.id})"> <input
+								class="btn btn-warning" type="button" value="수정"
+								onclick="location.href='${ctx}/product/ui/modify.do?id=${product.id}';">
 						</div>
-					</form>
+					</c:if>
+				</c:if>
+				<br>
+				<!-- <img class="imgr borderedbox"
+				src="images/demo/slider/pp.jpg" alt=""> -->
+				<p>Aliquatjusto quisque nam consequat doloreet vest orna partur
+					scetur portortis nam. Metadipiscing eget facilis elit sagittis
+					felisi eger id justo maurisus convallicitur.</p>
+			</div>
+			<br>
+			<%-- <c:forEach items="${ box_list }" var="literature"> --%>
+			<div align="center">
+				<img src="${ctx }/product/image.do?img=${product.image}" />
+			</div>
+			<br>
+			<%--  </c:forEach>--%>
 
-					<ul>
-						<li>
-							<article>
-								<header>
-									<%--        <c:forEach items="${reviews }" var="review"> --%>
-									<figure class="avatar">
-										<img src="${ctx }/views/images/img-10.jpg">
-									</figure>
-									<div class=reviewCotent>
-										<p>제목 : ${review.title }testReviewTitle</p>
-									</div>
-									<div class="comcont">
-										<p>This is an example of a comment made on a post. You can
-											either edit the comment, delete the comment or reply to the
-											comment. Use this as a place to respond to the post or to
-											share what you are thinking.</p>
-									</div>
+			<!-- 확인</main>  -->
 
-									<div class="one_half first">아이디 :${review.consumer.id }</div>
-									<div class="one_half">평점 :${review.grade }</div>
-									<!-- <time datetime="2045-04-06T08:15+00:00">
+			<p>${product.content }</p>
+
+			<div class="scrollable">
+				<table>
+				</table>
+			</div>
+
+			<div id="reviews">
+				<h2>상품 후기</h2>
+				<form class="clear">
+					<div>
+						<input type="button" onclick="javascript:Reviews(${product.id})"
+							value="전체 댓글"> <input type="button"
+							onclick="javascript:myReview(1,${product.id})" value="내가 작성한 댓글">
+						<fieldset>
+							<select name="type" id="type" class="form-control">
+								<option value="id">아이디</option>
+								<option value="title">제목</option>
+							</select> <input id="searchBar" name="searchBar" class="search-box-input"
+								type="text" value="" placeholder="Search Here" /> <input
+								type="button" onclick="javascript:TCReview()" value="검색">
+						</fieldset>
+					</div>
+				</form>
+
+				<ul>
+					<li>
+						<article>
+							<header>
+								<%--        <c:forEach items="${reviews }" var="review"> --%>
+								<figure class="avatar">
+									<img src="${ctx }/views/images/img-10.jpg">
+								</figure>
+								<div class=reviewCotent>
+									<p>제목 : ${review.title }testReviewTitle</p>
+								</div>
+								<div class="comcont">
+									<p>This is an example of a comment made on a post. You can
+										either edit the comment, delete the comment or reply to the
+										comment. Use this as a place to respond to the post or to
+										share what you are thinking.</p>
+								</div>
+
+								<div class="one_half first">아이디 :${review.consumer.id }</div>
+								<div class="one_half">평점 :${review.grade }</div>
+								<!-- <time datetime="2045-04-06T08:15+00:00">
 									Friday, 6<sup>th</sup> April 2045 @08:15:00
 								</time> -->
-									<%--	</c:forEach> --%>
-								</header>
-							</article>
-						</li>
-					</ul>
+								<%--	</c:forEach> --%>
+							</header>
+						</article>
+					</li>
+				</ul>
 
 
 
-					<div id="reiewList">
-						<c:forEach items="${product.reviews }" var="review">
+				<div id="reiewList">
+					<c:forEach items="${product.reviews }" var="review">
+						<form id="upDown${review.id }" onsubmit="return false;">
+							<input type="hidden" id="productId" name="product.id" value="${product.id }"> 
+							<input type="hidden" id="id" name="id" value="${review.id }">
+							<input type="hidden" id="title" name="title" value="${review.title }">
+							<input type="hidden" id="content" name="content" value="${review.content }">
+							<input type="hidden" id="grade" name="grade" value="${review.grade }">
 							<table class="table" style="font-size: 13px; padding: 20px;">
 								<tr>
-									<td>작성자 :</td>
+									<td>작성자 : "form${review.id }"</td>
 									<td>${review.consumer.id }</td>
 								</tr>
 								<tr>
-									<td>제목 :</td>
+									<td>제목 : ${review.id }</td>
 									<td>${review.title }</td>
 								</tr>
 								<tr>
@@ -124,59 +131,84 @@ ${head_body}
 								<input type="button" value="삭제"
 									onclick="javascript:deleteReview(${review.id})">
 							</c:if>
-						</c:forEach>
-					</div>
-					<form id="form2" onsubmit="return false;">
-						<input type="hidden" id="productId" name="product.id"
-							value="${product.id }">
-						<div class="one_third first">
-							<label for="title">제목 <span>*</span></label> <input type="text"
-								id="title" name="title" value="" size="22">
-						</div>
-
-						<div class="one_third">
-							<label for="grade">평점<span>*</span></label> <input type="text"
-								id="grade" name="grade" value="" size="22">
-						</div>
-
-						<div class="block clear">
-							<label for="content">후기</label>
-							<textarea id="content" name="content" placeholder="댓글쓰기"
-								cols="55" rows="7"></textarea>
-						</div>
-						<div>
-							<input type="button" onclick="javascript:reviewRegister()"
-								value="Submit"> <input name="reset" type="reset"
-								value="Reset">
-						</div>
-					</form>
+							<c:if test="${sessionScope.loginId ne review.consumer.id }">
+								<input type="button" value="따봉"
+									onclick="javascript:upGrade(${review.id})">
+								<input type="button" value="우우" onclick="javascript:downGrade()">
+							</c:if>
+						</form>
+					</c:forEach>
 				</div>
+				<form id="form2" onsubmit="return false;">
+					<input type="hidden" id="productId" name="product.id"
+						value="${product.id }">
+					<div class="one_third first">
+						<label for="title">제목 <span>*</span></label> <input type="text"
+							id="title" name="title" value="" size="22">
+					</div>
+
+					<div class="one_third">
+						<label for="grade">평점<span>*</span></label> <input type="text"
+							id="grade" name="grade" value="" size="22">
+					</div>
+
+					<div class="block clear">
+						<label for="content">후기</label>
+						<textarea id="content" name="content" placeholder="댓글쓰기" cols="55"
+							rows="7"></textarea>
+					</div>
+					<div>
+						<input type="button" onclick="javascript:reviewRegister()"
+							value="Submit"> <input name="reset" type="reset"
+							value="Reset">
+					</div>
+				</form>
 			</div>
-			<div class="sidebar one_third">
-				<h6>제작자 정보</h6>
-				<nav class="sdb_holder">
-					<ul>
-						<li><p>가격정보 : ${product.price }원</p></li>
-						<li><p>작업기간 : ${product.period }일</p></li>
-						<li><img
-							src="${ctx }/member/image.do?img=${product.maker.image}" /></li>
-						<li><p>제작자 아이디 : ${product.maker.id }</p></li>
-						<li><p>제작자 소개 : ${product.maker.introduce }</p></li>
-						<li><p></p></li>
-						<li><a
-							href="${ctx }/member/myPage.do?makerId=${product.maker.id }">프로필
-								바로가기</a></li>
-					</ul>
-				</nav>
-			</div>
-			<!-- / main body -->
-			<div class="clear"></div>
 		</div>
+		<div class="sidebar one_third">
+			<h6>제작자 정보</h6>
+			<nav class="sdb_holder">
+				<ul>
+					<li><p>가격정보 : ${product.price }원</p></li>
+					<li><p>작업기간 : ${product.period }일</p></li>
+					<li><img
+						src="${ctx }/member/image.do?img=${product.maker.image}" /></li>
+					<li><p>제작자 아이디 : ${product.maker.id }</p></li>
+					<li><p>제작자 소개 : ${product.maker.introduce }</p></li>
+					<li><p></p></li>
+					<li><a
+						href="${ctx }/member/myPage.do?makerId=${product.maker.id }">프로필
+							바로가기</a></li>
+				</ul>
+			</nav>
+		</div>
+		<!-- / main body -->
+		<div class="clear"></div>
 	</div>
+</div>
 
 
 
 <script type="text/javascript">
+
+function upGrade(reviewId) {
+	console.log(reviewId)
+	var reviewid = reviewId;
+	$.ajax({
+		url : "${ctx}/product/review/modify.do",
+		type : "post", 
+		data : $('#upDown'+reviewid).serialize(),
+		dataType : "text",
+		sucess : function(check) {
+			if(check=="true"){
+				console.log("44444444444444")
+			}
+		}
+	});
+}
+
+
+
 function deleteProduct(productId) {
 	$.ajax({
 		url:"${ctx}/product/xml/remove.do?id="+productId,
@@ -207,6 +239,7 @@ function reviewRegister(){
 	 console.log(reviewId)
 	 var updateReview = reviewId;
 	 var productid = $("#productId").val();
+	 var userId = "${sessionScope.loginId}";
 	$.ajax({
 		url:"${ctx}/product/ajax/product/productId.do?productId",
 		type:"get",
@@ -234,10 +267,14 @@ function reviewRegister(){
 				html += 		     "<td>" +$(">content",this).text()+ "</td>";
 				html += 		"</tr>";
 				html += '</table>';
-				html += "<c:if test="+${$(">consumer>id>id",this).text() eq sessionScope.loginId}+">";
-				html += "<input type='button' value='수정' onclick='javascript:updateReview("+$(">id",this).text()+")'>";
-				html += "<input type='button' value='삭제' onclick='javascript:deleteReview("+$(">id",this).text()+")'>";
-				html += "</c:if>";
+				if(userId===$(">consumer>id",this).text()){
+					html += "<input type='button' value='수정' onclick='javascript:updateReview("+$(">id",this).text()+")'>";
+					html += "<input type='button' value='삭제' onclick='javascript:deleteReview("+$(">id",this).text()+")'>";
+				}
+				if(userId!=$(">consumer>id",this).text()){
+					html += "<input type='button' value='따봉' onclick='javascript:upGrade()'>";
+					html += "<input type='button' value='우우' onclick='javascript:downGrade()'>";
+				}
 			 	} else if(updateReview==$(">id",this).text()){
 			 	html +=	"<form id='form3' onsubmit='return false;'>";
 			 	html +=		"<div class='one_third first'>";
@@ -337,7 +374,8 @@ function TCReview() {
 }
 var displayReviews = function(xml) {
 	console.log(xml);
-	var name = xml.firstChild.tagName
+	var name = xml.firstChild.tagName;
+	var userId = "${sessionScope.loginId}";
 	if(name=="product"){
 		var list = $(xml).find("product>reviews")
 	}else if(name=="reviews"){
@@ -361,10 +399,14 @@ var displayReviews = function(xml) {
 		html += 		     "<td>" +$(">content",this).text()+ "</td>";
 		html += 		"</tr>";
 		html += '</table>';
-		html += "<c:if test="+${$(">consumer>id>id",this).text() eq sessionScope.loginId}+">";
+		if(userId===$(">consumer>id",this).text()){
 		html += "<input type='button' value='수정' onclick='javascript:beforeUpdateReview("+$(">id",this).text()+")'>";
 		html += "<input type='button' value='삭제' onclick='javascript:deleteReview("+$(">id",this).text()+")'>";
-		html += "</c:if>";
+	}
+		if(userId!=$(">consumer>id",this).text()){
+			html += "<input type='button' value='따봉' onclick='javascript:upGrade()'>";
+			html += "<input type='button' value='우우' onclick='javascript:downGrade()'>";
+		}
 	});
 	$("#reiewList").empty();
 	$("#reiewList").append(html);

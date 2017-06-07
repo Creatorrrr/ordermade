@@ -167,11 +167,11 @@ public class ProductController {
 	@RequestMapping(value = "/review/register.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerReview(Review review, HttpServletRequest req) {
 		// Ajax 리뷰 등록후 화면유지
-		System.out.println(review.getTitle()+"*************");
-		System.out.println(review.getGrade()+"*************");
-		System.out.println(review.getContent()+"*************");
+		System.out.println(review.getTitle() + "*************");
+		System.out.println(review.getGrade() + "*************");
+		System.out.println(review.getContent() + "*************");
 		System.out.println(review.getProduct().getId());
-		
+
 		Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
 		review.setConsumer(consumer);
 		if (!pService.registerReview(review)) {
@@ -184,21 +184,19 @@ public class ProductController {
 	@RequestMapping(value = "/review/modify.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyReviewById(Review review, HttpServletRequest req) {
 		// Ajax 리뷰 수정후 화면유지
-		
-		System.out.println(review.getId()+"*************");
-		System.out.println(review.getTitle()+"*************");
-		System.out.println(review.getGrade()+"*************");
-		System.out.println(review.getContent()+"*************");
+		System.out.println(review.getId() + "*************");
+		System.out.println(review.getTitle() + "*************");
+		System.out.println(review.getGrade() + "*************");
+		System.out.println(review.getContent() + "*************");
 		System.out.println(review.getProduct().getId());
-		
-		
-		Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
-		review.setConsumer(consumer);
-		if (!pService.modifyReviewById(review)) {
-			return "false";
-		} else {
-			return "true";
-		}
+
+			Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
+			review.setConsumer(consumer);
+			if (!pService.modifyReviewById(review)) {
+				return "false";
+			} else {
+				return "true";
+			}
 
 	}
 
@@ -230,7 +228,8 @@ public class ProductController {
 	@RequestMapping(value = "xml/main/category/brandNew.do", produces = "application/xml")
 	public @ResponseBody Products findProductsByCategoryOrderByIdForMain(String category, String page) {
 		// Ajax 메인화면에서 히트 상품 종류 나옴
-		if(page == null || page == "") page = "1";
+		if (page == null || page == "")
+			page = "1";
 		List<Product> idProducts = pService.findProductsByCategoryOrderByIdForMain(category, page);
 
 		Products products = new Products();
@@ -253,8 +252,9 @@ public class ProductController {
 		// Ajax 나의 생산품들 전체 출력
 
 		String makerId = (String) req.getSession().getAttribute("loginId");
-		if(page == null || page == "") page = "1";
-		
+		if (page == null || page == "")
+			page = "1";
+
 		List<Product> myProducts = pService.findProductsByMakerId(makerId, "1");
 
 		Products products = new Products();
@@ -438,11 +438,11 @@ public class ProductController {
 
 	@RequestMapping("ui/search.do")
 	public ModelAndView showSearchProductsUI(String category, String page) {
-		if(category == null) category = Constants.CategoryType.values()[0] +"";
-		if(page == null) page = "1";
-		return new ModelAndView("product/search")
-				.addObject("categories",pService.findAllCategory())
-				.addObject("category", category)
-				.addObject("products", pService.findProductsByCategory(category, page));
+		if (category == null)
+			category = Constants.CategoryType.values()[0] + "";
+		if (page == null)
+			page = "1";
+		return new ModelAndView("product/search").addObject("categories", pService.findAllCategory())
+				.addObject("category", category).addObject("products", pService.findProductsByCategory(category, page));
 	}
 }
