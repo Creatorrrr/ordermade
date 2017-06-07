@@ -45,10 +45,11 @@ public class MainController {
 	@RequestMapping("file/download.do")
 	public void downloadFile(String fileName, HttpServletResponse resp) {
 		File file = new File(Constants.FILE_PATH + fileName);
+		System.out.println(file.toString());
 		if (!file.exists()) {
 			throw new RuntimeException("No such file");
 		}
-
+		System.out.println("==============");
 		try (InputStream in = new BufferedInputStream(new FileInputStream(file));
 				OutputStream out = resp.getOutputStream();) {
 			byte[] buf = new byte[8096];

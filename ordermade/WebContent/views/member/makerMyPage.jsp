@@ -57,13 +57,21 @@ ${box2 }
 // append portfolio and product on startup
 $(document).ready(function() {
 	
+	getPortfolios();
+	getProducts();
+	
+});
+
+// get portfolios with xml
+var getPortfolios = function() {
+	
 	$.ajax({
 		type : "get",
 		url : "${ctx}/portfolio/xml/search.do?page=1",
 		dataType : "xml",
 		success : function(xml) {
 				console.log("------load Success-----")
-				var xmlData = $(xml).find("portfolios>portfolio");
+				var xmlData = $(xml).find("portfolio");
 				var listLength = xmlData.length;
 				console.log(listLength)
 				$("#BrandNewPortfolios").empty();
@@ -73,9 +81,9 @@ $(document).ready(function() {
 					contentStr +=    "<li class='clear'>";
 					contentStr +=			"<table>";
 					contentStr +=				"<tr>";
-					contentStr += 					"<td style='width : 100px'>";
+					contentStr += 					"<td>";
 					$(xmlData).each(function() {
-						contentStr += 			"<img src='${ctx }/main/file/download.do?fileName=" + $(this).find('portfolio>image') + "'>";
+						contentStr += 			"<img src='${ctx }/portfolio/image.do?img=" + $(this).find('portfolio>image').text() + "'>";
 					});
 					contentStr += 					"</td>";
 					contentStr +=				"</tr>";
@@ -88,41 +96,7 @@ $(document).ready(function() {
 		}		
 	});
 	
-	$.ajax({
-		type : "get",
-		url : "${ctx }/product/ajax/products/makerid.do?page=1",
-		dataType : "xml",
-		success : function(xml) {
-				console.log("------load Success-----")
-				var xmlData = $(xml).find("products>product");
-				var listLength = xmlData.length;
-				console.log(listLength)
-				$("#BrandNewProducts").empty();
-				if(listLength){
-					var contentStr = "";
-					contentStr += "<ul class='nospace listing'>";
-					contentStr +=    "<li class='clear'>";
-					contentStr +=			"<table>";
-					contentStr +=				"<tr>";
-					contentStr += 					"<td style = 'width : 100px'>";
-					$(xmlData).each(function() {
-						contentStr += 			"<img src='${ctx }/main/file/download.do?fileName=" + $(this).find('product>image') + "'>";
-					});
-					contentStr += 					"</td>";
-					contentStr +=				"</tr>";
-					contentStr += 			"</table>";
-					contentStr +=	  "</li>"
-					contentStr += "</ul>"
-					$("#BrandNewProducts").append(contentStr);
-				}
-				console.log(contentStr)
-		}		
-	});
-});
-
-// get portfolios with xml
-/* var getPortfolios = function(page) {
-	$.ajax({
+	/* $.ajax({
 		url : "${ctx}/portfolio/xml/search.do?page=" + page,
 		type : "get",
 		dataType : "xml",
@@ -140,12 +114,49 @@ $(document).ready(function() {
 					$("#pfslider").append(contentStr);
 				}
 			}
-		});
+		}); */
+		
 	};
 
 // get products with xml
-var getProducts = function(page) {
+var getProducts = function() {
+	
 	$.ajax({
+		type : "get",
+		url : "${ctx }/product/ajax/products/makerid.do?page=1",
+		dataType : "xml",
+		success : function(xml) {
+				console.log("------load Success-----");
+				var xmlData = $(xml).find("product");
+				console.log(xmlData);
+				var listLength = xmlData.length;
+				console.log(listLength);
+				console.log($(xml).find('product>image'));
+				$("#BrandNewProducts").empty();
+				if(listLength){
+					var contentStr = "";
+					contentStr += "<ul class='nospace listing'>";
+					contentStr +=    "<li class='clear'>";
+					contentStr +=			"<table>";
+					contentStr +=				"<tr>";
+					contentStr += 					"<td style = 'width : 100px'>";
+					$(xmlData).each(function() {
+						
+						contentStr += 			"<img src='${ctx }/product/image.do?img=" + $(this).find('product>image').text() + "'>";
+						
+					});
+					contentStr += 					"</td>";
+					contentStr +=				"</tr>";
+					contentStr += 			"</table>";
+					contentStr +=	  "</li>"
+					contentStr += "</ul>"
+					$("#BrandNewProducts").append(contentStr);
+				}
+				console.log(contentStr)
+		}		
+	});
+	
+	/* $.ajax({
 		url : "${ctx}/product/ajax/products/makerid.do?page=" + page,
 		type : "get",
 		dataType : "xml",
@@ -163,8 +174,8 @@ var getProducts = function(page) {
 					$("#productslider").append(contentStr);
 				}
 			}
-		});
-	}; */
+		}); */
+	};
 
 // portfolio slider setting
 var pfSlider = $( '#pfslider' ).bxSlider( {

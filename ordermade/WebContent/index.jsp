@@ -77,7 +77,7 @@ ${head_body}
 $(document).ready(function(){
 	$.ajax({
 		type : "get",
-		url : "${ctx }/product/xml/main/category/hit.do?category=가구&page=4",
+		url : "${ctx }/product/xml/main/category/hit.do?category=Digital&page=4",
 		dataType : "xml",
 		success : function(xml) {
 				console.log("------load Success-----")
@@ -106,7 +106,7 @@ $(document).ready(function(){
 	
 	$.ajax({
 		type : "get",
-		url : "${ctx }/product/xml/main/category/brandNew.do?category=가구&page=4",
+		url : "${ctx }/product/xml/main/category/brandNew.do?category=Digital&page=4",
 		dataType : "xml",
 		success : function(xml) {
 				console.log("------load Success-----")
