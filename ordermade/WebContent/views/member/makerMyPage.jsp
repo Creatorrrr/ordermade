@@ -39,51 +39,64 @@ ${box2 }
 						<tr><td><h3>최신 포트폴리오</h3></td></tr>
 						<tr>
 							<td>
-								<ul id="pfslider">
-									<!-- images from ajax (sample under) -->
-									<li><img src="${ctx }/main/file/download.do?fileName=panda1.png"></li>
-									<li><img src="${ctx }/main/file/download.do?fileName=panda4.jpg"></li>
-								</ul>
-					            <a href="#" id="prevPfBtn">
-					                <img src="${ctx }/views/images/bul_prev.png" alt="이전">
-					            </a>
-					            <a href="#" id="nextPfBtn">
-					                <img src="${ctx }/views/images/bul_next.png" alt="다음">
-					            </a>
+								<div id="BrandNewPortfolios"></div>
 							</td>
 						</tr>
 						<tr><td><h3>최신 상품</h3></td></tr>
 						<tr>
 							<td>
-								<ul id="productslider">
-									<!-- images from ajax (sample under) -->
-									<li><img src="${ctx }/main/file/download.do?fileName=panda1.png"></li>
-									<li><img src="${ctx }/main/file/download.do?fileName=panda4.jpg"></li>
-								</ul>
-					            <a href="#" id="prevProductBtn">
-					                <img src="${ctx }/views/images/bul_prev.png" alt="이전">
-					            </a>
-					            <a href="#" id="nextProductBtn">
-					                <img src="${ctx }/views/images/bul_next.png" alt="다음">
-					            </a>
+								<div id="BrandNewProducts"></div>
 							</td>
 						</tr>
-					</table>
-				</div>
-				</ul>
-
-
+						</table>
+					</div>
+				</li>
+			</ul>
 
 <script type="text/javascript">
 // append portfolio and product on startup
 $(document).ready(function() {
-//	getPortfolios(1); *****************************************************************
-//	getProducts(1); *****************************************************************
+	
+	getPortfolios();
+	getProducts();
+	
 });
 
 // get portfolios with xml
-var getPortfolios = function(page) {
+var getPortfolios = function() {
+	
 	$.ajax({
+		type : "get",
+		url : "${ctx}/portfolio/xml/search.do?page=1",
+		dataType : "xml",
+		success : function(xml) {
+				console.log("------load Success-----")
+				var xmlData = $(xml).find("portfolio");
+				var listLength = xmlData.length;
+				console.log(listLength)
+				$("#BrandNewPortfolios").empty();
+				if(listLength){
+					var contentStr = "";
+					contentStr += "<ul class='nospace listing'>";
+					contentStr +=    "<li class='clear'>";
+					contentStr +=			"<table>";
+					contentStr +=				"<tr>";
+					contentStr += 					"<td>";
+					$(xmlData).each(function() {
+						contentStr += 			"<img src='${ctx }/portfolio/image.do?img=" + $(this).find('portfolio>image').text() + "'>";
+					});
+					contentStr += 					"</td>";
+					contentStr +=				"</tr>";
+					contentStr += 			"</table>";
+					contentStr +=	  "</li>"
+					contentStr += "</ul>"
+					$("#BrandNewPortfolios").append(contentStr);
+				}
+				console.log(contentStr)
+		}		
+	});
+	
+	/* $.ajax({
 		url : "${ctx}/portfolio/xml/search.do?page=" + page,
 		type : "get",
 		dataType : "xml",
@@ -101,17 +114,54 @@ var getPortfolios = function(page) {
 					$("#pfslider").append(contentStr);
 				}
 			}
-		});
+		}); */
+		
 	};
 
 // get products with xml
-var getProducts = function(page) {
+var getProducts = function() {
+	
 	$.ajax({
+		type : "get",
+		url : "${ctx }/product/ajax/products/makerid.do?page=1",
+		dataType : "xml",
+		success : function(xml) {
+				console.log("------load Success-----");
+				var xmlData = $(xml).find("product");
+				console.log(xmlData);
+				var listLength = xmlData.length;
+				console.log(listLength);
+				console.log($(xml).find('product>image'));
+				$("#BrandNewProducts").empty();
+				if(listLength){
+					var contentStr = "";
+					contentStr += "<ul class='nospace listing'>";
+					contentStr +=    "<li class='clear'>";
+					contentStr +=			"<table>";
+					contentStr +=				"<tr>";
+					contentStr += 					"<td style = 'width : 100px'>";
+					$(xmlData).each(function() {
+						
+						contentStr += 			"<img src='${ctx }/product/image.do?img=" + $(this).find('product>image').text() + "'>";
+						
+					});
+					contentStr += 					"</td>";
+					contentStr +=				"</tr>";
+					contentStr += 			"</table>";
+					contentStr +=	  "</li>"
+					contentStr += "</ul>"
+					$("#BrandNewProducts").append(contentStr);
+				}
+				console.log(contentStr)
+		}		
+	});
+	
+	/* $.ajax({
 		url : "${ctx}/product/ajax/products/makerid.do?page=" + page,
 		type : "get",
 		dataType : "xml",
 		success : function(xml) {
-				var xmlData = $(xml).find("product");
+				var xmlData = $(xml).find("products>product");
 				var listLength = xmlData.length;
 				$("#productslider").empty();
 				if (listLength) {
@@ -124,7 +174,7 @@ var getProducts = function(page) {
 					$("#productslider").append(contentStr);
 				}
 			}
-		});
+		}); */
 	};
 
 // portfolio slider setting

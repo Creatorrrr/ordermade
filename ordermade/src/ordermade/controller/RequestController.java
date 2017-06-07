@@ -49,8 +49,14 @@ public class RequestController {
 		Member consumer = new Member();
 		consumer.setId("user1");
 		request.setConsumer(consumer);
-		request.setBound("N");//비공개
-		System.out.println(request.toString());
+		System.out.println(request.getBound());
+		if(request.getBound().equals("1")){
+			request.setBound(Constants.BOUND_PUBLIC);
+		}else if(request.getBound().equals("0")){
+			request.setBound(Constants.BOUND_PRIVATE);
+		}
+		System.out.println(request.getBound());
+		//System.out.println(request.toString());
 		boolean check = service.registerRequest(request);
 		return check+"";
 	}	//post http://localhost:8080/ordermade/request/xml/register.do

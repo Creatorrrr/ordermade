@@ -73,7 +73,7 @@ ${head_body}
 						<div class="detailBtnBox">
 							
 						</div>
-					</div>
+					</div></div>
 				</c:forEach>
 			</div>
 		
