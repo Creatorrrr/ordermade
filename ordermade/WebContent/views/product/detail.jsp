@@ -197,14 +197,12 @@ ${head_body}
 
 
 <script type="text/javascript">
-
-/* if(${sessionScope.loginId} == null){ */
 function login(){
-	console.log(${sessionScope.loginId})
+		if("${sessionScope.loginId}"==""){
 	console.log(111111111111)
-	/* location.href="${ctx}/member/login.do" */
-}
-/* } */
+	 location.href="${ctx}/member/login.do" 
+		}
+} 
 
 function upGrade(reviewId) {
 	var reviewid = reviewId;
