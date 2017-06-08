@@ -105,19 +105,22 @@ ${head_body}
 				<div id="reiewList">
 					<c:forEach items="${product.reviews }" var="review">
 						<form id="upDown${review.id }" onsubmit="return false;">
-							<input type="hidden" id="productId" name="product.id" value="${product.id }"> 
-							<input type="hidden" id="id" name="id" value="${review.id }">
-							<input type="hidden" id="title" name="title" value="${review.title }">
-							<input type="hidden" id="content" name="content" value="${review.content }">
-							<input type="hidden" id="grade" name="grade" value="${review.grade }">
-							<input type="hidden" id="userId" name="consumer.id" value="${review.consumer.id }">
+							<input type="hidden" id="productId" name="product.id"
+								value="${product.id }"> <input type="hidden" id="id"
+								name="id" value="${review.id }"> <input type="hidden"
+								id="title" name="title" value="${review.title }"> <input
+								type="hidden" id="content" name="content"
+								value="${review.content }"> <input type="hidden"
+								id="grade" name="grade" value="${review.grade }"> <input
+								type="hidden" id="userId" name="consumer.id"
+								value="${review.consumer.id }">
 							<table class="table" style="font-size: 13px; padding: 20px;">
 								<tr>
-									<td>작성자 : </td>
+									<td>작성자 :</td>
 									<td>${review.consumer.id }</td>
 								</tr>
 								<tr>
-									<td>제목 : </td>
+									<td>제목 :</td>
 									<td>${review.title }</td>
 								</tr>
 								<tr>
@@ -127,12 +130,18 @@ ${head_body}
 
 							</table>
 							<c:if test="${sessionScope.loginId eq review.consumer.id }">
-								<input type="button" value="수정" onclick="javascript:beforeUpdateReview(${review.id})">
-								<input type="button" value="삭제" onclick="javascript:deleteReview(${review.id})">
+								<input type="button" value="수정"
+									onclick="javascript:beforeUpdateReview(${review.id})">
+								<input type="button" value="삭제"
+									onclick="javascript:deleteReview(${review.id})">
 							</c:if>
-							<c:if test="${sessionScope.loginId ne review.consumer.id }">
-								<input type="button" value="따봉" onclick="javascript:upGrade(${review.id})">
-								<input type="button" value="우우" onclick="javascript:downGrade()">
+							<c:if test="${sessionScope.loginId ne null }">
+								<c:if test="${sessionScope.loginId ne review.consumer.id }">
+									<input type="button" value="따봉"
+										onclick="javascript:upGrade(${review.id})">
+									<input type="button" value="우우"
+										onclick="javascript:downGrade(${review.id})">
+								</c:if>
 							</c:if>
 						</form>
 					</c:forEach>
@@ -153,7 +162,7 @@ ${head_body}
 					<div class="block clear">
 						<label for="content">후기</label>
 						<textarea id="content" name="content" placeholder="댓글쓰기" cols="55"
-							rows="7"></textarea>
+							rows="7" onclick="javascript:login()"></textarea>
 					</div>
 					<div>
 						<input type="button" onclick="javascript:reviewRegister()"
@@ -189,6 +198,14 @@ ${head_body}
 
 <script type="text/javascript">
 
+/* if(${sessionScope.loginId} == null){ */
+function login(){
+	console.log(${sessionScope.loginId})
+	console.log(111111111111)
+	/* location.href="${ctx}/member/login.do" */
+}
+/* } */
+
 function upGrade(reviewId) {
 	var reviewid = reviewId;
 	var up = 1;
@@ -205,9 +222,22 @@ function upGrade(reviewId) {
 		}
 	});
 }
-
-
-
+function downGrade(reviewId) {
+	var reviewid = reviewId;
+	var down = -1;
+	$.ajax({
+		url : "${ctx}/product/review/modify.do?updown="+down,
+		type : "post", 
+		data : $('#upDown'+reviewid).serialize(),
+		dataType : "text",
+		success : function(check) {
+			console.log(check)
+			if(check=="true"){
+				javascript:Reviews(${product.id})
+			}
+		}
+	});
+}
 function deleteProduct(productId) {
 	$.ajax({
 		url:"${ctx}/product/xml/remove.do?id="+productId,
@@ -272,9 +302,11 @@ function reviewRegister(){
 					html += "<input type='button' value='수정' onclick='javascript:updateReview("+$(">id",this).text()+")'>";
 					html += "<input type='button' value='삭제' onclick='javascript:deleteReview("+$(">id",this).text()+")'>";
 				}
+				if(userId != null){
 				if(userId!=$(">consumer>id",this).text()){
 					html += "<input type='button' value='따봉' onclick='javascript:upGrade()'>";
 					html += "<input type='button' value='우우' onclick='javascript:downGrade()'>";
+				}
 				}
 			 	} else if(updateReview==$(">id",this).text()){
 			 	html +=	"<form id='form3' onsubmit='return false;'>";
@@ -408,9 +440,11 @@ var displayReviews = function(xml) {
 		html += 		     "<td>" +$(">content",this).text()+ "</td>";
 		html += 		"</tr>";
 		html += '</table>';
+		if(userId != null){
 		if(userId===$(">consumer>id",this).text()){
 			html += "<input type='button' value='수정' onclick='javascript:beforeUpdateReview("+$(">id",this).text()+")'>";
 			html += "<input type='button' value='삭제' onclick='javascript:deleteReview("+$(">id",this).text()+")'>";
+		}
 		}
 		if(userId!=$(">consumer>id",this).text()){
 			html += "<input type='button' value='따봉' onclick='javascript:upGrade("+$(">id",this).text()+")'>";
