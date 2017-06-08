@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import ordermade.domain.Category;
 import ordermade.domain.Portfolio;
+import ordermade.domain.Product;
 import ordermade.domain.Tag;
 
 @Repository
@@ -18,4 +20,9 @@ public interface PortfolioStore {
 	public List<Portfolio> selectPortfoliosByMakerIdAndTitle(String makerId, String title,String begin, String end );
 	public List<Portfolio> selectPortfoliosByCategory(String category, String begin, String end);
 	public List<Portfolio> selectPortfoliosByTags(List<Tag> tags);
+	
+	//추가-----------
+	public List<Category> selectAllCategory();
+	public List<Portfolio> selectPortfoliosByCategoryAndMakerName(String category, String makerName, String begin, String end);
+	public List<Portfolio> selectPortfoliosByCategoryAndTitle(String category, String title, String begin, String end);
 }

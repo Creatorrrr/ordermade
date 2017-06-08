@@ -15,6 +15,12 @@ public class Portfolios {
 	
 	@XmlElement(name="portfolio")
 	private List<Portfolio> portfolios;
+	
+	public Portfolios(){} 
+	
+	public Portfolios(List<Portfolio> portfolios){
+		this.portfolios=portfolios;
+	} 
 
 	public List<Portfolio> getPortfolios() {
 		return portfolios;

@@ -7,10 +7,13 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Repository;
 
+import ordermade.domain.Category;
 import ordermade.domain.Portfolio;
+import ordermade.domain.Product;
 import ordermade.domain.Tag;
 import ordermade.store.facade.PortfolioStore;
 import ordermade.store.mapper.PortfolioMapper;
+import ordermade.store.mapper.ProductMapper;
 
 @Repository
 public class PortfolioStoreLogic implements PortfolioStore {
@@ -146,5 +149,55 @@ public class PortfolioStoreLogic implements PortfolioStore {
 		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
 		return mapper.selectPortfoliosByTags(tags);
 	}
+	
+	//추가---------------------
+	
+	@Override
+	public List<Category> selectAllCategory() {
+		SqlSession session = factory.openSession();
+		List<Category> categoryList = null;
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			categoryList = mapper.selectAllCategory();
+		}finally {
+			session.close();
+		}
+		return categoryList;
+	}
 
+	@Override
+	public List<Portfolio> selectPortfoliosByCategoryAndTitle(String category, String title, String begin, String end) {
+		SqlSession session = factory.openSession();
+		List<Portfolio> portfolioList = null;
+		HashMap<String, String> map = new HashMap<>();
+		map.put("category", category);
+		map.put("title", title);
+		map.put("begin", begin);
+		map.put("end", end);
+		try {
+			PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+			portfolioList = mapper.selectPortfoliosByCategoryAndTitle(map);
+		}finally {
+			session.close();
+		}
+		return portfolioList;
+	}
+
+	@Override
+	public List<Portfolio> selectPortfoliosByCategoryAndMakerName(String category, String makerName, String begin, String end) {
+		SqlSession session = factory.openSession();
+		List<Portfolio> portfolioList = null;
+		HashMap<String, String> map = new HashMap<>();
+		map.put("category", category);
+		map.put("makerName", makerName);
+		map.put("begin", begin);
+		map.put("end", end);
+		try {
+			PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+			portfolioList = mapper.selectPortfoliosByCategoryAndMakerName(map);
+		}finally {
+			session.close();
+		}
+		return portfolioList;
+	}
 }

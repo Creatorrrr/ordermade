@@ -9,11 +9,13 @@
 			<a href="${ctx }/"><img src="${ctx }/views/images/panda4.jpg"
 				style="width: 80px; height: 80px"><b>판다</b></a>
 
+
 			<div class="text-center"
 				style="line-height: 10px; font-size: 15px; margin: 0px;">
 				<p>1:1 매칭 서비스</p>
 			</div>
 		</div>
+
 
 		<nav style="margin-top: 20px; font-size: 20px;">
 			<c:choose>
@@ -41,6 +43,7 @@
 <div class="wrapper row2">
 	<div
 		style="padding:160px 10px 30px 10px;background-image: url('${ctx}/resources/imgs/pp.jpg'); background-position:center center"">
+
 		<div>
 			<form class="navbar-form text-center" method="post" action="#"
 				role="search">
@@ -64,23 +67,27 @@
 	<div class="rounded">
 		<nav id="mainav" class="clear">
 			<ul class="clear">
+
 				<li class=""><a href="${ctx }/">Main</a></li>
-				<li><a class="drop" href="${ctx }/product/ui/search.do">Category</a>
+				<li><a class="drop" href="${ctx }/product/ui/search.do?category=FUNITURE">Category</a>
+
 					<ul>
 						<c:forEach items="${categories}" var="category">
 							<li><a
 								href="${ctx }/product/ui/search.do?category=${category.type}">${category.type }</a></li>
 						</c:forEach>
 					</ul></li>
-				<li><a class="drop" href="${ctx }/portfolio/ui/search.do">Portfolio
-						List</a>
+
+				<li><a class="drop" href="${ctx }/portfolio/ui/search.do?category=FUNITURE">Portfolio List</a>
+
 					<ul>
 						<c:forEach items="${categories }" var="category">
 							<li><a
-								href="${ctx }/portfolio/ui/search.do?type=${category.type}">${category.type }</a></li>
+								href="${ctx }/portfolio/ui/search.do?category=${category.type}">${category.type }</a></li>
 						</c:forEach>
 					</ul></li>
 				<c:if test="${sessionScope.loginId ne null}">
+
 					<li><a href="${ctx}/request/ui/myRequest.do">Request List</a></li>
 				</c:if>
 				<c:choose>
@@ -94,6 +101,7 @@
 					</c:when>
 				</c:choose>
 				<li><a href="${ctx}/member/myPage.do">My Page</a></li>
+
 			</ul>
 		</nav>
 	</div>

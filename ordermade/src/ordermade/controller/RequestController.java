@@ -265,12 +265,12 @@ public class RequestController {
 
 
 	@RequestMapping(value = "request/ui/register.do", method = RequestMethod.GET)
-	public ModelAndView showRegisterRequestUI(String makerId, String productId, String categoryId) {
+	public ModelAndView showRegisterRequestUI(String makerId, String productId, String category) {
 		ModelAndView modelAndView = new ModelAndView("request/register");
 		if(makerId != null){
 			modelAndView.addObject("makerId", makerId);
 			modelAndView.addObject("productId", productId);
-			modelAndView.addObject("categoryId", categoryId);
+			modelAndView.addObject("category", category);
 		}
 		return modelAndView;
 	}	//GET http://localhost:8080/ordermade/request/ui/register.do

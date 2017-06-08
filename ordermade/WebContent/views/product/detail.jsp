@@ -76,7 +76,6 @@ ${head_body}
 
 <div class="wrapper row3">
 	<div class="rounded">
-		<!-- 본문 시작 -->
 		<div id="contents" class="two_third first">
 			<!-- 상품 제목 -->
 			<h1 class="productTitle">${product.title }</h1>
@@ -105,7 +104,7 @@ ${head_body}
 			</div>
 			<!-- 상품 설명 종료 -->
 
-			<!-- 후기 시작 -->
+			<!-- 후기 목록 시작 -->
 			<div class="reviewListBox">
 				<h2 class="productSubTitle">상품 후기</h2>
 				<hr style="margin:0px">
@@ -162,23 +161,11 @@ ${head_body}
 			<!-- 후기 등록 종료 -->
 		</div>
 		<!-- 본문 종료 -->
-		<div class="sidebar one_third" style="float:right">
-			<h6>제작자 정보</h6>
-			<nav class="sdb_holder">
-				<ul>
-					<li>
-						<img src="${ctx }/main/file/download.do?fileName=${product.maker.image}">
-					</li>
-					<li><p>제작자 아이디 : ${product.maker.id }</p></li>
-					<li><p>제작자 소개 : ${product.maker.introduce }</p></li>
-					<li><p>가격정보 : ${product.price }원</p></li>
-					<li><p>작업기간 : ${product.period }일</p></li>
-					<li>
-						<a href="${ctx }/member/myPage.do?makerId=${product.maker.id }">프로필 바로가기</a>
-					</li>
-				</ul>
-			</nav>
+
+		<div class="sidebar one_third">
+			<%@include file="/views/common/productNav.jsp"%>
 		</div>
+
 		<!-- / main body -->
 		<div class="clear"></div>
 	</div>
@@ -238,7 +225,7 @@ function reviewRegister(){
 		data: $('#form2').serialize(),
 		dataType : "text",
 		success : function(data) {
-			if(data=="true"){
+			if(data=="true"){ 
 				javascript:Reviews(${product.id})
 			}
 		}
