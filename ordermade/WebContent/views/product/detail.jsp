@@ -15,6 +15,9 @@ ${head_body}
 	margin-bottom: 15px;
 	display:inline-block;
 }
+.productSubTitle {
+	display:inline-block;
+}
 .productDetailBox {
 	margin: 15px;
 }
@@ -29,6 +32,9 @@ ${head_body}
 .productContentBox {
 	margin:30px 0px 30px 0px;
 }
+.reviewListBox {
+	margin: 15px;
+}
 .reviewBox {
 	overflow:hidden;
 	height: auto;
@@ -37,6 +43,9 @@ ${head_body}
 	height: 70px;
 	width: 80%;
 	display: inline-block;
+}
+.reviewContentBox * {
+	color: black;
 }
 .reviewContentBox h3 {
 	display: inline-block;
@@ -50,12 +59,18 @@ ${head_body}
 .reviewControlBox {
   float: right;
 }
-h3 {
+.reviewControlBox p {
+  text-align: right;
+}
+.reviewTitle {
 	font-size: 20px;
 	font-weight: 400;
 }
-p {
-	color:black;
+.reviewRegisterBox {
+	margin: 15px;
+}
+.reviewRegisterBox * {
+	color: black;
 }
 </style>
 
@@ -70,16 +85,17 @@ p {
 				<c:if test="${product.maker.id eq sessionScope.loginId}">
 					<!--본인이 작성한 글만 수정 삭제 가능하도록   -->
 					<div class="productControlBox">
-						<input class="btn btn-warning" type="button" value="삭제"
-							onclick="javascript:deleteProduct(${product.id})">
-						<input class="btn btn-warning" type="button" value="수정"
+						<input class="btn btn-default" type="button" value="수정"
 							onclick="location.href='${ctx}/product/ui/modify.do?id=${product.id}';">
+						<input class="btn btn-default" type="button" value="삭제"
+							onclick="javascript:deleteProduct(${product.id})">
 					</div>
 				</c:if>
 			</c:if>
 			<!-- 상품 설명 시작 -->
 			<div class="productDetailBox">
-				<h2>상품 상세</h2>
+				<h2 class="productSubTitle">상품 상세</h2>
+				<hr style="margin:0px 0px 15px 0px;">
 				<!-- 상품 이미지  -->
 				<div class="productImageBox" align="center">
 					<img src="${ctx }/product/image.do?img=${product.image}" />
@@ -91,94 +107,75 @@ p {
 
 			<!-- 후기 시작 -->
 			<div class="reviewListBox">
-				<h2>상품 후기</h2>
+				<h2 class="productSubTitle">상품 후기</h2>
+				<hr style="margin:0px">
+				<div class="right">
+					<form class="navbar-form text-right">
+						<select id="reviewSearchType" class="form-control" style="display: inline-block">
+							<option value="title">제목</option>
+							<option value="writer">작성자</option>
+						</select>
+						<input id="reviewSearchKeyword" class="form-control" type="text" value=""
+							placeholder="Search Here" style="display: inline-block" />
+						<button id="reviewSearchBtn" class="fa fa-search btn btn-default" type="button" title="Search">검색</button>
+						<button class="fa fa-search btn btn-default" type="button" title="Search" onclick="javascript:reviewController.getReviewsByProductId(1)">후기 전체 보기</button>
+					</form>
+				</div>
 				<!-- 후기 목록 시작 -->
 				<div id="reviewList">
-					<%-- <c:forEach items="${product.reviews }" var="review">
-						<form id="upDown${review.id }" onsubmit="return false;">
-							<input type="hidden" id="productId" name="product.id" value="${product.id }"> 
-							<input type="hidden" id="id" name="id" value="${review.id }">
-							<input type="hidden" id="title" name="title" value="${review.title }">
-							<input type="hidden" id="content" name="content" value="${review.content }">
-							<input type="hidden" id="grade" name="grade" value="${review.grade }">
-							<table class="table" style="font-size: 13px; padding: 20px;">
-								<tr>
-									<td>작성자 : "form${review.id }"</td>
-									<td>${review.consumer.id }</td>
-								</tr>
-								<tr>
-									<td>제목 : ${review.id }</td>
-									<td>${review.title }</td>
-								</tr>
-								<tr>
-									<td>내용 :</td>
-									<td>${review.content }</td>
-								</tr>
-
-							</table>
-							<c:if test="${sessionScope.loginId eq review.consumer.id }">
-								<input type="button" value="수정"
-									onclick="javascript:beforeUpdateReview(${review.id})">
-								<input type="button" value="삭제"
-									onclick="javascript:deleteReview(${review.id})">
-							</c:if>
-							<c:if test="${sessionScope.loginId ne review.consumer.id }">
-								<input type="button" value="따봉"
-									onclick="javascript:upGrade(${review.id})">
-								<input type="button" value="우우" onclick="javascript:downGrade()">
-							</c:if>
-						</form>
-					</c:forEach> --%>
+					<!-- reviews from server -->
 				</div>
-				<!-- 후기 목록 종료 -->
-				
-				<div>
-					<button class="reviewAllListBtn" onclick="javascript:Reviews(${product.id})">전체 댓글</button>
-					<button class="reviewMyListBtn" onclick="javascript:myReview(1,${product.id})">내가 작성한 댓글</button>
-				</div>
-
-				
-				<form id="form2" onsubmit="return false;">
-					<input type="hidden" id="productId" name="product.id"
-						value="${product.id }">
-					<div class="one_third first">
-						<label for="title">제목 <span>*</span></label> <input type="text"
-							id="title" name="title" value="" size="22">
+			</div>
+			<!-- 후기 목록 종료 -->
+			
+			<!-- 후기 등록 시작 -->
+			<div class="reviewRegisterBox">
+				<h2 class="productSubTitle">후기 등록</h2>
+				<hr style="margin:0px 0px 15px 0px;">
+				<form id="reviewRegisterForm" onsubmit="return false;">
+					<input type="hidden" id="productId" name="product.id" value="${product.id }">
+					<div class="two_third first">
+						<label for="title">제목</label>
+						<input class="form-control" type="text" name="title" value="" size="22">
 					</div>
-
 					<div class="one_third">
-						<label for="grade">평점<span>*</span></label> <input type="text"
-							id="grade" name="grade" value="" size="22">
+						<label for="reviewSearchType">평점</label>
+						<select id="reviewSearchType" class="form-control" style="display: inline-block">
+							<option value="1">★</option>
+							<option value="2">★★</option>
+							<option value="3">★★★</option>
+							<option value="4">★★★★</option>
+							<option value="5">★★★★★</option>
+						</select>
 					</div>
-
 					<div class="block clear">
-						<label for="content">후기</label>
-						<textarea id="content" name="content" placeholder="댓글쓰기" cols="55"
+						<label for="content">내용</label>
+						<textarea class="form-control" name="content" placeholder="댓글쓰기" cols="55"
 							rows="7"></textarea>
 					</div>
-					<div>
-						<input type="button" onclick="javascript:reviewRegister()"
-							value="Submit"> <input name="reset" type="reset"
-							value="Reset">
+					<div align="right">
+						<input class="btn btn-default" type="button" onclick="javascript:reviewController.registerReview()" value="등록">
+						<input class="btn btn-default" type="reset" value="취소">
 					</div>
 				</form>
 			</div>
+			<!-- 후기 등록 종료 -->
 		</div>
 		<!-- 본문 종료 -->
 		<div class="sidebar one_third" style="float:right">
 			<h6>제작자 정보</h6>
 			<nav class="sdb_holder">
 				<ul>
-					<li><p>가격정보 : ${product.price }원</p></li>
-					<li><p>작업기간 : ${product.period }일</p></li>
-					<li><img
-						src="${ctx }/member/image.do?img=${product.maker.image}" /></li>
+					<li>
+						<img src="${ctx }/main/file/download.do?fileName=${product.maker.image}">
+					</li>
 					<li><p>제작자 아이디 : ${product.maker.id }</p></li>
 					<li><p>제작자 소개 : ${product.maker.introduce }</p></li>
-					<li><p></p></li>
-					<li><a
-						href="${ctx }/member/myPage.do?makerId=${product.maker.id }">프로필
-							바로가기</a></li>
+					<li><p>가격정보 : ${product.price }원</p></li>
+					<li><p>작업기간 : ${product.period }일</p></li>
+					<li>
+						<a href="${ctx }/member/myPage.do?makerId=${product.maker.id }">프로필 바로가기</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -191,7 +188,19 @@ p {
 
 <script type="text/javascript">
 $(document).ready(function() {
-	reviewController.getReviewsByProductId("${product.id}", 1);
+	reviewController.getReviewsByProductId(1);
+});
+
+//검색을 클릭하면 검색된 의뢰서 목록을 가져온다.
+$("#reviewSearchBtn").click(function() {
+	var type = $("#reviewSearchType option:selected").val();
+	var keyword = $("#reviewSearchKeyword");
+	if (type === "title") {
+		reviewController.getReviewsByTitleAndProductId(keyword.val(), 1);
+	} else if (type === "writer") {
+		reviewController.getReviewsByConsumerIdAndProductId(keyword.val(), 1);
+	}
+	keyword.val("");
 });
 
 /* function upGrade(reviewId) {
@@ -317,17 +326,7 @@ function reviewRegister(){
 		 }
 	 });
 }  
- function deleteReview(data) {
-	$.ajax({
-		url:"${ctx}/product/review/remove.do?id="+data,
-		type:"get",
-		success :function(data) {
-			if(data=="true"){
-				javascript:Reviews(${product.id});
-			}
-		}
-	});
-}
+
 function Reviews(data){
 	$.ajax({
 		url:"${ctx}/product/ajax/product/productId.do?productId="+data,
@@ -417,12 +416,93 @@ var displayReviews = function(xml) {
 } */
 
 var reviewController = {
-	getReviewsByProductId : function(productId, page) {
+	
+	registerReview : function() {
 		$.ajax({
-			url : "${ctx}/product/ajax/reviews/productid.do?productId=" + productId + "&page=" + page,
+			url:"${ctx}/product/review/register.do",
+			type:"post",
+			data: $('#reviewRegisterForm').serialize(),
+			dataType : "text",
+			success : function(data) {
+				if(data === "true"){
+					reviewController.getReviewsByProductId(1);
+				}
+			}
+		});
+	},
+	
+	modifyReview : function() {
+		$.ajax({
+			url:"${ctx}/product/review/modify.do",
+			type:"post",
+			data: $('#reviewModifyForm').serialize(),
+			dataType : "text",
+			success : function(data) {
+				if(data === "true"){
+					reviewController.getReviewsByProductId(1);
+				}
+			}
+		});
+	},
+		
+	deleteReview : function(reviewId) {
+		$.ajax({
+			url : "${ctx}/product/review/remove.do?id=" + reviewId,
+			type : "get",
+			success : function(data) {
+				if(data === "true"){
+					reviewController.getReviewsByProductId(1);
+				}
+			}
+		});
+	},
+		 
+	getReviewsByProductId : function(page) {
+		$.ajax({
+			url : "${ctx}/product/ajax/reviews/productid.do?productId=${product.id}&page=" + page,
 			type : "get",
 			dataType : "xml",
-			success : function(xml) {console.log("asdf");
+			success : function(xml) {
+					var xmlData = $(xml).find("review");
+					var listLength = xmlData.length;
+					$("#reviewList").empty();
+					if (listLength) {
+						var contentStr = "";
+						$(xmlData).each(function() {
+							contentStr += reviewController.makeContent(this);
+						});
+						$("#reviewList").append(contentStr);
+					}
+			}
+		});
+	},
+	
+	getReviewsByTitleAndProductId : function(title, page) {
+		$.ajax({
+			url : "${ctx}/product/ajax/reviews/TP.do?productId=${product.id}&title=" + title + "&page=" + page,
+			type : "get",
+			dataType : "xml",
+			success : function(xml) {
+					var xmlData = $(xml).find("review");
+					var listLength = xmlData.length;
+					$("#reviewList").empty();
+					if (listLength) {
+						var contentStr = "";
+						$(xmlData).each(function() {
+							contentStr += reviewController.makeContent(this);
+						});
+						$("#reviewList").append(contentStr);
+					}
+			}
+		});
+	},
+	
+	getReviewsByConsumerIdAndProductId : function(consumerId, page) {
+		$.ajax({
+			url : "${ctx}/product/ajax/reviews/CP.do?productId=${product.id}&consumerId=" + consumerId + "&page=" + page,
+			type : "get",
+			dataType : "xml",
+			success : function(xml) {
 					var xmlData = $(xml).find("review");
 					var listLength = xmlData.length;
 					$("#reviewList").empty();
@@ -442,14 +522,14 @@ var reviewController = {
 
 		content += "<div class='reviewBox'>";
 		content += 		"<div class='reviewContentBox'>";
-		content += 			"<h3>" + $(xml).find("review>title").text() + "</h3>";
+		content += 			"<h3 class='reviewTitle'>" + $(xml).find("review>title").text() + "</h3>";
+		content += 			"<div class='reviewControlBox'>";
+		content += 				"<p>작성자 : " + $(xml).find("review>consumer>id").text() + "</p>";
 		if($(xml).find("review>consumer>id").text() === "${sessionScope.loginId}") {
-			content += "<div class='reviewControlBox'>";
-			content += 		"<p>작성자 : " + $(xml).find("review>consumer>id").text() + "</p>";
-			content += 		"<button value='수정' onclick='javascript:beforeUpdateReview(" + $(xml).find("review>id").text() + ")'>수정</button>";
-			content += 		"<button value='삭제' onclick='javascript:deleteReview(" + $(xml).find("review>id").text() + ")'>삭제</button>";
-			content += "</div>";
+			content += 			"<button class='btn btn-default' onclick='javascript:beforeUpdateReview(" + $(xml).find("review>id").text() + ")'>수정</button>";
+			content += 			"<button class='btn btn-default' onclick='javascript:reviewController.deleteReview(" + $(xml).find("review>id").text() + ")'>삭제</button>";
 		}
+		content += 				"</div>";
 		content += 			"<p>" + $(xml).find("review>content").text() + "</p>";
 		content += 		"</div>";
 		content += 		"<div class='reviewWriterBox'><img src='${ctx}/main/file/download.do?fileName=" + $(xml).find("review>consumer>image").text() + "'></div>"

@@ -67,10 +67,9 @@
 		FROM (
 		<include refid="selectReviewWithRowNum" />
 		FROM review
-		WHERE product_id = #{productId})
-		WHERE rnum BETWEEN #{begin}
-		AND #{end}
-		ORDER BY id ASC
+		WHERE product_id = #{productId}
+		ORDER BY id DESC)
+		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
 	<!-- For ProductMapper - Review Association -->
@@ -81,8 +80,7 @@
 		<include refid="selectReviewWithRowNum" />
 		FROM review
 		WHERE product_id = #{productId}
-		ORDER BY id ASC
-		)
+		ORDER BY id DESC)
 		WHERE rnum BETWEEN 1 AND 10
 	</select>
 
@@ -92,10 +90,9 @@
 		FROM (
 		<include refid="selectReviewWithRowNum" />
 		FROM review
-		WHERE title = #{title} AND product_id = #{productId})
-		WHERE
-		rnum BETWEEN
-		#{begin} AND #{end}
+		WHERE title LIKE '%${title}%' AND product_id = #{productId}
+		ORDER BY id DESC)
+		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
 	<select id="selectReviewsByConsumerIdAndProductId"

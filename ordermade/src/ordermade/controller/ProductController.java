@@ -11,13 +11,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -201,13 +201,10 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/review/remove.do", produces = "text/plain")
-	public @ResponseBody String removeReviewById(String id, HttpServletRequest req) {
+	public @ResponseBody String removeReviewById(String id, HttpSession session) {
 		// Ajax 리뷰 삭제후 화면유지
-		if (!pService.removeReviewById(id)) {
-			return "false";
-		} else {
-			return "true";
-		}
+		if(checkLogined(session)) return "member/login";	// check logined
+		return pService.removeReviewById(id) + "";
 	}
 
 	// ***********************************************************************************
@@ -312,37 +309,15 @@ public class ProductController {
 	@RequestMapping(value = "/ajax/reviews/TP.do")
 	public @ResponseBody Reviews findReviewsByTitleAndProductId(String page, String productId, String title) {
 		// Ajax 생산품 아이디 그리고 내용으로 리뷰들 출력
-		System.out.println(productId);
-		System.out.println(title);
-		List<Review> TPreview = pService.findReviewsByTitleAndProductId(title, productId, "1");
-
-		Reviews reviews = new Reviews();
-		reviews.setReviews(TPreview);
-
-		return reviews;
+		if(page == null || page.isEmpty()) page = "1";
+		return new Reviews(pService.findReviewsByTitleAndProductId(title, productId, page));
 	}
 
 	@RequestMapping(value = "/ajax/reviews/CP.do")
-	public @ResponseBody Reviews findReviewsByConsumerIdAndProductId(String page, String productId, String consumerId,
-			HttpServletRequest req) {
+	public @ResponseBody Reviews findReviewsByConsumerIdAndProductId(String page, String productId, String consumerId) {
 		// Ajax 생산품 아이디 그리고 내용으로 리뷰들 출력
-
-		if (consumerId == null) {
-			String id = (String) req.getSession().getAttribute("loginId");
-			List<Review> CPreview = pService.findReviewsByConsumerIdAndProductId(id, productId, "1");
-
-			Reviews reviews = new Reviews();
-			reviews.setReviews(CPreview);
-
-			return reviews;
-		} else {
-			List<Review> CPreview = pService.findReviewsByConsumerIdAndProductId(consumerId, productId, "1");
-
-			Reviews reviews = new Reviews();
-			reviews.setReviews(CPreview);
-
-			return reviews;
-		}
+		if(page == null || page.isEmpty()) page = "1";
+		return new Reviews(pService.findReviewsByConsumerIdAndProductId(consumerId, productId, page));
 	}
 
 	// Review end
@@ -440,4 +415,10 @@ public class ProductController {
 		return new ModelAndView("product/search").addObject("categories", pService.findAllCategory())
 				.addObject("category", category).addObject("products", pService.findProductsByCategory(category, page));
 	}
+	
+	// Complete
+		private boolean checkLogined(HttpSession session) {
+			String loginId = (String)session.getAttribute("loginId");
+			return loginId == null || loginId.isEmpty();
+		}
 }
