@@ -14,11 +14,9 @@ ${box2 }
 	
 			<h1>의뢰서 등록 페이지</h1>
 			<br>
-			<form action="${ctx }/request/xml/register.do" method="post" id="form1" name="form1" onsubmit="return checkIt()">
-				<input name="category" type="hidden" value="${categoryId }">
-
+			<form action="${ctx }/request/xml/register.do" method="post" id="form1" name="form1" enctype="multipart/form-data" onsubmit="return checkIt()">
+				<%-- <input name="category" type="hidden" value="${categoryId }"> --%>
 				<table class="table" id="table1">
-					
 					<tr>
 						<th>제작 항목</th>
 						<td><div id="category"></div></td>
@@ -45,7 +43,8 @@ ${box2 }
 					</tr>
 				</table>
 				<div align="center">
-					<input class="btn btn-success" type="button" id="btn" value="저장하기">
+					<input class="btn btn-default" type="button" id="btn" value="저장">
+					<input class="btn btn-default" type="reset" id="btn" value="취소">
 				</div>
 			</form>
 			
@@ -108,16 +107,23 @@ ${box2 }
 			
 			//저장버튼 구현
 			$("#btn").click(function() {
+				var data = new FormData($('#form1')[0]);
 				console.log("----------");
+				
 				if(checkIt()){
 					$.ajax({
-						url : "${ctx}/request/xml/register.do",
 						type : "post",
-						data : $('#form1').serialize(),
+						enctype :'multipart/form-data',
+						url : "${ctx}/request/xml/register.do",
+						data : data,
+						processData: false,
+						contentType: false,
+						cache: false,
+						
 						dataType : "text",
-						success : function(data) {
-							if(data=="true"){
-								location.href="${ctx}/request/ui/myRequest.do";//성공시 페이지 전환
+						success : function(resultData) {
+							if(resultData=="true"){
+								location.href="${ctx}/request/ui/myRequest.do"//성공시 페이지 전환
 							}
 						},
 						error: function(xml){
@@ -127,8 +133,6 @@ ${box2 }
 					});
 				}
 			});
-			
-			
 			
 			//필수 입력값 체크 
 			function checkIt() {

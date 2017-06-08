@@ -16,7 +16,7 @@ ${box2 }
 				<h1>나의 상품페이지</h1>
 				<div class="fl_left">
 					<%-- <c:if test="${sessionScope.loginId ne null && boardId ne null}"> --%>
-					<a class="btn btn-success" href="${ctx}/product/ui/register.do">상품 등록</a>
+					<a class="btn btn-default" href="${ctx}/product/ui/register.do">상품 등록</a>
 					<%-- </c:if> --%>
 				</div>
 				

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/views/common/_html.jsp"%>
-<title>나의 의뢰서</title>
+<title>상품 페이지</title>
 <%@ include file="/views/common/_common.jsp"%>
 	
 ${head_body}
@@ -68,7 +68,7 @@ ${head_body}
 								</table>
 							</div>
 							<div class="detailBtnBox">
-								<input type='button' value='자세히보기' class="btn btn-success"
+								<input type='button' value='자세히보기' class="btn btn-default"
 									onclick="javascript:location.href='${ctx}/product/ui/detail.do?id=${product.id}'">
 							</div>
 						</div>

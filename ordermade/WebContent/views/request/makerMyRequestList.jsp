@@ -154,7 +154,7 @@ ${box2 }
 			function tab1(doName, page){
 				var page = page || 1;
 				ajaxName = doName;
-				console.log(ajaxName);
+		//		console.log(ajaxName);
 				//var ctx = ${ctx};
 				$.ajax({
 					url : '${ctx}/request/xml/'+doName+'.do?page='+page,
@@ -165,7 +165,7 @@ ${box2 }
 						$('#resultBox').html('');
 						var list = $(xml).find("request");
 						var pageNum = $('>page',list.get(0)).text();
-						console.log(pageNum);
+				//		console.log(pageNum);
 						pagination(pageNum);
 						//console.log(list.size());
 						list.each(function(){
@@ -219,6 +219,9 @@ ${box2 }
 				if(status != 'tab2'){
 					tab1('searchMyRequestsByMakerId');
 					status = 'tab2';
+					$('#tab2').addClass("btn-primary").removeClass('btn-default');
+					//$('#tab1').removeClass("btn-primary").addClass('btn-default');
+					$('#tab3').removeClass("btn-primary").addClass('btn-default');
 				}
 			});
 			
@@ -228,6 +231,9 @@ ${box2 }
 				if(status != 'tab3'){
 					tab1('searchMyRequestsByMakerIdWithPayment');
 					status = 'tab3';
+					$('#tab3').addClass("btn-primary").removeClass('btn-default');
+					//$('#tab1').removeClass("btn-primary").addClass('btn-default');
+					$('#tab2').removeClass("btn-primary").addClass('btn-default');
 				}
 			});
 			

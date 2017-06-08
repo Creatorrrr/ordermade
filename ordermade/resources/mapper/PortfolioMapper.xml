@@ -72,7 +72,7 @@
   		<include refid="selectPortfolio"/>
   		FROM (<include refid="selectPortfolioWithRowNum"/>
   				FROM portfolio
-  				WHERE maker_id = #{makerId} 
+  				WHERE maker_id = #{makerId} AND title LIKE '%${title}%' 
   				ORDER BY id DESC)
   		WHERE rnum BETWEEN #{begin} AND #{end}		
   	</select>
@@ -96,6 +96,32 @@
 	            #{tag.keyword}
 	        </foreach>
  	</select>
+ 	
+ 	<!--추가  -->
+ 	
+ 	<select id="selectAllCategory" parameterType="HashMap"
+		resultType="Category">
+		SELECT type
+		FROM category
+	</select>
+ 	
+ 	<select id="selectPortfoliosByCategoryAndTitle" parameterType="HashMap" resultMap="portfolioMap">
+		<include refid="selectPortfolio" />
+		FROM (<include refid="selectPortfolioWithRowNum" />
+				FROM portfolio
+				WHERE type = #{category} AND title LIKE '%${title}%'
+				ORDER BY id DESC)
+		WHERE rnum BETWEEN #{begin} AND #{end}
+	</select>
+
+	<select id="selectPortfoliosByCategoryAndMakerName" parameterType="HashMap" resultMap="portfolioMap">
+		<include refid="selectPortfolio" />
+		FROM (<include refid="selectPortfolioWithRowNum" />
+				FROM portfolio INNER JOIN member ON portfolio.maker_id = member.id
+				WHERE portfolio.type = #{category} AND member.name LIKE '%${makerName}%'
+				ORDER BY portfolio.id DESC)
+		WHERE rnum BETWEEN #{begin} AND #{end}
+	</select>
  
   </mapper>
   

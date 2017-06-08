@@ -3,16 +3,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 
-<h6>제작자 정보</h6>
-			<nav class="sdb_holder">
-				<ul>
-					<li><p>가격정보 : 원</p></li>
-					<li><p>작업기간 : 일</p></li>
-					<li><img src="${ctx }/views/images/img-10.jpg" /></li>
-					<li><p>제작자 아이디 :</p></li>
-					<li><p>제작자 소개</p></li>
-					<li><p></p></li>
-					<br>
-					<li><a href="">프로필 바로가기</a></li>
-				</ul>
-			</nav>
+<h2>제작자 정보</h2>
+<nav class="sdb_holder">
+	<ul>
+		<li><p>가격정보 :${product.price }원</p></li>
+		<li><p>작업기간 :${product.period } 일</p></li>
+		<li><img src="${ctx }/member/image.do?img=${product.maker.image}" /></li>
+		<li><p>제작자 아이디 : ${product.maker.id }</p></li>
+		<li><p>제작자 소개</p></li>
+		<li><p>${product.maker.introduce }</p></li>
+		<br>
+		<li><a href="${ctx }/member/myPage.do?makerId=${product.maker.id }">프로필 바로가기</a></li>
+	</ul>
+</nav>
+
+
+

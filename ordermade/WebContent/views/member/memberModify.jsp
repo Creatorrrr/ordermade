@@ -82,7 +82,7 @@ ${box2 }
 					<br>
 					<div align="center">
 						<input class="btn btn-default" type="reset" value="취소">
-						<input class="btn btn-success" type="button" value="수정" onclick="javascript:memberController.modifyMember()">
+						<input class="btn btn-default" type="button" value="수정" onclick="javascript:memberController.modifyMember()">
 					</div>
 				</form>
 

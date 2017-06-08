@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ordermade.constants.Constants;
+import ordermade.domain.Category;
 import ordermade.domain.Member;
 import ordermade.domain.Portfolio;
 import ordermade.domain.Tag;
 import ordermade.service.facade.PortfolioService;
+import ordermade.store.facade.CategoryStore;
 import ordermade.store.facade.PortfolioStore;
 import ordermade.store.facade.TagStore;
 import ordermade.store.logic.PortfolioStoreLogic;
@@ -21,6 +23,8 @@ public class PortfolioServiceLogic implements PortfolioService{
 	private PortfolioStore store;
 	@Autowired
 	private TagStore tStore;
+	@Autowired
+	private CategoryStore cStore;
 	
 	public PortfolioServiceLogic() {
 		store = new PortfolioStoreLogic();
@@ -68,6 +72,25 @@ public class PortfolioServiceLogic implements PortfolioService{
 	public List<Portfolio> findPortfoliosByCategory(String category, String page) {
 		return excludePassword(store.selectPortfoliosByCategory(category, getPortfolioBegin(page), getPortfolioEnd(page)));
 	}
+	
+	//추가----------------------------
+	
+	@Override
+	public List<Category> findAllCategory() {
+		return cStore.selectAllCategory();
+	}
+	
+	@Override
+	public List<Portfolio> findPortfoliosByCategoryAndTitle(String category, String title, String page) {
+		return excludePassword(store.selectPortfoliosByCategoryAndTitle(category, title, getPortfolioBegin(page), getPortfolioEnd(page)));
+	}
+
+	@Override
+	public List<Portfolio> findPortfoliosByCategoryAndMakerName(String category, String makerName, String page) {
+		return excludePassword(store.selectPortfoliosByCategoryAndMakerName(category, makerName, getPortfolioBegin(page), getPortfolioEnd(page)));
+	}
+	
+	//---------------------------
 	
 	
 	

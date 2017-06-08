@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ include file="/views/common/_html.jsp"%>
 <title></title>
 <%@ include file="/views/common/_common.jsp"%>
@@ -19,9 +20,16 @@ ${head_body}
 				<!-- 장르별 추천작, 장르를 select에서 선택하면 ajax로 controller 들러서 리스트 다시 뿌려줌 -->
 				<div class="navbar-form" id="recoResult">
 					<select id="recoGenre" class="form-control navbar-right">
-						<c:forEach items="${genreList }" var="genre">
+						<option value="title">FUNITURE</option>
+						<option value="makerName">ACCESSORY</option>
+						<option value="title">KITCHEN</option>
+						<option value="makerName">DIGITAL</option>
+						<option value="title">CLOTHING</option>
+						<option value="makerName">SPORT</option>
+
+						<%-- <c:forEach items="${genreList }" var="genre">
 							<option value="${genre.category }">${genre.category}</option>
-						</c:forEach>
+						</c:forEach> --%>
 					</select>
 					<h2>인기 상품</h2>
 				</div>
@@ -37,9 +45,16 @@ ${head_body}
 
 				<div class="navbar-form">
 					<select id="recoGenre" class="form-control navbar-right">
-						<c:forEach items="${genreList }" var="genre">
+						<option value="title">FUNITURE</option>
+						<option value="makerName">ACCESSORY</option>
+						<option value="title">KITCHEN</option>
+						<option value="makerName">DIGITAL</option>
+						<option value="title">CLOTHING</option>
+						<option value="makerName">SPORT</option>
+
+						<%-- <c:forEach items="${genreList }" var="genre">
 							<option value="${product.category }">${product.category}</option>
-						</c:forEach>
+						</c:forEach> --%>
 					</select>
 					<h2>최신 상품</h2>
 				</div>

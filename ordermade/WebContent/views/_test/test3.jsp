@@ -82,13 +82,6 @@ ${head_body}
 					felisi eger id justo maurisus convallicitur.</p>
 			</div>
 			<br>
-			<div>
-				<h2>상품 내용</h2>
-				<p class="">상품 번호 :</p>
-				<p class="">색상 :</p>
-				<p class="">소재 :</p>
-				<p class="">크기 :</p>
-			</div>
 			<%-- <c:forEach items="${ box_list }" var="literature"> --%>
 			<div align="center">
 				<img src="${ctx }/views/images/img6.jpg" />

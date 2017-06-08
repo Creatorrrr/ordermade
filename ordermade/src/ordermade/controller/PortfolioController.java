@@ -26,12 +26,16 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.sun.xml.internal.ws.wsdl.writer.document.Port;
 
+import oracle.net.aso.f;
 import ordermade.constants.Constants;
 import ordermade.domain.Category;
 import ordermade.domain.Member;
 import ordermade.domain.Portfolio;
 import ordermade.domain.Portfolios;
+import ordermade.domain.Product;
 import ordermade.domain.Products;
+import ordermade.domain.Review;
+import ordermade.domain.Reviews;
 import ordermade.service.facade.MemberService;
 import ordermade.service.facade.PortfolioService;
 import ordermade.service.facade.ProductService;
@@ -215,32 +219,41 @@ public class PortfolioController {
 	public ModelAndView showDetailPortfolioUI(String id) {
 		
 		Portfolio portfolio = pService.findPortfolioById(id);
-	
-		System.out.println("ui/detail.do->portfolio/detail#########################"+id);  //test
-		
 		ModelAndView modelAndView = new ModelAndView("portfolio/detail");
 		modelAndView.addObject("portfolio", portfolio);
+		
+		System.out.println("ui/detail.do->portfolio/detail#########################"+id);  //test
 		return modelAndView;
 
 	} // test http://localhost:8080/ordermade/portfolio/ui/detail.do?id=7
 
 	@RequestMapping(value = "ui/search.do", method = RequestMethod.GET)
-	public ModelAndView showSearchPortfolioUI(String type, String page) {
-		if(type == null) type = Constants.CategoryType.values()[0] +"";
-		if(page == null) page = "1";
-		List<Portfolio> portfolios = pService.findPortfoliosByCategory(type, page);
+	public ModelAndView showSearchPortfolioUI(String category, String page) {
 		
+		if (category == null)
+			category = Constants.CategoryType.values()[0] + "";
+		if (page == null)
+			page = "1";
 		return new ModelAndView("portfolio/search")
-			.addObject("categories", pdService.findAllCategory())
-			.addObject("category", type)
-			.addObject("portfolios", portfolios);
+				.addObject("categories", pService.findAllCategory())
+				.addObject("category", category)
+				.addObject("portfolio", pService.findPortfoliosByCategory(category, page));
+		
+//		if(category == null) 
+//			category = Constants.CategoryType.values()[0] +"";
+//		if(page == null) 
+//			page = "1";
+//		List<Portfolio> portfolios = pService.findPortfoliosByCategory(category, page);
+//		
+//		return new ModelAndView("portfolio/search")
+//			.addObject("categories", pService.findAllCategory())
+//			.addObject("category", category)
+//			.addObject("portfolios", portfolios);
 	} // test http://localhost:8080/ordermade/portfolio/ui/search.do?type=뷰티
 
 	@RequestMapping(value = "ui/mylist.do", method = RequestMethod.GET)
-	public ModelAndView showMyPortfolioListUI(String page, HttpServletRequest req) { // String
-																		// page
+	public ModelAndView showMyPortfolioListUI(String page, HttpServletRequest req) { 
 		// -------session으로 로그인 정보 갖고 오기.
-
 		String makerId = (String) req.getSession().getAttribute("loginId");
 		List<Portfolio> portfolios = pService.findPortfoliosByMakerId(makerId, "1");
 		
@@ -270,30 +283,25 @@ public class PortfolioController {
 		return portfolios;
 	} // test http://localhost:8080/ordermade/portfolio/xml/search.do?page=2
 
-	@RequestMapping(value = "xml/searchByTitle.do", produces = "application/xml")
-	public @ResponseBody Portfolios findMyPortfoliosByTitle(String title, String page,  HttpSession session) {
-		// -------session으로 로그인 정보 갖고 오기.
-//		makerId = (String)session.getAttribute("loginId");
-//		return new Portfolios(pService.findPortfoliosByMakerIdAndTitle(makerId, title, page));
-		
-//origin
-//		makerId = (String) session.getAttribute("loginId");
-//		if (page == null)
+	@RequestMapping(value = "xml/searchByTitle.do", produces = "application/xml")                                 
+	public @ResponseBody Portfolios findMyPortfoliosByMakerIdAndTitle(String title, String page, String makerId,  HttpServletRequest req) {         //findPortfoliosByMakerIdAndTitle		
+
+//-------------------------------------		
+//		String makerId = (String) req.getSession().getAttribute("loginId");
+//		if (page == null || page == "")
 //			page = "1";
-//		List<Portfolio> list = pService.findPortfoliosByMakerIdAndTitle(makerId, title, page);
+//
+//		System.out.println(makerId);
+//		System.out.println(title);
+//		List<Portfolio> pList = pService.findPortfoliosByMakerIdAndTitle(title, makerId, "1");
+//
 //		Portfolios portfolios = new Portfolios();
-//		portfolios.setPortfolios(list);
+//		portfolios.setPortfolios(pList);
+//
 //		return portfolios;
-		
-		String makerId = (String) session.getAttribute("loginId");
-		System.out.println("@@@@@@@@@@@" + makerId);
-		
-		List<Portfolio> pList = pService.findPortfoliosByMakerIdAndTitle(makerId, title, page);
-		Portfolios portfolios = new Portfolios();
-		portfolios.setPortfolios(pList);
-		return portfolios;
-		
-	} // test - http://localhost:8080/ordermade/portfolio/xml/search2.do?title=a&page=2
+//---------------------------------------
+		return new Portfolios(pService.findPortfoliosByMakerIdAndTitle(makerId, title, page));
+	} 
 
 	@RequestMapping(value = "xml/searchById.do", produces = "application/xml")
 	public @ResponseBody Portfolio findPortfolioById(String id) {
@@ -306,11 +314,25 @@ public class PortfolioController {
 		
 	} // test http://localhost:8080/ordermade/portfolio/xml/searchById.do?id=7
 	
-	@RequestMapping("image.do")
+	
+	//추가---------------------------
+	@RequestMapping(value = "ajax/portfolios/CT.do", produces = "application/xml")
+	public @ResponseBody Portfolios findPortfoliosByCategoryAndTitle(String page, String category, String title) {
+		// Ajax 생산품 종류와 내용 검색으로 생산품들 출력
+		return new Portfolios(pService.findPortfoliosByCategoryAndTitle(category, title, page)); 
+	}
+	
+	@RequestMapping(value = "ajax/portfolios/CM.do", produces = "application/xml")
+	public @ResponseBody Portfolios findPortfoliosByCategoryAndMakerName(String page, String category, String makerName) {
+		// Ajax 생산자 이름 그리고 생산품 종류로 생산품들 출력
+		return new Portfolios(pService.findPortfoliosByCategoryAndMakerName(category, makerName, page));
+	}
+	//--------------------------
+	
+	@RequestMapping("/image.do")
 	public void getProductImage(String img, HttpServletResponse resp) {
 		File image = new File(Constants.IMAGE_PATH+img);
 		//System.out.println(img+"img");
-		
 		try {//test
 			System.out.println(image.getCanonicalPath());
 		} catch (IOException e1) {

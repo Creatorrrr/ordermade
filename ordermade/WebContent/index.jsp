@@ -64,10 +64,12 @@ var getHitsProducts = function() {
 					var contentStr = "";
 					$(xmlData).each(function() {
 						contentStr +=    "<li>";
+						contentStr +=    "<a href='${ctx }/product/ui/detail.do?id="+$(xml).find("product>id").text()+ "'>";
 						contentStr += 		"<img src=\"${ctx }/product/image.do?img=" + $(this).find("product>image").text() +"\">";
+						contentStr +=    "</a>";
 						contentStr +=	  "</li>";
 					});
-					
+				
 					$("#HitsProductImages").append(contentStr);
 					
 					//main Hits product slider setting
@@ -106,7 +108,9 @@ var getBrandNewProducts	= function(){
 					var contentStr = "";
 					$(xmlData).each(function() {
 						contentStr +=    "<li>";
+						contentStr +=    "<a href='${ctx }/product/ui/detail.do?id="+$(xml).find("product>id").text()+ "'>";
 						contentStr += 		"<img src=\"${ctx }/product/image.do?img=" + $(this).find("product>image").text() +"\">";
+						contentStr +=	  "</a>";
 						contentStr +=	  "</li>";
 					});
 					

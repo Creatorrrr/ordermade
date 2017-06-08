@@ -28,10 +28,21 @@ ${box1 }
 	<%@ include file="/views/common/myPageNav.jsp"%>
 			
 ${box2 }
-	
 
-	<div class="content" align="center">
-		<h1 align="left">의뢰서 검색</h1>
+<h1 align="left">의뢰서 검색</h1>
+<div class="fl_right">
+	<form class="navbar-form text-center">
+		<select id="requestSearchType" class="form-control" style="display:inline-block">
+				<option value="title">제목</option>
+				<option value="content">내용</option>
+		</select>
+		<input id="requestSearchKeyword" name="requestSearchKeyword" class="form-control"
+				type="text" value="" placeholder="Search Here" style="display:inline-block"/>
+		<button id="requestSearchBtn" class="btn btn-default" title="Search" type="button">검색</button>
+	</form>
+</div>
+<!-- 	<div class="content" align="center">
+		
 		<div style="float:right">
 			<select id="requestSearchType" class="form-control" style="display:inline-block">
 				<option value="title">제목</option>
@@ -43,11 +54,13 @@ ${box2 }
 				<em>Search</em>
 			</button>
 		</div>
-	</div> <%-- <c:forEach items="${ box_list }" var="literature"> --%>
+	</div>  --><%-- <c:forEach items="${ box_list }" var="literature"> --%>
 	
-	<div align="left">
-		<button onclick="javascript:requestController.getRequestsByBound(1);">모든 의뢰서</button>
-		<button onclick="javascript:requestController.getMyInviteRequestsForMaker(1);">내가 보낸 의뢰서</button>
+	<div class="content" align="center">					
+		<div  class="btn-group btn-group-justified" id="tabBox">
+			<button class="btn btn-default" onclick="javascript:requestController.getRequestsByBound(1);">모든 의뢰서</button>
+			<button class="btn btn-default" onclick="javascript:requestController.getMyInviteRequestsForMaker(1);">내가 보낸 의뢰서</button>
+		</div>
 	</div>
 	
 	<!-- requests from server -->
