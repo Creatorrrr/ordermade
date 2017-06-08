@@ -10,7 +10,7 @@ ${box1 }
 		
 			<%@ include file="/views/common/myPageNav.jsp"%>
 			
-${box2 }
+${box2 } 
 
 
 				<h1 align="left">나의 포트폴리오</h1>
