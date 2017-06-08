@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -33,8 +34,9 @@ public class MainController {
 	private ProductService pService;
 
 	@RequestMapping("/main.do")
-	public String showMainUI(){
-		return "redirect:/index.jsp";
+	public ModelAndView showMainUI(){
+		return new ModelAndView("main/main")
+				.addObject("categories", pService.findAllCategory());
 	}
 	
 	@RequestMapping(value="xml/categoryList.do", produces="application/xml")

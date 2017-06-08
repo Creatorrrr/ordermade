@@ -7,14 +7,11 @@
 ${head_body}
 <%@ include file="/views/common/header.jsp"%>
 
-
-
 <div class="wrapper row3">
 	<div class="rounded">
-
 		<div id="contents" class="two_third first">
 			<div class="sdb_holder">
-				<h1>상품페이지-${product.title }</h1>
+				<h1>${product.title }</h1>
 
 				<c:if test="${sessionScope.loginId ne null}">
 					<c:if test="${product.maker.id eq sessionScope.loginId}">

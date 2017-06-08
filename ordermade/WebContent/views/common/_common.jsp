@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<link href="${ctx }/resources/css/humen/bootstrap.css" rel="stylesheet">
-<script src="${ctx }/resources/js/bootstrap.min.js"></script>
 
+<link href="${ctx }/resources/css/humen/bootstrap.css" rel="stylesheet">
 <link href="${ctx }/resources/css/layout.css" rel="stylesheet" type="text/css" media="all">
 <link href="${ctx }/resources/css/framework.css" rel="stylesheet" type="text/css" media="all">
 <link href="${ctx }/resources/css/jquery.bxslider.min.css" rel="stylesheet" />
@@ -17,6 +16,7 @@
 <script src="${ctx }/resources/js/jquery.bxslider.min.js"></script>
 <script src="${ctx }/resources/js/jquery.uploadfile.min.js"></script>
 <script src="${ctx }/resources/js/vendor/ckeditor/ckeditor.js"></script>
+<script src="${ctx }/resources/js/bootstrap.min.js"></script>
 
 <script src="${ctx }/resources/js/js_simplePagination/jquery.simplePagination.js"></script>
 <%-- <script src="${ctx }/resources/js/jquery.validate.min.js"></script>
@@ -50,4 +50,10 @@ select { padding: 10px;}
 #tabBox {width: 85%; float: left;}
 #tabBox button{width: 33%;margin-bottom: 10px;}
 .request_table{border:1px solid #ccc; margin:2px; width:48%; display: inline-block;}
+
+.itemBox { width : 300px; }
+.itemExplainBox { margin-top:5px;width:85%;font-size:120%;color:black; }
+.itemTitleBox { font-weight:bold;width:50%;display:inline-block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:black; }
+.itemPriceBox { font-weight : bold;color : black;float : right; }
+.itemHitBox { font-size : 80%;color : black;text-align: right; }
 </style>
