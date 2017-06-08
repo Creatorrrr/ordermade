@@ -51,7 +51,6 @@ public class MainController {
 		if (!file.exists()) {
 			throw new RuntimeException("No such file");
 		}
-		System.out.println("==============");
 		try (InputStream in = new BufferedInputStream(new FileInputStream(file));
 				OutputStream out = resp.getOutputStream();) {
 			byte[] buf = new byte[8096];

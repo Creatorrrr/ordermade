@@ -303,15 +303,10 @@ public class ProductController {
 
 	// Review start
 
-	@RequestMapping(value = "/ajax/reviews/productid", produces = "text/plain")
+	@RequestMapping(value = "/ajax/reviews/productid.do", produces = "application/xml")
 	public @ResponseBody Reviews findReviewsByProductId(String page, String productId) {
 		// Ajax 생산품 아이디로 리뷰들 출력
-		List<Review> review = pService.findReviewsByProductId(productId, page);
-
-		Reviews reviews = new Reviews();
-		reviews.setReviews(review);
-
-		return reviews;
+		return new Reviews(pService.findReviewsByProductId(productId, page));
 	}
 
 	@RequestMapping(value = "/ajax/reviews/TP.do")

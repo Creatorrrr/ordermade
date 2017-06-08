@@ -14,6 +14,12 @@ import org.springframework.stereotype.Component;
 public class Reviews {
 	@XmlElement(name = "review")
 	private List<Review> reviews;
+	
+	public Reviews() {}
+
+	public Reviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
 
 	public List<Review> getReviews() {
 		return reviews;
