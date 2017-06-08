@@ -52,7 +52,7 @@ $(document).ready(function(){
 var getHitsProducts = function() {
 	$.ajax({
 		type : "get",
-		url : "${ctx }/product/xml/main/category/hit.do?category=가구&page=4",
+		url : "${ctx }/product/xml/main/category/hit.do?category=FUNITURE&page=4",
 		dataType : "xml",
 		success : function(xml) {
 				var xmlData = $(xml).find("product");
@@ -82,7 +82,7 @@ var getHitsProducts = function() {
 					    slideMargin: 5,    // 슬라이드간의 간격
 					    auto: false,        // 자동 실행 여부
 					    autoHover: true,   // 마우스 호버시 정지 여부
-					    controls: false,   // 이전 다음 버튼 노출 여부
+					    controls: true,   // 이전 다음 버튼 노출 여부
 					    captions: true     // 캡션 노출 여부
 					} );
 				}
@@ -94,7 +94,7 @@ var getHitsProducts = function() {
 var getBrandNewProducts	= function(){
 	$.ajax({
 		type : "get",
-		url : "${ctx }/product/xml/main/category/brandNew.do?category=악세사리&page=4",
+		url : "${ctx }/product/xml/main/category/brandNew.do?category=FUNITURE&page=4",
 		dataType : "xml",
 		success : function(xml) {
 				console.log("------load Success-----")
