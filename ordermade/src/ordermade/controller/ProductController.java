@@ -181,8 +181,8 @@ public class ProductController {
 		}
 	}
 
-	@RequestMapping(value = "/review/modify.do", method = RequestMethod.POST, produces = "text/plain")
-	public @ResponseBody String modifyReviewById(Review review, HttpServletRequest req) {
+	@RequestMapping(value = "/review/modify.do", method = RequestMethod.POST,produces = "text/plain")
+	public @ResponseBody String modifyReviewById(Review review, int updown, HttpServletRequest req) {
 		// Ajax 리뷰 수정후 화면유지
 		System.out.println(review.getId() + "*************");
 		System.out.println(review.getTitle() + "*************");
@@ -190,14 +190,36 @@ public class ProductController {
 		System.out.println(review.getContent() + "*************");
 		System.out.println(review.getProduct().getId());
 		System.out.println(review.getConsumer().getId());
+		System.out.println(updown);
 
-			Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
+		int upDown = review.getGrade();
+		Member consumer = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
+
+		if (review.getConsumer().getId().equals((String) req.getSession().getAttribute("loginId"))) {
+			
+			System.out.println("본인 수정");
 			review.setConsumer(consumer);
+
 			if (!pService.modifyReviewById(review)) {
 				return "false";
 			} else {
 				return "true";
 			}
+		} else{
+			System.out.println("따봉/우우"); 
+			upDown+=updown;
+			review.setGrade(upDown);
+			
+			if (!pService.modifyReviewById(review)) {
+				System.out.println("****************");
+				System.out.println("false");
+				return "false";
+			} else {
+				System.out.println("****************");
+				System.out.println("true");
+				return "true";
+			}
+		}
 
 	}
 

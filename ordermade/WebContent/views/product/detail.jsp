@@ -113,11 +113,11 @@ ${head_body}
 							<input type="hidden" id="userId" name="consumer.id" value="${review.consumer.id }">
 							<table class="table" style="font-size: 13px; padding: 20px;">
 								<tr>
-									<td>작성자 : "form${review.id }"</td>
+									<td>작성자 : </td>
 									<td>${review.consumer.id }</td>
 								</tr>
 								<tr>
-									<td>제목 : ${review.id }</td>
+									<td>제목 : </td>
 									<td>${review.title }</td>
 								</tr>
 								<tr>
@@ -127,14 +127,11 @@ ${head_body}
 
 							</table>
 							<c:if test="${sessionScope.loginId eq review.consumer.id }">
-								<input type="button" value="수정"
-									onclick="javascript:beforeUpdateReview(${review.id})">
-								<input type="button" value="삭제"
-									onclick="javascript:deleteReview(${review.id})">
+								<input type="button" value="수정" onclick="javascript:beforeUpdateReview(${review.id})">
+								<input type="button" value="삭제" onclick="javascript:deleteReview(${review.id})">
 							</c:if>
 							<c:if test="${sessionScope.loginId ne review.consumer.id }">
-								<input type="button" value="따봉"
-									onclick="javascript:upGrade(${review.id})">
+								<input type="button" value="따봉" onclick="javascript:upGrade(${review.id})">
 								<input type="button" value="우우" onclick="javascript:downGrade()">
 							</c:if>
 						</form>
@@ -193,16 +190,17 @@ ${head_body}
 <script type="text/javascript">
 
 function upGrade(reviewId) {
-	console.log(reviewId)
 	var reviewid = reviewId;
+	var up = 1;
 	$.ajax({
-		url : "${ctx}/product/review/modify.do",
+		url : "${ctx}/product/review/modify.do?updown="+up,
 		type : "post", 
 		data : $('#upDown'+reviewid).serialize(),
 		dataType : "text",
-		sucess : function(check) {
+		success : function(check) {
+			console.log(check)
 			if(check=="true"){
-				console.log("44444444444444")
+				javascript:Reviews(${product.id})
 			}
 		}
 	});
@@ -229,6 +227,8 @@ function reviewRegister(){
 		data: $('#form2').serialize(),
 		dataType : "text",
 		success : function(data) {
+			
+		console.log(data);
 			if(data=="true"){
 				javascript:Reviews(${product.id})
 			}
@@ -303,7 +303,7 @@ function reviewRegister(){
 	});
 } 
  
-  function afterUpdateReview(productId){
+ function afterUpdateReview(productId){
 	 console.log(productId+"afterUpdateReview")
 	 var productSS = productId;
 	 $.ajax({
@@ -386,6 +386,14 @@ var displayReviews = function(xml) {
 	console.log(listLength)
 	var html = "";
 	list.each(function(){
+		
+	 	html += '<form id=upDown'+$(">id",this).text()+' onsubmit="return false";>'; 
+		html +=		'<input type="hidden" id="productId" name="product.id" value="'+${product.id}+'">'; 
+		html +=		"<input type='hidden' id='id' name='id' value="+$(">id",this).text()+">";
+		html +=		"<input type='hidden' id='title' name='title' value="+$(">title",this).text()+">";
+		html +=		"<input type='hidden' id='content' name='content' value="+$(">content",this).text()+">";
+		html +=		"<input type='hidden' id='grade' name='grade' value="+$(">grade",this).text()+">";
+		html +=		"<input type='hidden' id='userId' name='consumer.id' value="+$(">consumer>id",this).text()+">";
 		html += '<table>';
 		html += 		"<tr>";
 		html += 			"<td>작성자 : </td>";
@@ -401,13 +409,14 @@ var displayReviews = function(xml) {
 		html += 		"</tr>";
 		html += '</table>';
 		if(userId===$(">consumer>id",this).text()){
-		html += "<input type='button' value='수정' onclick='javascript:beforeUpdateReview("+$(">id",this).text()+")'>";
-		html += "<input type='button' value='삭제' onclick='javascript:deleteReview("+$(">id",this).text()+")'>";
-	}
-		if(userId!=$(">consumer>id",this).text()){
-			html += "<input type='button' value='따봉' onclick='javascript:upGrade()'>";
-			html += "<input type='button' value='우우' onclick='javascript:downGrade()'>";
+			html += "<input type='button' value='수정' onclick='javascript:beforeUpdateReview("+$(">id",this).text()+")'>";
+			html += "<input type='button' value='삭제' onclick='javascript:deleteReview("+$(">id",this).text()+")'>";
 		}
+		if(userId!=$(">consumer>id",this).text()){
+			html += "<input type='button' value='따봉' onclick='javascript:upGrade("+$(">id",this).text()+")'>";
+			html += "<input type='button' value='우우' onclick='javascript:downGrade("+$(">id",this).text()+")'>";
+		}
+		 html += '</form>' 
 	});
 	$("#reiewList").empty();
 	$("#reiewList").append(html);
