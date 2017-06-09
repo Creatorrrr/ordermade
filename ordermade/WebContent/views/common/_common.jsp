@@ -56,4 +56,22 @@ select { padding: 10px;}
 .itemTitleBox { font-weight:bold;width:50%;display:inline-block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:black; }
 .itemPriceBox { font-weight : bold;color : black;float : right; }
 .itemHitBox { font-size : 80%;color : black;text-align: right; }
+
+.productTitle {width:80%;font-size: 2em;margin-top: 15px;margin-bottom: 15px;display:inline-block;}
+.productSubTitle {display:inline-block;}
+.productDetailBox {margin: 15px;}
+.productControlBox{margin-top: 15px;margin-bottom: 15px;float:right;}
+.productImageBox img{width:50%;}
+.productContentBox {margin:30px 0px 30px 0px;}
+.reviewListBox {margin: 15px;}
+.reviewBox {overflow:hidden;height: auto;}
+.reviewContentBox {height: 70px;width: 80%;display: inline-block;}
+.reviewContentBox * {color: black;}
+.reviewContentBox h3 {display: inline-block;}
+.reviewWriterBox {height: auto;width: 95px;margin: 5px;float: left;}
+.reviewControlBox {float: right;}
+.reviewControlBox p {text-align: right;}
+.reviewTitle {font-size: 20px;font-weight: 400;}
+.reviewRegisterBox {margin: 15px;}
+.reviewRegisterBox * {color: black;}
 </style>

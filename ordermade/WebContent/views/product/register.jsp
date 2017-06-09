@@ -15,8 +15,7 @@ ${box2 }
 
 			<h1>상품 등록 페이지</h1>
 			<br>
-			<form action="${ctx }/product/register.do" method="post" id="productRegister"
-				enctype="multipart/form-data" name="productRegister" onsubmit="return checkIt()">
+			<form id="productRegister">
 				<table class="table">
 					<tr>
 						<th>제작 항목 <span>*</span></th>
@@ -24,42 +23,47 @@ ${box2 }
 					</tr>
 					<tr>
 						<th>상품명 <span>*</span></th>
-						<td><input id="productTitle" name="productTitle"
+						<td><input id="productTitle" name="title"
 							class="form-control" type="text" value=""></td>
 					<tr>
 					<tr>
 						<th>상품 이미지</th>
-						<td><input id="image" name="image" class="btn btn-success"
-							type="file" value="찾아보기"></td>
+						<td>
+							<div id='imageuploader'>Upload</div>
+							<div><img id='productImage' src="${ctx }/main/file/download.do?fileName=default.jpg" style="width:100px"></div>
+							<input id="productImageHidden" name="image" type="hidden" value="">
+						</td>
 					<tr>
 					<tr>
 						<th>금액 <span>*</span></th>
-						<td><input id="price" name="price" class="form-control"
-							type="text" value=""></td>
+						<td><input id="productPrice" name="price" class="form-control"
+							type="number" value=""></td>
 					</tr>
 					<tr>
 						<th>제작 기간</th>
-						<td><input id="period" name="period" class="form-control"
-							type="text" value=""></td>
+						<td><input id="productPeriod" name="period" class="form-control"
+							type="number" value=""></td>
 					</tr>
 					<tr>
 						<th>상품 내용 <span>*</span></th>
-						<td><textarea id="productContent" name="productContent"
+						<td><textarea id="productContent" name="content"
 								class="form-control" rows="7" cols="50"></textarea>
 					</tr>
 				</table>
 				<div align="center">
-					<input class="btn btn-default" type="reset" value="취소하기" onclick="javascript:window.location='${ctx }/post/list.do?boardId=${boardId }'">
+					<input class="btn btn-default" type="reset" value="취소하기" onclick="javascript:window.location='${ctx }/product/ui/myProducts.do?page=1'">
 					<input id="registBtn" class="btn btn-success" type="button" value="등록하기">
 				</div>
 			</form>
 			<br>
 
+${box3 }
 
 
 <script type="text/javaScript">
 
 $(document).ready(function() {
+	imageUploader();
 	
 	// DB에서 카테고리 리스트 불러오기
 	$.ajax({
@@ -70,7 +74,6 @@ $(document).ready(function() {
 			var categoryId = "${categoryId}";
 			var rs = '<select name="category" id="category" class="form-control">';
 			var list = $(xml).find("category > type");
-			console.log(list.size());
 			list.each(function(){
 				rs += '<option value"' + $(this).text() + '""';
 				if(categoryId == $(this).text()){
@@ -95,25 +98,17 @@ $(document).ready(function() {
 	
 	// 등록버튼 구현
 	$("#registBtn").click(function(){
-		var data = new FormData($('#productRegister')[0]);
-		
-		console.log("----testing here-------");
 		if(checkIt()){
 			$.ajax({
 				// 보낼 때
 				type : "post",
-				enctype: 'multipart/form-data',
 				url : "${ctx}/product/xml/register.do",
-				data : data,
-				processData: false,
-				contentType: false,
-				cache: false,
+				data : $('#productRegister').serialize(),
 				// 받을 때 
 				dataType : "text",
 				success : function(resultData) {
 					if(resultData === "true"){
 						location.href= "${ctx}/product/ui/myProducts.do"
-							/* "${ctx}/product/ui/myProducts.do" */; // 성공시 페이지 전환
 					}
 				},
 				error: function(xml){
@@ -122,37 +117,48 @@ $(document).ready(function() {
 			});
 		}
 	});
-	
-	//필수 입력값 체크
-	function checkIt() {
-
-		var pRegister = document.productRegister;
-
-		if (!pRegister.productTitle.value) {
-			alert("상품명을 입력하세요");
-			return false;
-		}
-
-		if (!pRegister.productContent.value) {
-			alert("내용을 입력하세요");
-			return false;
-		}
-		
-		if(!pRegister.price.value){
-			alert("금액을 입력하세요");
-			return false;
-		}
-		
-		if(!pRegister.period.value){
-			alert("기간을 입력하세요");
-			return false;
-		}
-		return true;
-	}
 });
 
-</script>
+//필수 입력값 체크
+function checkIt() {
+	if (!$("#productTitle").val()) {
+		alert("상품명을 입력하세요");
+		return false;
+	}
+	if (!$("#productContent").val()) {
+		alert("내용을 입력하세요");
+		return false;
+	}
+	if (!$("#productPrice").val()) {
+		alert("금액을 입력하세요");
+		return false;
+	}
+	if (!$("#productPeriod").val()) {
+		alert("기간을 입력하세요");
+		return false;
+	}
+	return true;
+}
 
-${box3 }
+var imageUploader = function() {
+	$("#imageuploader").uploadFile({
+		url:"${ctx}/main/file/upload.do",
+		acceptFiles:"image/*",
+		fileName:"upload",
+		returnType:"text",
+		showStatusAfterSuccess:false,
+		onSuccess:function(files,data,xhr,pd)
+		{
+			var result = data;
+			if(result === "fail") {
+				alert("이미지 업로드 실패")
+			} else {
+				$("#productImage").attr("src", "${ctx}/main/file/download.do?fileName=" + data);
+				$("#productImageHidden").val(data);
+			}
+		},
+	});	
+};
+</script>
 
 <%@ include file="/views/common/footer.jsp"%>

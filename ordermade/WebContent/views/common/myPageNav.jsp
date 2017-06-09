@@ -18,7 +18,7 @@
 			<c:when test="${sessionScope.memberType eq 'M'}">
 				<li><a href="${ctx }/request/ui/search.do">의뢰서 검색</a></li>
 				<li><a href="${ctx }/request/ui/myRequest.do">받은 의뢰서</a></li>
-				<li><a href="${ctx }/product/ui/myProducts.do">상품 관리</a></li>
+				<li><a href="${ctx }/product/ui/myProducts.do?page=1">상품 관리</a></li>
 				<li><a href="${ctx }/portfolio/ui/mylist.do">포트폴리오 관리 </a></li>
 				<li><a href="${ctx }/deal/ui/transaction.do">거래 이력 </a></li>
 				<li><a href="${ctx }/request/ui/makerInviteList.do?page=1">참가요청내역 </a></li>

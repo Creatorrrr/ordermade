@@ -13,7 +13,7 @@
 		<li><p>작업기간 :${product.period } 일</p></li>
 		<li><p>${product.maker.introduce }</p></li>
 		<br>
-		<li><a href="${ctx }/member/myPage.do?makerId=${product.maker.id }">프로필 바로가기</a></li>
+		<li><a href="${ctx }/member/myPage.do?makerId=${product.maker.id }" class="btn btn-default">프로필 바로가기</a></li>
 	</ul>
 </nav>
 
