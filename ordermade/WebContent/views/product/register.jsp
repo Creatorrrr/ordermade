@@ -59,6 +59,7 @@ ${box2 }
 
 ${box3 }
 
+<%@ include file="/views/common/footer.jsp"%>
 
 <script type="text/javaScript">
 
@@ -160,5 +161,3 @@ var imageUploader = function() {
 	});	
 };
 </script>
-
-<%@ include file="/views/common/footer.jsp"%>

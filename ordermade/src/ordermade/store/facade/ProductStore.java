@@ -20,5 +20,6 @@ public interface ProductStore {
 	public List<Product> selectProductsByCategoryAndMakerIdForImage(List<Portfolio> portfolios);
 	public List<Product> selectProductsByMakerId(String makerId, String begin, String end);
 	public List<Product> selectProductsByMakerIdAndTitle(String makerId, String title, String begin, String end);
+	public List<Product> selectProductsByTitle(String title, String begin, String end);
 	public List<Category> selectAllCategory();
 }

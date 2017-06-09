@@ -113,7 +113,7 @@ public class ProductController {
 		return pService.findProductById(productId);
 	}
 
-	@RequestMapping(value = "/ajax/products/makerid.do")
+	@RequestMapping(value = "/ajax/products/makerid.do", produces = "application/xml")
 	public @ResponseBody Products findMyProducts(String page, HttpSession session) {
 		// Ajax 나의 생산품들 전체 출력
 		if (page == null || page.isEmpty()) page = "1";
@@ -147,7 +147,7 @@ public class ProductController {
 		return new Products(pService.findProductsByCategoryAndMakerName(category, makerName, page));
 	}
 
-	@RequestMapping(value = "/ajax/products/MT", produces = "text/plain")
+	@RequestMapping(value = "/ajax/products/MT", produces = "application/xml")
 	public @ResponseBody Products findProductsByMakerIdAndTitle(String page, String title, HttpSession session) {
 		// Ajax 생산자 아이디 그리고 내용으로 생산품들 출력
 		return new Products(pService.findProductsByMakerIdAndTitle(
@@ -265,6 +265,14 @@ public class ProductController {
 				.addObject("categories", pService.findAllCategory())
 				.addObject("category", category)
 				.addObject("products", pService.findProductsByCategory(category, page));
+	}
+	
+	@RequestMapping("ui/searchMain.do")
+	public ModelAndView showSearchProductsUIForMain(String keyword) {
+		return new ModelAndView("product/search")
+				.addObject("categories", pService.findAllCategory())
+				.addObject("category", "전체")
+				.addObject("products", pService.findProductsByTitle(keyword, "1"));
 	}
 	
 	// Complete

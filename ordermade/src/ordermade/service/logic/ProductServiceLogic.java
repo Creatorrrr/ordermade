@@ -50,7 +50,10 @@ public class ProductServiceLogic implements ProductService{
 
 	@Override
 	public Product findProductById(String id) {
-		return excludePassword(pStore.selectProductById(id));
+		Product product = pStore.selectProductById(id);
+		product.setHit(product.getHit() + 1);
+		pStore.updateProductById(product);
+		return excludePassword(product);
 	}
 
 	@Override
@@ -94,6 +97,11 @@ public class ProductServiceLogic implements ProductService{
 	@Override
 	public List<Product> findProductsByCategory(String category, String page) {
 		return excludePassword(pStore.selectProductsByCategory(category, getProductBegin(page), getProductEnd(page)));
+	}
+	
+	@Override
+	public List<Product> findProductsByTitle(String title, String page) {
+		return excludePassword(pStore.selectProductsByTitle(title, getProductBegin(page), getProductEnd(page)));
 	}
 
 	@Override

@@ -106,7 +106,7 @@ ${head_body}
 	</div>
 </div>
 
-
+<%@ include file="/views/common/footer.jsp"%>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -334,6 +334,3 @@ var reviewController = {
 	}
 };
 </script>
-
-
-<%@ include file="/views/common/footer.jsp"%>

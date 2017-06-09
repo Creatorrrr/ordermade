@@ -45,10 +45,9 @@
 		style="padding:160px 10px 30px 10px;background-image: url('${ctx}/resources/imgs/pp.jpg'); background-position:center center"">
 
 		<div>
-			<form class="navbar-form text-center" method="post" action="#"
-				role="search">
+			<form class="navbar-form text-center" method="get" action="${ctx}/product/ui/searchMain.do" role="search">
 				<div class="form-group">
-					<input type="text" class="form-control" placeholder="어떤 주문을 원하십니까?"
+					<input name="keyword" type="text" class="form-control" placeholder="어떤 주문을 원하십니까?"
 						style="width: 220px">
 				</div>
 				<button type="submit" class="btn btn-default">검색</button>
@@ -107,4 +106,6 @@
 	</div>
 </div>
 
+<script type="text/javascript">
 
+</script>

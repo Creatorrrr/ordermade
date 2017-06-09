@@ -239,6 +239,23 @@ public class ProductStoreLogic implements ProductStore {
 		}
 		return productList;
 	}
+	
+	@Override
+	public List<Product> selectProductsByTitle(String title, String begin, String end) {
+		SqlSession session = factory.openSession();
+		List<Product> productList = null;
+		HashMap<String, String> map = new HashMap<>();
+		map.put("title", title);
+		map.put("begin", begin);
+		map.put("end", end);
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			productList = mapper.selectProductsByTitle(map);
+		}finally {
+			session.close();
+		}
+		return productList;
+	}
 
 	@Override
 	public List<Category> selectAllCategory() {

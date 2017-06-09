@@ -93,9 +93,11 @@ var getHitsProducts = function(category) {
 					$(xmlData).each(function() {
 						contentStr +=    "<li>";
 						contentStr +=	 	"<div class='itemBox'>";
-						contentStr +=	 		"<a href='${ctx}/product/ui/detail.do?id=" + $(this).find("product>id").text() +"'>";
-						contentStr += 				"<img src=\"${ctx }/product/image.do?img=" + $(this).find("product>image").text() +"\">";
-						contentStr += 			"</a>";
+						contentStr += 			"<div class='itemImageBox imgl borderedbox'>";
+						contentStr +=	 			"<a href='${ctx}/product/ui/detail.do?id=" + $(this).find("product>id").text() +"'>";
+						contentStr += 					"<img src=\"${ctx }/main/file/download.do?fileName=" + $(this).find("product>image").text() +"\">";
+						contentStr += 				"</a>";
+						contentStr += 			"</div>";
 						contentStr +=	 		"<div class='itemExplainBox'>";
 						contentStr +=	 			"<a href='${ctx}/product/ui/detail.do?id=" + $(this).find("product>id").text() +"'>";
 						contentStr +=	 				"<p class='itemTitleBox'>" + $(this).find("product>title").text() + "</p>";
@@ -149,9 +151,11 @@ var getBrandNewProducts	= function(category){
 					$(xmlData).each(function() {
 						contentStr +=    "<li>";
 						contentStr +=	 	"<div class='itemBox'>";
-						contentStr +=	 		"<a href='${ctx}/product/ui/detail.do?id=" + $(this).find("product>id").text() +"'>";
-						contentStr += 				"<img src=\"${ctx }/product/image.do?img=" + $(this).find("product>image").text() +"\">";
-						contentStr += 			"</a>";
+						contentStr += 			"<div class='itemImageBox imgl borderedbox'>";
+						contentStr +=	 			"<a href='${ctx}/product/ui/detail.do?id=" + $(this).find("product>id").text() +"'>";
+						contentStr += 					"<img src=\"${ctx }/main/file/download.do?fileName=" + $(this).find("product>image").text() +"\">";
+						contentStr += 				"</a>";
+						contentStr += 			"</div>";
 						contentStr +=	 		"<div class='itemExplainBox'>";
 						contentStr +=	 			"<a href='${ctx}/product/ui/detail.do?id=" + $(this).find("product>id").text() +"'>";
 						contentStr +=	 				"<p class='itemTitleBox'>" + $(this).find("product>title").text() + "</p>";

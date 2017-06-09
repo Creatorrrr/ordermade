@@ -195,7 +195,18 @@
 		FROM (
 		<include refid="selectProductWithRowNum" />
 		FROM product
-		WHERE title = #{title} AND maker_id = #{makerId}
+		WHERE title LIKE '%${title}%' AND maker_id = #{makerId}
+		ORDER BY id DESC)
+		WHERE rnum BETWEEN #{begin} AND #{end}
+	</select>
+
+	<select id="selectProductsByTitle" parameterType="HashMap"
+		resultMap="productMap">
+		<include refid="selectProduct" />
+		FROM (
+		<include refid="selectProductWithRowNum" />
+		FROM product
+		WHERE title LIKE '%${title}%'
 		ORDER BY id DESC)
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>

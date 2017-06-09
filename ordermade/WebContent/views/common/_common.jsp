@@ -25,13 +25,11 @@
 
 <style type="text/css">
 
-.listBox {display: inline-block;border-style: solid;margin: 5px;width: 48%;}
-.listExplainBox {display: inline-block;width: 100%;}
-.listExplainBox img {width: 30%;}
-.listExplainBox table {display: inline-block;float: right;border-style: none;width: 70%;color: black;}
+.listBox {display: inline-block;border-style: solid;margin: 5px;width: 340px;}
+.listExplainBox {display: inline-block;}
+.listExplainBox img {width: 100px;height: 70px}
+.listExplainBox table {float: right;border-style: none;width: 210px;color: black;}
 .listExplainBox table * {border-style: none;}
-.detailBtnBox {width: 100%;}
-.detailBtnBox input {float: right;}
 
 .table th{width: 150px;}
 .table td input, .table td textarea, .table select {width:100%;}
@@ -51,7 +49,8 @@ select { padding: 10px;}
 #tabBox button{width: 33%;margin-bottom: 10px;}
 .request_table{border:1px solid #ccc; margin:2px; width:48%; display: inline-block;}
 
-.itemBox { width : 300px; }
+.itemBox { width: 300px;}
+.itemImageBox a img { height: 200px;}
 .itemExplainBox { margin-top:5px;width:85%;font-size:120%;color:black; }
 .itemTitleBox { font-weight:bold;width:50%;display:inline-block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:black; }
 .itemPriceBox { font-weight : bold;color : black;float : right; }
