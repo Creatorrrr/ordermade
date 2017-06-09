@@ -98,9 +98,9 @@ var productController = {
 		content += '		<tr>';
 		content += '			<div class="imgl borderedbox">';
 		content += '				<a href="${ctx }/product/ui/detail.do?id=' + $(xml).find("product>id").text() + '">';
-		content += '					<img src="${ctx }/main/file/download.do?fileName=' + $(xml).find("product>image").text() + '" style="width:100px;" />';
+		content += '					<img src="${ctx }/main/file/download.do?fileName=' + $(xml).find("product>image").text() + '" style="width:105px;height: 100px"; />';
 		content += '				</a>';
-		content += '			</div>';
+		content += '			</div>';																			
 		content += '		</tr>';
 		content += '		<tr class="nospace btmspace-15">';
 		content += '			<td>상품명</td>';

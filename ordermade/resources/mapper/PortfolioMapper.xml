@@ -18,7 +18,7 @@
 		SELECT id,
 		title,
 		content,
-		type
+		type,
 		image,
 		maker_id
 	</sql>
