@@ -20,9 +20,6 @@
 		}
 	</style>
 	
-	<link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" >
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-	
 ${head_body}
 <%@ include file="/views/common/header.jsp"%>
 
@@ -34,23 +31,25 @@ ${box2 }
 
 
 	<div class="content" align="center">
-		<h1 align="left">
+		<h1 align="left" style="line-height:200%">
 			의뢰서
-			<button id="btn2" style="float:right" onclick="javascript:location.href='${ctx}/request/xml/remove.do?id=${request.id }'">삭제</button>
-			<button id="btn1" style="float:right" onclick="javascript:location.href='${ctx}/request/ui/modify.do?requestId=${request.id }'">수정</button>
+			<button id="btn2" class="fl_right btn btn-default" onclick="javascript:location.href='${ctx}/request/xml/remove.do?id=${request.id }'">삭제</button>
+			<button id="btn1" class="fl_right btn btn-default" onclick="javascript:location.href='${ctx}/request/ui/modify.do?requestId=${request.id }'">수정</button>
 		</h1>
-		<div class="imgl borderedbox">
-			<img src="${ctx }/views/images/img1.jpg" />
-		</div>
 		<table class="table" style="color: black">
+			<tr>
+				<td>
+					<p>의뢰 내용</p>
+					<div>
+						${request.content }
+					</div>
+				</td>
+			</tr>
 			<tr>
 				<td><p>의뢰 명 : ${request.title}</p></td>
 			</tr>
 			<tr>
-				<td><p>의뢰자 : ${request.id }</p></td>
-			</tr>
-			<tr>
-				<td><p>의뢰 내용 : ${request.content }</p></td>
+				<td><p>의뢰자 : ${request.consumer.id }</p></td>
 			</tr>
 			<tr>
 				<td><p>제작 항목 : ${request.category }</p></td>
@@ -62,38 +61,17 @@ ${box2 }
 		<table class="table" style="color: black">
 			<tr>
 				<td>
-					<h3>
+					<h3 style="line-height:200%">
 						대화 기록
-						<button style="float: right;">파일함</button>
+						<!-- <button  class="btn btn-default" style="float: right;">파일함</button> -->
 					</h3>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<ul id="commentList" class="commentListStyle"><h1>${request }</h1><h1>${request.comments }</h1>
-						<%-- <c:forEach items="${request.comments }" var="comment">
-							<li id="commentContent-${comment.id }">
-								<p class="commentWriter"><strong>${comment.member.id }</strong></p>
-								<c:choose>
-									<c:when test="${comment.contentType eq 'C'}">
-										<p class="commentContent">${comment.content }</p>
-									</c:when>
-									<c:when test="${comment.contentType eq 'F'}">
-										<p class="commentContent">
-											<a href="${ctx }/main/file/download.do?fileName=${comment.content }" download="${comment.content }">
-												<img src="${ctx }/views/images/file_icon.png" style="width:50px">
-												${comment.content }
-											</a>
-										</p>
-									</c:when>
-								</c:choose>
-								<c:if test="${comment.member.id eq sessionScope.loginId}">
-									<button onclick="javascript:commentController.modifyCommentForm(${comment.id});">수정</button>
-									<button onclick="javascript:commentController.removeComment(${comment.id});">삭제</button>
-								</c:if>
-							</li>
-						</c:forEach> --%>
-					</ul>
+					<div id="commentList">
+						<!-- comments from server -->
+					</div>
 	            </td>
 			</tr>
 			<tr><td><h3>추가 요구 사항</h3></td></tr>
@@ -107,7 +85,7 @@ ${box2 }
 						<div id="tabs-1">
 							<textarea id="commentRegisterContent" rows="5" style="width:100%"></textarea>
 							<div align="right">
-								<button id="commentRegister">코멘트 등록</button>
+								<button id="commentRegister" class="btn btn-default">코멘트 등록</button>
 							</div>
 						</div>
 						<div id="tabs-2">
@@ -122,9 +100,8 @@ ${box2 }
 				<c:when test="${sessionScope.memberType eq 'C'}">
 					<p align="right">제작기간 : 일</p>
 					<p align="right">결제금액 (배송비 포함): ${request.price }원</p> 
-					<input type="button" name=""
-						onclick="setPurchaseHistory.registerPurchaseHistory();" 
-						value="결제" style="float:right">
+					<input type="button" name="" onclick="setPurchaseHistory.registerPurchaseHistory();" 
+						 class="btn btn-default" value="결제" style="float:right">
 				</c:when>
 				<c:when test="${sessionScope.memberType eq 'M'}">
 					<p align="right">
@@ -135,7 +112,7 @@ ${box2 }
 						결제금액 (배송비 포함): <input name="" type="text" value=""
 							style="display: inline-block">원
 					</p>
-					<input type="button" name="" value="등록" style="float: right">
+					<input type="button" name=""  class="btn btn-default" value="등록" style="float: right">
 				</c:when>
 			</c:choose>
 		</div>
@@ -192,6 +169,8 @@ $("#paymentButton").click(function(){
 
 // get comments with xml
 var commentController = {
+	modifyFormFlag : false,
+		
 	registerComment : function(content, type) {
 		$.ajax({
 			url : "${ctx }/comment/xml/register.do",
@@ -209,7 +188,7 @@ var commentController = {
 	},
 	
 	modifyCommentForm : function(commentId) {
-		var comment = $("#commentContent-" + commentId);
+		var comment = $("#commentContentBox-" + commentId);
 		var contentStr = "";
 		
 		contentStr += "<p class='commentWriter'><strong>" + comment.children(".commentWriter").text() + "</strong></p>"
@@ -274,8 +253,15 @@ var commentController = {
 	makeContent : function(xml) {
 		var content = "";
 
-		content += "<li id='commentContent-" + $(xml).find("comment>id").text() + "'>";
-		content += "<p class='commentWriter'><strong>" + $(xml).find("comment>member>id").text() + "</strong></p>";
+		content += "<div class='commentBox'>";
+		content += 		"<div id='commentContentBox-" + $(xml).find("comment>id").text() + "' class='commentContentBox'>";
+		content += 			"<div class='commentControlBox'>";
+		content += 				"<p>작성자 : " + $(xml).find("comment>member>id").text() + "</p>";
+		if($(xml).find("comment>member>id").text() === "${sessionScope.loginId}") {
+			content += 			"<button class='btn btn-default' onclick='javascript:if(commentController.modifyFormFlag===true)return false;commentController.modifyCommentForm(" + $(xml).find("comment>id").text() + ");commentController.modifyFormFlag=true;'>수정</button>";
+			content += 			"<button class='btn btn-default' onclick='javascript:commentController.removeComment(" + $(xml).find("comment>id").text() + ")'>삭제</button>";
+		}
+		content += 			"</div>";
 		if($(xml).find("comment>contentType").text() === "C") {
 			content += '<p class="commentContent">' + $(xml).find("comment>content").text() + '</p>';
 		} else if($(xml).find("comment>contentType").text() === "F") {
@@ -285,12 +271,9 @@ var commentController = {
 			content += '	</a>';
 			content += '</p>';
 		}
-		if($(xml).find("comment>member>id").text() === "${sessionScope.loginId}") {
-			content += "<button onclick='javascript:commentController.modifyCommentForm(" + $(xml).find("comment>id").text() + ");'>수정</button>";
-			content += "<button onclick='javascript:commentController.removeComment(" + $(xml).find("comment>id").text() + ");'>삭제</button>";
-		}
-		content += "</li>";
-		
+		content += 		"</div>";
+		content += 		"<div class='commentWriterBox'><img class='imgl borderedbox' src='${ctx}/main/file/download.do?fileName=" + $(xml).find("comment>member>image").text() + "'></div>"
+		content += '</div>';
 		return content;
 	}
 };

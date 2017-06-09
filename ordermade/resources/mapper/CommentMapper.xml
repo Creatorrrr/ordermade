@@ -41,7 +41,7 @@
   		SELECT * FROM (
   			SELECT rownum limitNum, A.* FROM COMM A 
   			WHERE REQUEST_ID=#{requestId} 
-  			and rownum &lt;= #{page}*10s)
+  			and rownum &lt;= #{page}*10)
   		WHERE limitNum > (#{page}-1)*10
   	</select>
   

@@ -70,9 +70,9 @@
 		<selectKey resultType="String" keyProperty="id" order="BEFORE">
 			select request_seq.nextval from dual
 		</selectKey>
-		INSERT INTO request(id, title, maker_id, consumer_id, type, content,
+		INSERT INTO request(id, title, <if test="maker.id != null">maker_id, </if>consumer_id, type, content,
 		hope_price, price, bound)
-		VALUES (#{id},#{title},#{maker.id},#{consumer.id},#{category},#{content},#{hopePrice},#{price},#{bound})
+		VALUES (#{id},#{title},<if test="maker.id != null">#{maker.id},</if>#{consumer.id},#{category},#{content},#{hopePrice},#{price},#{bound})
 	</insert>
 
 	<update id="updateReqeustById" parameterType="request">

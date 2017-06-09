@@ -53,7 +53,6 @@ ${head_body}
 						<button class="fa fa-search btn btn-default" type="button" title="Search" onclick="javascript:reviewController.getReviewsByProductId(1)">후기 전체 보기</button>
 					</form>
 				</div>
-				<!-- 후기 목록 시작 -->
 				<div id="reviewList">
 					<!-- reviews from server -->
 				</div>

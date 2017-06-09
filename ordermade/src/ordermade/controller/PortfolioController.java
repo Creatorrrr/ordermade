@@ -24,18 +24,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import com.sun.xml.internal.ws.wsdl.writer.document.Port;
 
-import oracle.net.aso.f;
 import ordermade.constants.Constants;
 import ordermade.domain.Category;
 import ordermade.domain.Member;
 import ordermade.domain.Portfolio;
 import ordermade.domain.Portfolios;
-import ordermade.domain.Product;
-import ordermade.domain.Products;
-import ordermade.domain.Review;
-import ordermade.domain.Reviews;
 import ordermade.service.facade.MemberService;
 import ordermade.service.facade.PortfolioService;
 import ordermade.service.facade.ProductService;
@@ -276,7 +270,7 @@ public class PortfolioController {
 //		if (page == null)
 //			page = "1";
 		
-		List<Portfolio> pList = pService.findPortfoliosByMakerId(makerId, "1");
+		List<Portfolio> pList = pService.findPortfoliosByMakerId(makerId, "1");System.out.println(pList.get(0).getImage());
 		Portfolios portfolios = new Portfolios();
 		portfolios.setPortfolios(pList);
 		

@@ -19,7 +19,6 @@ import ordermade.domain.Comments;
 import ordermade.domain.InviteRequest;
 import ordermade.domain.InviteRequests;
 import ordermade.domain.Member;
-import ordermade.domain.Products;
 import ordermade.domain.Request;
 import ordermade.domain.Requests;
 import ordermade.service.facade.RequestService;
@@ -37,29 +36,15 @@ public class RequestController {
 
 	@RequestMapping(value = "request/xml/register.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerRequest(Request request, HttpSession session) {
-//		String memberType = (String)session.getAttribute("memberType");
-//		String loginId = (String)session.getAttribute("loginId");
-		if(request.getTitle()==null) return "error";
-		//System.out.println(request.getMaker().getId());
-		if(request.getMaker()== null){		//DB member.id null-> fix	
-			Member maker = new Member();
-			maker.setId("");
-			request.setMaker(maker);
+		if(checkLogined(session)) return "member/login";	// check logined
+		request.setMaker(new Member());
+		request.setConsumer(new Member());
+		request.getConsumer().setId((String)session.getAttribute("loginId"));
+		if(service.registerRequest(request)) {
+			return request.getId();
+		} else {
+			return "error";
 		}
-		
-		Member consumer = new Member();
-		consumer.setId("user1");
-		request.setConsumer(consumer);
-		System.out.println(request.getBound());
-		if(request.getBound().equals("1")){
-			request.setBound(Constants.BOUND_PUBLIC);
-		}else if(request.getBound().equals("0")){
-			request.setBound(Constants.BOUND_PRIVATE);
-		}
-		System.out.println(request.getBound());
-		//System.out.println(request.toString());
-		boolean check = service.registerRequest(request);
-		return check+"";
 	}	//post http://localhost:8080/ordermade/request/xml/register.do
 		//{"title":"의뢰\n","maker.id":"maker1","consumer.id":"user1","category":"aaa","content":"ccccc","hopePrice":"10000","price":"10500","bound":"boundsdfsdfjalkfjl"}
 
@@ -283,10 +268,10 @@ public class RequestController {
 		String memberType = (String)session.getAttribute("memberType");
 		
 		if(memberType==null){
-			return new ModelAndView("redirect:../../member/login.do");//로그인 페이지 전환.
+			return new ModelAndView("redirect:/member/login.do");//로그인 페이지 전환.
 		}
 		
-		if(page == null || page == "") page = "1";
+		if(page == null || page.isEmpty()) page = "1";
 		List<Request> list = null;
 		ModelAndView modelAndView = null;
 		
@@ -329,6 +314,7 @@ public class RequestController {
 	// 170530 Complete
 	@RequestMapping(value="request/ui/makerInviteList.do",method=RequestMethod.GET)
 	public ModelAndView showMakerInviteRequestListUI(String page, HttpSession session){
+		if(page == null || page.isEmpty()) page = "1";
 		return new ModelAndView("request/makerInviteList")
 				.addObject("inviteRequests", 
 						service.findInviteRequestsByMakerId(
@@ -340,6 +326,7 @@ public class RequestController {
 	// 170530 Complete
 	@RequestMapping(value="request/ui/consumerInviteList.do",method=RequestMethod.GET)
 	public ModelAndView showConsumerInviteRequestListUI(String page, HttpSession session){
+		if(page == null || page.isEmpty()) page = "1";
 		return new ModelAndView("request/consumerInviteList")
 				.addObject("inviteRequests", 
 						service.findInviteRequestsByConsumerId(

@@ -6,6 +6,7 @@
 <link href="${ctx }/resources/css/jquery.bxslider.min.css" rel="stylesheet" />
 <link href="${ctx }/resources/css/uploadfile.css" rel="stylesheet">
 <link href="${ctx }/resources/js/js_simplePagination/simplePagination.css" rel="stylesheet" type="text/css">
+<link href="${ctx }/resources/css/jquery-ui.css" rel="stylesheet">
 
 <script src="${ctx }/resources/js/jquery.min.js"></script><%-- <script src="${ctx}/resources/js/jquery-2.1.3.js"> --%>
 <script src="${ctx }/resources/js/jquery.fitvids.min.js"></script>
@@ -17,6 +18,7 @@
 <script src="${ctx }/resources/js/jquery.uploadfile.min.js"></script>
 <script src="${ctx }/resources/js/vendor/ckeditor/ckeditor.js"></script>
 <script src="${ctx }/resources/js/bootstrap.min.js"></script>
+<script src="${ctx }/resources/js/jquery-ui.min.js"></script>
 
 <script src="${ctx }/resources/js/js_simplePagination/jquery.simplePagination.js"></script>
 <%-- <script src="${ctx }/resources/js/jquery.validate.min.js"></script>
@@ -73,4 +75,12 @@ select { padding: 10px;}
 .reviewTitle {font-size: 20px;font-weight: 400;}
 .reviewRegisterBox {margin: 15px;}
 .reviewRegisterBox * {color: black;}
+
+.commentListBox {margin: 15px;}
+.commentBox {overflow:hidden;height: auto;}
+.commentContentBox {height: 70px;width: 80%;display: inline-block;}
+.commentContentBox h3 {display: inline-block;}
+.commentWriterBox {height: auto;width: 95px;margin: 5px;float: left;}
+.commentControlBox {float: right;}
+.commentControlBox p {text-align: right;}
 </style>
