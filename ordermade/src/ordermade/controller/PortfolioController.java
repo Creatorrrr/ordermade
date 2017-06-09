@@ -327,6 +327,12 @@ public class PortfolioController {
 		// Ajax 생산자 이름 그리고 생산품 종류로 생산품들 출력
 		return new Portfolios(pService.findPortfoliosByCategoryAndMakerName(category, makerName, page));
 	}
+	
+	@RequestMapping(value = "ajax/portfolios/category.do", produces = "application/xml")
+	public @ResponseBody Portfolios findPortfoliosByCategory(String page, String category) {
+		// Ajax 한 종류 생산품검색으로 생산품들 출력
+		return new Portfolios(pService.findPortfoliosByCategory(category, page));
+	}
 	//--------------------------
 	
 	@RequestMapping("/image.do")

@@ -32,6 +32,7 @@ ${box2 }
 
 	<div>
 		<p>제작항목 : ${portfolio.category }</p>
+		<p>제작자 : ${portfolio.maker.id }</p>
 		<p>포트폴리오 명 : ${portfolio.title }</p>
 		<!-- <p>
 			등록일자 :

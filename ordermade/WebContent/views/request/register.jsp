@@ -16,35 +16,35 @@ ${box2 }
 			<br>
 			<form action="${ctx }/request/xml/register.do" method="post" id="form1" name="form1" enctype="multipart/form-data" onsubmit="return checkIt()">
 				<%-- <input name="category" type="hidden" value="${categoryId }"> --%>
-				<table class="table" id="table1">
+				<table class="table">
 					<tr>
-						<th>제작 항목</th>
+						<th>제작 항목<span>*</span></th>
 						<td><div id="category"></div></td>
 					</tr>
 					<tr>
-						<th>의뢰 제목</th>
-						<td><input id="title" name="title" class="form-control" type="text" value=""></td>
+						<th>의뢰 제목<span>*</span></th>
+						<td><input id="requestTitle" name="requestTitle" class="form-control" type="text" value=""></td>
 					<tr>
 					<tr>
-						<th>의뢰 상세 내용</th>
-						<td><textarea id="contentText" name="content" class="form-control" rows="7"></textarea></td>
+						<th>의뢰 상세 내용<span>*</span></th>
+						<td><textarea id="requestContent" name="requestContent" class="form-control" rows="7"></textarea></td>
 					</tr>
 
 					<tr>
-						<th>희망 금액</th>
+						<th>희망 금액<span>*</span></th>
 						<td><input id="hopePrice" name="hopePrice" class="" type="text" value=""></td>
 					</tr>
 					<tr>
-						<th>공개 여부</th>
+						<th>공개 여부<span>*</span></th>
 						<td>
-							<input type="radio" name="bound" id="boundPublic" value="1"><label for="boundPublic">공개</label>
-							<input type="radio" name="bound" id="boundPrivate" value="0" checked="checked"><label for="boundPrivate">비공개</label>
+							<input type="radio" name="boundPublic" id="boundPublic" value="1"><label for="boundPublic">공개</label>
+							<input type="radio" name="boundPrivate" id="boundPrivate" value="0" checked="checked"><label for="boundPrivate">비공개</label>
 						</td>
 					</tr>
 				</table>
 				<div align="center">
-					<input class="btn btn-default" type="button" id="btn" value="저장">
-					<input class="btn btn-default" type="reset" id="btn" value="취소">
+					<input class="btn btn-default" type="button" id="btn" name="btn" value="저장">
+					<input class="btn btn-default" type="reset" value="취소">
 				</div>
 			</form>
 			
@@ -55,45 +55,27 @@ ${box2 }
 		//html구조가 모두 인클루드 된후 실행
 		$(document).ready(function() {
 			
-			//상품번호 의뢰 내용에 넣기 (출처)
-			var productId = '${productId }';
-			if(productId != ''){
-				$("#contentText").html("[상품번호: ${productId }]\n");
-			}
-			
-			
-			var makerId = '${makerId}';
-			if(makerId != ''){
-				$("#table1").prepend('<tr><th>제작자</th><td>${makerId }<input id="maker" name="maker.id" class="form-control" type="hidden" value="${makerId }" ></td><tr>');
-			}
-			
-			
-			//DB에서 카테고리 리스트 불러오기  
-			$.ajax({
-				url : "${ctx}/main/xml/categoryList.do",
-				type : "post",
-				dataType : "xml",
-				success : function(xml) {
-					var categoryId = "${categoryId}";
-					//console.log(xml);
-					var rs= '<select name="category" id="category" class="form-control">';
-					var list = $(xml).find("category > type");
-					console.log(list.size());
-					list.each(function(){
-						rs+='<option value="' + $(this).text() + '" ';
-						if(categoryId == $(this).text()){
-							rs+='selected="selected"';
-						}
-						rs+='>'+$(this).text()+'</option>';
-						//console.log($(this).text());
-					});
-					rs+='</select>';
-					//console.log(rs);
-					$("#category").html(rs);
-					
-				},
-				error: function(xml){
-					$("#category").html('<select name="category" id="category" class="form-control">'
+				$.ajax({
+					url : "${ctx}/main/xml/categoryList.do",
+					type : "post",
+					dataType : "xml",
+					success : function(xml) {
+						var categoryId = "${categoryId}";
+						var rs = '<select name="category" id="category" class="form-control">';
+						var list = $(xml).find("category > type");
+						console.log(list.size());
+						list.each(function(){
+							rs += '<option value"' + $(this).text() + '""';
+							if(categoryId == $(this).text()){
+								rs += 'selected="selected"';
+							}
+								rs += '>' + $(this).text() + '</option>';
+						});
+						rs += '</select>';
+						$("#category").html(rs);
+					},
+					error: function(xml){
+						$("#category").html('<select name="category" id="category" class="form-control">'
 											+'<option value="가구" selected="selected">가구</option>'
 											+'<option value="의류">의류</option>'
 											+'<option value="악세사리">악세사리</option>'
@@ -101,15 +83,14 @@ ${box2 }
 											+'<option value="주방">주방</option>'
 											+'<option value="스포츠">스포츠</option>'
 										+'</select>');
-				}
+					}
 			});
-			
 			
 			//저장버튼 구현
 			$("#btn").click(function() {
 				var data = new FormData($('#form1')[0]);
-				console.log("----------");
 				
+				console.log("--------------test------------");
 				if(checkIt()){
 					$.ajax({
 						type : "post",
@@ -119,11 +100,10 @@ ${box2 }
 						processData: false,
 						contentType: false,
 						cache: false,
-						
 						dataType : "text",
 						success : function(resultData) {
 							if(resultData=="true"){
-								location.href="${ctx}/request/ui/myRequest.do"//성공시 페이지 전환
+								location.href="${ctx}/request/ui/register.do"//성공시 페이지 전환
 							}
 						},
 						error: function(xml){
@@ -136,13 +116,16 @@ ${box2 }
 			
 			//필수 입력값 체크 
 			function checkIt() {
-				if (!title.value) {
+				
+				var form1 = document.form1;
+				
+				if (!form1.requestTitle.value) {
 					alert("제목을 입력하세요");
 					return false;
-				}else if (!contentText.value) {
+				}else if (!form1.requestContent.value) {
 					alert("내용을 입력하세요");
 					return false;
-				}else if(!hopePrice.value){
+				}else if(!form1.hopePrice.value){
 					alert("희망금액을 입력하세요");
 					return false;
 				}
@@ -150,9 +133,6 @@ ${box2 }
 			}
 
 		});
-
-		
-	
 
 	</script>
 

@@ -88,21 +88,18 @@ public class RequestStoreLogic implements RequestStore {
 		}
 		return request;
 	}
-
-	
-	
-	
-	
-	
 	
 	@Override
-	public List<Request> selectRequestsByBound(String bound, String page) {
+	public List<Request> selectRequestsByBound(String bound, String begin, String end) {
 		SqlSession session = factory.openSession();
 		List<Request> list = null;
-		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("bound", bound);
+		map.put("begin", begin);
+		map.put("end", end);
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			list = mapper.selectRequestsByBound(bound, page);
+			list = mapper.selectRequestsByBound(map);
 		} finally {
 			session.close();
 		}
@@ -110,14 +107,18 @@ public class RequestStoreLogic implements RequestStore {
 	}
 
 	@Override
-	public List<Request> selectRequestsByBoundAndTitle(String bound, String title, String page) {
+	public List<Request> selectRequestsByBoundAndTitle(String bound, String title, String begin, String end) {
 		SqlSession session = factory.openSession();
 		List<Request> list = null;
-
+		HashMap<String, String> map = new HashMap<>();
+		map.put("bound", bound);
+		map.put("title", title);
+		map.put("begin", begin);
+		map.put("end", end);
 
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			list = mapper.selectRequestsByBoundAndTitle(bound, title, page);
+			list = mapper.selectRequestsByBoundAndTitle(map);
 		} finally {
 			session.close();
 		}
@@ -125,13 +126,17 @@ public class RequestStoreLogic implements RequestStore {
 	}
 
 	@Override
-	public List<Request> selectRequestsByBoundAndContent(String bound, String content, String page) {
+	public List<Request> selectRequestsByBoundAndContent(String bound, String content, String begin, String end) {
 		SqlSession session = factory.openSession();
 		List<Request> list = null;
-
+		HashMap<String, String> map = new HashMap<>();
+		map.put("bound", bound);
+		map.put("content", content);
+		map.put("begin", begin);
+		map.put("end", end);
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			list = mapper.selectRequestsByBoundAndContent(bound, content, page);
+			list = mapper.selectRequestsByBoundAndContent(map);
 		} finally {
 			session.close();
 		}
@@ -139,13 +144,16 @@ public class RequestStoreLogic implements RequestStore {
 	}
 
 	@Override
-	public List<Request> selectRequestsByConsumerId(String consumerId, String page) {
+	public List<Request> selectRequestsByConsumerId(String consumerId, String begin, String end) {
 		SqlSession session = factory.openSession();
 		List<Request> list = null;
-		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("consumerId", consumerId);
+		map.put("begin", begin);
+		map.put("end", end);
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			list = mapper.selectRequestsByConsumerId(consumerId, page);
+			list = mapper.selectRequestsByConsumerId(map);
 		} finally {
 			session.close();
 		}
@@ -153,13 +161,16 @@ public class RequestStoreLogic implements RequestStore {
 	}
 
 	@Override
-	public List<Request> selectRequestsByConsumerIdWithMaker(String consumerId, String page) {
+	public List<Request> selectRequestsByConsumerIdWithMaker(String consumerId, String begin, String end) {
 		SqlSession session = factory.openSession();
 		List<Request> list = null;
-
+		HashMap<String, String> map = new HashMap<>();
+		map.put("consumerId", consumerId);
+		map.put("begin", begin);
+		map.put("end", end);
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			list = mapper.selectRequestsByConsumerIdWithMaker(consumerId, page);
+			list = mapper.selectRequestsByConsumerIdWithMaker(map);
 		} finally {
 			session.close();
 		}
@@ -167,30 +178,33 @@ public class RequestStoreLogic implements RequestStore {
 	}
 
 	@Override
-	public List<Request> selectRequestsByConsumerIdWithPayment(String consumerId, String page) {
+	public List<Request> selectRequestsByConsumerIdWithPayment(String consumerId, String begin, String end) {
 		SqlSession session = factory.openSession();
 		List<Request> list = null;
-		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("consumerId", consumerId);
+		map.put("begin", begin);
+		map.put("end", end);
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			list = mapper.selectRequestsByConsumerIdWithPayment(consumerId, page);
+			list = mapper.selectRequestsByConsumerIdWithPayment(map);
 			//--------pagefix
-			double length = list.size()* 1.0;
-			int pageNum = (int)Math.ceil(length/Constants.REQUEST_ROW_SIZE);
-			System.out.println(pageNum);
-			int index = 0 ;
-			int start = (Integer.parseInt(page)-1)*Constants.REQUEST_ROW_SIZE;	//0*10=0 , 1*10=10
-			int end = Integer.parseInt(page)*Constants.REQUEST_ROW_SIZE;		//1*10=10, 2*10=20
-			for(Request request : list){//page bug 수정
-				//페이지 만큼 불러주기
-				//1페이지 일때0-9, 2페이지 일떄 10-19 내의 데이터만 불러옴
-				if(start <= index && index < end){
-					//System.out.println(pageNum+"");
-					request.setPage(pageNum+"");//총페이지 수
-				}
-				//System.out.println(index);
-				index++;
-			}//--------
+//			double length = list.size()* 1.0;
+//			int pageNum = (int)Math.ceil(length/Constants.REQUEST_ROW_SIZE);
+//			System.out.println(pageNum);
+//			int index = 0 ;
+//			int start = (Integer.parseInt(page)-1)*Constants.REQUEST_ROW_SIZE;	//0*10=0 , 1*10=10
+//			int end = Integer.parseInt(page)*Constants.REQUEST_ROW_SIZE;		//1*10=10, 2*10=20
+//			for(Request request : list){//page bug 수정
+//				//페이지 만큼 불러주기
+//				//1페이지 일때0-9, 2페이지 일떄 10-19 내의 데이터만 불러옴
+//				if(start <= index && index < end){
+//					//System.out.println(pageNum+"");
+//					request.setPage(pageNum+"");//총페이지 수
+//				}
+//				//System.out.println(index);
+//				index++;
+//			}//--------
 		} finally {
 			session.close();
 		}
@@ -198,13 +212,16 @@ public class RequestStoreLogic implements RequestStore {
 	}
 
 	@Override
-	public List<Request> selectRequestsByMakerId(String makerId, String page) {
+	public List<Request> selectRequestsByMakerId(String makerId, String begin, String end) {
 		SqlSession session = factory.openSession();
 		List<Request> list = null;
-		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("makerId", makerId);
+		map.put("begin", begin);
+		map.put("end", end);
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			list = mapper.selectRequestsByMakerId(makerId, page);
+			list = mapper.selectRequestsByMakerId(map);
 		} finally {
 			session.close();
 		}
@@ -212,29 +229,32 @@ public class RequestStoreLogic implements RequestStore {
 	}
 
 	@Override
-	public List<Request> selectRequestsByMakerIdWithPayment(String makerId, String page) {
+	public List<Request> selectRequestsByMakerIdWithPayment(String makerId, String begin, String end) {
 		SqlSession session = factory.openSession();
 		List<Request> list = null;
-		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("makerId", makerId);
+		map.put("begin", begin);
+		map.put("end", end);
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			list = mapper.selectRequestsByMakerIdWithPayment(makerId, page);//모든것을 데이터를 불러옴.
+			list = mapper.selectRequestsByMakerIdWithPayment(map);//모든것을 데이터를 불러옴.
 			//--------pagefix
-			double length = list.size()* 1.0;
-			int pageNum = (int)Math.ceil(length/Constants.REQUEST_ROW_SIZE);
-			int index = 0 ;
-			int start = (Integer.parseInt(page)-1)*Constants.REQUEST_ROW_SIZE;	//0*10=0 , 1*10=10
-			int end = Integer.parseInt(page)*Constants.REQUEST_ROW_SIZE;		//1*10=10, 2*10=20
-			for(Request request : list){//page bug 수정
-				//페이지 만큼 불러주기
-				//1페이지 일때0-9, 2페이지 일떄 10-19 내의 데이터만 불러옴
-				if(start <= index && index < end){
-					//System.out.println(pageNum+"");
-					request.setPage(pageNum+"");//총페이지 수
-				}
-				//System.out.println(index);
-				index++;
-			}//--------
+//			double length = list.size()* 1.0;
+//			int pageNum = (int)Math.ceil(length/Constants.REQUEST_ROW_SIZE);
+//			int index = 0 ;
+//			int start = (Integer.parseInt(page)-1)*Constants.REQUEST_ROW_SIZE;	//0*10=0 , 1*10=10
+//			int end = Integer.parseInt(page)*Constants.REQUEST_ROW_SIZE;		//1*10=10, 2*10=20
+//			for(Request request : list){//page bug 수정
+//				//페이지 만큼 불러주기
+//				//1페이지 일때0-9, 2페이지 일떄 10-19 내의 데이터만 불러옴
+//				if(start <= index && index < end){
+//					//System.out.println(pageNum+"");
+//					request.setPage(pageNum+"");//총페이지 수
+//				}
+//				//System.out.println(index);
+//				index++;
+//			}//--------
 		} finally {
 			session.close();
 		}

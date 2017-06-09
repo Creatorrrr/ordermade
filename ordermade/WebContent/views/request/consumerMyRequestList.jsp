@@ -12,12 +12,12 @@ ${box1 }
 			
 ${box2 }
 
-
+ System.print.out("dksdkdksadkgfjdlg");
 
 			<ul class="nospace listing">
 				<li class="clear">
 
-					<div class="fl_right">
+					<div class="content" align="center">
 						<h1 align="left">나의 의뢰서</h1>
 						<button id="registerBtn" class="btn btn-success">의뢰서 등록</button>
 						<div class="btn-group btn-group-justified" id="tabBox">
@@ -26,20 +26,22 @@ ${box2 }
 							<button id="tab3" class="btn btn-default">완료</button>
 						</div>
 					</div>
+					
 					<div id="resultBox">
 					<c:forEach items="${requests }" var="request" varStatus="status">
 						<div class="request_table" data="${request.id }" page="${request.page }" >
+						
 								<div class="fl_left"><b style="padding: 20px 0 0 10px;font-size: 20px;">No: ${request.id }</b></div>
 								<div class="fl_right" style="padding: 4px;">
 									<c:choose>
 										<c:when test='${request.bound eq "PRIVATE" }'><button class="boundBtn btn btn-xs btn-success">비공개</button></c:when>
 										<c:otherwise><button class="boundBtn btn btn-xs btn-success">공개</button></c:otherwise>
 									</c:choose>
-									<button class="modifyBtn btn btn-xs btn-warning">수정</button>
-									<button class="deleteBtn btn btn-xs btn-default">삭제</button>
+									<button class="modifyBtn btn btn-xs btn-warning" id="modifyBtn">수정</button>
+									<button class="deleteBtn btn btn-xs btn-default" id="deleteBtn">삭제</button>
 								</div>
+								
 								<table>
-									
 									<tr><td>의뢰 명 : ${request.title}</td></tr>
 									<c:choose>
 										<c:when test='${request.maker.id ne null }'><tr><td>의뢰자 : ${request.maker.id }</td></tr></c:when>
@@ -54,16 +56,13 @@ ${box2 }
 					</div>
 				</li>
 				
-				
 				<!-- 페이지 구현  -->
 
 				<link href="${ctx }/resources/js/js_simplePagination/simplePagination.css" rel="stylesheet" type="text/css">
 				<script src="${ctx }/resources/js/js_simplePagination/jquery.simplePagination.js"></script>	
 				<li><div id = "pagination"></div></li>
 
-
 			</ul>
-			
 			
 	<script type="text/javaScript">
 
@@ -71,7 +70,6 @@ ${box2 }
 			
 	
 
-			
 			//공개 설정 버튼 구현 
 			$("#resultBox").on('click','.boundBtn', function(){
 				var requestId = $(this).parent().parent().attr("data");
@@ -136,8 +134,6 @@ ${box2 }
 					});
 				}
 				
-
-
 			});
 			
 			//의뢰서 추가 버튼

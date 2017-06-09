@@ -68,7 +68,7 @@
 			<ul class="clear">
 
 				<li class=""><a href="${ctx }/">Main</a></li>
-				<li><a class="drop" href="${ctx }/product/ui/search.do?category=FUNITURE">Category</a>
+				<li><a class="drop" href="${ctx }/product/ui/search.do?category=FUNITURE">PRODUCTS</a>
 
 					<ul>
 						<c:forEach items="${categories}" var="category">
@@ -77,7 +77,7 @@
 						</c:forEach>
 					</ul></li>
 
-				<li><a class="drop" href="${ctx }/portfolio/ui/search.do?category=FUNITURE">Portfolio List</a>
+				<li><a class="drop" href="${ctx }/portfolio/ui/search.do?category=FUNITURE">PORTFOLIOS</a>
 
 					<ul>
 						<c:forEach items="${categories }" var="category">
@@ -87,7 +87,7 @@
 					</ul></li>
 				<c:if test="${sessionScope.loginId ne null}">
 
-					<li><a href="${ctx}/request/ui/myRequest.do">Request List</a></li>
+					<li><a href="${ctx}/request/ui/myRequest.do">REQUESTS</a></li>
 				</c:if>
 				<c:choose>
 					<c:when test="${sessionScope.memberType eq 'C' }">

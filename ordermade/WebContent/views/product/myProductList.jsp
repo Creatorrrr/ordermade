@@ -23,7 +23,6 @@ ${box2 }
 						<button class="fa fa-search btn btn-default" type="button" title="Search" onclick="javascript:productController.getMyProducts(1)">내 상품 전체 보기</button>
 					</form>
 				</div>
-				
 				<div id="listSearchResult" class="nospace listing" style="margin-top:20px; ">
 					<!-- products from server -->
 				</div>
@@ -110,6 +109,10 @@ var productController = {
 		content += '		<tr class="nospace btmspace-15">';
 		content += '			<td>가격</td>';
 		content += '			<td class="creatorId">' + $(xml).find("product>price").text() + '원</td>';
+		content += '		</tr>';
+		content += '		<tr class="nospace btmspace-15">';
+		content += '			<td>제작항목</td>';
+		content += '			<td class="creatorId">' + $(xml).find("product>category").text() + '</td>';
 		content += '		</tr>';
 		content += '	</table>';
 		content += '</div>';

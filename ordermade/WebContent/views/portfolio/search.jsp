@@ -25,7 +25,7 @@ ${head_body}
 		<div id="content" class="two_third">
 			<div class="content" align="center">
 				<h1>[${category }] 포트폴리오 페이지</h1>
-				
+
 				<div class="right">
 					<form class="navbar-form text-right">
 						<select id="portfolioSearchType" class="form-control"
@@ -77,6 +77,48 @@ ${head_body}
 </div>
 
 <script type="text/javascript">
+  $(document).ready(function(){
+	/*  $("#portfolioSearchBtn").click(
+				function() {
+					var type = $("#portfolioSearchType option:selected").val();
+					var keyword = $("#portfolioSearchKeyword");
+					if (type === "title") {
+						portfolioController.getPortfoliosByCategoryAndTitle(1, keyword.val());
+					} else if (type === "makerName") {
+						portfolioController.getPortfoliosByCategoryAndMakerName(1, keyword.val());
+					} else if(type === "category"){
+						portfolioController.getPortfoliosByCategory(1, keyword.val());
+					}
+					keyword.val("");
+				});
+	 var portfolioController = {
+	 getPortfoliosByCategory : function(page, category) {
+			$.ajax({
+				url : "${ctx}/portfolio/ajax/portfolios/category.do?page=" + page,
+				type : "get",
+				dataType : "xml",
+				success : function(xml) {
+					var xmlData = $(xml).find("portfolio");
+					var listLength = xmlData.length;
+					$("#listSearchResult").empty();
+					if (listLength) {
+						var contentStr = "";
+						$(xmlData).each(function() {
+							contentStr += portfolioController.makeContent(this);
+						});
+						$("#listSearchResult").append(contentStr);
+					} else {
+						$("#listSearchResult").append(
+								portfolioController.makeContentForEmpty());
+					}
+				}
+			});
+		}, 
+	 }; */
+	 
+	 portfolioController.getPortfoliosByCategory(1, keyword.val());
+	
+ });
 	//검색을 클릭하면 검색된 의뢰서 목록을 가져온다.
 	$("#portfolioSearchBtn").click(
 			function() {
@@ -86,40 +128,12 @@ ${head_body}
 					portfolioController.getPortfoliosByCategoryAndTitle(1, keyword.val());
 				} else if (type === "makerName") {
 					portfolioController.getPortfoliosByCategoryAndMakerName(1, keyword.val());
+				} else if(type === "category"){
+					portfolioController.getPortfoliosByCategory(1, keyword.val());
 				}
 				keyword.val("");
 			});
 
-	// 이미지 검색 대화상자를 생성
-	/* var createImageSearchModal = function() {
-		var contentStr = "";
-
-		contentStr += "<div align='right'><button onclick='javascript:$.unblockUI();'>X</button></div>";
-		contentStr += "<div id='fileuploader'>Upload</div>";
-
-		$.blockUI({
-			message : contentStr
-		});
-
-		$("#fileuploader").uploadFile({
-			url : "${ctx}/product/imageUpload.do",
-			acceptFiles : "image/*",
-			fileName : "image",
-			multiple : false,
-			dragdropWidth:"100%",
-			maxFileCount : 1,
-			returnType : "text",
-			onSuccess : function(files, data, xhr, pd) {
-				$.unblockUI();
-				var result = data;
-				if (result === "fail") {
-					alert("이미지 업로드 실패")
-				} else {
-					portfolioController.getPortfoliosByImage(result);
-				}
-			},
-		});
-	}; */
 
 	var portfolioController = {
 		getPortfoliosByCategoryAndTitle : function(page, title) {
@@ -170,29 +184,30 @@ ${head_body}
 			});
 		},
 
-/* 		getProductsByImage : function(image) {
+ 		getPortfoliosByCategory : function(page, category) {
 			$.ajax({
-				url : "${ctx}/product/ajax/products/image.do?image=" + image,
+				url : "${ctx}/portfolio/ajax/portfolios/category.do?page=" + page,
 				type : "get",
 				dataType : "xml",
 				success : function(xml) {
-					var xmlData = $(xml).find("product");
+					var xmlData = $(xml).find("portfolio");
 					var listLength = xmlData.length;
 					$("#listSearchResult").empty();
-					$("#productCategory").html("[이미지 검색] 상품페이지");
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function() {
-							contentStr += productController.makeContent(this);
+							contentStr += portfolioController.makeContent(this);
 						});
 						$("#listSearchResult").append(contentStr);
 					} else {
 						$("#listSearchResult").append(
-								productController.makeContentForEmpty());
+								portfolioController.makeContentForEmpty());
 					}
 				}
 			});
-		}, */
+		}, 
+		
+
 
 		makeContent : function(xml) {
 			var content = "";
@@ -242,6 +257,7 @@ ${head_body}
 			return content;
 		}
 	};
+
 </script>
 
 
