@@ -19,6 +19,7 @@ import ordermade.domain.Comments;
 import ordermade.domain.InviteRequest;
 import ordermade.domain.InviteRequests;
 import ordermade.domain.Member;
+import ordermade.domain.Products;
 import ordermade.domain.Request;
 import ordermade.domain.Requests;
 import ordermade.service.facade.RequestService;
@@ -351,19 +352,23 @@ public class RequestController {
 	
 	// Complete
 	@RequestMapping(value="request/xml/searchBound.do", produces="application/xml")
-	public @ResponseBody Requests findRequestsByBound(String page){
+	public @ResponseBody Requests findRequestsByBound(String page, String bound){
 		if(page == null) page = "1";
 		return new Requests(service.findRequestsByBound(Constants.BOUND_PUBLIC, page));
+		
+//		return new Requests(service.findRequestsByBound(bound, page));
 	}
 	// Complete
 	@RequestMapping(value="request/xml/searchBoundAndTitle.do", produces="application/xml")
-	public @ResponseBody Requests findRequestsByBoundAndTitle(String title, String page){
+	public @ResponseBody Requests findRequestsByBoundAndTitle(String title, String page ){
 		if(page == null) page = "1";
 		return new Requests(service.findRequestsByBoundAndTitle(Constants.BOUND_PUBLIC, title, page));
+		
+//		return new Requests(service.findRequestsByBoundAndTitle(bound, title, page));
 	}
 	// Complete
 	@RequestMapping(value="request/xml/searchBoundAndContent.do", produces="application/xml")
-	public @ResponseBody Requests findRequestsByBoundAndContent(String content, String page){
+	public @ResponseBody Requests findRequestsByBoundAndContent(String content, String page,String bound){
 		if(page == null) page = "1";
 		return new Requests(service.findRequestsByBoundAndContent(Constants.BOUND_PUBLIC, content, page));
 	}

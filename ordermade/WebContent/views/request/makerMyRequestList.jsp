@@ -41,8 +41,8 @@ ${box2 }
 						<p>의뢰 내용 : ${request.content }</p>
 						<p>제작항목 : ${request.category }</p>
 						<p>희망 가격 : ${request.hopePrice }</p>
-						<button class="modifyBtn">수정</button>
-						<button class="deleteBtn">삭제</button>
+						<button class="modifyBtn" id="modifyBtn">수정</button>
+						<button class="deleteBtn" id="deleteBtn">삭제</button>
 					
 				</div>
 			</c:forEach>
@@ -96,14 +96,12 @@ ${box2 }
 					});
 				}
 				
-
-
 			});
 			
-			//의뢰서 추가 버튼
+		/* 	//의뢰서 추가 버튼
 			$("#registerBtn").click(function(){
 				window.location.href = "${ctx}/request/ui/register.do";
-			});
+			}); */
 			
 			
 			//-------------page

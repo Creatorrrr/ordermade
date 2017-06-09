@@ -48,9 +48,9 @@ ${box2 }
 								class="form-control" rows="7" cols="50"></textarea>
 					</tr>
 				</table>
-				<div align="center">
+				<div align="right">
 					<input class="btn btn-default" type="reset" value="취소하기" onclick="javascript:window.location='${ctx }/post/list.do?boardId=${boardId }'">
-					<input id="registBtn" class="btn btn-success" type="button" value="등록하기">
+					<input id="registBtn" class="btn btn-default" type="button" value="등록하기">
 				</div>
 			</form>
 			<br>

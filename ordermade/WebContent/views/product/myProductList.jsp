@@ -61,6 +61,10 @@ ${box2 }
 									<td>가격</td>
 									<td class="creatorId">${product.price}원</td>
 								</tr>
+								<tr class="nospace btmspace-15">
+									<td>제작항목</td>
+									<td class="creatorId">${product.category}</td>
+								</tr>
 							</table>
 						</div>
 					</c:forEach>
