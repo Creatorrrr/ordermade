@@ -38,6 +38,7 @@ ${box2 }
 		</form>
 	</div>
 </div>
+
 </br>
 </br>
 </br>
@@ -48,7 +49,7 @@ ${box2 }
 		<c:forEach items="${portfolios }" var="portfolio">
 			<div class='listBox'>
 				<div class="listExplainBox">
-					<img src="${ctx }/portfolio/image.do?img=${portfolio.image}">
+					<img src="${ctx }/portfolio/image.do?img=${portfolio.image}" style=" width: 105px;height: 100px";>
 					<table>
 						<tr>
 							<td>포트폴리오 명</td>

@@ -92,17 +92,22 @@ var getHitsProducts = function(category) {
 					var contentStr = "";
 					$(xmlData).each(function() {
 						contentStr +=    "<li>";
-						contentStr +=	 	"<div class='itemBox'>";
+						contentStr +=	 	"<div class='itemBox' >";
 						contentStr += 			"<div class='itemImageBox imgl borderedbox'>";
 						contentStr +=	 			"<a href='${ctx}/product/ui/detail.do?id=" + $(this).find("product>id").text() +"'>";
-						contentStr += 					"<img src=\"${ctx }/main/file/download.do?fileName=" + $(this).find("product>image").text() +"\">";
+						contentStr += 					'<img src=\"${ctx }/main/file/download.do?fileName=' + $(this).find("product>image").text() +'" style="width:200px;height: 110px"; />';
 						contentStr += 				"</a>";
 						contentStr += 			"</div>";
-						contentStr +=	 		"<div class='itemExplainBox'>";
+						contentStr +=	 		"<div class='itemExplainBox' align='center'>";
 						contentStr +=	 			"<a href='${ctx}/product/ui/detail.do?id=" + $(this).find("product>id").text() +"'>";
-						contentStr +=	 				"<p class='itemTitleBox'>" + $(this).find("product>title").text() + "</p>";
+						contentStr +=	 				"<p class='itemTitleBox'>상품 명 [" + $(this).find("product>title").text() + "]</p>";
 						contentStr +=	 			"</a>";
-						contentStr +=	 			"<span class='itemPriceBox'>" + $(this).find("product>price").text() + " 원</span>";
+						contentStr +=	 		"</div>";
+						contentStr +=	 		"<div class='itemExplainBox' align='center'>";
+						contentStr +=	 			"<h1 class='itemPriceBox'>가격 &nbsp;" + $(this).find("product>price").text() + " 원</h1>";
+						contentStr +=	 		"</div>";
+						contentStr +=	 		"</br>";
+						contentStr +=	 		"<div class='itemExplainBox' align='center'>";
 						contentStr +=	 			"<p class='itemHitBox'>" + $(this).find("product>hit").text() + " Hits!!</p>";
 						contentStr +=	 		"</div>";
 						contentStr +=	 	"</div>";
@@ -153,7 +158,7 @@ var getBrandNewProducts	= function(category){
 						contentStr +=	 	"<div class='itemBox'>";
 						contentStr += 			"<div class='itemImageBox imgl borderedbox'>";
 						contentStr +=	 			"<a href='${ctx}/product/ui/detail.do?id=" + $(this).find("product>id").text() +"'>";
-						contentStr += 					"<img src=\"${ctx }/main/file/download.do?fileName=" + $(this).find("product>image").text() +"\">";
+						contentStr += 					'<img src=\"${ctx }/main/file/download.do?fileName=' + $(this).find("product>image").text() +'" style="width:105px;height: 100px"; />';
 						contentStr += 				"</a>";
 						contentStr += 			"</div>";
 						contentStr +=	 		"<div class='itemExplainBox'>";

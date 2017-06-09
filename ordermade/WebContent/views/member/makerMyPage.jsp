@@ -18,8 +18,8 @@ ${box2 }
 		<div class="content" align="left">
 			<h1>${member.id }님의정보</h1>
 
-			<div class="imgl borderedbox">
-				<img src="${ctx }/main/file/download.do?fileName=${member.image}" />
+			<div class="imgl borderedbox" >
+				<img src="${ctx }/main/file/download.do?fileName=${member.image}"  style=" width: 200px;height: 140px"; />
 			</div>
 			<table class="table">
 				<tr class="nospace btmspace-15">
@@ -61,13 +61,12 @@ ${box2 }
 	// get portfolios with xml
 	var getPortfolios = function(page) {
 
-		$
-				.ajax({
+		$.ajax({
 					url : "${ctx}/portfolio/xml/search.do?page=" + page,
 					type : "get",
 					dataType : "xml",
 					success : function(xml) {
-						var xmlData = $(xml).find("portfolio");
+						var xmlData = $(xml).find("portfolios>portfolio");
 						var listLength = xmlData.length;
 						$("#BrandNewPortfolios").empty();
 						if (listLength) {
@@ -80,7 +79,7 @@ ${box2 }
 														+ $(this).find(
 																'portfolio>id')
 																.text() + "'>"
-												contentStr += "<img src='${ctx }/product/image.do?img="
+												contentStr += "<img src='${ctx }/portfolio/image.do?img="
 														+ $(this)
 																.find(
 																		'portfolio>image')
@@ -114,8 +113,7 @@ ${box2 }
 	// get products with xml
 	var getProducts = function(page) {
 
-		$
-				.ajax({
+		$.ajax({
 					url : "${ctx}/product/ajax/products/makerid.do?page="
 							+ page,
 					type : "get",
