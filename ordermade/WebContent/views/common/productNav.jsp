@@ -6,7 +6,7 @@
 <h2>제작자 정보</h2>
 <nav class="sdb_holder">
 	<ul>
-		<li><img src="${ctx }/member/image.do?img=${product.maker.image}" /></li>
+		<li><img src="${ctx }/main/file/download.do?fileName=${product.maker.image}" /></li>
 		<li><p>제작자 아이디 : ${product.maker.id }</p></li>
 		<li><p>제작자 소개</p></li>
 		<li><p>가격정보 :${product.price }원</p></li>

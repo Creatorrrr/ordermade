@@ -139,7 +139,7 @@ ${head_body}
 					</div>
 					<div class="one_third">
 						<label for="reviewSearchType">평점</label>
-						<select id="reviewSearchType" class="form-control" style="display: inline-block">
+						<select id="reviewSearchType" name="grade" class="form-control" style="display: inline-block">
 							<option value="1">★</option>
 							<option value="2">★★</option>
 							<option value="3">★★★</option>
@@ -512,6 +512,17 @@ var reviewController = {
 		content += 			"<h3 class='reviewTitle'>" + $(xml).find("review>title").text() + "</h3>";
 		content += 			"<div class='reviewControlBox'>";
 		content += 				"<p>작성자 : " + $(xml).find("review>consumer>id").text() + "</p>";
+		content += 				"<p>점수 : ";
+		var grade = parseInt($(xml).find("review>grade").text());
+		for(var i = 0 ; i < 5 ; i++) {
+			if(grade > 0) {
+				content += 	"★";
+			} else {
+				content += "☆";
+			}
+			grade--;
+		}	
+		content += 				"</p>";
 		if($(xml).find("review>consumer>id").text() === "${sessionScope.loginId}") {
 			content += 			"<button class='btn btn-default' onclick='javascript:beforeUpdateReview(" + $(xml).find("review>id").text() + ")'>수정</button>";
 			content += 			"<button class='btn btn-default' onclick='javascript:reviewController.deleteReview(" + $(xml).find("review>id").text() + ")'>삭제</button>";
