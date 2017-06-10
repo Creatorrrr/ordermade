@@ -19,6 +19,7 @@ ${head_body}
 	}
 	.requestBox table {
 		color:black;
+		border-style:none;
 	}
 </style>
 
@@ -29,35 +30,21 @@ ${box1 }
 			
 ${box2 }
 
-<h1 align="left">의뢰서 검색</h1>
-<div class="fl_right">
-	<form class="navbar-form text-center">
-		<select id="requestSearchType" class="form-control" style="display:inline-block">
-				<option value="title">제목</option>
-				<option value="content">내용</option>
-		</select>
-		<input id="requestSearchKeyword" name="requestSearchKeyword" class="form-control"
-				type="text" value="" placeholder="Search Here" style="display:inline-block"/>
-		<button id="requestSearchBtn" class="btn btn-default" title="Search" type="button">검색</button>
-	</form>
-</div>
-<!-- 	<div class="content" align="center">
-		
-		<div style="float:right">
+	<h1 align="left">의뢰서 검색</h1>
+	<div class="fl_right">
+		<form class="navbar-form text-center">
 			<select id="requestSearchType" class="form-control" style="display:inline-block">
-				<option value="title">제목</option>
-				<option value="content">내용</option>
+					<option value="title">제목</option>
+					<option value="content">내용</option>
 			</select>
-			<input id="requestSearchKeyword" name="requestSearchKeyword" class="search-box-input"
-				type="text" value="" placeholder="Search Here" style="display:inline-block"/>
-			<button id="requestSearchBtn" class="fa fa-search" title="Search">
-				<em>Search</em>
-			</button>
-		</div>
-	</div>  --><%-- <c:forEach items="${ box_list }" var="literature"> --%>
+			<input id="requestSearchKeyword" name="requestSearchKeyword" class="form-control"
+					type="text" value="" placeholder="Search Here" style="display:inline-block"/>
+			<button id="requestSearchBtn" class="btn btn-default" title="Search" type="button">검색</button>
+		</form>
+	</div>
 	
-	<div class="content" align="center">					
-		<div  class="btn-group btn-group-justified" id="tabBox">
+	<div class="content" align="left">					
+		<div class="btn-group btn-group-justified" id="tabBox">
 			<button class="btn btn-default" onclick="javascript:requestController.getRequestsByBound(1);">모든 의뢰서</button>
 			<button class="btn btn-default" onclick="javascript:requestController.getMyInviteRequestsForMaker(1);">내가 보낸 의뢰서</button>
 		</div>
@@ -98,8 +85,8 @@ var createInviteModal = function(requestId) {
 	contentStr += "    	<label>메시지<textarea name='message' rows='5' style='width: 100%' placeholder='메시지를 입력해주세요.'></textarea></label>";
 	contentStr += "	</div>";
 	contentStr += "	<div align='right'>";
-	contentStr += "		<button type='button' onclick='javascript:requestController.registerInviteRequest()'>참가요청 보내기</button>";
-	contentStr += "    	<button type='reset' onclick='javascript:$.unblockUI();'>취소</button>";
+	contentStr += "		<button type='button' class='btn btn-default' onclick='javascript:requestController.registerInviteRequest()'>참가요청 보내기</button>";
+	contentStr += "    	<button type='reset' class='btn btn-default' onclick='javascript:$.unblockUI();'>취소</button>";
 	contentStr += "	</div>";
 	contentStr += "</form>";
 	
@@ -235,9 +222,9 @@ var requestController = {
 		content += 		"</tr>";
 		content += 	"</table>";
 		if(contentType === "참가") {
-			content += 	"<input type='button' value='참가' onclick='javascript:createInviteModal(" + $(xml).find("request>id").text() + ")'>";
+			content += 	"<input type='button' class='btn btn-default' value='참가' onclick='javascript:createInviteModal(" + $(xml).find("request>id").text() + ")'>";
 		} else if(contentType === "진행중") {
-			content += 	"<input type='button' value='진행중' disabled>";
+			content += 	"<input type='button' class='btn btn-default' value='요청중' disabled>";
 		}
 		content += "</div>";
 

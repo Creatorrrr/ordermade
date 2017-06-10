@@ -54,9 +54,9 @@ ${box2 }
 	                            </td>
 	                            <td style="text-align: center">
 	                            	<!-- 수락 ajax 구현 -->
-	                           		<input type="button" value="수락" style="display: inline-block;">
+	                           		<input type="button" class="btn btn-default" value="수락" style="display: inline-block;">
 	                           		<!-- 거절 ajax 구현 -->
-	                           		<span><input type="button" value="거절" style="display: inline-block;"></span>
+	                           		<span><input type="button" class="btn btn-default" value="거절" style="display: inline-block;"></span>
 	                            </td>
 	                        </tr>
 	                       </c:forEach>

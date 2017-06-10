@@ -254,7 +254,7 @@ var commentController = {
 		var content = "";
 
 		content += "<div class='commentBox'>";
-		content += 		"<div id='commentContentBox-" + $(xml).find("comment>id").text() + "' class='commentContentBox'>";
+		content += 		"<div id='commentContentBox-" + $(xml).find("comment>id").text() + "' class='commentContentBox' style='width:550px;'>";
 		content += 			"<div class='commentControlBox'>";
 		content += 				"<p>작성자 : " + $(xml).find("comment>member>id").text() + "</p>";
 		if($(xml).find("comment>member>id").text() === "${sessionScope.loginId}") {
@@ -263,7 +263,7 @@ var commentController = {
 		}
 		content += 			"</div>";
 		if($(xml).find("comment>contentType").text() === "C") {
-			content += '<p class="commentContent">' + $(xml).find("comment>content").text() + '</p>';
+			content += '<p class="commentContent" style="﻿word-break:break-word;">' + $(xml).find("comment>content").text() + '</p>';
 		} else if($(xml).find("comment>contentType").text() === "F") {
 			content += '<p class="commentContent">';
 			content += '	<a href="${ctx }/main/file/download.do?fileName=' + $(xml).find("comment>content").text() + '" download="' + $(xml).find("comment>content").text() + '">';

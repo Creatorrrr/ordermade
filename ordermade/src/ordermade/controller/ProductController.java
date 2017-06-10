@@ -146,8 +146,20 @@ public class ProductController {
 		// Ajax 생산자 이름 그리고 생산품 종류로 생산품들 출력
 		return new Products(pService.findProductsByCategoryAndMakerName(category, makerName, page));
 	}
+	
+	@RequestMapping(value = "/ajax/products/title.do", produces = "application/xml")
+	public @ResponseBody Products findProductsByTitle(String page, String title) {
+		// Ajax 생산자 아이디 그리고 내용으로 생산품들 출력
+		return new Products(pService.findProductsByTitle(title, page));
+	}
+	
+	@RequestMapping(value = "/ajax/products/makerName.do", produces = "application/xml")
+	public @ResponseBody Products findProductsByMakerName(String page, String makerName) {
+		// Ajax 생산자 아이디 그리고 내용으로 생산품들 출력
+		return new Products(pService.findProductsByMakerName(makerName, page));
+	}
 
-	@RequestMapping(value = "/ajax/products/MT", produces = "application/xml")
+	@RequestMapping(value = "/ajax/products/MT.do", produces = "application/xml")
 	public @ResponseBody Products findProductsByMakerIdAndTitle(String page, String title, HttpSession session) {
 		// Ajax 생산자 아이디 그리고 내용으로 생산품들 출력
 		return new Products(pService.findProductsByMakerIdAndTitle(
@@ -268,11 +280,12 @@ public class ProductController {
 	}
 	
 	@RequestMapping("ui/searchMain.do")
-	public ModelAndView showSearchProductsUIForMain(String keyword) {
+	public ModelAndView showSearchProductsUIForMain(String page, String keyword) {
+		if (page == null || page.isEmpty()) page = "1";
 		return new ModelAndView("product/search")
 				.addObject("categories", pService.findAllCategory())
-				.addObject("category", "전체")
-				.addObject("products", pService.findProductsByTitle(keyword, "1"));
+				.addObject("category", "ALL")
+				.addObject("products", pService.findProductsByTitle(keyword, page));
 	}
 	
 	// Complete

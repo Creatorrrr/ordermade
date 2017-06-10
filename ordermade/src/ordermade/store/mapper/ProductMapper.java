@@ -22,5 +22,6 @@ public interface ProductMapper {
 	public List<Product> selectProductsByMakerId(HashMap<String, String> map);
 	public List<Product> selectProductsByMakerIdAndTitle(HashMap<String, String> map);
 	public List<Product> selectProductsByTitle(HashMap<String, String> map);
+	public List<Product> selectProductsByMakerName(HashMap<String, String> map);
 	public List<Category> selectAllCategory();
 }

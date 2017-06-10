@@ -103,6 +103,11 @@ public class ProductServiceLogic implements ProductService{
 	public List<Product> findProductsByTitle(String title, String page) {
 		return excludePassword(pStore.selectProductsByTitle(title, getProductBegin(page), getProductEnd(page)));
 	}
+	
+	@Override
+	public List<Product> findProductsByMakerName(String makerName, String page) {
+		return excludePassword(pStore.selectProductsByMakerName(makerName, getProductBegin(page), getProductEnd(page)));
+	}
 
 	@Override
 	public boolean registerReview(Review review) {

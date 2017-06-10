@@ -46,10 +46,10 @@ ${box2 }
                          <td class="" style="text-align: center">${inviteRequest.requestTime}</td>
                          <td class="" style="text-align: center">
                          	<!-- 수락 ajax 구현 -->
-                       		<input type="button" value="수락" style="display: inline-block;" onclick="javascript:inviteRequestController.acceptInviteRequest(${inviteRequest.request.id})">
+                       		<input type="button" class="btn btn-default" value="수락" style="display: inline-block;" onclick="javascript:inviteRequestController.acceptInviteRequest(${inviteRequest.request.id})">
                        		<!-- 거절 ajax 구현 -->
                        		<span>
-                       		<input type="button" value="거절" style="display: inline-block;" onclick="javascript:inviteRequestController.rejectInviteRequest('${inviteRequest.id}')">
+                       		<input type="button" class="btn btn-default" value="거절" style="display: inline-block;" onclick="javascript:inviteRequestController.rejectInviteRequest('${inviteRequest.id}')">
                        		</span>
                          </td>
                      </tr>

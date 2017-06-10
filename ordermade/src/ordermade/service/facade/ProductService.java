@@ -33,6 +33,8 @@ public interface ProductService {
 
 	public List<Product> findProductsByTitle(String title, String page);
 
+	public List<Product> findProductsByMakerName(String makerName, String page);
+
 	public boolean registerReview(Review review);
 
 	public boolean modifyReviewById(Review review);

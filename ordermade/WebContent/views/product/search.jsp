@@ -90,10 +90,18 @@ $("#productSearchBtn").click(
 		function() {
 			var type = $("#productSearchType option:selected").val();
 			var keyword = $("#productSearchKeyword");
-			if (type === "title") {
-				productController.getProductsByCategoryAndTitle(1, keyword.val());
-			} else if (type === "makerName") {
-				productController.getProductsByCategoryAndMakerName(1, keyword.val());
+			if("${category}" === "ALL" || "${category}" === "IMAGE SEARCH") {
+				if (type === "title") {
+					productController.getProductsByTitle(1, keyword.val());
+				} else if (type === "makerName") {
+					productController.getProductsByMakerName(1, keyword.val());
+				}
+			} else {
+				if (type === "title") {
+					productController.getProductsByCategoryAndTitle(1, keyword.val());
+				} else if (type === "makerName") {
+					productController.getProductsByCategoryAndMakerName(1, keyword.val());
+				}
 			}
 			keyword.val("");
 });
@@ -130,6 +138,52 @@ var createImageSearchModal = function() {
 };
 
 var productController = {
+	getProductsByTitle : function(page, title) {
+		$.ajax({
+			url : "${ctx}/product/ajax/products/title.do?page=" + page + "&title=" + title,
+			type : "get",
+			dataType : "xml",
+			success : function(xml) {
+				var xmlData = $(xml).find("product");
+				var listLength = xmlData.length;
+				$("#listSearchResult").empty();
+				if (listLength) {
+					var contentStr = "";
+					$(xmlData).each(function() {
+						contentStr += productController.makeContent(this);
+					});
+					$("#listSearchResult").append(contentStr);
+				} else {
+					$("#listSearchResult").append(
+							productController.makeContentForEmpty());
+				}
+			}
+		});
+	},
+	
+	getProductsByMakerName : function(page, makerName) {
+		$.ajax({
+			url : "${ctx}/product/ajax/products/makerName.do?page=" + page + "&makerName=" + makerName,
+			type : "get",
+			dataType : "xml",
+			success : function(xml) {
+				var xmlData = $(xml).find("product");
+				var listLength = xmlData.length;
+				$("#listSearchResult").empty();
+				if (listLength) {
+					var contentStr = "";
+					$(xmlData).each(function() {
+						contentStr += productController.makeContent(this);
+					});
+					$("#listSearchResult").append(contentStr);
+				} else {
+					$("#listSearchResult").append(
+							productController.makeContentForEmpty());
+				}
+			}
+		});
+	},
+		
 	getProductsByCategoryAndTitle : function(page, title) {
 		$.ajax({
 			url : "${ctx}/product/ajax/products/CT.do?page=" + page

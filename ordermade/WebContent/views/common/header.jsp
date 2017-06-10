@@ -45,7 +45,7 @@
 		style="padding:160px 10px 30px 10px;background-image: url('${ctx}/resources/imgs/pp.jpg'); background-position:center center"">
 
 		<div>
-			<form class="navbar-form text-center" method="get" action="${ctx}/product/ui/searchMain.do" role="search">
+			<form class="navbar-form text-center" method="get" action="${ctx}/product/ui/searchMain.do?page=1" role="search">
 				<div class="form-group">
 					<input name="keyword" type="text" class="form-control" placeholder="어떤 주문을 원하십니까?"
 						style="width: 220px">

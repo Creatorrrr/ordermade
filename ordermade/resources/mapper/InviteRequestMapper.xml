@@ -22,7 +22,7 @@
   			select invite_request_seq.nextval from dual
   		</selectKey>
 		INSERT INTO invite_request(id, message, maker_id, request_time, request_id, form)
-		VALUES (#{id},#{message},#{maker.id},TO_DATE(sysdate,'yyyy/mm/dd hh24:mi:ss'),#{request.id},#{form})
+		VALUES (#{id},#{message},#{maker.id},SYSDATE,#{request.id},#{form})
 	</insert>
 	
 	<delete id="deleteInviteRequestById" parameterType="String">

@@ -211,6 +211,25 @@
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
+	<select id="selectProductsByMakerName" parameterType="HashMap"
+		resultMap="productMap">
+		<include refid="selectProduct" />
+		FROM (SELECT rownum rnum,
+						product.id, 
+						product.title, 
+						product.content, 
+						product.image, 
+						product.price, 
+						product.period, 
+						product.maker_id, 
+						product.type,
+						product.hit
+				FROM product INNER JOIN member ON product.maker_id = member.id
+				WHERE member.name LIKE '%${makerName}%'
+				ORDER BY product.id DESC)
+		WHERE rnum BETWEEN #{begin} AND #{end}
+	</select>
+
 	<select id="selectAllCategory" parameterType="HashMap"
 		resultType="Category">
 		SELECT type
