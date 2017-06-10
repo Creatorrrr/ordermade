@@ -35,7 +35,7 @@ ${head_body}
 				</div>
 				<!-- 상품 설명 -->
 				<p class="productContentBox">
-					<div align="center">
+					<div align="center" style="color: #000000">
 					 ${product.content}
 					</div>
 				</p>

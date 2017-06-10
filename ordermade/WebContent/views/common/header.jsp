@@ -7,12 +7,12 @@
 		<div id="logo" class="fl_left heading"
 			style="line-height: 70px; font-size: 70px; margin: 0px;">
 			<a href="${ctx }/"><img src="${ctx }/views/images/panda4.jpg"
-				style="width: 80px; height: 80px"><b>PANDA</b></a>
+				style="width: 80px; height: 80px;"><b style="color:#8c8c8c; font-size: 90px; vertical-align: middle">PANDA</b></a>
 
-			<div class="text-center"
-				style="line-height: 10px; font-size: 15px; margin-left: 230px;">
+			 <div class="text-center"
+				style="line-height: 10px; font-size: 15px; margin-left: 300px;">
 				<p>1:1 matching service</p>
-			</div>
+			</div> 
 		</div>
 
 
@@ -20,18 +20,18 @@
 			<c:choose>
 				<c:when test="${loginId eq null }">
 
-					<li><a href="${ctx }/member/login.do">Login</a></li>
-					<li><a href="${ctx }/member/join.do">sign up</a></li>
+					<li><a style="font-size:15px; color: #ffffff;" href="${ctx }/member/login.do">Login</a></li>
+					<li><a style="font-size:15px; color: #ffffff;" href="${ctx }/member/join.do">sign up</a></li>
 					<%-- <a id="loginBtn" href="${ctx }/member/login.do"
 						class="btn btn-success">로그인</a>
 					<a href="${ctx }/member/join.do" class="btn btn-success">회원가입</a> --%>
 				</c:when>
 				<c:otherwise>
 
-					<b>${loginId}</b>님 환영합니다. &nbsp;
+					<b style="font-size: 40px">${loginId}</b>님 환영합니다. &nbsp;
 					<br>
-					<li style="font-size:15px; color: #ffffff ; "><a href="${ctx }/member/logout.do">Logout</a></li>
-					<li style="font-size:15px; color: #ffffff ; margin-right: 10px;"><a href="${ctx}/member/myPage.do">my page</a></li>
+					<li><a  style="font-size:15px; color: #ffffff ;" href="${ctx }/member/logout.do">Logout</a></li>
+					<li style="margin-right: 10px;"><a  style="font-size:15px; color: #ffffff ;"href="${ctx}/member/myPage.do">my page</a></li>
 						<%-- 	<a href="${ctx }/member/logout.do" class="btn btn-success">로그아웃</a>
 					<a href="${ctx}/member/myPage.do" class="btn btn-success">회원정보</a> --%>
 				</c:otherwise>

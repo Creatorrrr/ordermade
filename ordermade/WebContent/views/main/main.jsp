@@ -94,7 +94,7 @@ var getHitsProducts = function(category) {
 						contentStr +=	 	"<div class='itemBox' >";
 						contentStr += 			"<div class='itemImageBox imgl borderedbox'>";
 						contentStr +=	 			"<a href='${ctx}/product/ui/detail.do?id=" + $(this).find("product>id").text() +"'>";
-						contentStr += 					'<img src=\"${ctx }/main/file/download.do?fileName=' + $(this).find("product>image").text() +'" style="width:240px;height: 110px"; />';
+						contentStr += 					'<img class="main-image" src=\"${ctx }/main/file/download.do?fileName=' + $(this).find("product>image").text() +'" />';
 						contentStr += 				"</a>";
 						contentStr += 			"</div>";
 						contentStr +=	 		"<div class='itemExplainBox' align='left' style='margin-left: 15px'>";
@@ -157,7 +157,7 @@ var getBrandNewProducts	= function(category){
 						contentStr +=	 	"<div class='itemBox'>";
 						contentStr += 			"<div class='itemImageBox imgl borderedbox'>";
 						contentStr +=	 			"<a href='${ctx}/product/ui/detail.do?id=" + $(this).find("product>id").text() +"'>";
-						contentStr += 					'<img src=\"${ctx }/main/file/download.do?fileName=' + $(this).find("product>image").text() +'" style="width:240px;height: 110px"; />';
+						contentStr += 					'<img class="main-image" src=\"${ctx }/main/file/download.do?fileName=' + $(this).find("product>image").text() +'" />';
 						contentStr += 				"</a>";
 						contentStr += 			"</div>";
 						contentStr +=	 		"<div class='itemExplainBox' align='left' style='margin-left: 15px'>";

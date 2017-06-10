@@ -11,6 +11,28 @@ a:hover {color:#fff;}
 /*-------------------------------------------------
 CSS TWEAKS
 -------------------------------------------------*/
+
+.main-image{
+	width: auto;
+	height: auto;
+	max-width: 200px;
+	max-height: 150px;
+}
+.portfolio-image{
+	width: auto;
+	height: auto; 
+	max-width: 150px;
+	max-height: 100px; 
+	 /*105 100  */
+}
+.productSearch-image{
+	width: auto;
+	height: auto; 
+	max-width: 200px;
+	max-height: 200px; 
+	 /*105 100  */
+}
+
 .clearing { clear:both;}
 .fltLeft { float:left;}
 .flrRight { float:right;}
