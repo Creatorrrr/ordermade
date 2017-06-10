@@ -103,6 +103,13 @@ public class PortfolioController {
 //		}else {
 //			return "portfolio/register";
 //		}
+		
+
+
+//	Member maker = mService.findMemberById((String) session.getAttribute("loginId"));
+//		portfolio.setMaker(new Member());
+//	//	portfolio.getMaker().setId((String)session.getAttribute("loginId"));
+//		return pService.registerPortfolio(portfolio) + "";
 	} 
 
 	@RequestMapping(value = "xml/modify.do", method = RequestMethod.POST, produces = "text/plain")
@@ -355,5 +362,24 @@ public class PortfolioController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping(value = "imageUpload.do", method = RequestMethod.POST, produces = "text/plain")
+	public @ResponseBody String uploadPortfolioImage(HttpServletRequest req) {
+		String imagePath = Constants.IMAGE_PATH;
+
+		File dir = new File(imagePath);
+		if (!dir.exists()) {
+			// 폴더가 존재하지 않으면 폴더 생성
+			dir.mkdirs();
+		}
+
+		try {
+			return new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy())
+					.getFile("image").getName();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "fail";
 	}
 }

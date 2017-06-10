@@ -11,7 +11,8 @@ ${head_body}
 	<div class="rounded">
 		<div id="contents" class="two_third first">
 			<!-- 상품 제목 -->
-			<h1 class="productTitle">${product.title }</h1>
+			<h1 class="productTitle" align="left">[${product.title }] 상품페이지</h1>
+			<h2 align="left">(category - [${product.category }] 상품페이지)</h2>
 			<!-- 수정 삭제 메뉴 -->
 			<c:if test="${sessionScope.loginId ne null}">
 				<c:if test="${product.maker.id eq sessionScope.loginId}">
@@ -26,14 +27,18 @@ ${head_body}
 			</c:if>
 			<!-- 상품 설명 시작 -->
 			<div class="productDetailBox">
-				<h2 class="productSubTitle">상품 상세</h2>
+				<h2 class="productSubTitle">상품 상세 </h2>
 				<hr style="margin:0px 0px 15px 0px;">
 				<!-- 상품 이미지  -->
 				<div class="productImageBox" align="center">
 					<img src="${ctx }/main/file/download.do?fileName=${product.image}" />
 				</div>
 				<!-- 상품 설명 -->
-				<p class="productContentBox">${product.content}</p>
+				<p class="productContentBox">
+					<div align="center">
+					 ${product.content}
+					</div>
+				</p>
 			</div>
 			<!-- 상품 설명 종료 -->
 
