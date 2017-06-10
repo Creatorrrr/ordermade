@@ -12,7 +12,7 @@ ${head_body}
 		<div id="contents" class="two_third first">
 			<!-- 상품 제목 -->
 			<h1 class="productTitle" align="left">[${product.title }] 상품페이지</h1>
-			<h2 align="left">(category - [${product.category }] 상품페이지)</h2>
+			<h2 align="left">카테고리 : ${product.category }</h2>
 			<!-- 수정 삭제 메뉴 -->
 			<c:if test="${sessionScope.loginId ne null}">
 				<c:if test="${product.maker.id eq sessionScope.loginId}">

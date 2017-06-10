@@ -162,6 +162,17 @@
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
+	<select id="selectRequestsByMakerIdExceptPayment" parameterType="HashMap"
+		resultMap="requestMap">
+		SELECT rownum rnum, r.id, r.title, r.maker_id,
+		r.consumer_id, r.type, r.content, r.hope_price, r.price, r.bound , 1
+		page
+		FROM request r
+		LEFT OUTER JOIN purchase_history ph ON r.id = ph.request_id
+		WHERE r.maker_id = #{makerId} AND (ph.payment =
+		'${@ordermade.constants.Constants@PAYMENT_N}' OR ph.payment IS NULL)
+	</select>
+	
 	<select id="selectRequestsByMakerIdWithPayment" parameterType="HashMap"
 		resultMap="requestMap">
 		(SELECT rownum rnum, r.id, r.title, r.maker_id,

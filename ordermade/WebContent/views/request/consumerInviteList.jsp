@@ -64,7 +64,22 @@ ${box2 }
 	<script type="text/javascript">
 	
 	var inviteRequestController = {
-		acceptInviteRequest : function(requestId){
+		acceptInviteRequest : function(requestId, makerId){
+			$.ajax({
+				type: "get",
+				url: "${ctx }/request/xml/modifyMakerId.do?requestId=" + requestId + "&makerId=" + makerId,
+				dataType: "text",
+				success: function(text) {
+						if(text === "true"){
+							/* 나중에 page 동적으로 받아서 넘겨주어야 함 */
+							location.href="${ctx}/request/ui/consumerInviteList.do?page=1";
+						}
+				},
+				error: function(xml){
+					console.log("실패 메시지 :\n" + xml.responseText);
+				}
+			});
+			
 			$.ajax({
 				type: "get",
 				url: "${ctx }/request/xml/removeInviteByRequestId.do?requestId=" + requestId,

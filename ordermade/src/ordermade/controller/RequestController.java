@@ -171,8 +171,12 @@ public class RequestController {
 	@RequestMapping(value = "request/xml/registerInviteRequest.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerInviteRequest(InviteRequest inviteRequest, HttpSession session) {
 		if(checkLogined(session)) return "error";	// check logined
-		inviteRequest.setMaker(new Member());
-		inviteRequest.getMaker().setId((String)session.getAttribute("loginId"));
+		if(((String)session.getAttribute("memberType")).equals(Constants.MAKER)) {
+			inviteRequest.setMaker(new Member());
+			inviteRequest.getMaker().setId((String)session.getAttribute("loginId"));
+		} else {
+			inviteRequest.setMessage((String)session.getAttribute("loginId") + "님으로부터의 1:1 의뢰입니다.");
+		}
 		return service.registerInviteRequest(inviteRequest) + "";
 	}	//POST  http://localhost:8080/ordermade/request/xml/registerInviteToMaker.do
 		//{"message":"asdfaasf","maker.id":"maker2","form":"test","request.id":"7"}
@@ -251,11 +255,11 @@ public class RequestController {
 
 
 	@RequestMapping(value = "request/ui/register.do", method = RequestMethod.GET)
-	public ModelAndView showRegisterRequestUI(String makerId, String productId, String category) {
+	public ModelAndView showRegisterRequestUI(String makerId, String productTitle, String category) {
 		ModelAndView modelAndView = new ModelAndView("request/register");
 		if(makerId != null){
 			modelAndView.addObject("makerId", makerId);
-			modelAndView.addObject("productId", productId);
+			modelAndView.addObject("productTitle", productTitle);
 			modelAndView.addObject("category", category);
 		}
 		return modelAndView;
@@ -279,7 +283,7 @@ public class RequestController {
 			list = service.findRequestsByConsumerId(loginId, page);
 			modelAndView = new ModelAndView("request/consumerMyRequestList");//나의 의뢰서
 		}else if(memberType.equals(Constants.MAKER)){
-			list = service.findRequestsByMakerId(loginId, page);
+			list = service.findRequestsByMakerIdExceptPayment(loginId, page);
 			modelAndView = new ModelAndView("request/makerMyRequestList");//받은 의뢰서
 		}else{
 			throw new RuntimeException("error");
@@ -383,6 +387,13 @@ public class RequestController {
 		if(page == null) page = "1";
 		return new Requests(service.findRequestsByMakerId((String)session.getAttribute("loginId"), page));
 	}
+	
+	@RequestMapping(value="request/xml/searchMyRequestsByMakerIdExceptPayment.do", produces="application/xml")
+	public @ResponseBody Requests findMyRequestsByMakerIdExceptPayment(String page, HttpSession session){
+		if(page == null) page = "1";
+		return new Requests(service.findRequestsByMakerIdExceptPayment((String)session.getAttribute("loginId"), page));
+	}
+	
 	@RequestMapping(value="request/xml/searchMyRequestsByMakerIdWithPayment.do", produces="application/xml")
 	public @ResponseBody Requests findMyRequestsByMakerIdWithPayment(String page, HttpSession session){
 		if(page == null) page = "1";

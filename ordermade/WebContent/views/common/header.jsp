@@ -6,8 +6,10 @@
 
 		<div id="logo" class="fl_left heading"
 			style="line-height: 70px; font-size: 70px; margin: 0px;">
-			<a href="${ctx }/"><img src="${ctx }/views/images/panda4.jpg"
-				style="width: 80px; height: 80px"><b>PANDA</b></a>
+			<a href="${ctx }/">
+				<img src="${ctx }/views/images/panda4.jpg" style="width: 80px; height: 80px">
+				<b style="vertical-align:middle;font-size:90px">PANDA</b>
+			</a>
 
 			<div class="text-center"
 				style="line-height: 10px; font-size: 15px; margin-left: 230px;">

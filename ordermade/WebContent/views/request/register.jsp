@@ -12,15 +12,31 @@ ${box1 }
 			
 ${box2 }
 	
-			<h1>의뢰서 등록 페이지</h1>
+			<h1>의뢰서 등록 페이지<c:if test="${productTitle ne null }">(상품명 : ${productTitle})</c:if></h1>
 			<br>
 			<form action="${ctx }/request/xml/register.do" method="post" id="form1" name="form1" enctype="multipart/form-data" onsubmit="return checkIt()">
-				<%-- <input name="category" type="hidden" value="${categoryId }"> --%>
 				<table class="table">
-					<tr>
-						<th>제작 항목<span>*</span></th>
-						<td><div id="category"></div></td>
-					</tr>
+					<c:choose>
+						<c:when test="${makerId ne null }">
+							<tr>
+								<th>제작자</th>
+								<td><input class="form-control" type="text" value="${makerId}" disabled></td>
+							</tr>
+							<tr>
+								<th>제작 항목</th>
+								<td>
+									<input name="category" type="hidden" value="${category}">
+									<input class="form-control" type="text" value="${category}" disabled>
+								</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<th>제작 항목<span>*</span></th>
+								<td><div id="category"></div></td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
 					<tr>
 						<th>의뢰 제목<span>*</span></th>
 						<td><input id="requestTitle" name="title" class="form-control" type="text" value=""></td>
@@ -40,8 +56,9 @@ ${box2 }
 					<tr>
 						<th>공개 여부<span>*</span></th>
 						<td>
-							<input type="radio" name="bound" id="boundPublic" value="PUBLIC"><label for="boundPublic">공개</label>
-							<input type="radio" name="bound" id="boundPrivate" value="PRIVATE" checked><label for="boundPrivate">비공개</label>
+							<c:if test="${makerId ne null }"><input name="bound" type="hidden" value="PRIVATE"></c:if>
+							<input type="radio" name="bound" id="boundPublic" value="PUBLIC" <c:if test="${makerId ne null }">disabled</c:if>><label for="boundPublic">공개</label>
+							<input type="radio" name="bound" id="boundPrivate" value="PRIVATE" checked <c:if test="${makerId ne null }">disabled</c:if>><label for="boundPrivate">비공개</label>
 						</td>
 					</tr>
 				</table>
@@ -108,7 +125,8 @@ ${box3 }
 					dataType : "text",
 					success : function(resultData) {
 						if(resultData != "error"){
-							location.href="${ctx}/request/ui/detail.do?id=" + resultData	//성공시 페이지 전환
+							joinRequest(resultData);
+							location.href="${ctx}/request/ui/detail.do?id=" + resultData;	//성공시 페이지 전환
 						} else {
 							alert("의뢰서 등록 실패");
 						}
@@ -120,6 +138,26 @@ ${box3 }
 				});
 			}
 		});
+		
+		function joinRequest(requestId) {
+			$.ajax({
+				type : "post",
+				url : "${ctx}/request/xml/registerInviteRequest.do",
+				data : {'maker.id' : "${makerId}",
+						'request.id' : requestId,
+						form : "I"},
+				dataType : "text",
+				success : function(resultData) {
+					if(resultData == "error"){
+						alert("초대 요청 실패");
+					}
+				},
+				error: function(xml){
+					console.log("실패 메세지:\n"+xml.responseText);
+				}
+				
+			});
+		};
 		
 		//필수 입력값 체크 
 		function checkIt() {
@@ -137,7 +175,7 @@ ${box3 }
 				return false;
 			}
 			return true;
-		}
+		};
 
 	});
 

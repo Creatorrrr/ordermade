@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/views/common/_html.jsp"%>
 <title>나의 의뢰서</title>
 <%@ include file="/views/common/_common.jsp"%>
@@ -40,8 +40,8 @@ ${box2 }
 							<table>
 								<tr><td>의뢰 명 : ${request.title}</td></tr>
 								<c:choose>
-									<c:when test='${request.maker.id ne null }'><tr><td>의뢰자 : ${request.maker.id }</td></tr></c:when>
-									<c:otherwise><tr><td>의뢰자 : 없음</td></td></c:otherwise>
+									<c:when test='${request.maker.id ne null }'><tr><td>제작자 : ${request.maker.id }</td></tr></c:when>
+									<c:otherwise><tr><td>제작자 : 없음</td></td></c:otherwise>
 								</c:choose>
 								<tr><td>제작항목 : ${request.category }</td></tr>
 								<tr><td>희망 가격 : ${request.hopePrice }</td></tr>
@@ -243,9 +243,9 @@ ${box2 }
 							rs+='</div><table><tr><td>의뢰 명 : '+ $(">title",this).text() +'</td></tr>';
 								
 							if(makerId == null || makerId==""){
-								rs+='<tr><td>의뢰자 : 없음 </td></tr>';
+								rs+='<tr><td>제작자 : 없음 </td></tr>';
 							}else{
-								rs+='<tr><td>의뢰자 : '+ makerId +' </td></tr>';
+								rs+='<tr><td>제작자 : '+ makerId +' </td></tr>';
 							}
 							
 							rs+='<tr><td>제작항목 : '+ $(">category",this).text() +'  </td></tr>';

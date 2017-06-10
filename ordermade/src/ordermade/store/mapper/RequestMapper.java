@@ -29,5 +29,6 @@ public interface RequestMapper {
 	public List<Request> selectRequestsByConsumerIdWithMaker(HashMap<String, String> map);
 	public List<Request> selectRequestsByConsumerIdWithPayment(HashMap<String, String> map);
 	public List<Request> selectRequestsByMakerId(HashMap<String, String> map);
+	public List<Request> selectRequestsByMakerIdExceptPayment(HashMap<String, String> map);
 	public List<Request> selectRequestsByMakerIdWithPayment(HashMap<String, String> map);
 }

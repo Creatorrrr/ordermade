@@ -19,5 +19,6 @@ public interface RequestStore {
 	public List<Request> selectRequestsByConsumerIdWithMaker(String consumerId, String begin, String end);
 	public List<Request> selectRequestsByConsumerIdWithPayment(String consumerId, String begin, String end);
 	public List<Request> selectRequestsByMakerId(String makerId, String begin, String end);
+	public List<Request> selectRequestsByMakerIdExceptPayment(String makerId, String begin, String end);
 	public List<Request> selectRequestsByMakerIdWithPayment(String makerId, String begin, String end);
 }

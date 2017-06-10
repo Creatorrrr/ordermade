@@ -83,4 +83,6 @@ select { padding: 10px;}
 .commentWriterBox {height: auto;width: 95px;margin: 5px;float: left;}
 .commentControlBox {float: right;}
 .commentControlBox p {text-align: right;}
+
+.ellipse {white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 </style>

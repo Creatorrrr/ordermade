@@ -13,7 +13,8 @@
 		<li><p>가격정보 :${product.price }원</p></li>
 		<li><p>작업기간 :${product.period } 일</p></li>
 		<br>
-		<li><a href="${ctx }/member/myPage.do?makerId=${product.maker.id }" class="bbtn btn-primary">프로필 바로가기</a></li>
+		<li><a href="${ctx }/member/myPage.do?makerId=${product.maker.id }" class="btn btn-info">프로필 바로가기</a></li>
+		<li><button class="btn btn-danger btn-lg" style="width:100%" onclick="javascript:location.href='${ctx}/request/ui/register.do?productTitle=${product.title}&makerId=${product.maker.id }&category=${product.category }'">주문하러 가기</button></li>
 	</ul>
 </nav>
 

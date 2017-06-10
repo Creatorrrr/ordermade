@@ -227,6 +227,23 @@ public class RequestStoreLogic implements RequestStore {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<Request> selectRequestsByMakerIdExceptPayment(String makerId, String begin, String end) {
+		SqlSession session = factory.openSession();
+		List<Request> list = null;
+		HashMap<String, String> map = new HashMap<>();
+		map.put("makerId", makerId);
+		map.put("begin", begin);
+		map.put("end", end);
+		try {
+			RequestMapper mapper = session.getMapper(RequestMapper.class);
+			list = mapper.selectRequestsByMakerIdExceptPayment(map);
+		} finally {
+			session.close();
+		}
+		return list;
+	}
 
 	@Override
 	public List<Request> selectRequestsByMakerIdWithPayment(String makerId, String begin, String end) {

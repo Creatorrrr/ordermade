@@ -82,6 +82,11 @@ public class RequestServiceLogic implements RequestService{
 	public List<Request> findRequestsByMakerId(String makerId, String page) {
 		return rStore.selectRequestsByMakerId(makerId, getRequestBegin(page),getRequestEnd(page));
 	}
+	
+	@Override
+	public List<Request> findRequestsByMakerIdExceptPayment(String makerId, String page) {
+		return rStore.selectRequestsByMakerIdExceptPayment(makerId, getRequestBegin(page),getRequestEnd(page));
+	}
 
 	@Override
 	public List<Request> findRequestsByMakerIdWithPayment(String makerId, String page) {
