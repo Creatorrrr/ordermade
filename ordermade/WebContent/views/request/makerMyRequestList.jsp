@@ -19,10 +19,11 @@ ${box2 }
 
 			<div class="content" align="center">
 				<h1 align="left">받은 의뢰서</h1>
-				<div class="btn-group btn-group-justified">
+				<div class="btn-group btn-group-justified" id="tabBox">
 					<button id="tab2" class="btn btn-default">진행중</button>
 					<button id="tab3" class="btn btn-default">완료</button>
 				</div>
+				
 			</div>
 			<div id="resultBox">
 			<c:forEach items="${requests }" var="request" varStatus="status">

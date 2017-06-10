@@ -110,11 +110,9 @@ ${box2 }
 
 		makeContent : function(xml) {
 			var content = "";
-
 			content += "<div class='listBox'>";
 			content += "	<div class='listExplainBox'>";
-			content += "		<img src='${ctx }/portfolio/image.do?img="
-					+ $(xml).find("portfolio>image").text() + "'>";
+			content += '		<img src="${ctx }/portfolio/image.do?img='+ $(xml).find("portfolio>image").text() +'" style="width:105px;height: 100px";>';
 			content += "		<table>";
 			content += "			<tr>";
 			content += "				<td>포트폴리오 명 : </td>";

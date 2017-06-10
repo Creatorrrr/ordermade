@@ -59,11 +59,10 @@ ${head_body}
 				</p>
 			</div>
 		</div>
+		
 		</main>
 	</div>
 </div>
-
-
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -95,14 +94,19 @@ var getHitsProducts = function(category) {
 						contentStr +=	 	"<div class='itemBox' >";
 						contentStr += 			"<div class='itemImageBox imgl borderedbox'>";
 						contentStr +=	 			"<a href='${ctx}/product/ui/detail.do?id=" + $(this).find("product>id").text() +"'>";
-						contentStr += 					'<img src=\"${ctx }/main/file/download.do?fileName=' + $(this).find("product>image").text() +'"/>';
+						contentStr += 					'<img src=\"${ctx }/main/file/download.do?fileName=' + $(this).find("product>image").text() +'" style="width:240px;height: 110px"; />';
 						contentStr += 				"</a>";
 						contentStr += 			"</div>";
-						contentStr +=	 		"<div class='itemExplainBox'>";
+						contentStr +=	 		"<div class='itemExplainBox' align='left' style='margin-left: 15px'>";
 						contentStr +=	 			"<a href='${ctx}/product/ui/detail.do?id=" + $(this).find("product>id").text() +"'>";
 						contentStr +=	 				"<p class='itemTitleBox'>" + $(this).find("product>title").text() + "</p>";
 						contentStr +=	 			"</a>";
-						contentStr +=	 			"<span class='itemPriceBox'>" + $(this).find("product>price").text() + " 원</span>";
+						contentStr +=	 		"</div>";
+						contentStr +=	 		"<div align='left' style='margin-left: 15px'>";
+						contentStr +=	 			"<h2 class='itemPriceBox'>" + $(this).find("product>price").text() + " 원~</h2>";
+						contentStr +=	 		"</div>";
+						contentStr +=	 		"<br>";
+						contentStr +=	 		"<div align='center'>";
 						contentStr +=	 			"<p class='itemHitBox'>" + $(this).find("product>hit").text() + " Hits!!</p>";
 						contentStr +=	 		"</div>";
 						contentStr +=	 	"</div>";
@@ -153,14 +157,19 @@ var getBrandNewProducts	= function(category){
 						contentStr +=	 	"<div class='itemBox'>";
 						contentStr += 			"<div class='itemImageBox imgl borderedbox'>";
 						contentStr +=	 			"<a href='${ctx}/product/ui/detail.do?id=" + $(this).find("product>id").text() +"'>";
-						contentStr += 					'<img src=\"${ctx }/main/file/download.do?fileName=' + $(this).find("product>image").text() +'"/>';
+						contentStr += 					'<img src=\"${ctx }/main/file/download.do?fileName=' + $(this).find("product>image").text() +'" style="width:240px;height: 110px"; />';
 						contentStr += 				"</a>";
 						contentStr += 			"</div>";
-						contentStr +=	 		"<div class='itemExplainBox'>";
+						contentStr +=	 		"<div class='itemExplainBox' align='left' style='margin-left: 15px'>";
 						contentStr +=	 			"<a href='${ctx}/product/ui/detail.do?id=" + $(this).find("product>id").text() +"'>";
 						contentStr +=	 				"<p class='itemTitleBox'>" + $(this).find("product>title").text() + "</p>";
 						contentStr +=	 			"</a>";
-						contentStr +=	 			"<span class='itemPriceBox'>" + $(this).find("product>price").text() + " 원</span>";
+						contentStr +=	 		"</div>";
+						contentStr +=	 		"<div class='itemExplainBox' align='left' style='margin-left: 15px'>";
+						contentStr +=	 			"<span class='itemPriceBox'>" + $(this).find("product>price").text() + " 원 ~</span>";
+						contentStr +=	 		"</div>";
+						contentStr +=	 		"</br>";
+						contentStr +=	 		"<div class='itemExplainBox' align='center'>";
 						contentStr +=	 			"<p class='itemHitBox'>" + $(this).find("product>hit").text() + " Hits!!</p>";
 						contentStr +=	 		"</div>";
 						contentStr +=	 	"</div>";

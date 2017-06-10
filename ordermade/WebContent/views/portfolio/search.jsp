@@ -15,8 +15,7 @@ ${head_body}
 			<nav class="sdb_holder">
 				<ul>
 					<c:forEach items="${categories}" var="category">
-						<li><a
-							href="${ctx }/portfolio/ui/search.do?category=${category.type}">${category.type }</a></li>
+						<li><a href="${ctx }/portfolio/ui/search.do?category=${category.type}">${category.type }</a></li>
 					</c:forEach>
 				</ul>
 			</nav>
@@ -32,11 +31,11 @@ ${head_body}
 							style="display: inline-block">
 							<option value="title">제목</option>
 							<option value="makerName">제작자</option>
-						</select> <input id="portfolioSearchKeyword" name="portfolioSearchKeyword"
+						</select> 
+						<input id="portfolioSearchKeyword" name="portfolioSearchKeyword"
 							class="form-control" type="text" value=""
 							placeholder="Search Here" style="display: inline-block" />
-						<button id="portfolioSearchBtn"
-							class="fa fa-search btn btn-default" type="button" title="Search">검색</button>
+						<button id="portfolioSearchBtn" class="fa fa-search btn btn-default" type="button" title="Search">검색</button>
 						<!-- <button id="imageSearchBtn" class="fa fa-search btn btn-default"
 							type="button" title="Search"
 							onclick="javascript:createImageSearchModal();">이미지 검색</button> -->
@@ -64,7 +63,7 @@ ${head_body}
 								</tr>
 							</table>
 						</div>
-						<div class="detailBtnBox">
+						<div class="detailBtnBox" align="right">
 							<input type='button' value='자세히보기' class="btn btn-success"
 								onclick="javascript:location.href='${ctx}/portfolio/ui/detail.do?id=${portfolio.id}'">
 						</div>
@@ -75,6 +74,9 @@ ${head_body}
 		</main>
 	</div>
 </div>
+${box3} 
+
+<%@ include file="/views/common/footer.jsp"%>
 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -158,12 +160,10 @@ ${head_body}
 					$("#listSearchResult").empty();
 					if (listLength) {
 						var contentStr = "";
-						
 						$(xmlData).each(function() {
 							content += "<div class='listBox'>";
-							content += "	<div class='listExplainBox'>";
-							content += "		<img src='${ctx }/portfolio/image.do?img="
-									+ $(xml).find("portfolio>image").text() + "'>";
+							content += "	<div class='listExplainBox'  align='right'>";
+							content += '		<img src="${ctx }/portfolio/image.do?img='+ $(xml).find("portfolio>image").text() + '">';
 							content += "		<table>";
 							content += "			<tr>";
 							content += "				<td>포트폴리오 명 : </td>";
@@ -191,9 +191,8 @@ ${head_body}
 			var content = "";
 
 			content += "<div class='listBox'>";
-			content += "	<div class='listExplainBox'>";
-			content += "		<img src='${ctx }/portfolio/image.do?img="
-					+ $(xml).find("portfolio>image").text() + "'>";
+			content += "	<div class='listExplainBox'  align='right'>";
+			content += '		<img src="${ctx }/portfolio/image.do?img='+ $(xml).find("portfolio>image").text() + '"style="width:105px;height: 90px";>';
 			content += "		<table>";
 			content += "			<tr>";
 			content += "				<td>포트폴리오 명 : </td>";
@@ -213,8 +212,7 @@ ${head_body}
 			content += "		</table>";
 			content += "	</div>";
 			content += "	<div class='detailBtnBox'>";
-			content += "		<input type='button' value='자세히보기' onclick=\"javascript:location.href='${ctx}/portfolio/ui/detail.do?id="
-					+ $(xml).find("portfolio>id").text() + "'\">";
+			content += "		<input type='button' value='자세히보기' onclick=\"javascript:location.href='${ctx}/portfolio/ui/detail.do?id="+ $(xml).find("portfolio>id").text() + "'\">";
 			content += "	</div>";
 			content += "</div>";
 
@@ -242,4 +240,3 @@ ${head_body}
 
 ${box3 }
 
-<%@ include file="/views/common/footer.jsp"%>

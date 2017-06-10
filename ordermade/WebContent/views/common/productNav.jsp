@@ -8,12 +8,12 @@
 	<ul>
 		<li><img src="${ctx }/main/file/download.do?fileName=${product.maker.image}" /></li>
 		<li><p>제작자 아이디 : ${product.maker.id }</p></li>
-		<li><p>제작자 소개</p></li>
+		<li><p>제작자 소개 : </p></li>
+		<li><p>${product.maker.introduce }</p></li>
 		<li><p>가격정보 :${product.price }원</p></li>
 		<li><p>작업기간 :${product.period } 일</p></li>
-		<li><p>${product.maker.introduce }</p></li>
 		<br>
-		<li><a href="${ctx }/member/myPage.do?makerId=${product.maker.id }" class="btn btn-default">프로필 바로가기</a></li>
+		<li><a href="${ctx }/member/myPage.do?makerId=${product.maker.id }" class="bbtn btn-primary">프로필 바로가기</a></li>
 	</ul>
 </nav>
 

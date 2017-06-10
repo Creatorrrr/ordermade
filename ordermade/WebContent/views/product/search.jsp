@@ -24,6 +24,7 @@ ${head_body}
 			<div id="content" class="two_third">
 				<div class="content" align="center">
 					<h1 id="productCategory">[${category }] 상품페이지</h1>
+					
 					<div class="right">
 						<form class="navbar-form text-right">
 							<select id="productSearchType" class="form-control" style="display: inline-block">
@@ -45,7 +46,7 @@ ${head_body}
 							<div class="listExplainBox">
 								<div class="imgl borderedbox">
 									<a href="${ctx}/product/ui/detail.do?id=${product.id}">
-										<img src="${ctx }/main/file/download.do?fileName=${product.image}">
+										<img src="${ctx }/main/file/download.do?fileName=${product.image}" style=" width: 100px;height: 100px">
 									</a>
 								</div>
 								<table class="table">
@@ -74,7 +75,6 @@ ${head_body}
 						</div>
 					</c:forEach>
 				</div>
-				
 			</div>
 			</main>
 		</div>
@@ -258,12 +258,11 @@ var productController = {
 
 	makeContent : function(xml) {
 		var content = "";
-
 		content += "<div class='listBox'>";
 		content += "	<div class='listExplainBox'>";
 		content += "		<div class='imgl borderedbox'>";
 		content += "			<a href='${ctx}/product/ui/detail.do?id='" + $(xml).find("product>id").text() + ">";
-		content += "				<img src='${ctx }/main/file/download.do?fileName=" + $(xml).find("product>image").text() + "'>";
+		content += '				<img src="${ctx }/main/file/download.do?fileName=' + $(xml).find("product>image").text() + '"style="width:100px;height: 100px";>';
 		content += "			</a>";
 		content += "		</div>";
 		content += "		<table class='table'>";
