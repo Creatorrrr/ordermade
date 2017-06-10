@@ -45,35 +45,13 @@ ${box2 }
 
 <ul class="nospace listing" style="margin-top: 20px;">
 
-	<%--  <div id="listSearchResult">
 		<c:forEach items="${portfolios }" var="portfolio">
-			<div class='listBox'>
-				<div class="listExplainBox">
-					<img src="${ctx }/portfolio/image.do?img=${portfolio.image}" class="portfolio-image">
-					<table>
-						<tr>
-							<td>포트폴리오 명</td>
-							<td><a class="portfolio" id="portfolioTitle"
-								href="${ctx }/portfolio/ui/detail.do?id=${portfolio.id}">${portfolio.title }</a>
-							</td>
-						</tr>
-						<tr>
-							<td>제작항목 :</td>
-							<td>${portfolio.category }</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</c:forEach>
-	</div>  --%>
-	
-	 <div id="listSearchResult">
-		 <c:forEach items="${portfolios }" var="portfolio">
 			<div style="display:inline-block; padding-right: 10px">
-			<!-- <div class="imgl borderedbox"> -->
 				<table class="table" style="width:210px;">
 					<tr>
-						<img src="${ctx }/portfolio/image.do?img=${portfolio.image}" class="portfolio-image" style="width: 220px; height: 180px">
+						<div class="imgl borderedbox">	
+							<img src="${ctx }/portfolio/image.do?img=${portfolio.image}" class=portfolio-image>
+						</div>
 					</tr>
 					<tr>
 						<td>포트폴리오 명 : </td>
@@ -84,10 +62,9 @@ ${box2 }
 						<td>${ portfolio.category}</td>
 					</tr>
 				</table>
-			<!-- </div> -->
 			</div>
-		</c:forEach> 
-	</div>
+		</c:forEach>
+
 </ul>
 
 
@@ -130,10 +107,12 @@ ${box2 }
 
 		makeContent : function(xml) {
 			var content = "";
-	 		content += '<div style="display:inline-block; padding-right: 10px;">';
+			content += '<div style="display:inline-block; padding-right: 10px;">';
 			content += '	<table class="table" style="width:210px;">';
 			content += '		<tr>';
-			content += '			<img src="${ctx }/portfolio/image.do?img='+ $(xml).find("portfolio>image").text() +'"style="width: 220px; height: 180px" >';
+			content += '			<div class="imgl borderedbox">';	
+			content += '				<img src="${ctx }/portfolio/image.do?img='+ $(xml).find("portfolio>image").text() +'" class="portfolio-image">';
+			content += '			</div>';	
 			content += '		</tr>';
 			content += "		<tr>";
 			content += "			<td>포트폴리오 명 : </td>";
@@ -146,23 +125,6 @@ ${box2 }
 			content += "		</tr>";
 			content += "	</table>";
 			content += "</div>";
-			
-		/* 	content += "<div class='listBox'>";
-			content += "	<div class='listExplainBox'>";
-			content += '		<img src="${ctx }/portfolio/image.do?img='+ $(xml).find("portfolio>image").text() +'" class="portfolio-image">';
-			content += "		<table>";
-			content += "			<tr>";
-			content += "				<td>포트폴리오 명 : </td>";
-			content += "				<td><a class='portfolio' id='portfolioTitle' href='${ctx }/portfolio/ui/detail.do?id="+ $(xml).find("portfolio>id").text()+ "'>" + $(xml).find("portfolio>title").text()+"</a></td>";
-			content += "			</tr>";
-			content += "			<tr>";
-			content += "				<td>제작항목 : </td>";
-			content += "				<td>" + $(xml).find("portfolio>category").text()
-					+ "</td>";
-			content += "			</tr>";
-			content += "		</table>";
-			content += "	</div>";
-			content += "</div>"; */
 
 			return content;
 		},

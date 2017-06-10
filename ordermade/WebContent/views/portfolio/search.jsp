@@ -81,7 +81,7 @@ ${box3}
 <script type="text/javascript">
   $(document).ready(function(){
 	 
-	  portfolioController.getPortfoliosByCategory("FUNITURE");
+	  portfolioController.getPortfoliosByCategory("FUNITURE",1);
 	
  });
 	//검색을 클릭하면 검색된 의뢰서 목록을 가져온다.
@@ -149,9 +149,9 @@ ${box3}
 			});
 		},
 
- 		getPortfoliosByCategory : function(category) {
+ 		getPortfoliosByCategory : function(category, page) {
 			$.ajax({
-				url : "${ctx}/portfolio/ajax/portfolios/category.do?category=" + category + "&page=10",
+				url : "${ctx}/portfolio/ajax/portfolios/category.do?category=" + category + "&page="+page,
 				type : "get",
 				dataType : "xml",
 				success : function(xml) {
@@ -161,38 +161,24 @@ ${box3}
 					if (listLength) {
 						var contentStr = "";
 						$(xmlData).each(function() {
-							content += "<div class='listBox'>";
-							content += "	<div class='listExplainBox'  align='right'>";
-							content += '		<img src="${ctx }/portfolio/image.do?img='+ $(xml).find("portfolio>image").text() + '">';
-							content += "		<table>";
-							content += "			<tr>";
-							content += "				<td>포트폴리오 명 : </td>";
-							content += "				<td><a class='portfolio' id='portfolioTitle' href='${ctx }/portfolio/ui/detail.do?id="+ $(xml).find("portfolio>id").text()+ "'>" + $(xml).find("portfolio>title").text()+"</a></td>";
-							content += "			</tr>";
-							content += "			<tr>";
-							content += "				<td>제작항목 : </td>";
-							content += "				<td>" + $(xml).find("portfolio>category").text()
-									+ "</td>";
-							content += "			</tr>";
-							content += "		</table>";
-							content += "	</div>";
-							content += "</div>";
+							contentStr += portfolioController.makeContent(this);
 						});
+						$("#listSearchResult").append(contentStr);
+					} else {
+						$("#listSearchResult").append(
+								portfolioController.makeContentForEmpty());
 					}
-						
-				
 				}
 			});
-		}, 
+		},
+
 		
-
-
 		makeContent : function(xml) {
 			var content = "";
 
 			content += "<div class='listBox'>";
 			content += "	<div class='listExplainBox'  align='right'>";
-			content += '		<img src="${ctx }/portfolio/image.do?img='+ $(xml).find("portfolio>image").text() + '"style="width:105px;height: 90px";>';
+			content += '		<img src="${ctx }/portfolio/image.do?img='+ $(xml).find("portfolio>image").text() + '"style="width:120px;height: 100px";>';
 			content += "		<table>";
 			content += "			<tr>";
 			content += "				<td>포트폴리오 명 : </td>";

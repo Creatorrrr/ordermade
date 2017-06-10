@@ -15,14 +15,14 @@ ${box2 }
 
 <ul class="nospace listing">
 	<li class="clear">
-		<div class="content" align="left">
+		<div class="content" align="center">
 			<h1>${member.id }님의정보</h1>
 
-			<div class="imgl borderedbox" >
-				<img src="${ctx }/main/file/download.do?fileName=${member.image}"  style=" width: 200px;height: 140px"; />
+			<div class="imgl borderedbox" align="center" >
+				<img src="${ctx }/main/file/download.do?fileName=${member.image}"  style="width:200px;height: 150px"; />
 			</div>
 			<table class="table">
-				<tr class="nospace btmspace-15">
+<!-- 			<tr class="nospace btmspace-15">-->				
 				<tr>
 					<td><p>아이디&nbsp;:&nbsp; ${member.id}</p></td>
 				</tr>
@@ -79,14 +79,10 @@ ${box2 }
 														+ $(this).find(
 																'portfolio>id')
 																.text() + "'>"
-												contentStr += "<img src='${ctx }/portfolio/image.do?img="
-														+ $(this)
-																.find(
-																		'portfolio>image')
-																.text() + "'>";
+												contentStr += "<img src='${ctx }/portfolio/image.do?img="+ $(this).find('portfolio>image').text() + "'style='width:155px;height:120px';>";
 												contentStr += "</a>";
 												contentStr += "</li>";
-											});
+											}); 					 
 							$("#BrandNewPortfolios").append(contentStr);
 
 							$('#BrandNewPortfolios').bxSlider({
@@ -136,7 +132,7 @@ ${box2 }
 														+ $(this)
 																.find(
 																		'product>image')
-																.text() + "'>";
+																.text() + "'style='width:155px;height:120px';>";
 												contentStr += "</a>"
 												contentStr += "</li>";
 											});
