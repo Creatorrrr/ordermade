@@ -19,7 +19,7 @@ ${box2 }
 			<h1>${member.id }님의정보</h1>
 
 			<div class="imgl borderedbox" align="center" >
-				<img src="${ctx }/main/file/download.do?fileName=${member.image}"  style="width:200px;height: 150px"; />
+				<img src="${ctx }/main/file/download.do?fileName=${member.image}"  style="width:200px;height: 150px" />
 			</div>
 			<table class="table">
 <!-- 			<tr class="nospace btmspace-15">-->				
@@ -128,7 +128,7 @@ ${box2 }
 														+ $(this).find(
 																'product>id')
 																.text() + "'>"
-												contentStr += "<img src='${ctx }/product/image.do?img="
+												contentStr += "<img src='${ctx }/main/file/download.do?fileName="
 														+ $(this)
 																.find(
 																		'product>image')

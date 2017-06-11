@@ -3,7 +3,6 @@ package ordermade.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ordermade.constants.Constants;
-import ordermade.domain.Account;
-import ordermade.domain.Member;
 import ordermade.domain.PurchaseHistories;
 import ordermade.domain.PurchaseHistory;
 import ordermade.service.facade.DealService;
@@ -31,64 +28,18 @@ public class DealController {
 	
 	// http://localhost:8080/ordermade/deal/account/consumerMoney.do
 	// data : {"maker.id":"admin1\n","consumer.id":"consuser1\n","request.id":"1","invoiceNumber":"02255215","deliveryStatus":"yes","payment":"C" }
-	@RequestMapping(value="xml/account/consumerMoney.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String consumerMoneyToAccount(PurchaseHistory purchaseHistory, HttpSession session){
-		
-		System.out.println("----------controller 성공-----------");
-		System.out.println("------data : "+purchaseHistory.toString());
-		
-		// session에서 회원ID 가져오기
-		String memberId = (String)session.getAttribute("loginId");
-		boolean checkPurchase = false;
-		boolean checkAccount = false;
-		purchaseHistory.setDeliveryStatus("배송중");
-		checkPurchase = dService.registerPurchaseHistory(purchaseHistory);
-		
-		System.out.println("------data : "+purchaseHistory.toString());
-		
-		if(checkPurchase == true){
-			Account account = dService.findAccountById(memberId);
-			account.setMoney(purchaseHistory.getRequest().getPrice());
-			checkAccount = dService.modifyAccountById(account);
-		}
-		return checkAccount+"";
-		
+	@RequestMapping(value="xml/account/consumerMoney.do", method=RequestMethod.GET, produces="text/plain")
+	public @ResponseBody String consumerMoneyToAccount(String requestId, HttpSession session){
+		if(checkLogined(session)) return "error";	// check logined
+		return dService.transactionFromConsumer(requestId) + "";
 	}
 	
 	// http://localhost:8080/ordermade/deal/account/makerMoney.do
 	// data : {"maker.id":"admin1\n","consumer.id":"consuser1\n","request.id":"1","invoiceNumber":"02255215","deliveryStatus":"yes","payment":"C" }
-	@RequestMapping(value="xml/account/makerMoney.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String sendMoneyToMakerAccount(PurchaseHistory purchaseHistory, HttpSession session){
-		
-		System.out.println("----------controller 성공-----------");
-		System.out.println("------data : "+purchaseHistory.toString());
-		
-		// session에서 회원ID 가져오기
-		boolean checkAccount = false;
-		boolean checkPurchase = false;
-//		if(session.getAttribute("memberType").equals(Constants.CONSUMER)){
-			String memberId = (String)session.getAttribute("loginId");
-			System.out.println("------ID : " + memberId);
-			System.out.println("------makerID : "+purchaseHistory.getMaker().getId());
-			Account makerAccount = dService.findAccountById(purchaseHistory.getMaker().getId());
-			Account consumerAccount = dService.findAccountById(purchaseHistory.getConsumer().getId());
-			
-			purchaseHistory = dService.findPurchseHistoryById(purchaseHistory.getId());
-			System.out.println("------data2 : " + purchaseHistory.toString());
-			System.out.println("------consumerID : "+purchaseHistory.getConsumer().getId());
-			System.out.println(consumerAccount.getMoney());
-			
-			
-			makerAccount.setMoney(consumerAccount.getMoney());
-			checkAccount = dService.modifyAccountById(makerAccount);
-			if(checkAccount){
-				purchaseHistory.setPayment("true");
-				checkPurchase = dService.modifyPurchaseHistoryById(purchaseHistory);
-			}
-			return checkPurchase+"";
-//		}
-		
-//		return checkAccount+"";
+	@RequestMapping(value="xml/account/makerMoney.do", method=RequestMethod.GET, produces="text/plain")
+	public @ResponseBody String sendMoneyToMakerAccount(String requestId, HttpSession session){
+		if(checkLogined(session)) return "error";	// check logined
+		return dService.transactionToMaker(requestId) + "";
 	}
 	
 	// http://localhost:8080/ordermade/deal/purchaseHistory/delivery.do
@@ -119,6 +70,7 @@ public class DealController {
 	// http://localhost:8080/ordermade/deal/ui/transaction.do
 	@RequestMapping(value="ui/transaction.do", method=RequestMethod.GET)
 	public ModelAndView showPurchaseHistoryUI(String page, HttpSession session){
+		if(checkLogined(session)) return new ModelAndView("member/login");	// check logined
 		
 		String memberType = (String)session.getAttribute("memberType");
 		String memberId = (String)session.getAttribute("loginId");
@@ -185,5 +137,11 @@ public class DealController {
 		PurchaseHistories purchaseHistories = new PurchaseHistories();
 		purchaseHistories.setPurchaseList(purchaseMakerTitleList);
 		return purchaseHistories;
+	}
+	
+	// Complete
+	private boolean checkLogined(HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		return loginId == null || loginId.isEmpty();
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ordermade.constants.Constants;
 import ordermade.domain.Account;
 import ordermade.domain.PurchaseHistory;
 import ordermade.domain.Request;
@@ -18,16 +19,39 @@ public class DealServiceLogic implements DealService{
 	
 	@Autowired
 	private AccountStore accountStore;
-	
 	@Autowired
 	private PurchaseHistoryStore purchaseHistoryStore;
-	
 	@Autowired
 	private RequestStore requestStore;
 
 	@Override
-	public boolean modifyAccountById(Account account) {
-		return accountStore.updateAccountById(account);
+	public boolean transactionToMaker(String requestId) {
+		Request request = requestStore.selectRequestById(requestId);
+		
+		accountStore.transaction(
+				Constants.PANDA_ACCOUNT, 
+				request.getMaker().getId(), 
+				request.getPrice());
+		
+		return purchaseHistoryStore.updatePurchaseHistoryByRequestIdForPayment(requestId, Constants.PAYMENT_Y);
+	}
+	
+	@Override
+	public boolean transactionFromConsumer(String requestId) {
+		Request request = requestStore.selectRequestById(requestId);
+		
+		accountStore.transaction(
+				request.getConsumer().getId(), 
+				Constants.PANDA_ACCOUNT, 
+				request.getPrice());
+		
+		PurchaseHistory purchaseHistory = new PurchaseHistory();
+		purchaseHistory.setConsumer(request.getConsumer());
+		purchaseHistory.setMaker(request.getMaker());
+		purchaseHistory.setRequest(request);
+		purchaseHistory.setDeliveryStatus(Constants.DELIVERY_PREPARE);
+		purchaseHistory.setPayment(Constants.PAYMENT_Y);
+		return purchaseHistoryStore.insertPurchaseHistory(purchaseHistory);
 	}
 
 	@Override
@@ -39,7 +63,6 @@ public class DealServiceLogic implements DealService{
 	public PurchaseHistory findPurchseHistoryById(String id) {
 		return purchaseHistoryStore.selectPurchseHistoryById(id);
 	}
-
 
 	@Override
 	public boolean registerPurchaseHistory(PurchaseHistory purchaseHistory) {

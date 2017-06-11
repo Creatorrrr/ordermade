@@ -30,7 +30,15 @@
   	</insert>
   	
   	<update id="updatePurchaseHistoryById" parameterType="PurchaseHistory">
-  		update purchase_history set  consumer_id=#{consumer.id}, maker_id=#{maker.id}, request_id=#{request.id}, order_date=#{orderDate}, invoice_number=#{invoiceNumber}, charge=#{charge}, delivery_status=#{deliveryStatus}, payment=#{payment} where id=#{id}
+  		update purchase_history
+  		set  consumer_id=#{consumer.id}, maker_id=#{maker.id}, request_id=#{request.id}, order_date=#{orderDate}, invoice_number=#{invoiceNumber}, charge=#{charge}, delivery_status=#{deliveryStatus}, payment=#{payment}
+  		where id=#{id}
+  	</update>
+  	
+  	<update id="updatePurchaseHistoryByRequestIdForPayment" parameterType="PurchaseHistory">
+  		update purchase_history
+  		set  payment=#{payment}
+  		where request_id=#{requestId}
   	</update>
   	
   	<select id="selectPurchseHistoryById" parameterType="String" resultMap="purchaseHistoryMap">

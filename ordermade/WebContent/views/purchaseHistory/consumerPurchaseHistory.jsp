@@ -28,67 +28,63 @@ ${box2 }
 				</form>
 			</div>
 			<p>
-			 <table class="">
-                   <colgroup>
-                       <col width="170"/>
-                       <col width="210"/>
-                       <col width="200"/>
-                       <col width="300"/>
-                   </colgroup>
-                   <thead>
-                   <tr>
-                       <td class="" style="text-align: center">판매자 ID</td>
-                       <td class="" style="text-align: center">구매상품 정보</td>
-                       <td class="" style="text-align: center">구매일자</td>
-                       <td class="" style="text-align: center">진행상태</td>
-                   </tr>
-                   </thead>
-                   <tbody>
-                   	<c:if test="${empty purchaseList}">
-                        <tr>
-                            <td style="text-align: center" colspan="5" class="text-center">이력이 존재하지 않습니다.</td>
-                        </tr>
-                       </c:if>
-                       <c:forEach var="purchaseHistory" items="${purchaseList}"
-                                  varStatus="sts">
-                          <div class="purchaseTable" page="${purchaseHistory.page }">
-	                        <tr>
-	                            <td class="text-center" style="text-align: center">
-	                            	<%-- <img src=${ctx }/views/images/img-10.jpg> --%>
-	                            	${purchaseHistory.maker.id }
-	                            </td>
-	                            <td style="text-align: center">
-									상품명 : ${purchaseHistory.request.title }<br>
-									아이디 : ${purchaseHistory.consumer.id }<br>
-									가격 : ${purchaseHistory.request.price }<br>
-								</td>
-	                            <td class="text-center" style="text-align: center">
-	                            	${purchaseHistory.orderDate}
-	                            </td>
-	                            <td class="text-center" style="text-align: center">
-	                           		${purchaseHistory.deliveryStatus}<br>
-	                           		<c:if test="${purchaseHistory.payment eq false}">
-		                           		<div align="center"><input class="purchaseBtn" type="button" 
-		                           			value="구매확정" class="btn btn-sm btn-success"
-		                           			data1 = "${purchaseHistory.id }"
-			                        		data2 = "${purchaseHistory.request.id }"
-			                        		data3 = "${purchaseHistory.consumer.id }"
-			                        		data4 = "${purchaseHistory.maker.id }"
-			                        		data5 = "${purchaseHistory.invoiceNumber }"
-			                        		data6 = "${purchaseHistory.deliveryStatus }"
-			                        		data7 = "${purchaseHistory.payment }"></div>
-		                        	</c:if>
-		                        	<c:if test="${purchaseHistory.payment eq true}">
-		                        		<div align="center"><input class="" type="button" 
-		                        		value="구매완료" class="btn btn-sm btn-success" disabled></div>
-		                        	</c:if>
-	                            </td>
-	                        </tr>
-	                      </div>
-                       </c:forEach>
-                   </tbody>
-               </table>
-          		<div id="pagination">페이지 위치</div>
+			<table class="">
+            	<colgroup>
+	                <col width="100"/>
+	                <col width="500"/>
+	                <col width="100"/>
+	                <col width="100"/>
+	                <col width="100"/>
+           		</colgroup>
+                <thead>
+	                <tr>
+	                    <td class="" style="text-align: center">판매자 ID</td>
+	                    <td class="" style="text-align: center">의뢰서</td>
+	                    <td class="" style="text-align: center">가격</td>
+	                    <td class="" style="text-align: center">구매일자</td>
+	                    <td class="" style="text-align: center">진행상태</td>
+	                </tr>
+                </thead>
+                <tbody>
+	                <c:if test="${empty purchaseList}">
+		               	<tr>
+		                   	<td style="text-align: center" colspan="5" class="text-center">이력이 존재하지 않습니다.</td>
+		                </tr>
+	                </c:if>
+                    <c:forEach var="purchaseHistory" items="${purchaseList}" varStatus="sts">
+	                    <tr>
+	                        <td class="text-center" style="text-align: center">
+	                        	${purchaseHistory.maker.id }
+	                        </td>
+	                        <td style="text-align: center">
+	                        	<a href="${ctx }/request/ui/detail.do?id=${purchaseHistory.request.id }" style="color:black">
+	                        		${purchaseHistory.request.title }
+	                        	</a>
+							</td>
+							<td style="text-align: center">
+								${purchaseHistory.request.price }
+							</td>
+	                        <td class="text-center" style="text-align: center">
+	                        	${purchaseHistory.orderDate}
+	                        </td>
+	                      	<td class="text-center" style="text-align: center">
+	                     		${purchaseHistory.deliveryStatus}<br>
+	                     		<c:if test="${purchaseHistory.payment eq 'N'}">
+		                      		<div align="center">
+			                      		<input id="purchaseBtn" class="btn btn-sm btn-primary" type="button" value="구매확정"
+			                      		onclick="javascript:dealController.changeMakerAccount(${purchaseHistory.request.id})">
+		                    		</div>
+			                   	</c:if>
+			                   	<c:if test="${purchaseHistory.payment eq 'Y'}">
+			                   		<div align="center">
+			                   		<input class="btn btn-sm btn-success" type="button" value="구매완료" disabled></div>
+			              		</c:if>
+	                    	</td>
+	                    </tr>
+                    </c:forEach>
+                </tbody>
+			</table>
+          	<div id="pagination">페이지 위치</div>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -129,36 +125,20 @@ $(document).ready(function(){
 	
 });
 
-$(".purchaseBtn").click(function(){
-	var dom = $(this);
-	console.log(dom)
-	console.log(dom.attr("value"))
-	sendMoneyToMakerAccount.changeMakerAccount(dom);
-});
-
-var sendMoneyToMakerAccount = {
-	changeMakerAccount : function(dom) {
+var dealController = {
+	changeMakerAccount : function(requestId) {
 		$.ajax({
-			type: "post",
+			type: "get",
 			url: "${ctx }/deal/xml/account/makerMoney.do",
-			data: {
-					"id" : dom.attr("data1"),
-					"request.id" : dom.attr("data2"),
-					"consumer.id" : dom.attr("data3"),
-					"maker.id" : dom.attr("data4"),
-					"invoiceNumber" : dom.attr("data5"),
-					"deliveryStatus" : dom.attr("data6"),
-					"payment" : dom.attr("data7")
-				   },
+			data: {"requestId" : requestId},
 			dataType: "text",
 			success: function(text){
-						if(text === "true"){
-							console.log(text)
-							dom.attr("value", "구매완료");
-							dom.attr("disabled", "true");
-						}else{
-							alert("구매확정이 실패하였습니다.");
-						}
+				if(text === "true"){
+					$("#purchaseBtn").val("구매완료").attr("disabled", true);
+					$("#purchaseBtn").removeClass("btn-primary").addClass("btn-success");
+				}else{
+					alert("구매확정이 실패하였습니다.");
+				}
 			},
 			error: function(xml){
 				console.log("실패 메시지 : \n" + xml.responseText)

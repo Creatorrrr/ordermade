@@ -14,8 +14,8 @@ ${box2 }
 
 
 			<h1>참가요청내역</h1>
-			<div class="table2">
-				<table class="table">
+			<div>
+				<table>
 	                   <colgroup>
 	                       <col width="110"/>
 	                       <col width="120"/>
@@ -54,9 +54,9 @@ ${box2 }
 	                            </td>
 	                            <td style="text-align: center">
 	                            	<!-- 수락 ajax 구현 -->
-	                           		<input type="button" class="btn btn-default" value="수락" style="display: inline-block;">
+	                           		<input type="button" class="btn btn-default" value="수락" style="display: inline-block;" onclick="javascript:inviteRequestController.acceptInviteRequest(${inviteRequest.request.id}, ${inviteRequest.maker.id})">
 	                           		<!-- 거절 ajax 구현 -->
-	                           		<span><input type="button" class="btn btn-default" value="거절" style="display: inline-block;"></span>
+	                           		<span><input type="button" class="btn btn-default" value="거절" style="display: inline-block;" onclick="javascript:inviteRequestController.rejectInviteRequest('${inviteRequest.id}')"></span>
 	                            </td>
 	                        </tr>
 	                       </c:forEach>
@@ -64,7 +64,59 @@ ${box2 }
 	               </table>
 				</div>
 
-
 ${box3 }
 
 <%@ include file="/views/common/footer.jsp"%>
+
+<script type="text/javascript">
+
+var inviteRequestController = {
+	acceptInviteRequest : function(requestId, makerId){
+		$.ajax({
+			type: "get",
+			url: "${ctx }/request/xml/modifyMakerId.do?requestId=" + requestId + "&makerId=" + makerId,
+			dataType: "text",
+			success: function(text) {
+					if(text === "true"){
+						alert("수락되었습니다");
+					}
+			},
+			error: function(xml){
+				console.log("실패 메시지 :\n" + xml.responseText);
+			}
+		});
+		
+		$.ajax({
+			type: "get",
+			url: "${ctx }/request/xml/removeInviteByRequestId.do?requestId=" + requestId,
+			dataType: "text",
+			success: function(text) {
+					if(text === "true"){
+						location.href="${ctx}/request/ui/consumerInviteList.do?page=1";
+					};
+			},
+			error: function(xml){
+				console.log("실패 메시지 :\n" + xml.responseText);
+			}
+		});
+	},
+	
+	rejectInviteRequest : function(inviteRequestId){
+		$.ajax({
+			type: "get",
+			url: "${ctx}/request/xml/removeInviteById.do?id=" + inviteRequestId,
+			dataType: "text",
+			success: function(text){
+					if(text === "true"){
+						/* 나중에 page 동적으로 받아서 넘겨주어야 함 */
+						location.href="${ctx}/request/ui/consumerInviteList.do?page=1";
+					}
+			},
+			error: function(xml){
+				console.log("실패 메시지 :\n" + xml.responseText);
+			}
+		});
+	}
+};
+
+</script>

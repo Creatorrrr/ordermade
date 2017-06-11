@@ -11,10 +11,8 @@
   			jdbcType="VARCHAR"/>
   	</resultMap>
   
-  	<update id="updateAccountById" parameterType="Account">
-  		UPDATE ACCOUNT
-  		SET MONEY  = #{money}
-  		WHERE MEMBER_ID = #{member.id}
+  	<update id="transaction" statementType="CALLABLE">
+  		{CALL transaction(#{fromId}, #{toId}, #{money})}
   	</update>
   	
   	<!-- 회원ID로 금액 불러오기 -->

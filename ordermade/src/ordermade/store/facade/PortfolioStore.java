@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import ordermade.domain.Category;
 import ordermade.domain.Portfolio;
-import ordermade.domain.Product;
 import ordermade.domain.Tag;
 
 @Repository

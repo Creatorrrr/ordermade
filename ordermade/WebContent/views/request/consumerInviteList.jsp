@@ -58,7 +58,9 @@ ${box2 }
           </table>
 	</div>
 
+${box3 }
 
+<%@ include file="/views/common/footer.jsp"%>
 
 
 <script type="text/javascript">
@@ -113,8 +115,3 @@ var inviteRequestController = {
 };
 
 </script>
-
-
-${box3 }
-
-<%@ include file="/views/common/footer.jsp"%>

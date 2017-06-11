@@ -149,6 +149,33 @@ CREATE SEQUENCE request_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE review_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE tag_seq START WITH 1 INCREMENT BY 1;
 
+CREATE OR REPLACE PROCEDURE transaction (
+from_id IN VARCHAR2,
+to_id IN VARCHAR2,
+transfer IN NUMBER
+)
+IS
+
+PRAGMA autonomous_transaction;
+
+BEGIN 
+
+  UPDATE account
+  SET money = money - transfer
+  WHERE member_id = from_id;
+  
+  UPDATE account
+  SET money = money + transfer
+  WHERE member_id = to_id; 
+  
+  COMMIT;
+  
+EXCEPTION
+  WHEN OTHERS THEN
+    ROLLBACK;
+
+END transaction;
+
 
 INSERT INTO category(type) VALUES ('FUNITURE');
 INSERT INTO category(type) VALUES ('ACCESSORY');

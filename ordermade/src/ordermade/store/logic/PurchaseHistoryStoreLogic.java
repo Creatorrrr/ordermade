@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import ordermade.domain.PurchaseHistory;
@@ -45,6 +44,24 @@ public class PurchaseHistoryStoreLogic implements PurchaseHistoryStore {
 		try {
 			PurchaseHistoryMapper mapper = session.getMapper(PurchaseHistoryMapper.class);
 			check = mapper.updatePurchaseHistoryById(purchaseHistory);
+			if(check){
+				session.commit();
+			} else {
+				session.rollback();
+			}
+		} finally {
+			session.close();
+		}
+		return check;
+	}
+	
+	@Override
+	public boolean updatePurchaseHistoryByRequestIdForPayment(String requestId, String payment) {
+		SqlSession session = factory.openSession();
+		boolean check = false;
+		try {
+			PurchaseHistoryMapper mapper = session.getMapper(PurchaseHistoryMapper.class);
+			check = mapper.updatePurchaseHistoryByRequestIdForPayment(requestId, payment);
 			if(check){
 				session.commit();
 			} else {

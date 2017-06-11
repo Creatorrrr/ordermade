@@ -30,7 +30,7 @@ ${box2 }
 						<th>상품 이미지</th>
 						<td>
 							<div id='imageuploader'>Upload</div>
-							<div><img id='productImage' src="${ctx }/main/file/download.do?fileName=default.jpg" style="width:100px"></div>
+							<div><img id='productImage' src="${ctx }/resources/imgs/upload_default.jpg" style="width:100px"></div>
 							<input id="productImageHidden" name="image" type="hidden" value="">
 						</td>
 					<tr>

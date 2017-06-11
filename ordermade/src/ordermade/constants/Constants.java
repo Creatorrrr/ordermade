@@ -27,9 +27,11 @@ public class Constants {
 	public static final String MAKER = "M";
 	public static final String COMMENT_TYPE_CONTENT = "C";
 	public static final String COMMENT_TYPE_FILE = "F";
-	
 	public static final String BOUND_PUBLIC = "PUBLIC";
 	public static final String BOUND_PRIVATE = "PRIVATE";
+	public static final String DELIVERY_PREPARE = "배송준비중";
+	
+	public static final String PANDA_ACCOUNT = "0";
 
 	// Category
 	public enum CategoryType {

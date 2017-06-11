@@ -6,7 +6,9 @@ import ordermade.domain.Account;
 import ordermade.domain.PurchaseHistory;
 
 public interface DealService {
-	public boolean modifyAccountById(Account account);
+	public boolean transactionToMaker(String requestId);
+	
+	public boolean transactionFromConsumer(String requestId);
 
 	public Account findAccountById(String id);
 

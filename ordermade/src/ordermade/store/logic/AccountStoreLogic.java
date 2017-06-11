@@ -2,7 +2,6 @@ package ordermade.store.logic;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import ordermade.domain.Account;
@@ -19,13 +18,13 @@ public class AccountStoreLogic implements AccountStore{
 	}
 	
 	@Override
-	public boolean updateAccountById(Account account) {
+	public boolean transaction(String fromId, String toId, int money) {
 		SqlSession session = factory.openSession();
 		boolean check = false;
 		
 		try{
 			AccountMapper mapper = session.getMapper(AccountMapper.class);
-			check = mapper.updateAccountById(account);
+			check = mapper.transaction(fromId, toId, money);
 			session.commit();
 		} finally {
 			session.close();
