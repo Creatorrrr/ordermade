@@ -33,8 +33,8 @@ public class Constants {
 
 	// Category
 	public enum CategoryType {
-		//FUNITIURE, ACCESSORY, KITCHEN, DIGITAL, CLOTHING, SPORT
-		가구, 가방, 뷰티, 신발, 악세사리, 의류, 지갑, 파우치, 휴대폰케이스
+		FUNITIURE, ACCESSORY, KITCHEN, DIGITAL, CLOTHING, SPORT
+//		가구, 가방, 뷰티, 신발, 악세사리, 의류, 지갑, 파우치, 휴대폰케이스
 	}
 
 	public static final String PORTFOLIO_TITLE = "portfolioTitle";

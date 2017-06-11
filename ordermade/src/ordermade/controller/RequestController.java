@@ -117,30 +117,22 @@ public class RequestController {
 
 	
 
-	@RequestMapping(value = "request/xml/modifyMakerId.do", method = RequestMethod.POST, produces = "text/plain")
+	@RequestMapping(value = "request/xml/modifyMakerId.do", method = RequestMethod.GET, produces = "text/plain")
 	public @ResponseBody String modifyMakerIdToRequest(String requestId, String makerId, HttpSession session) {
-		// String loginId=(String)session.getAttribute("loginId");
-		System.out.println(requestId);
-		if(requestId == null) return "error";
+		if(requestId == null || makerId == null) return "error";
 		Request request= service.findRequestById(requestId);
-		Member maker = new Member();
-		maker.setId(makerId);
-		request.setMaker(maker);
-		boolean check = service.modifyRequestById(request);
-		return check+"";
+		request.setMaker(new Member());
+		request.getMaker().setId(makerId);
+		return service.modifyRequestById(request) + "";
 	}	//POST  http://localhost:8080/ordermade/request/xml/modifyMakerId.do
 		//{"requestId":"1","makerId":"maker1"}
 
-	@RequestMapping(value = "request/xml/removeMakerId.do", method = RequestMethod.POST, produces = "text/plain")
+	@RequestMapping(value = "request/xml/removeMakerId.do", method = RequestMethod.GET, produces = "text/plain")
 	public @ResponseBody String removeMakerIdToRequest(String requestId, HttpSession session) {
-		// String loginId=(String)session.getAttribute("loginId");
 		if(requestId == null ) return "error";
 		Request request= service.findRequestById(requestId);
-		Member maker = new Member();
-		maker.setId("");
-		request.setMaker(maker);
-		boolean check = service.modifyRequestById(request);
-		return check+"";
+		request.setMaker(new Member());
+		return service.modifyRequestById(request) + "";
 	}	//POST  http://localhost:8080/ordermade/request/xml/removeMakerId.do
 		//{"requestId":"1"}
 	

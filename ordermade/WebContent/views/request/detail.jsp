@@ -32,15 +32,15 @@ ${box2 }
 
 	<div class="content" align="center">
 		<h1 align="left" style="line-height:200%">
-			의뢰서
-			<button id="btn2" class="fl_right btn btn-default" onclick="javascript:location.href='${ctx}/request/xml/remove.do?id=${request.id }'">삭제</button>
+			의뢰서<c:if test="${request.maker ne null}"> - ${request.maker.id }님과 매칭되었습니다.</c:if>
+			<button id="removeRequest" class="fl_right btn btn-default" onclick="javascript:location.href='${ctx}/request/xml/remove.do?id=${request.id }'">삭제</button>
 			<button id="btn1" class="fl_right btn btn-default" onclick="javascript:location.href='${ctx}/request/ui/modify.do?requestId=${request.id }'">수정</button>
 		</h1>
 		<table class="table" style="color: black">
 			<tr>
 				<td>
 					<p>의뢰 내용</p>
-					<div>
+					<div style="word-break:break-all">
 						${request.content }
 					</div>
 				</td>
@@ -153,6 +153,19 @@ var fileUploader = function() {
 	});	
 };
 
+$("#removeRequest").click(function() {
+	$.ajax({
+		url : "${ctx}/request/xml/remove.do?id=${request.id }",
+		type : "get",
+		dataType : "text",
+		success : function(text) {
+				if(text === "true") {
+					location.href='${ctx}/request/ui/myRequest.do';
+				}
+		}
+	});
+});
+
 $("#commentRegister").click(function() {
 	var editor = CKEDITOR.instances.commentRegisterContent;
 	if(editor.getData().length < 1){
@@ -189,16 +202,23 @@ var commentController = {
 	
 	modifyCommentForm : function(commentId) {
 		var comment = $("#commentContentBox-" + commentId);
+		var innerData = comment.html();
 		var contentStr = "";
 		
-		contentStr += "<p class='commentWriter'><strong>" + comment.children(".commentWriter").text() + "</strong></p>"
-		contentStr += "<textarea class='commentModifyContent' rows='5' style='width:100%'>" + comment.children(".commentContent").text() + "</textarea>";
+		contentStr += "<textarea id='commentModifyContent' class='commentModifyContent' rows='5'></textarea>";
 		contentStr += "<div style='float:right'>";
-		contentStr += 	"<button onclick='javascript:commentController.modifyComment(" + commentId + ")'>코멘트 수정</button>";
-		contentStr += 	"<button onclick='javascript:commentController.getCommentsByRequestId(\"${request.id}\", 1)'>취소</button>";
+		contentStr += 	"<button class='btn btn-default' onclick='javascript:commentController.modifyComment(" + commentId + ");commentController.modifyFormFlag=false;'>코멘트 수정</button>";
+		contentStr += 	"<button class='btn btn-default' onclick='javascript:commentController.getCommentsByRequestId(\"${request.id}\", 1);commentController.modifyFormFlag=false;'>취소</button>";
 		contentStr += "</div>";
 
 		comment.empty().append(contentStr);
+		
+		CKEDITOR.replace('commentModifyContent', {
+			imageUploadUrl : '${ctx}/main/file/uploadJson.do',
+			filebrowserUploadUrl: '${ctx}/main/file/uploadJson.do'
+		});
+		
+		CKEDITOR.instances.commentModifyContent.setData(innerData);
 	},
 	
 	modifyComment : function(commentId) {
@@ -206,11 +226,13 @@ var commentController = {
 			url : "${ctx }/comment/xml/modify.do",
 			data : {id : commentId,
 					'request.id' : "${request.id}",
-					content : $("#commentContent-" + commentId + ">.commentModifyContent").val()},
+					content : CKEDITOR.instances.commentModifyContent.getData(),
+					contentType : 'C'},
 			type : "post",
 			dataType : "text",
 			success : function(text) {
 					if(text === "true") {
+						CKEDITOR.instances.commentModifyContent.destroy();
 						commentController.getCommentsByRequestId("${request.id}", 1);
 					}
 			}
@@ -254,25 +276,25 @@ var commentController = {
 		var content = "";
 
 		content += "<div class='commentBox'>";
-		content += 		"<div id='commentContentBox-" + $(xml).find("comment>id").text() + "' class='commentContentBox' style='width:550px;'>";
-		content += 			"<div class='commentControlBox'>";
-		content += 				"<p>작성자 : " + $(xml).find("comment>member>id").text() + "</p>";
+		content += 		"<div class='commentWriterBox'><img class='imgl borderedbox' src='${ctx}/main/file/download.do?fileName=" + $(xml).find("comment>member>image").text() + "'></div>";
+		content += 		"<div class='commentControlBox'>";
+		content += 			"<p>작성자 : " + $(xml).find("comment>member>id").text() + "</p>";
 		if($(xml).find("comment>member>id").text() === "${sessionScope.loginId}") {
-			content += 			"<button class='btn btn-default' onclick='javascript:if(commentController.modifyFormFlag===true)return false;commentController.modifyCommentForm(" + $(xml).find("comment>id").text() + ");commentController.modifyFormFlag=true;'>수정</button>";
-			content += 			"<button class='btn btn-default' onclick='javascript:commentController.removeComment(" + $(xml).find("comment>id").text() + ")'>삭제</button>";
-		}
-		content += 			"</div>";
-		if($(xml).find("comment>contentType").text() === "C") {
-			content += '<p class="commentContent" style="﻿word-break:break-word;">' + $(xml).find("comment>content").text() + '</p>';
-		} else if($(xml).find("comment>contentType").text() === "F") {
-			content += '<p class="commentContent">';
-			content += '	<a href="${ctx }/main/file/download.do?fileName=' + $(xml).find("comment>content").text() + '" download="' + $(xml).find("comment>content").text() + '">';
-			content += '		<img src="${ctx }/views/images/file_icon.png" style="width:50px">' + $(xml).find("comment>content").text();
-			content += '	</a>';
-			content += '</p>';
+			if($(xml).find("comment>contentType").text() === "C") {
+				content += 		"<button class='btn btn-default' onclick='javascript:if(commentController.modifyFormFlag===true)return false;commentController.modifyCommentForm(" + $(xml).find("comment>id").text() + ");commentController.modifyFormFlag=true;'>수정</button>";
+			}
+			content += 		"<button class='btn btn-default' onclick='javascript:commentController.removeComment(" + $(xml).find("comment>id").text() + ")'>삭제</button>";
 		}
 		content += 		"</div>";
-		content += 		"<div class='commentWriterBox'><img class='imgl borderedbox' src='${ctx}/main/file/download.do?fileName=" + $(xml).find("comment>member>image").text() + "'></div>"
+		content += 		"<div id='commentContentBox-" + $(xml).find("comment>id").text() + "' class='commentContentBox'>";
+		if($(xml).find("comment>contentType").text() === "C") {
+			content += 		$(xml).find("comment>content").text();
+		} else if($(xml).find("comment>contentType").text() === "F") {
+			content += 		'<a href="${ctx }/main/file/download.do?fileName=' + $(xml).find("comment>content").text() + '" download="' + $(xml).find("comment>content").text() + '">';
+			content += 		'	<img src="${ctx }/views/images/file_icon.png" style="width:50px;margin-top:15px">' + $(xml).find("comment>content").text();
+			content += 		'</a>';
+		}
+		content += 		"</div>";
 		content += '</div>';
 		return content;
 	}

@@ -78,9 +78,8 @@ select { padding: 10px;}
 
 .commentListBox {margin: 15px;}
 .commentBox {overflow:hidden;height: auto;}
-.commentContentBox {height: 70px;width: 80%;display: inline-block;}
-.commentContentBox h3 {display: inline-block;}
-.commentWriterBox {height: auto;width: 95px;margin: 5px;float: left;}
+.commentContentBox {width: 70%;display: inline-block;float: left;word-break:break-all;}
+.commentWriterBox {height: auto;width: 95px;margin: 5px;display: inline-block;float:left}
 .commentControlBox {float: right;}
 .commentControlBox p {text-align: right;}
 

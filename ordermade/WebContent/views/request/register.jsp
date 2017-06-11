@@ -125,7 +125,9 @@ ${box3 }
 					dataType : "text",
 					success : function(resultData) {
 						if(resultData != "error"){
-							joinRequest(resultData);
+							if("${makerId}" != "") {
+								joinRequest(resultData);
+							}
 							location.href="${ctx}/request/ui/detail.do?id=" + resultData;	//성공시 페이지 전환
 						} else {
 							alert("의뢰서 등록 실패");
