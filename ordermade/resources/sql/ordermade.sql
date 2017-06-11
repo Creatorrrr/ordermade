@@ -48,7 +48,8 @@ CREATE TABLE request (
   content VARCHAR2(2000),
   hope_price NUMBER,
   price NUMBER,
-  bound VARCHAR2(50)
+  bound VARCHAR2(50),
+  payment VARCHAR2(50)
 );
 
 CREATE TABLE invite_request (
