@@ -45,12 +45,16 @@ public class DealServiceLogic implements DealService{
 				Constants.PANDA_ACCOUNT, 
 				request.getPrice());
 		
+		requestStore.updateRequestByIdForPayment(requestId, Constants.PAYMENT_Y);
+		
 		PurchaseHistory purchaseHistory = new PurchaseHistory();
 		purchaseHistory.setConsumer(request.getConsumer());
 		purchaseHistory.setMaker(request.getMaker());
 		purchaseHistory.setRequest(request);
+		purchaseHistory.setInvoiceNumber(new String());
+		purchaseHistory.setCharge(0);
 		purchaseHistory.setDeliveryStatus(Constants.DELIVERY_PREPARE);
-		purchaseHistory.setPayment(Constants.PAYMENT_Y);
+		purchaseHistory.setPayment(Constants.PAYMENT_N);
 		return purchaseHistoryStore.insertPurchaseHistory(purchaseHistory);
 	}
 

@@ -2,14 +2,13 @@ package ordermade.store.facade;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import ordermade.domain.Request;
 
 public interface RequestStore {
 	
 	public boolean insertRequest(Request request);
-	public boolean updateReqeustById(Request request);
+	public boolean updateRequestById(Request request);
+	public boolean updateRequestByIdForPayment(String requestId, String payment);
 	public boolean deleteRequestById(String id);
 	public Request selectRequestById(String id); 
 	public List<Request> selectRequestsByBound(String bound, String begin, String end);

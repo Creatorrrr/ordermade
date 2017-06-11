@@ -7,7 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Repository;
 
-import ordermade.constants.Constants;
 import ordermade.domain.Request;
 import ordermade.store.facade.RequestStore;
 import ordermade.store.mapper.RequestMapper;
@@ -41,13 +40,31 @@ public class RequestStoreLogic implements RequestStore {
 	}
 
 	@Override
-	public boolean updateReqeustById(Request request) {
+	public boolean updateRequestById(Request request) {
 		SqlSession session = factory.openSession();
 		boolean result = false;
 		
 		try{
 			RequestMapper mapper= session.getMapper(RequestMapper.class);
-			if(result=mapper.updateReqeustById(request)){
+			if(result=mapper.updateRequestById(request)){
+				session.commit();
+			}else{
+				session.rollback();
+			}
+			return result;
+		}finally{
+				session.close();
+		}
+	}
+	
+	@Override
+	public boolean updateRequestByIdForPayment(String requestId, String payment) {
+		SqlSession session = factory.openSession();
+		boolean result = false;
+		
+		try{
+			RequestMapper mapper= session.getMapper(RequestMapper.class);
+			if(result=mapper.updateRequestByIdForPayment(requestId, payment)){
 				session.commit();
 			}else{
 				session.rollback();

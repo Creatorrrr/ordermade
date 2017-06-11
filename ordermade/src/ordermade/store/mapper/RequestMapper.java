@@ -10,7 +10,8 @@ import ordermade.domain.Request;
 public interface RequestMapper {
 
 	public boolean insertRequest(Request request);
-	public boolean updateReqeustById(Request request);
+	public boolean updateRequestById(Request request);
+	public boolean updateRequestByIdForPayment(@Param("requestId")String requestId, @Param("payment")String payment);
 	public boolean deleteRequestById(String id);
 	public Request selectRequestById(String id); 
 //	public List<Request> selectRequestsByBound(@Param("bound")String bound, @Param("page")String page);

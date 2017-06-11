@@ -12,6 +12,7 @@
 		<result property="category" column="type" />
 		<result property="hopePrice" column="hope_price" jdbcType="NUMERIC" />
 		<result property="price" column="price" jdbcType="NUMERIC" />
+		<result property="payment" column="payment" jdbcType="NUMERIC" />
 		<result property="page" column="page" />
 		<!-- <result property="consumer.id" column="consumer_id"/> -->
 		<!-- <result property="maker.id" column="maker_id"/> -->
@@ -38,7 +39,8 @@
 		content, 
 		hope_price, 
 		price, 
-		bound
+		bound,
+		payment
 	</sql>
 	
 	<sql id="selectRequest">
@@ -50,7 +52,8 @@
 		content, 
 		hope_price, 
 		price,
-		bound
+		bound,
+		payment
 	</sql>
 
 	<sql id="selectRequestRownum">
@@ -63,7 +66,8 @@
 		content,
 		hope_price, 
 		price, 
-		bound
+		bound,
+		payment
 	</sql>
 
 	<insert id="insertRequest" parameterType="request">
@@ -71,17 +75,23 @@
 			select request_seq.nextval from dual
 		</selectKey>
 		INSERT INTO request(id, title, <if test="maker.id != null">maker_id, </if>consumer_id, type, content,
-		hope_price, price, bound)
-		VALUES (#{id},#{title},<if test="maker.id != null">#{maker.id},</if>#{consumer.id},#{category},#{content},#{hopePrice},#{price},#{bound})
+		hope_price, price, bound, payment)
+		VALUES (#{id},#{title},<if test="maker.id != null">#{maker.id},</if>#{consumer.id},#{category},#{content},#{hopePrice},#{price},#{bound},#{payment})
 	</insert>
 
-	<update id="updateReqeustById" parameterType="request">
+	<update id="updateRequestById" parameterType="request">
 		UPDATE request
 		SET
 		title = #{title}, maker_id=#{maker.id}, consumer_id=#{consumer.id},
 		type = #{category}, content = #{content}, hope_price=#{hopePrice},
-		price=#{price}, bound=#{bound}
+		price=#{price}, bound=#{bound}, payment=#{payment}
 		WHERE id = #{id}
+	</update>
+	
+	<update id="updateRequestByIdForPayment">
+		UPDATE request
+		SET payment=#{payment}
+		WHERE id = #{requestId}
 	</update>
 
 	<delete id="deleteRequestById" parameterType="String">
@@ -146,7 +156,7 @@
 		parameterType="HashMap" resultMap="requestMap">
 		(SELECT rownum rnum, r.id, r.title,
 		r.maker_id, r.consumer_id, r.type, r.content, r.hope_price, r.price,
-		r.bound, 1 page
+		r.bound, r.payment 1 page
 		FROM request r
 		INNER JOIN purchase_history ph ON r.id = ph.request_id
 		WHERE r.consumer_id = #{consumerId} AND ph.payment =
@@ -165,7 +175,7 @@
 	<select id="selectRequestsByMakerIdExceptPayment" parameterType="HashMap"
 		resultMap="requestMap">
 		SELECT rownum rnum, r.id, r.title, r.maker_id,
-		r.consumer_id, r.type, r.content, r.hope_price, r.price, r.bound , 1
+		r.consumer_id, r.type, r.content, r.hope_price, r.price, r.bound , r.payment, 1
 		page
 		FROM request r
 		LEFT OUTER JOIN purchase_history ph ON r.id = ph.request_id
@@ -176,7 +186,7 @@
 	<select id="selectRequestsByMakerIdWithPayment" parameterType="HashMap"
 		resultMap="requestMap">
 		(SELECT rownum rnum, r.id, r.title, r.maker_id,
-		r.consumer_id, r.type, r.content, r.hope_price, r.price, r.bound , 1
+		r.consumer_id, r.type, r.content, r.hope_price, r.price, r.bound , r.payment, 1
 		page
 		FROM request r
 		INNER JOIN purchase_history ph ON r.id = ph.request_id

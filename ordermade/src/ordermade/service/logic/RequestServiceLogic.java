@@ -35,7 +35,12 @@ public class RequestServiceLogic implements RequestService{
 
 	@Override
 	public boolean modifyRequestById(Request request) {
-		return rStore.updateReqeustById(request);
+		return rStore.updateRequestById(request);
+	}
+	
+	@Override
+	public boolean modifyRequestByIdForPayment(String requestId, String payment) {
+		return rStore.updateRequestByIdForPayment(requestId, payment);
 	}
 
 	@Override

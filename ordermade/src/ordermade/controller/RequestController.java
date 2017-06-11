@@ -40,6 +40,7 @@ public class RequestController {
 		request.setMaker(new Member());
 		request.setConsumer(new Member());
 		request.getConsumer().setId((String)session.getAttribute("loginId"));
+		request.setPayment(Constants.PAYMENT_N);
 		if(service.registerRequest(request)) {
 			return request.getId();
 		} else {
@@ -316,7 +317,7 @@ public class RequestController {
 						service.findInviteRequestsByMakerId(
 								(String)session.getAttribute("loginId"), 
 								Constants.FORM_INVITE, 
-								/*page*/"1"));
+								page));
 	}
 	
 	// 170530 Complete
@@ -328,7 +329,7 @@ public class RequestController {
 						service.findInviteRequestsByConsumerId(
 								(String)session.getAttribute("loginId"), 
 								Constants.FORM_REQUEST, 
-								/*page*/"1"));
+								page));
 	}
 	
 	//==================mobile -> xml

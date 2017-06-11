@@ -10,6 +10,7 @@ import ordermade.domain.Request;
 public interface RequestService {
 	public boolean registerRequest(Request request);
 	public boolean modifyRequestById(Request request);
+	public boolean modifyRequestByIdForPayment(String requestId, String payment);
 	public boolean removeRequestById(String id);
 	public Request findRequestById(String id);
 	public List<Request> findRequestsByBound(String bound, String page);

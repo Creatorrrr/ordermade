@@ -7,8 +7,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.springframework.stereotype.Component;
-
 
 @XmlRootElement(name="request")
 @XmlAccessorType(XmlAccessType.PROPERTY)
@@ -24,6 +22,7 @@ public class Request {
 	private List<Comment> comments;
 	private List<Attach> attachs;
 	private String bound;
+	private String payment;
 	private String page;
 	
 	public String getPage() {
@@ -127,5 +126,12 @@ public class Request {
 	}
 	public void setBound(String bound) {
 		this.bound = bound;
+	}
+
+	public String getPayment() {
+		return payment;
+	}
+	public void setPayment(String payment) {
+		this.payment = payment;
 	}
 }
