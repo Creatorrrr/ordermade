@@ -82,7 +82,7 @@
   		FROM (<include refid="selectPurchaseHistoryWithRowNum" />
   			FROM purchase_history ph INNER JOIN request r ON ph.request_id = r.id
   			WHERE ph.consumer_id = #{consumerId})
-		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
+		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE} + 1) AND (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
   	</select>
   	
   	<select id="selectPurchaseHistoriesByConsumerIdAndRequestTitle" parameterType="java.util.Map" resultMap="purchaseHistoryMap">
@@ -90,7 +90,7 @@
   		FROM (<include refid="selectPurchaseHistoryWithRowNum" />
   			FROM purchase_history ph INNER JOIN request r ON ph.request_id = r.id
   			WHERE ph.consumer_id = #{consumerId} AND r.title LIKE '%${title}%')
-		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
+		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE} + 1) AND (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
   	</select>
   	
   	<select id="selectPurchaseHistoriesByMakerId" parameterType="java.util.Map" resultMap="purchaseHistoryMap">
@@ -98,7 +98,7 @@
   		FROM (<include refid="selectPurchaseHistoryWithRowNum" />
   			FROM purchase_history ph INNER JOIN request r ON ph.request_id = r.id
   			WHERE ph.maker_id = #{makerId})
-		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
+		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE} + 1) AND (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
   	</select>
   	
   	<select id="selectPurchaseHistoriesByMakerIdAndRequestTitle" parameterType="java.util.Map" resultMap="purchaseHistoryMap">
@@ -106,7 +106,7 @@
   		FROM (<include refid="selectPurchaseHistoryWithRowNum" />
   			FROM purchase_history ph INNER JOIN request r ON ph.request_id = r.id
   			WHERE ph.maker_id = #{makerId} AND r.title LIKE '%${title}%')
-		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
+		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE} + 1) AND (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
   	</select>
   
   </mapper>

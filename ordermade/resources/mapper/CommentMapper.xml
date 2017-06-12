@@ -53,7 +53,7 @@
   						time
   				FROM comm
 	  			WHERE request_id = #{requestId})
-  		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@COMMENT_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@COMMENT_ROW_SIZE})
+  		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@COMMENT_ROW_SIZE} + 1) AND (#{page}*${@ordermade.constants.Constants@COMMENT_ROW_SIZE})
   	</select>
   
   </mapper>

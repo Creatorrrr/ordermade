@@ -74,6 +74,11 @@ ${box2 }
 					</div>
 	            </td>
 			</tr>
+			<tr>
+				<td>
+					<button class="btn btn-default btn-lg" type=button style="width:100%" onclick="javascript:commentController.appendCommentsByRequestId()">더보기</button>
+	            </td>
+			</tr>
 			<tr><td><h3>추가 요구 사항</h3></td></tr>
 			<tr>
 				<td>
@@ -134,7 +139,7 @@ ${box2 }
 $(document).ready(function() {
 	$("#tabs").tabs({active:2});
 	fileUploader();
-	commentController.getCommentsByRequestId("${request.id}", 1);
+	commentController.getCommentsByRequestId(1);
 });
 
 CKEDITOR.replace('commentRegisterContent', {
@@ -208,6 +213,7 @@ var registerPayment = function() {
 // get comments with xml
 var commentController = {
 	modifyFormFlag : false,
+	pageNow : 1,
 		
 	registerComment : function(content, type) {
 		$.ajax({
@@ -219,7 +225,7 @@ var commentController = {
 			dataType : "text",
 			success : function(text) {
 					if(text === "true") {
-						commentController.getCommentsByRequestId("${request.id}", 1);
+						commentController.getCommentsByRequestId(1);
 					}
 			}
 		});
@@ -258,7 +264,7 @@ var commentController = {
 			success : function(text) {
 					if(text === "true") {
 						CKEDITOR.instances.commentModifyContent.destroy();
-						commentController.getCommentsByRequestId("${request.id}", 1);
+						commentController.getCommentsByRequestId(1);
 					}
 			}
 		});
@@ -271,15 +277,15 @@ var commentController = {
 			dataType : "text",
 			success : function(text) {
 					if(text === "true") {
-						commentController.getCommentsByRequestId("${request.id}", 1);
+						commentController.getCommentsByRequestId(1);
 					}
 			}
 		});
 	},
 	
-	getCommentsByRequestId : function(requestId, page) {
+	getCommentsByRequestId : function(page) {
 		$.ajax({
-			url : "${ctx}/comment/xml/searchRequestId.do?requestId=" + requestId + "&page=" + page,
+			url : "${ctx}/comment/xml/searchRequestId.do?requestId=${request.id}" + "&page=" + page,
 			type : "get",
 			dataType : "xml",
 			success : function(xml) {
@@ -292,6 +298,27 @@ var commentController = {
 							contentStr += commentController.makeContent(this);
 						});
 						$("#commentList").append(contentStr);
+						commentController.pageNow = 2;
+					}
+			}
+		});
+	},
+	
+	appendCommentsByRequestId : function() {
+		$.ajax({
+			url : "${ctx}/comment/xml/searchRequestId.do?requestId=${request.id}" + "&page=" + commentController.pageNow,
+			type : "get",
+			dataType : "xml",
+			success : function(xml) {
+					var xmlData = $(xml).find("comment");
+					var listLength = xmlData.length;
+					if (listLength) {
+						var contentStr = "";
+						$(xmlData).each(function() {
+							contentStr += commentController.makeContent(this);
+						});
+						$("#commentList").append(contentStr);
+						commentController.pageNow++;
 					}
 			}
 		});

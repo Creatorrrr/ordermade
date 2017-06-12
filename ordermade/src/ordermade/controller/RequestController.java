@@ -305,8 +305,8 @@ public class RequestController {
 	// 170531 Complete
 	@RequestMapping(value="request/ui/detail.do",method=RequestMethod.GET)
 	public ModelAndView showDetailRequestUI(String id, HttpSession session){System.out.println(service.findRequestById(id).getComments());
-			return new ModelAndView("request/detail")
-					.addObject("request", service.findRequestById(id));
+		return new ModelAndView("request/detail")
+				.addObject("request", service.findRequestById(id));
 	}
 	
 	// 170530 Complete
