@@ -53,7 +53,7 @@ select { padding: 10px;}
 
 .itemBox { width: 300px;}
 .itemImageBox a img { height: 200px;}
-.itemExplainBox { margin-top:5px;width:85%;font-size:120%;color:black; }
+.itemExplainBox { margin-top:5px;width:85%;font-size:120%;color:black;display:inline-block }
 .itemTitleBox { font-weight:bold;width:50%;display:inline-block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:black; }
 .itemPriceBox { font-weight : bold;color : black;float : right; }
 .itemHitBox { font-size : 80%;color : black;text-align: right; }

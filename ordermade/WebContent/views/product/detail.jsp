@@ -27,18 +27,20 @@ ${head_body}
 			</c:if>
 			<!-- 상품 설명 시작 -->
 			<div class="productDetailBox">
-				<h2 class="productSubTitle">상품 상세 </h2>
-				<hr style="margin:0px 0px 15px 0px;">
 				<!-- 상품 이미지  -->
+				<h2 class="productSubTitle">상품 이미지 </h2>
+				<hr style="margin:0px 0px 15px 0px;">
 				<div class="productImageBox" align="center">
 					<img src="${ctx }/main/file/download.do?fileName=${product.image}" />
 				</div>
-				<!-- 상품 설명 -->
-				<p class="productContentBox">
+				<!-- 상품 소개 -->
+				<h2 class="productSubTitle">상품 소개 </h2>
+				<hr style="margin:0px 0px 15px 0px;">
+				<div class="productContentBox">
 					<div align="center" style="color: #000000">
 					 ${product.content}
 					</div>
-				</p>
+				</div>
 			</div>
 			<!-- 상품 설명 종료 -->
 

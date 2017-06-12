@@ -103,7 +103,7 @@ var getHitsProducts = function(category) {
 						contentStr +=	 			"</a>";
 						contentStr +=	 		"</div>";
 						contentStr +=	 		"<div align='left' style='margin-left: 15px'>";
-						contentStr +=	 			"<h2 class='itemPriceBox'>" + $(this).find("product>price").text() + " 원~</h2>";
+						contentStr +=	 			"<z class='itemPriceBox'>" + $(this).find("product>price").text() + " 원~</h2>";
 						contentStr +=	 		"</div>";
 						contentStr +=	 		"<br>";
 						contentStr +=	 		"<div align='center'>";
