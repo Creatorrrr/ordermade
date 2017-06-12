@@ -53,21 +53,21 @@ ${box2 }
 	                </c:if>
                     <c:forEach var="purchaseHistory" items="${purchaseList}" varStatus="sts">
 	                    <tr>
-	                        <td class="text-center" style="text-align: center">
+	                        <td class="text-center">
 	                        	${purchaseHistory.maker.id }
 	                        </td>
-	                        <td style="text-align: center">
+	                        <td class="text-center">
 	                        	<a href="${ctx }/request/ui/detail.do?id=${purchaseHistory.request.id }" style="color:black">
 	                        		${purchaseHistory.request.title }
 	                        	</a>
 							</td>
-							<td style="text-align: center">
+							<td class="text-center">
 								${purchaseHistory.request.price }
 							</td>
-	                        <td class="text-center" style="text-align: center">
+	                        <td class="text-center">
 	                        	${purchaseHistory.orderDate}
 	                        </td>
-	                      	<td class="text-center" style="text-align: center">
+	                      	<td class="text-center">
 	                     		${purchaseHistory.deliveryStatus}<br>
 	                     		<c:if test="${purchaseHistory.payment eq 'N'}">
 		                      		<div align="center">

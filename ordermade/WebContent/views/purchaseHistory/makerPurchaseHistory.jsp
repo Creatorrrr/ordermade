@@ -27,53 +27,57 @@ ${box2 }
 				</div>
 				<p>
 					<table class="">
-	                   <colgroup>
-	                       <col width="170"/>
-	                       <col width="210"/>
-	                       <col width="200"/>
-	                       <col width="300"/>
-	                   </colgroup>
-	                   <thead>
-	                   <tr>
-	                       <td class="" style="text-align: center">구매자 ID</td>
-	                       <td class="" style="text-align: center">구매상품 정보</td>
-	                       <td class="" style="text-align: center">구매일자</td>
-	                       <td class="" style="text-align: center">진행상태</td>
-	                   </tr>
-	                   </thead>
-	                   <tbody>
+	                	<colgroup>
+			            	<col width="100"/>
+			                <col width="500"/>
+			                <col width="100"/>
+			                <col width="100"/>
+			                <col width="100"/>
+		           		</colgroup>
+	                	<thead>
+		               		<tr>
+			                    <td class="" style="text-align: center">구매자 ID</td>
+			                    <td class="" style="text-align: center">의뢰서</td>
+			                    <td class="" style="text-align: center">가격</td>
+			                    <td class="" style="text-align: center">판매일자</td>
+			                    <td class="" style="text-align: center">진행상태</td>
+			                </tr>
+	        			</thead>
+	         			<tbody>
 	                   		<c:if test="${empty purchaseList}">
-	                        <tr>
-	                            <td style="text-align: center" colspan="5" class="text-center">이력이 존재하지 않습니다.</td>
-	                        </tr>
-	                       </c:if>
-	                       <c:forEach var="purchaseHistory" items="${purchaseList}"  varStatus="sts">
-	                        <tr>
-	                            <td style="text-align: center">
-	                            	<%-- <img src=${ctx }/views/images/img-10.jpg> --%>
-	                            	${purchaseHistory.consumer.id }
-	                            </td>
-	                            <td style="text-align: center">
-									상품명 : ${purchaseHistory.request.title }<br>
-									아이디 : ${purchaseHistory.consumer.id }<br>
-									가격 : ${purchaseHistory.request.price }<br>
-								</td>
-	                            <td class="text-center" style="text-align: center">
-	                            	${purchaseHistory.orderDate}
-	                            </td>
-	                            <td class="text-center" style="text-align: center">
-	                           		${purchaseHistory.deliveryStatus}<br>
-	                           		<c:if test="${purchaseHistory.deliveryStatus eq '배송중' }">
-	                           			<div align="center"><input class="deliveryBtn" type="button"
-		                           			value="상품배송" data1 = "${purchaseHistory.id }"></div>
-                           			</c:if>
-                           			<c:if test="${purchaseHistory.deliveryStatus eq '배송완료' }">
-                           			</c:if>
-	                            </td>
-	                        </tr>
-	                       </c:forEach>
-	                   </tbody>
-	               </table>
+		                        <tr>
+		                            <td style="text-align: center" colspan="5" class="text-center">이력이 존재하지 않습니다.</td>
+		                        </tr>
+	              			</c:if>
+	           				<c:forEach var="purchaseHistory" items="${purchaseList}"  varStatus="sts">
+		           				<tr>
+		                 			<td class="text-center">
+		                            	${purchaseHistory.consumer.id }
+		                            </td>
+		                            <td class="text-center">
+										<a href="${ctx }/request/ui/detail.do?id=${purchaseHistory.request.id }" style="color:black">
+			                        		${purchaseHistory.request.title }
+			                        	</a>
+									</td>
+		                            <td class="text-center" style="text-align: center">
+		                            	${purchaseHistory.orderDate}
+		                            </td>
+		                            <td class="text-center">
+										${purchaseHistory.request.price }
+									</td>
+		                            <td class="text-center">
+		                           		${purchaseHistory.deliveryStatus}<br>
+		                           		<c:if test="${purchaseHistory.deliveryStatus eq '배송중' }">
+		                           			<div align="center"><input class="deliveryBtn" type="button"
+			                           			value="상품배송" data1 = "${purchaseHistory.id }"></div>
+	                           			</c:if>
+	                           			<c:if test="${purchaseHistory.deliveryStatus eq '배송완료' }">
+	                           			</c:if>
+		                            </td>
+		                        </tr>
+	                    	</c:forEach>
+	               		</tbody>
+	           		</table>
 					<div id="makerPagination">페이지 위치</div>
 
 <script type="text/javascript">
