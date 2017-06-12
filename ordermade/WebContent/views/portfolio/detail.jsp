@@ -44,7 +44,7 @@ ${box2 }
 
 	<br>
 	<%-- <c:forEach items="${ portfolio }" var="portfolio"> --%>
-	<img src="${ctx }/portfolio/image.do?img=${portfolio.image}"> <br>
+	<img src="${ctx }/main/file/download.do?fileName=${portfolio.image}"> <br>
 	<%-- </c:forEach> --%>
 </div>
 <div>

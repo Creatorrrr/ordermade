@@ -56,6 +56,24 @@ public class PurchaseHistoryStoreLogic implements PurchaseHistoryStore {
 	}
 	
 	@Override
+	public boolean updatePurchaseHistoryByIdForDelivery(PurchaseHistory purchaseHistory) {
+		SqlSession session = factory.openSession();
+		boolean check = false;
+		try {
+			PurchaseHistoryMapper mapper = session.getMapper(PurchaseHistoryMapper.class);
+			check = mapper.updatePurchaseHistoryByIdForDelivery(purchaseHistory);
+			if(check){
+				session.commit();
+			} else {
+				session.rollback();
+			}
+		} finally {
+			session.close();
+		}
+		return check;
+	}
+	
+	@Override
 	public boolean updatePurchaseHistoryByRequestIdForPayment(String requestId, String payment) {
 		SqlSession session = factory.openSession();
 		boolean check = false;

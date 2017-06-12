@@ -29,9 +29,11 @@ public class Constants {
 	public static final String COMMENT_TYPE_FILE = "F";
 	public static final String BOUND_PUBLIC = "PUBLIC";
 	public static final String BOUND_PRIVATE = "PRIVATE";
-	public static final String DELIVERY_PREPARE = "배송준비중";
-	
+	public static final String DELIVERY_PREPARE = "P";
+	public static final String DELIVERY_COMPLETE = "C";
+
 	public static final String PANDA_ACCOUNT = "0";
+	public static final int INITIAL_MONEY = 1000000;
 
 	// Category
 	public enum CategoryType {

@@ -8,6 +8,7 @@ public interface PurchaseHistoryStore {
 
 	public boolean insertPurchaseHistory(PurchaseHistory purchaseHistory);
 	public boolean updatePurchaseHistoryById(PurchaseHistory purchaseHistory);
+	public boolean updatePurchaseHistoryByIdForDelivery(PurchaseHistory purchaseHistory);
 	public boolean updatePurchaseHistoryByRequestIdForPayment(String requestId, String payment);
 	public PurchaseHistory selectPurchseHistoryById(String id);
 	public List<PurchaseHistory> selectPurchaseHistoriesByConsumerId(String consumerId, String page);

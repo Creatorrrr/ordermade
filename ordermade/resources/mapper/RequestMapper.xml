@@ -107,11 +107,21 @@
 
 	<select id="selectRequestsByBound" parameterType="HashMap" resultMap="requestMap">
 		<include refid="selectRequest"/>
-		FROM(<include refid="selectRequestRownum"/>
-			FROM request
-			WHERE bound = #{bound}
-			ORDER BY id DESC )
-			WHERE rnum BETWEEN #{begin} AND #{end}
+		FROM(SELECT rownum rnum,
+                r.id, 
+                r.title, 
+                r.maker_id, 
+                r.consumer_id, 
+                r.type, 
+                r.content,
+                r.hope_price, 
+                r.price, 
+                r.bound,
+                r.payment
+				FROM request r LEFT OUTER JOIN invite_request ir ON r.id = ir.request_id
+			WHERE r.bound = #{bound} AND ir.id IS NULL
+				ORDER BY id DESC )
+		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
 	<select id="selectRequestsByBoundAndTitle" parameterType="HashMap"
@@ -146,9 +156,19 @@
 	<select id="selectRequestsByConsumerIdWithMaker" parameterType="HashMap"
 		resultMap="requestMap">
 		<include refid="selectRequest" />
-		FROM (<include refid="selectRequestRownum" />
-				FROM request
-				WHERE consumer_id = #{consumerId} AND maker_id IS NOT NULL)   
+		FROM (SELECT rownum rnum,
+	                r.id, 
+	                r.title, 
+	                r.maker_id, 
+	                r.consumer_id, 
+	                r.type, 
+	                r.content,
+	                r.hope_price, 
+	                r.price, 
+	                r.bound,
+	                r.payment
+				FROM request r LEFT OUTER JOIN purchase_history ph ON r.id = ph.request_id
+				WHERE r.consumer_id = #{consumerId} AND r.maker_id IS NOT NULL AND (ph.payment != 'Y' OR ph.payment IS NULL))   
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
@@ -156,11 +176,9 @@
 		parameterType="HashMap" resultMap="requestMap">
 		(SELECT rownum rnum, r.id, r.title,
 		r.maker_id, r.consumer_id, r.type, r.content, r.hope_price, r.price,
-		r.bound, r.payment 1 page
-		FROM request r
-		INNER JOIN purchase_history ph ON r.id = ph.request_id
-		WHERE r.consumer_id = #{consumerId} AND ph.payment =
-		'${@ordermade.constants.Constants@PAYMENT_Y}')
+		r.bound, r.payment
+		FROM request r INNER JOIN purchase_history ph ON r.id = ph.request_id
+		WHERE r.consumer_id = #{consumerId} AND ph.payment = '${@ordermade.constants.Constants@PAYMENT_Y}')
 	</select>
 
 	<select id="selectRequestsByMakerId" parameterType="HashMap"

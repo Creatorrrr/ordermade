@@ -10,6 +10,7 @@ public interface PurchaseHistoryMapper {
 
 	public boolean insertPurchaseHistory(PurchaseHistory purchaseHistory);
 	public boolean updatePurchaseHistoryById(PurchaseHistory purchaseHistory);
+	public boolean updatePurchaseHistoryByIdForDelivery(PurchaseHistory purchaseHistory);
 	public boolean updatePurchaseHistoryByRequestIdForPayment(@Param("requestId")String requestId, @Param("payment")String payment);
 	public PurchaseHistory selectPurchseHistoryById(String id);
 	public List<PurchaseHistory> selectPurchaseHistoriesByConsumerId(@Param("consumerId")String consumerId, @Param("page")String page);

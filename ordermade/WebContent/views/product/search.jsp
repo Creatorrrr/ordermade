@@ -43,35 +43,33 @@ ${head_body}
 				<div id="listSearchResult">
 					<c:forEach items="${products }" var="product">
 						<div class='listBox'>
-							<!-- <div class="listExplainBox"> -->
-								<div class="productSearch-image" align="center">
-									<a href="${ctx}/product/ui/detail.do?id=${product.id}">
-										<img src="${ctx }/main/file/download.do?fileName=${product.image}" class="productSearch-image" >
-									</a>     
-								</div>
-								<table class="table">
-									<tr>
-										<td style="color: #000000">상품명 :</td>
-										<td style="color: #000000">${product.title }</td>
-									</tr>
-									<tr>
-										<td style="color: #000000">제작자 :</td>
-										<td style="color: #000000">${product.maker.name }</td>
-									</tr>
-									<tr>
-										<td style="color: #000000">제작항목 :</td>
-										<td style="color: #000000">${product.category }</td>
-									</tr>
-									<tr>
-										<td style="color: #000000">예상 가격 :</td>
-										<td style="color: #000000">${product.price }</td>
-									</tr>
-									<tr>
-										<td style="color: #000000">기간 :</td>
-										<td style="color: #000000">${product.period }</td>
-									</tr>
-								</table>
-							<!-- </div> -->
+							<div class="productSearch-image" align="center">
+								<a href="${ctx}/product/ui/detail.do?id=${product.id}">
+									<img src="${ctx }/main/file/download.do?fileName=${product.image}" class="productSearch-image" >
+								</a>     
+							</div>
+							<table class="table">
+								<tr>
+									<td style="color: #000000">상품명 :</td>
+									<td style="color: #000000">${product.title }</td>
+								</tr>
+								<tr>
+									<td style="color: #000000">제작자 :</td>
+									<td style="color: #000000">${product.maker.name }</td>
+								</tr>
+								<tr>
+									<td style="color: #000000">제작항목 :</td>
+									<td style="color: #000000">${product.category }</td>
+								</tr>
+								<tr>
+									<td style="color: #000000">예상 가격 :</td>
+									<td style="color: #000000">${product.price }</td>
+								</tr>
+								<tr>
+									<td style="color: #000000">기간 :</td>
+									<td style="color: #000000">${product.period }</td>
+								</tr>
+							</table>
 						</div>
 					</c:forEach>
 				</div>
@@ -259,9 +257,8 @@ var productController = {
 	makeContent : function(xml) {
 		var content = "";
 		content += "<div class='listBox'>";
-	/* 	content += "	<div class='listExplainBox'>"; */
 		content += "		<div align='center'>";
-		content += "			<a href='${ctx}/product/ui/detail.do?id='" + $(xml).find("product>id").text() + ">";
+		content += "			<a href='${ctx}/product/ui/detail.do?id=" + $(xml).find("product>id").text() + ">";
 		content += '				<img src="${ctx }/main/file/download.do?fileName=' + $(xml).find("product>image").text() + '" class="productSearch-image";>';
 		content += "			</a>";
 		content += "		</div>";
@@ -292,7 +289,6 @@ var productController = {
 				+ "</td>";
 		content += "			</tr>";
 		content += "		</table>";
-	/* 	content += "	</div>"; */
 		content += "</div>";
 
 		return content;

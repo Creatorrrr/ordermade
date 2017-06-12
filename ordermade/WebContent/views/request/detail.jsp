@@ -99,26 +99,28 @@ ${box2 }
 			<c:if test="${request.maker ne null }">
 				<c:choose>
 					<c:when test="${sessionScope.memberType eq 'C'}">
-						<p align="right">제작기간 : 일</p>
-						<p align="right">결제금액 (배송비 포함): ${request.price }원</p>
-						<c:if test="${request.payment eq 'N' }">
-							<input id="requestPayment" type="button" onclick="dealController.consumerMoneyToAccount();" 
-							 class="btn btn-default" value="결제" style="float:right">
-						</c:if>
-						<c:if test="${request.payment eq 'Y' }">
-							<input type="button" class="btn btn-default" value="결제완료" style="float:right" disabled>
-						</c:if>
+						<c:choose>
+							<c:when test="${request.price eq 0 }"></c:when>
+							<c:when test="${request.payment eq 'N' }">
+								<p align="right">결제금액: ${request.price }원</p>
+								<input id="requestPayment" type="button" onclick="dealController.consumerMoneyToAccount();" 
+								 class="btn btn-default" value="결제" style="float:right">
+							</c:when>
+							<c:when test="${request.payment eq 'Y' }">
+								<p align="right">결제금액: ${request.price }원</p>
+								<input type="button" class="btn btn-default" value="결제완료" style="float:right" disabled>
+							</c:when>
+						</c:choose>
 					</c:when>
 					<c:when test="${sessionScope.memberType eq 'M'}">
-						<p align="right">
-							제작기간 :<input name="" type="text" value=""
-								style="display: inline-block">일
-						</p>
-						<p align="right">
-							결제금액 (배송비 포함): <input name="" type="text" value=""
-								style="display: inline-block">원
-						</p>
-						<input type="button" name=""  class="btn btn-default" value="등록" style="float: right">
+						<form id="registerPayment">
+							<p align="right">
+								결제금액: 
+								<input name="id" type="hidden" value="${request.id }">
+								<input name="price" class="form-control" type="number" style="width:200px;display: inline-block" value="${request.price }">원
+							</p>
+							<input type="button" class="btn btn-default" value="등록" style="float: right" onclick="registerPayment()">
+						</form>
 					</c:when>
 				</c:choose>
 			</c:if>
@@ -186,6 +188,22 @@ $("#commentRegister").click(function() {
 $("#paymentButton").click(function(){
 	setPurchaseHistory.registerPurchaseHistory();
 });
+
+
+
+var registerPayment = function() {
+	$.ajax({
+		url : "${ctx }/request/xml/modifyPaymentValue.do",
+		data : $("#registerPayment").serialize(),
+		type : "post",
+		dataType : "text",
+		success : function(text) {
+				if(text === "true") {
+					alert("등록되었습니다.");
+				}
+		}
+	});
+}
 
 // get comments with xml
 var commentController = {

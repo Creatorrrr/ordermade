@@ -15,6 +15,8 @@ public interface DealService {
 	public boolean registerPurchaseHistory(PurchaseHistory purchaseHistory);
 
 	public boolean modifyPurchaseHistoryById(PurchaseHistory purchaseHistory);
+
+	public boolean modifyPurchaseHistoryByIdForDelivery(PurchaseHistory purchaseHistory);
 	
 	public PurchaseHistory findPurchseHistoryById(String id);
 

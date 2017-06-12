@@ -30,6 +30,7 @@ ${box2 }
 							<div class="fl_left"><b style="padding: 20px 0 0 10px;font-size: 20px;">No: ${request.id }</b></div>
 							<div class="fl_right" style="padding: 4px;">
 								<c:choose>
+									<c:when test="${request.maker ne null }"><button class="btn btn-xs btn-success" disabled>비공개</button></c:when>
 									<c:when test='${request.bound eq "PRIVATE" }'><button class="boundBtn btn btn-xs btn-success">비공개</button></c:when>
 									<c:otherwise><button class="boundBtn btn btn-xs btn-success">공개</button></c:otherwise>
 								</c:choose>
@@ -232,7 +233,9 @@ ${box2 }
 							rs+='<div class="fl_left"><b style="padding: 20px 0 0 10px;font-size: 20px;">No : '+ $(">id",this).text() +'</b></div>';
 							rs+='<div class="fl_right" style="padding: 4px;">';
 							
-							if(bound == null){
+							if(makerId != "") {
+								rs+='<button class="btn btn-xs btn-success" disabled>비공개</button>';
+							} else if(bound == null){
 								rs+='	<button class="boundBtn btn btn-xs btn-success">비공개</button>';
 							}else{
 								rs+='	<button class="boundBtn btn btn-xs btn-success">공개</button>';

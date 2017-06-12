@@ -188,7 +188,7 @@ var requestController = {
 					$("#requestSearchResult").empty();
 					if (listLength) {
 						var contentStr = "";
-						$(xmlData).each(function() {console.log($(xmlData).text());
+						$(xmlData).each(function() {
 							contentStr += requestController.makeContent(this, "진행중");
 						});
 						$("#requestSearchResult").append(contentStr);

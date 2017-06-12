@@ -73,7 +73,7 @@ ${box2 }
 			<!-- <div class="imgl borderedbox"> -->
 				<table class="table" style="width:210px;">
 					<tr>
-						<img src="${ctx }/portfolio/image.do?img=${portfolio.image}" class="portfolio-image" style="width: 220px; height: 180px">
+						<img src="${ctx }/main/file/download.do?fileName=${portfolio.image}" class="portfolio-image" style="width: 220px; height: 180px">
 					</tr>
 					<tr>
 						<td>포트폴리오 명 : </td>
@@ -133,7 +133,7 @@ ${box2 }
 	 		content += '<div style="display:inline-block; padding-right: 10px;">';
 			content += '	<table class="table" style="width:210px;">';
 			content += '		<tr>';
-			content += '			<img src="${ctx }/portfolio/image.do?img='+ $(xml).find("portfolio>image").text() +'"style="width: 220px; height: 180px" >';
+			content += '			<img src="${ctx }/main/file/download.do?fileName='+ $(xml).find("portfolio>image").text() +'"style="width: 220px; height: 180px" >';
 			content += '		</tr>';
 			content += "		<tr>";
 			content += "			<td>포트폴리오 명 : </td>";

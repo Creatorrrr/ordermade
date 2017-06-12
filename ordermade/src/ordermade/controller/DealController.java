@@ -45,24 +45,10 @@ public class DealController {
 	// http://localhost:8080/ordermade/deal/purchaseHistory/delivery.do
 	// data : {"invoiceNumber":"02255215","id":"2"}
 	@RequestMapping(value="xml/purchaseHistory/delivery.do", method=RequestMethod.POST, produces="text/plain")
-	public @ResponseBody String registerInvoiceNumberToPurchaseHistory(String invoiceNumber, String id, HttpSession session){
-		
-		System.out.println("----------controller 성공-----------");
-		System.out.println("invoiceNumber : " + invoiceNumber);
-		System.out.println("id : " + id);
-		boolean checkPurchase = false;
-		// session에서 회원ID 가져오기
-//		if(session.getAttribute("loginId") != null){
-			PurchaseHistory purchaseHistory = dService.findPurchseHistoryById(id);
-			System.out.println("-------data : "+purchaseHistory.toString());
-			purchaseHistory.setInvoiceNumber(invoiceNumber);
-			purchaseHistory.setDeliveryStatus("배송완료");
-			System.out.println("-------data2 : "+purchaseHistory.toString());
-			checkPurchase = dService.modifyPurchaseHistoryById(purchaseHistory);
-//		}
-		
-		return checkPurchase+"";
-//		return Boolean.toString(checkPurchase);
+	public @ResponseBody String registerInvoiceNumberToPurchaseHistory(PurchaseHistory purchaseHistory, HttpSession session){
+		if(checkLogined(session)) return "error";	// check logined
+		purchaseHistory.setDeliveryStatus(Constants.DELIVERY_COMPLETE);
+		return dService.modifyPurchaseHistoryByIdForDelivery(purchaseHistory) + "";
 	}
 	
 	// UI For WEB

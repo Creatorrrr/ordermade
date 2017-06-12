@@ -15,9 +15,7 @@ ${box2 }
 
 			<h1>포트폴리오 등록</h1>
 			<br>
-			<form action="${ctx }/portfolio/xml/register.do" method="post" enctype="multipart/form-data"
-				name="pRegister"id="pRegister" onsubmit="return checkIt()" >
-				<%--   <input name="makerId" type="hidden" value="${makerId}">   --%>
+			<form id="pRegister">
 				<table class="table">
 					<tr>
 						<th>제작 항목 <span>*</span></th>
@@ -25,16 +23,22 @@ ${box2 }
 					</tr>
 					<tr>
 						<th>포트폴리오 명 <span>*</span></th>
-						<td><input id="title" name="title" class="form-control" type="text" value=""></td>
+						<td><input id="portfolioTitle" name="title" class="form-control" type="text" value=""></td>
 					<tr>
 					<tr>
 						<th>표지 이미지</th>
-						<td><input id="image" name="image" class="btn btn-default" type="file" value="찾아보기"></td>
+						<td>
+							<div id='imageuploader'>Upload</div>
+							<div><img id='portfolioImage' src="${ctx }/resources/imgs/upload_default.jpg" style="width:100px"></div>
+							<input id="portfolioImageHidden" name="image" type="hidden" value="${portfolio.image }">
+						</td>
 					<tr>
 					<tr>
 						<th>포트폴리오 내용 <span>*</span></th>
-						<td><textarea id="content" name="content"
-								class="form-control" cols="35" rows="10"></textarea></td>
+						<td>
+							<textarea id="portfolioContent" class="form-control" cols="35" rows="10"></textarea>
+							<input id="portfolioContentHidden" name="content" type="hidden">
+						</td>
 					</tr>
 				</table>
 				<div align="right">
@@ -49,6 +53,12 @@ ${box2 }
 <script type="text/javaScript">
 
 $(document).ready(function(){
+	CKEDITOR.replace('portfolioContent', {
+		imageUploadUrl : '${ctx}/main/file/uploadJson.do',
+		filebrowserUploadUrl: '${ctx}/main/file/uploadJson.do'
+	});
+	
+	imageUploader();
 	
 	$.ajax({
 		url : "${ctx}/main/xml/categoryList.do",
@@ -83,19 +93,13 @@ $(document).ready(function(){
 	
  	 // 등록버튼 구현
 	 $("#registBtn").click(function(){
-		 var data = new FormData($('#pRegister')[0]);
-		 
-		console.log("----testing here-------");
 		if(checkIt()){
+			$("#portfolioContentHidden").val(CKEDITOR.instances.portfolioContent.getData());
 			$.ajax({
 				// 보낼 때
 				type : "post",
-				enctype :'multipart/form-data',
 				url : "${ctx }/portfolio/xml/register.do",
-				data : data,
-				processData: false,
-				contentType: false,
-				cache: false,
+				data : $("#pRegister").serialize(),
 				// 받을 때 
 				dataType : "text",
 				success : function(resultData) {
@@ -112,15 +116,12 @@ $(document).ready(function(){
 
 	//유효성 검사
 	function checkIt() {
-
-		var pRegister = document.pRegister;
-
-		if (!pRegister.title.value) {
+		if (!$("#portfolioTitle").val()) {
 			alert("제목을 입력하세요");
 			return false;
 		}
 
-		if (!pRegister.content.value) {
+		if (CKEDITOR.instances.portfolioContent.getData().length < 1) {
 			alert("내용을 입력하세요");
 			return false;
 		}
@@ -128,6 +129,26 @@ $(document).ready(function(){
 	}
 	
 });
+
+var imageUploader = function() {
+	$("#imageuploader").uploadFile({
+		url:"${ctx}/main/file/upload.do",
+		acceptFiles:"image/*",
+		fileName:"upload",
+		returnType:"text",
+		showStatusAfterSuccess:false,
+		onSuccess:function(files,data,xhr,pd)
+		{
+			var result = data;
+			if(result === "fail") {
+				alert("이미지 업로드 실패")
+			} else {
+				$("#portfolioImage").attr("src", "${ctx}/main/file/download.do?fileName=" + data);
+				$("#portfolioImageHidden").val(data);
+			}
+		},
+	});	
+};
 
 </script>
 

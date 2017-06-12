@@ -18,6 +18,21 @@ public class AccountStoreLogic implements AccountStore{
 	}
 	
 	@Override
+	public boolean insertAccountByMemberId(String memberId, int money) {
+		SqlSession session = factory.openSession();
+		boolean check = false;
+		
+		try{
+			AccountMapper mapper = session.getMapper(AccountMapper.class);
+			check = mapper.insertAccountByMemberId(memberId, money);
+			session.commit();
+		} finally {
+			session.close();
+		}
+		return check;
+	}
+	
+	@Override
 	public boolean transaction(String fromId, String toId, int money) {
 		SqlSession session = factory.openSession();
 		boolean check = false;

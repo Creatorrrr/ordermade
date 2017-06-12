@@ -35,6 +35,12 @@
   		where id=#{id}
   	</update>
   	
+  	<update id="updatePurchaseHistoryByIdForDelivery" parameterType="PurchaseHistory">
+  		update purchase_history
+  		set  invoice_number=#{invoiceNumber}, charge=#{charge}, delivery_status=#{deliveryStatus}
+  		where id=#{id}
+  	</update>
+  	
   	<update id="updatePurchaseHistoryByRequestIdForPayment" parameterType="PurchaseHistory">
   		update purchase_history
   		set  payment=#{payment}

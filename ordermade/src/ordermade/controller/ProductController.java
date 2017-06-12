@@ -40,7 +40,7 @@ public class ProductController {
 	@RequestMapping(value = "xml/register.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String registerProduct(Product product, HttpSession session) {
 		// 상품 등록후 상세 상품페이지로 이동
-		if(checkLogined(session)) return "member/login";	// check logined
+		if(checkLogined(session)) return "error";	// check logined
 		product.setMaker(new Member());
 		product.getMaker().setId((String)session.getAttribute("loginId"));
 		return pService.registerProduct(product) + "";
@@ -49,7 +49,7 @@ public class ProductController {
 	@RequestMapping(value = "xml/modify.do", method = RequestMethod.POST, produces = "text/plain")
 	public @ResponseBody String modifyProductById(Product product, HttpSession session) {
 		// 상품 수정 후 상세 상품페이지로 이동
-		if(checkLogined(session)) return "member/login";	// check logined
+		if(checkLogined(session)) return "error";	// check logined
 		product.setMaker(new Member());
 		product.getMaker().setId((String)session.getAttribute("loginId"));
 		return pService.modifyProductById(product) + "";
@@ -58,7 +58,7 @@ public class ProductController {
 	@RequestMapping(value = "xml/remove.do", produces = "text/plain")
 	public @ResponseBody String removeProductById(String id, HttpSession session) {
 		// 상품페이지 삭제후 상품페이지 목록으로 이동
-		if(checkLogined(session)) return "member/login";	// check logined
+		if(checkLogined(session)) return "error";	// check logined
 		return pService.removeProductById(id) + "";
 	}
 

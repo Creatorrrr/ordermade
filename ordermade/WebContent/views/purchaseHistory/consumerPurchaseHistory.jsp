@@ -68,16 +68,25 @@ ${box2 }
 	                        	${purchaseHistory.orderDate}
 	                        </td>
 	                      	<td class="text-center">
-	                     		${purchaseHistory.deliveryStatus}<br>
+		                      	<c:choose>
+		                      		<c:when test="${purchaseHistory.deliveryStatus eq 'P'}">
+		                     			배송준비중
+		                      		</c:when>
+		                      		<c:when test="${purchaseHistory.deliveryStatus eq 'C'}">
+		                     			배송완료
+		                      		</c:when>
+	                      		</c:choose>
+	                     		<br>
 	                     		<c:if test="${purchaseHistory.payment eq 'N'}">
 		                      		<div align="center">
-			                      		<input id="purchaseBtn" class="btn btn-sm btn-primary" type="button" value="구매확정"
+			                      		<input id="purchaseBtn-${purchaseHistory.request.id}" class="btn btn-sm btn-primary" type="button" value="구매확정"
 			                      		onclick="javascript:dealController.changeMakerAccount(${purchaseHistory.request.id})">
 		                    		</div>
 			                   	</c:if>
 			                   	<c:if test="${purchaseHistory.payment eq 'Y'}">
 			                   		<div align="center">
-			                   		<input class="btn btn-sm btn-success" type="button" value="구매완료" disabled></div>
+			                   			<input class="btn btn-sm btn-success" type="button" value="구매완료" disabled>
+			                   		</div>
 			              		</c:if>
 	                    	</td>
 	                    </tr>
@@ -134,8 +143,8 @@ var dealController = {
 			dataType: "text",
 			success: function(text){
 				if(text === "true"){
-					$("#purchaseBtn").val("구매완료").attr("disabled", true);
-					$("#purchaseBtn").removeClass("btn-primary").addClass("btn-success");
+					$("#purchaseBtn-" + requestId).val("구매완료").attr("disabled", true);
+					$("#purchaseBtn-" + requestId).removeClass("btn-primary").addClass("btn-success");
 				}else{
 					alert("구매확정이 실패하였습니다.");
 				}

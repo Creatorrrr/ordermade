@@ -124,8 +124,9 @@ public class RequestController {
 		Request request= service.findRequestById(requestId);
 		request.setMaker(new Member());
 		request.getMaker().setId(makerId);
+		request.setBound(Constants.BOUND_PRIVATE);
 		return service.modifyRequestById(request) + "";
-	}	//POST  http://localhost:8080/ordermade/request/xml/modifyMakerId.do
+	}	//GET  http://localhost:8080/ordermade/request/xml/modifyMakerId.do
 		//{"requestId":"1","makerId":"maker1"}
 
 	@RequestMapping(value = "request/xml/removeMakerId.do", method = RequestMethod.GET, produces = "text/plain")

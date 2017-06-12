@@ -66,13 +66,28 @@ ${box2 }
 										${purchaseHistory.request.price }
 									</td>
 		                            <td class="text-center">
-		                           		${purchaseHistory.deliveryStatus}<br>
-		                           		<c:if test="${purchaseHistory.deliveryStatus eq '배송중' }">
-		                           			<div align="center"><input class="deliveryBtn" type="button"
-			                           			value="상품배송" data1 = "${purchaseHistory.id }"></div>
-	                           			</c:if>
-	                           			<c:if test="${purchaseHistory.deliveryStatus eq '배송완료' }">
-	                           			</c:if>
+				                      	<c:choose>
+				                      		<c:when test="${purchaseHistory.request.payment eq 'N' }">
+				                      			<p>결제 전</p>
+				                     			<div align="center">
+			                           				<input class="btn btn-warning" type="button" value="결제 전" disabled>
+				                           		</div>
+				                      		</c:when>
+				                      		<c:when test="${purchaseHistory.deliveryStatus eq 'P'}">
+				                     			<p id="deliveryStatus-${purchaseHistory.id}">배송준비중</p>
+				                     			<div align="center">
+			                           				<input id="deliveryBtn-${purchaseHistory.id}" class="btn btn-primary" type="button" value="상품배송" 
+			                           					onclick="javascript:createDeliveryModal(${purchaseHistory.id})">
+				                           		</div>
+				                      		</c:when>
+				                      		<c:when test="${purchaseHistory.deliveryStatus eq 'C'}">
+				                     			배송완료
+			                     				<br>
+				                     			<div align="center">
+			                           				<input class="btn btn-success" type="button" value="배송완료" disabled>
+				                           		</div>
+				                      		</c:when>
+			                      		</c:choose>
 		                            </td>
 		                        </tr>
 	                    	</c:forEach>
@@ -118,23 +133,19 @@ $(document).ready(function(){
 		});
 });
 
-$(".deliveryBtn").click(function(){
-	var dom = $(this);
-	console.log(dom.attr("data1"))
-	createDeliveryModal(dom);
-});
-
-var createDeliveryModal = function(dom) {
+var createDeliveryModal = function(purchaseHistoryId) {
 	var contentStr = "";
 
 	contentStr += "<form id='deliveryForm'>";
-	contentStr += "	<input id='btnData' type='hidden' name='id' value='" + dom.attr("data1") + "'>";
+	contentStr += "	<input id='btnData' type='hidden' name='id' value='" + purchaseHistoryId + "'>";
 	contentStr += "	<div class='invoiceNumber'>";
-	contentStr += "    	<label>메시지<textarea name='invoiceNumber' rows='1' style='width: 100%' placeholder='송장번호를 입력해주세요.'></textarea></label>";
+	contentStr += "    	<b style='margin:10px;float:left'>메시지</b>";
+	contentStr += "    		<input class='form-control' type='text' name='invoiceNumber' style='width: 100%' placeholder='송장번호를 입력해주세요.'></input>";
+	contentStr += "    		<input class='form-control' type='number' name='charge' style='width: 100%' placeholder='배송료를 입력해주세요.'></input>";
 	contentStr += "	</div>";
 	contentStr += "	<div align='right'>";
-	contentStr += "		<button type='button' onclick='javascript:setInvoiceNumberToPurchaseHistory.registerInvoiceNumber()'>등록</button>";
-	contentStr += "    	<button type='reset' onclick='javascript:$.unblockUI();'>취소</button>";
+	contentStr += "		<button class='btn btn-default' type='button' onclick='javascript:setInvoiceNumberToPurchaseHistory.registerInvoiceNumber(" + purchaseHistoryId + ")'>등록</button>";
+	contentStr += "    	<button class='btn btn-default' type='reset' onclick='javascript:$.unblockUI();'>취소</button>";
 	contentStr += "	</div>";
 	contentStr += "</form>";
 	
@@ -142,7 +153,7 @@ var createDeliveryModal = function(dom) {
 };
 
 var setInvoiceNumberToPurchaseHistory = {
-	registerInvoiceNumber : function() {
+	registerInvoiceNumber : function(purchaseHistoryId) {
 		$.ajax({
 			type: "post",
 			url: "${ctx }/deal/xml/purchaseHistory/delivery.do",
@@ -150,11 +161,9 @@ var setInvoiceNumberToPurchaseHistory = {
 			dataType: "text",
 			success: function(text){
 						if(text === "true"){
-							alert("등록완료")
-							var dom = $('.deliveryBtn[data1 = '+ $('#btnData').val() +']');
-							console.log(dom)
-							dom.attr('value', '배송완료');
-							dom.attr('disabled', 'true');
+							$("#deliveryStatus-" + purchaseHistoryId).text("배송완료");
+							$("#deliveryBtn-" + purchaseHistoryId).val("배송완료").attr("disabled", true);
+							$("#deliveryBtn-" + purchaseHistoryId).removeClass("btn-primary").addClass("btn-success");
 						}else{
 							alert("등록실패");
 						}

@@ -10,6 +10,11 @@
   			select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member"
   			jdbcType="VARCHAR"/>
   	</resultMap>
+  	
+  	<insert id="insertAccountByMemberId">
+  		INSERT INTO account(member_id, money)
+  		VALUES(#{memberId}, #{money})
+  	</insert>
   
   	<update id="transaction" statementType="CALLABLE">
   		{CALL transaction(#{fromId}, #{toId}, #{money})}

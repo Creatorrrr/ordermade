@@ -185,6 +185,9 @@ INSERT INTO category(type) VALUES ('DIGITAL');
 INSERT INTO category(type) VALUES ('CLOTHING');
 INSERT INTO category(type) VALUES ('SPORT');
 
+
+INSERT INTO account(member_id, money) VALUES (0, 1000000);
+
 --INSERT INTO category(type) VALUES ('가구');
 --INSERT INTO category(type) VALUES ('가방');
 --INSERT INTO category(type) VALUES ('뷰티');

@@ -81,6 +81,11 @@ public class DealServiceLogic implements DealService{
 	public boolean modifyPurchaseHistoryById(PurchaseHistory purchaseHistory) {
 		return purchaseHistoryStore.updatePurchaseHistoryById(purchaseHistory);
 	}
+	
+	@Override
+	public boolean modifyPurchaseHistoryByIdForDelivery(PurchaseHistory purchaseHistory) {
+		return purchaseHistoryStore.updatePurchaseHistoryByIdForDelivery(purchaseHistory);
+	}
 
 	@Override
 	public List<PurchaseHistory> findpurchaseHistoriesByConsumerId(String consumerId, String page) {

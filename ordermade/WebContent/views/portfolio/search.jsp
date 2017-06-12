@@ -47,7 +47,7 @@ ${head_body}
 				<c:forEach items="${portfolios }" var="portfolio">
 					<div class='listBox'>
 						<div class="listExplainBox">
-							<img src="${ctx }/portfolio/image.do?img=${portfolio.image}">
+							<img src="${ctx }/main/file/download.do?fileName=${portfolio.image}">
 							<table>
 								<tr>
 									<td>포트폴리오 명 :</td>
@@ -178,7 +178,7 @@ ${box3}
 
 			content += "<div class='listBox'>";
 			content += "	<div class='listExplainBox'  align='right'>";
-			content += '		<img src="${ctx }/portfolio/image.do?img='+ $(xml).find("portfolio>image").text() + '"style="width:120px;height: 100px";>';
+			content += '		<img src="${ctx }/main/file/download.do?fileName='+ $(xml).find("portfolio>image").text() + '"style="width:120px;height: 100px";>';
 			content += "		<table>";
 			content += "			<tr>";
 			content += "				<td>포트폴리오 명 : </td>";

@@ -30,7 +30,6 @@ import ordermade.domain.Category;
 import ordermade.domain.Member;
 import ordermade.domain.Portfolio;
 import ordermade.domain.Portfolios;
-import ordermade.service.facade.MemberService;
 import ordermade.service.facade.PortfolioService;
 import ordermade.service.facade.ProductService;
 
@@ -40,125 +39,23 @@ public class PortfolioController {
 
 	@Autowired
 	private PortfolioService pService;
-
-	@Autowired
-	private MemberService mService;
-	// ---------action -> xml
 	@Autowired
 	private ProductService pdService;
 
 	@RequestMapping(value = "xml/register.do", method = RequestMethod.POST, produces = "text/plain")
-	public @ResponseBody String registerPortfolio(Portfolio portfolio, Model model, HttpServletRequest req) {
-		
-		String imagePath = Constants.IMAGE_PATH;
-		boolean check=false;
-		
-		File dir = new File(imagePath);
-		if (!dir.exists()) {
-			// 폴더가 존재하지 않으면 폴더 생성
-			dir.mkdirs();
-		}
-
-		try {
-			MultipartRequest mr = new MultipartRequest(req, imagePath, 5*1024*1024 , "UTF-8",
-					new DefaultFileRenamePolicy());
-
-			String title = mr.getParameter("title");
-			String content = mr.getParameter("content");
-			String category = mr.getParameter("category");
-			
-//			File image = mr.getFile("image");
-			
-//			Member maker = new Member();
-//			maker.setId((String) req.getSession().getAttribute("loginId"));
-			Member maker = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
-		
-			portfolio.setTitle(title);
-			portfolio.setContent(content);
-			portfolio.setCategory(category);
-	//		portfolio.setImage(image.getCanonicalPath());
-			portfolio.setMaker(maker);
-			
-//			String title = mr.getParameter("title"); + portfolio.setTitle(title);
-//			= portfolio.setTitle(mr.getParameter("title"));
-//			 portfolio.setCategory(mr.getParameter("category"));
-//			 portfolio.setContent(mr.getParameter("content"));
-			 
-			 portfolio.setImage(mr.getFile("image").getName());
-			
-			System.out.println("+++++++++++++++++makerId:" + maker);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	
-		check = pService.registerPortfolio(portfolio);
-		
-		System.out.println("ZZZZZZZZZZZZZZZZZZZz"+ check);
-		return check+"";
-		
-//		if (pService.registerPortfolio(portfolio)) {
-//		//	model.addAttribute("portfolio", portfolio);
-//			return "portfolio/myPortfolioList";
-//		}else {
-//			return "portfolio/register";
-//		}
-		
-
-
-//	Member maker = mService.findMemberById((String) session.getAttribute("loginId"));
-//		portfolio.setMaker(new Member());
-//	//	portfolio.getMaker().setId((String)session.getAttribute("loginId"));
-//		return pService.registerPortfolio(portfolio) + "";
+	public @ResponseBody String registerPortfolio(Portfolio portfolio, HttpSession session) {
+		if(checkLogined(session)) return "error";	// check logined
+		portfolio.setMaker(new Member());
+		portfolio.getMaker().setId((String)session.getAttribute("loginId"));
+		return pService.registerPortfolio(portfolio) + "";
 	} 
 
 	@RequestMapping(value = "xml/modify.do", method = RequestMethod.POST, produces = "text/plain")
-	public @ResponseBody String modifyPortfolioById(Model model,Portfolio portfolio, String makerId, HttpServletRequest req) {
-
-		boolean check = false;
-		
-		String imagePath = Constants.IMAGE_PATH;
-		
-		File dir = new File(imagePath);
-		if (!dir.exists()) {
-			// 폴더가 존재하지 않으면 폴더 생성
-			dir.mkdirs();
-		}
-
-		try {
-			MultipartRequest mr = new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8",
-					new DefaultFileRenamePolicy());
-
-			String id = mr.getParameter("id");
-			
-			String title = mr.getParameter("title");
-			String content = mr.getParameter("content");
-			String category = mr.getParameter("category");
-			//File image = mr.getFile("image");
-			Member maker = mService.findMemberById((String) req.getSession().getAttribute("loginId"));
-		
-			portfolio.setId(id);
-			
-			portfolio.setTitle(title);
-			portfolio.setContent(content);
-			portfolio.setCategory(category);
-			portfolio.setMaker(maker);
-			//portfolio.setImage(image.getCanonicalPath());
-			portfolio.setImage(mr.getFile("image").getName());
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-//		if (pService.modifyPortfolio(portfolio)) {
-////			model.addAttribute("portfolio",portfolio);
-////			model.addAttribute("makerId",makerId);
-//			return "redirect:/portfolio/detail";
-//		} else {
-//			throw new RuntimeException("Modify portfolio failed");
-//		}
-		
-		check = pService.modifyPortfolio(portfolio);
-		return check +"";
+	public @ResponseBody String modifyPortfolioById(Portfolio portfolio, HttpSession session) {
+		if(checkLogined(session)) return "error";	// check logined
+		portfolio.setMaker(new Member());
+		portfolio.getMaker().setId((String)session.getAttribute("loginId"));
+		return pService.modifyPortfolio(portfolio) + "";
 	} 
 
 	@RequestMapping(value = "xml/remove.do", method = RequestMethod.GET, produces = "text/plain")
@@ -381,5 +278,11 @@ public class PortfolioController {
 			e.printStackTrace();
 		}
 		return "fail";
+	}
+	
+	// Complete
+	private boolean checkLogined(HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		return loginId == null || loginId.isEmpty();
 	}
 }
