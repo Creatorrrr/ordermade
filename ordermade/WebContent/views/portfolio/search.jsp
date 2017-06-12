@@ -81,7 +81,7 @@ ${box3}
 <script type="text/javascript">
   $(document).ready(function(){
 	 
-	  portfolioController.getPortfoliosByCategory("FUNITURE",1);
+	portfolioController.getPortfoliosByCategory("${category }",1);
 	
  });
 	//검색을 클릭하면 검색된 의뢰서 목록을 가져온다.
@@ -198,7 +198,7 @@ ${box3}
 			content += "		</table>";
 			content += "	</div>";
 			content += "	<div class='detailBtnBox'>";
-			content += "		<input type='button' value='자세히보기' onclick=\"javascript:location.href='${ctx}/portfolio/ui/detail.do?id="+ $(xml).find("portfolio>id").text() + "'\">";
+			content += "		<input class='btn btn-default' type='button' value='자세히보기' onclick=\"javascript:location.href='${ctx}/portfolio/ui/detail.do?id="+ $(xml).find("portfolio>id").text() + "'\">";
 			content += "	</div>";
 			content += "</div>";
 

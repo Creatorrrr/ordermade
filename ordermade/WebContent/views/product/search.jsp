@@ -43,9 +43,9 @@ ${head_body}
 				<div id="listSearchResult">
 					<c:forEach items="${products }" var="product">
 						<div class='listBox'>
-							<div class="productSearch-image" align="center">
+							<div align="center">
 								<a href="${ctx}/product/ui/detail.do?id=${product.id}">
-									<img src="${ctx }/main/file/download.do?fileName=${product.image}" class="productSearch-image" >
+									<img src="${ctx }/main/file/download.do?fileName=${product.image}">
 								</a>     
 							</div>
 							<table class="table">
@@ -258,35 +258,30 @@ var productController = {
 		var content = "";
 		content += "<div class='listBox'>";
 		content += "		<div align='center'>";
-		content += "			<a href='${ctx}/product/ui/detail.do?id=" + $(xml).find("product>id").text() + ">";
-		content += '				<img src="${ctx }/main/file/download.do?fileName=' + $(xml).find("product>image").text() + '" class="productSearch-image";>';
+		content += "			<a href='${ctx}/product/ui/detail.do?id=" + $(xml).find("product>id").text() + "'>";
+		content += '				<img src="${ctx }/main/file/download.do?fileName=' + $(xml).find("product>image").text() + '">';
 		content += "			</a>";
 		content += "		</div>";
 		content += "		<table class='table'>";
 		content += "			<tr>";
-		content += "				<td>상품명 : </td>";
-		content += "				<td>" + $(xml).find("product>title").text()
-				+ "</td>";
+		content += "				<td style='color: #000000'>상품명 :</td>";
+		content += "				<td style='color: #000000'>" + $(xml).find("product>title").text() + "</td>";
 		content += "			</tr>";
 		content += "			<tr>";
-		content += "				<td>제작자 : </td>";
-		content += "				<td>" + $(xml).find("product>maker>name").text()
-				+ "</td>";
+		content += "				<td style='color: #000000'>제작자 : </td>";
+		content += "				<td style='color: #000000'>" + $(xml).find("product>maker>name").text() + "</td>";
 		content += "			</tr>";
 		content += "			<tr>";
-		content += "				<td>제작항목 : </td>";
-		content += "				<td>" + $(xml).find("product>category").text()
-				+ "</td>";
+		content += "				<td style='color: #000000'>제작항목 : </td>";
+		content += "				<td style='color: #000000'>" + $(xml).find("product>category").text() + "</td>";
 		content += "			</tr>";
 		content += "			<tr>";
-		content += "				<td>예상 가격 : </td>";
-		content += "				<td>" + $(xml).find("product>price").text()
-				+ "</td>";
+		content += "				<td style='color: #000000'>예상 가격 : </td>";
+		content += "				<td style='color: #000000'>" + $(xml).find("product>price").text() + "</td>";
 		content += "			</tr>";
 		content += "			<tr>";
-		content += "				<td>기간 : </td>";
-		content += "				<td>" + $(xml).find("product>period").text()
-				+ "</td>";
+		content += "				<td style='color: #000000'>기간 : </td>";
+		content += "				<td style='color: #000000'>" + $(xml).find("product>period").text() + "</td>";
 		content += "			</tr>";
 		content += "		</table>";
 		content += "</div>";

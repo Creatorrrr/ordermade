@@ -116,7 +116,13 @@
 
 	<select id="selectPortfoliosByCategoryAndMakerName" parameterType="HashMap" resultMap="portfolioMap">
 		<include refid="selectPortfolio" />
-		FROM (<include refid="selectPortfolioWithRowNum" />
+		FROM (SELECT rownum rnum,
+					portfolio.id,
+					portfolio.title,
+					portfolio.content,
+					portfolio.type,
+					portfolio.image,
+					portfolio.maker_id
 				FROM portfolio INNER JOIN member ON portfolio.maker_id = member.id
 				WHERE portfolio.type = #{category} AND member.name LIKE '%${makerName}%'
 				ORDER BY portfolio.id DESC)
