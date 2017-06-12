@@ -46,8 +46,10 @@ ${box2 }
 					</tr>
 					<tr>
 						<th>상품 내용 <span>*</span></th>
-						<td><textarea id="productContent" name="content"
-								class="form-control" rows="7" cols="50"></textarea>
+						<td>
+							<textarea id="productContent" class="form-control" rows="7" cols="50"></textarea>
+							<input id="productContentHidden" name="content" type="hidden">
+						</td>
 					</tr>
 				</table>
 				<div align="center">
@@ -64,6 +66,11 @@ ${box3 }
 <script type="text/javaScript">
 
 $(document).ready(function() {
+	CKEDITOR.replace('productContent', {
+		imageUploadUrl : '${ctx}/main/file/uploadJson.do',
+		filebrowserUploadUrl: '${ctx}/main/file/uploadJson.do'
+	});
+	
 	imageUploader();
 	
 	// DB에서 카테고리 리스트 불러오기
@@ -100,6 +107,7 @@ $(document).ready(function() {
 	// 등록버튼 구현
 	$("#registBtn").click(function(){
 		if(checkIt()){
+			$("#productContentHidden").val(CKEDITOR.instances.productContent.getData());
 			$.ajax({
 				// 보낼 때
 				type : "post",
@@ -126,7 +134,7 @@ function checkIt() {
 		alert("상품명을 입력하세요");
 		return false;
 	}
-	if (!$("#productContent").val()) {
+	if (CKEDITOR.instances.productContent.getData().length < 1) {
 		alert("내용을 입력하세요");
 		return false;
 	}
