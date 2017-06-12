@@ -24,7 +24,7 @@
 	</sql>
 
 	<sql id="selectPortfolioWithRowNum">
-		SELECT rownum rnum,
+		SELECT ROW_NUMBER() OVER (ORDER BY regdate DESC) rnum,
 		id,
 		title,
 		content,
@@ -37,8 +37,8 @@
   		<selectKey resultType="String" keyProperty="id" order="BEFORE">
   			SELECT portfolio_seq.NEXTVAL FROM dual
   		</selectKey>
-  		INSERT INTO portfolio(id, title, type, content, maker_id, image) 
-  		values(#{id}, #{title}, #{category}, #{content}, #{maker.id}, #{image})
+  		INSERT INTO portfolio(id, title, type, content, maker_id, image, regdate) 
+  		values(#{id}, #{title}, #{category}, #{content}, #{maker.id}, #{image}, SYSDATE)
   	</insert>
   
   	<update id="updatePortfolioById" parameterType="Portfolio">
@@ -62,8 +62,7 @@
   		<include refid="selectPortfolio" />
 		FROM (<include refid="selectPortfolioWithRowNum" />
 				FROM portfolio
-				WHERE maker_id = #{makerId}
-				ORDER BY id DESC)
+				WHERE maker_id = #{makerId})
 		WHERE rnum BETWEEN #{begin} AND #{end}
   	</select>
 
@@ -72,8 +71,7 @@
   		<include refid="selectPortfolio"/>
   		FROM (<include refid="selectPortfolioWithRowNum"/>
   				FROM portfolio
-  				WHERE maker_id = #{makerId} AND title LIKE '%${title}%' 
-  				ORDER BY id DESC)
+  				WHERE maker_id = #{makerId} AND title LIKE '%${title}%')
   		WHERE rnum BETWEEN #{begin} AND #{end}		
   	</select>
   	
@@ -82,8 +80,7 @@
 		<include refid="selectPortfolio" />
 		FROM (<include refid="selectPortfolioWithRowNum" />
 				FROM portfolio
-				WHERE type = #{category}
-				ORDER BY id DESC)
+				WHERE type = #{category})
 				WHERE rnum BETWEEN #{begin} AND #{end}
   	</select>
   	
@@ -109,14 +106,13 @@
 		<include refid="selectPortfolio" />
 		FROM (<include refid="selectPortfolioWithRowNum" />
 				FROM portfolio
-				WHERE type = #{category} AND title LIKE '%${title}%'
-				ORDER BY id DESC)
+				WHERE type = #{category} AND title LIKE '%${title}%')
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
 	<select id="selectPortfoliosByCategoryAndMakerName" parameterType="HashMap" resultMap="portfolioMap">
 		<include refid="selectPortfolio" />
-		FROM (SELECT rownum rnum,
+		FROM (SELECT ROW_NUMBER() OVER (ORDER BY portfolio.regdate DESC) rnum,
 					portfolio.id,
 					portfolio.title,
 					portfolio.content,
@@ -124,8 +120,7 @@
 					portfolio.image,
 					portfolio.maker_id
 				FROM portfolio INNER JOIN member ON portfolio.maker_id = member.id
-				WHERE portfolio.type = #{category} AND member.name LIKE '%${makerName}%'
-				ORDER BY portfolio.id DESC)
+				WHERE portfolio.type = #{category} AND member.name LIKE '%${makerName}%')
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
  

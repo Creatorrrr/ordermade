@@ -139,7 +139,7 @@ var hitSlider, newSlider;
 var getBrandNewProducts	= function(category){
 	$.ajax({
 		type : "get",
-		url : "${ctx }/product/xml/main/category/brandNew.do?category=" + category + "&page=10",
+		url : "${ctx }/product/xml/main/category/brandNew.do?category=" + category + "&page=3",
 		dataType : "xml",
 		success : function(xml) {
 				var xmlData = $(xml).find("product");

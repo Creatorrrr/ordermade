@@ -19,14 +19,38 @@
   		<association property="request" column="request_id" select="ordermade.store.mapper.RequestMapper.selectRequestById" javaType="String" jdbcType="VARCHAR"/>
 		
   	</resultMap>
-  
+  	
+  	<sql id="selectPurchaseHistory">
+	  	SELECT id, 
+				consumer_id, 
+				maker_id, 
+				request_id, 
+				order_date, 
+				invoice_number, 
+				charge, 
+				delivery_status, 
+				payment
+  	</sql>
+  	
+  	<sql id="selectPurchaseHistoryWithRowNum">
+		SELECT ROW_NUMBER() OVER (ORDER BY order_date DESC) rnum, 
+				ph.id, 
+				ph.consumer_id, 
+				ph.maker_id, 
+				ph.request_id, 
+				ph.order_date, 
+				ph.invoice_number, 
+				ph.charge, 
+				ph.delivery_status, 
+				ph.payment
+	</sql>
   
   	<insert id="insertPurchaseHistory">
   		<selectKey resultType="String" keyProperty="id" order="BEFORE">
   			select purchase_history_seq.nextval from dual
   		</selectKey>
   		insert into purchase_history(id, consumer_id, maker_id, request_id, order_date, invoice_number, charge, delivery_status, payment) 
-  		values(#{id}, #{consumer.id}, #{maker.id}, #{request.id}, TO_DATE(sysdate,'yyyy/mm/dd hh24:mi:ss'), #{invoiceNumber}, #{charge}, #{deliveryStatus}, #{payment})
+  		values(#{id}, #{consumer.id}, #{maker.id}, #{request.id}, SYSDATE, #{invoiceNumber}, #{charge}, #{deliveryStatus}, #{payment})
   	</insert>
   	
   	<update id="updatePurchaseHistoryById" parameterType="PurchaseHistory">
@@ -54,35 +78,35 @@
   	</select>
   
   	<select id="selectPurchaseHistoriesByConsumerId" parameterType="java.util.Map" resultMap="purchaseHistoryMap">
-  		select * from (
-			select rownum limitNum, A.* from purchase_history A where consumer_id=#{consumerId}
-			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) order by A.id desc)
-			, (select /*+INDEX_FES(table column) */ ceil(count(*)/${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) page from purchase_history WHERE consumer_id = #{consumerId} )
-		where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
+  		<include refid="selectPurchaseHistory" />
+  		FROM (<include refid="selectPurchaseHistoryWithRowNum" />
+  			FROM purchase_history ph INNER JOIN request r ON ph.request_id = r.id
+  			WHERE ph.consumer_id = #{consumerId})
+		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
   	</select>
   	
   	<select id="selectPurchaseHistoriesByConsumerIdAndRequestTitle" parameterType="java.util.Map" resultMap="purchaseHistoryMap">
-  		select * from (
-  			select rownum limitNum, A.* from purchase_history A, request B  where A.consumer_id=#{consumerId} and B.title like '%${title}%' and A.request_id = B.id
-			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) order by A.id desc)
-			, (select /*+INDEX_FES(table column) */ ceil(count(*)/${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) page from purchase_history A, request B where A.consumer_id=#{consumerId} and B.title like '%${title}%' and A.request_id = B.id)
-		 where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
+  		<include refid="selectPurchaseHistory" />
+  		FROM (<include refid="selectPurchaseHistoryWithRowNum" />
+  			FROM purchase_history ph INNER JOIN request r ON ph.request_id = r.id
+  			WHERE ph.consumer_id = #{consumerId} AND r.title LIKE '%${title}%')
+		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
   	</select>
   	
   	<select id="selectPurchaseHistoriesByMakerId" parameterType="java.util.Map" resultMap="purchaseHistoryMap">
-  		select * from (
-			select rownum limitNum, A.* from purchase_history A where maker_id=#{makerId}
-			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) order by A.id desc)
-			, (select /*+INDEX_FES(table column) */ ceil(count(*)/${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) page from purchase_history WHERE maker_id=#{makerId} )
-		 where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
+  		<include refid="selectPurchaseHistory" />
+  		FROM (<include refid="selectPurchaseHistoryWithRowNum" />
+  			FROM purchase_history ph INNER JOIN request r ON ph.request_id = r.id
+  			WHERE ph.maker_id = #{makerId})
+		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
   	</select>
   	
   	<select id="selectPurchaseHistoriesByMakerIdAndRequestTitle" parameterType="java.util.Map" resultMap="purchaseHistoryMap">
-  		select * from (
-  			select rownum limitNum, A.* from purchase_history A, request B  where A.maker_id=#{makerId} and B.title like '%${title}%' and A.request_id = B.id
-			and rownum &lt;= (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) order by A.id desc)
-			, (select /*+INDEX_FES(table column) */ ceil(count(*)/${@ordermade.constants.Constants@REQUEST_ROW_SIZE}) page from purchase_history A, request B where A.maker_id=#{makerId} and B.title like '%${title}%' and A.request_id = B.id)
-		 where limitNum > ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
+  		<include refid="selectPurchaseHistory" />
+  		FROM (<include refid="selectPurchaseHistoryWithRowNum" />
+  			FROM purchase_history ph INNER JOIN request r ON ph.request_id = r.id
+  			WHERE ph.maker_id = #{makerId} AND r.title LIKE '%${title}%')
+		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
   	</select>
   
   </mapper>

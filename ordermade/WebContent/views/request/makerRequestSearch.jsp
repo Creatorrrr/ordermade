@@ -107,6 +107,7 @@ var requestController = {
 						alert("참가 요청 실패");
 					}
 					javascript:$.unblockUI();
+					requestController.getRequestsByBound(1);
 			}
 		});
 	},

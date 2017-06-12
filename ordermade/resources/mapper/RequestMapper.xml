@@ -57,7 +57,7 @@
 	</sql>
 
 	<sql id="selectRequestRownum">
-		SELECT rownum rnum,
+		SELECT ROW_NUMBER() OVER (ORDER BY regdate DESC) rnum,
 		id, 
 		title, 
 		maker_id, 
@@ -75,8 +75,8 @@
 			select request_seq.nextval from dual
 		</selectKey>
 		INSERT INTO request(id, title, <if test="maker.id != null">maker_id, </if>consumer_id, type, content,
-		hope_price, price, bound, payment)
-		VALUES (#{id},#{title},<if test="maker.id != null">#{maker.id},</if>#{consumer.id},#{category},#{content},#{hopePrice},#{price},#{bound},#{payment})
+		hope_price, price, bound, payment, regdate)
+		VALUES (#{id},#{title},<if test="maker.id != null">#{maker.id},</if>#{consumer.id},#{category},#{content},#{hopePrice},#{price},#{bound},#{payment}, SYSDATE)
 	</insert>
 
 	<update id="updateRequestById" parameterType="request">
@@ -107,7 +107,7 @@
 
 	<select id="selectRequestsByBound" parameterType="HashMap" resultMap="requestMap">
 		<include refid="selectRequest"/>
-		FROM(SELECT rownum rnum,
+		FROM(SELECT ROW_NUMBER() OVER (ORDER BY regdate DESC) rnum,
                 r.id, 
                 r.title, 
                 r.maker_id, 
@@ -119,8 +119,7 @@
                 r.bound,
                 r.payment
 				FROM request r LEFT OUTER JOIN invite_request ir ON r.id = ir.request_id
-			WHERE r.bound = #{bound} AND ir.id IS NULL
-				ORDER BY id DESC )
+			WHERE r.bound = #{bound} AND ir.id IS NULL)
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
@@ -129,8 +128,7 @@
 		<include refid="selectRequest" />
 		FROM (<include refid="selectRequestRownum" />
 				FROM request
-				WHERE bound = #{bound} AND title LIKE '%${title}%'
-				ORDER BY id DESC)      
+				WHERE bound = #{bound} AND title LIKE '%${title}%')      
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
@@ -139,8 +137,7 @@
 		<include refid="selectRequest" />
 		FROM (<include refid="selectRequestRownum" />
 				FROM request
-				WHERE bound = #{bound} AND content LIKE '%${content}%'
-				ORDER BY id DESC)        <!-- '%${value}%' -->
+				WHERE bound = #{bound} AND content LIKE '%${content}%')        <!-- '%${value}%' -->
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
@@ -156,7 +153,7 @@
 	<select id="selectRequestsByConsumerIdWithMaker" parameterType="HashMap"
 		resultMap="requestMap">
 		<include refid="selectRequest" />
-		FROM (SELECT rownum rnum,
+		FROM (SELECT ROW_NUMBER() OVER (ORDER BY regdate DESC) rnum,
 	                r.id, 
 	                r.title, 
 	                r.maker_id, 
@@ -174,7 +171,7 @@
 
 	<select id="selectRequestsByConsumerIdWithPayment"
 		parameterType="HashMap" resultMap="requestMap">
-		(SELECT rownum rnum, r.id, r.title,
+		(SELECT ROW_NUMBER() OVER (ORDER BY regdate DESC) rnum, r.id, r.title,
 		r.maker_id, r.consumer_id, r.type, r.content, r.hope_price, r.price,
 		r.bound, r.payment
 		FROM request r INNER JOIN purchase_history ph ON r.id = ph.request_id
@@ -192,7 +189,7 @@
 
 	<select id="selectRequestsByMakerIdExceptPayment" parameterType="HashMap"
 		resultMap="requestMap">
-		SELECT rownum rnum, r.id, r.title, r.maker_id,
+		SELECT ROW_NUMBER() OVER (ORDER BY regdate DESC) rnum, r.id, r.title, r.maker_id,
 		r.consumer_id, r.type, r.content, r.hope_price, r.price, r.bound , r.payment, 1
 		page
 		FROM request r
@@ -203,7 +200,7 @@
 	
 	<select id="selectRequestsByMakerIdWithPayment" parameterType="HashMap"
 		resultMap="requestMap">
-		(SELECT rownum rnum, r.id, r.title, r.maker_id,
+		(SELECT ROW_NUMBER() OVER (ORDER BY regdate DESC) rnum, r.id, r.title, r.maker_id,
 		r.consumer_id, r.type, r.content, r.hope_price, r.price, r.bound , r.payment, 1
 		page
 		FROM request r

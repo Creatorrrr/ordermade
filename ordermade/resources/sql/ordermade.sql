@@ -27,7 +27,8 @@ CREATE TABLE product (
   image VARCHAR2(500),
   price NUMBER,
   period NUMBER,
-  hit NUMBER
+  hit NUMBER,
+  regdate DATE
 );
 
 CREATE TABLE review (

@@ -27,7 +27,7 @@
 	</sql>
 
 	<sql id="selectReviewWithRowNum">
-		SELECT rownum rnum,
+		SELECT ROW_NUMBER() OVER (ORDER BY regdate DESC) rnum,
 		id,
 		title,
 		content,
@@ -40,19 +40,17 @@
 		<selectKey keyProperty="id" resultType="String" order="BEFORE">
 			SELECT review_seq.nextval FROM dual
 		</selectKey>
-		INSERT INTO review(id,title,content,grade,product_id,consumer_id)
-		VALUES(#{id},#{title},#{content},#{grade},#{product.id},#{consumer.id})
+		INSERT INTO review(id,title,content,grade,product_id,consumer_id,regdate)
+		VALUES(#{id},#{title},#{content},#{grade},#{product.id},#{consumer.id},SYSDATE)
 	</insert>
 
 	<update id="updateReviewById" parameterType="Review">
 		UPDATE review
-		SET
-		title = #{title},
-		content = #{content},
-		grade = #{grade},
-		product_id =
-		#{product.id},
-		consumer_id = #{consumer.id}
+		SET title = #{title},
+			content = #{content},
+			grade = #{grade},
+			product_id = #{product.id},
+			consumer_id = #{consumer.id}
 		WHERE id = #{id}
 	</update>
 
@@ -64,11 +62,9 @@
 	<select id="selectReviewsByProductId" parameterType="HashMap"
 		resultMap="reviewMap">
 		<include refid="selectReview" />
-		FROM (
-		<include refid="selectReviewWithRowNum" />
-		FROM review
-		WHERE product_id = #{productId}
-		ORDER BY id DESC)
+		FROM (<include refid="selectReviewWithRowNum" />
+				FROM review
+				WHERE product_id = #{productId})
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
@@ -76,35 +72,28 @@
 	<select id="selectReviewsByProductIdForCollection"
 		parameterType="String" resultMap="reviewMap">
 		<include refid="selectReview" />
-		FROM (
-		<include refid="selectReviewWithRowNum" />
-		FROM review
-		WHERE product_id = #{productId}
-		ORDER BY id DESC)
+		FROM (<include refid="selectReviewWithRowNum" />
+				FROM review
+				WHERE product_id = #{productId})
 		WHERE rnum BETWEEN 1 AND 10
 	</select>
 
 	<select id="selectReviewsByTitleAndProductId" parameterType="HashMap"
 		resultMap="reviewMap">
 		<include refid="selectReview" />
-		FROM (
-		<include refid="selectReviewWithRowNum" />
-		FROM review
-		WHERE title LIKE '%${title}%' AND product_id = #{productId}
-		ORDER BY id DESC)
+		FROM (<include refid="selectReviewWithRowNum" />
+				FROM review
+				WHERE title LIKE '%${title}%' AND product_id = #{productId})
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
 	<select id="selectReviewsByConsumerIdAndProductId"
 		parameterType="HashMap" resultMap="reviewMap">
 		<include refid="selectReview" />
-		FROM (
-		<include refid="selectReviewWithRowNum" />
-		FROM review
-		WHERE consumer_id = #{consumerId} AND product_id =
-		#{productId})
-		WHERE rnum
-		BETWEEN #{begin} AND #{end}
+		FROM (<include refid="selectReviewWithRowNum" />
+				FROM review
+				WHERE consumer_id = #{consumerId} AND product_id = #{productId})
+		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
 </mapper>

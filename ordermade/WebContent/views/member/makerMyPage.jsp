@@ -79,7 +79,7 @@ ${box2 }
 														+ $(this).find(
 																'portfolio>id')
 																.text() + "'>"
-												contentStr += "<img src='${ctx }/portfolio/image.do?img="+ $(this).find('portfolio>image').text() + "'style='width:155px;height:120px';>";
+												contentStr += "<img src='${ctx }/main/file/download.do?fileName="+ $(this).find('portfolio>image').text() + "'style='width:155px;height:120px';>";
 												contentStr += "</a>";
 												contentStr += "</li>";
 											}); 					 

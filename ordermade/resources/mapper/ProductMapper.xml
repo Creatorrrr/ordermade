@@ -23,27 +23,27 @@
 
 	<sql id="selectProduct">
 		SELECT id,
-		title,
-		content,
-		image,
-		price,
-		period,
-		maker_id,
-		type,
-		hit
+				title,
+				content,
+				image,
+				price,
+				period,
+				maker_id,
+				type,
+				hit
 	</sql>
 
 	<sql id="selectProductWithRowNum">
-		SELECT rownum rnum,
-		id,
-		title,
-		content,
-		image,
-		price,
-		period,
-		maker_id,
-		type,
-		hit
+		SELECT ROW_NUMBER() OVER (ORDER BY regdate DESC) rnum,
+				id,
+				title,
+				content,
+				image,
+				price,
+				period,
+				maker_id,
+				type,
+				hit
 	</sql>
 
 	<insert id="insertProduct" parameterType="Product">
@@ -51,23 +51,25 @@
 			SELECT product_seq.nextval FROM dual
 		</selectKey>
 		INSERT INTO product(id,
-		title,
-		content,
-		image,
-		price,
-		period,
-		maker_id,
-		type,
-		hit)
+							title,
+							content,
+							image,
+							price,
+							period,
+							maker_id,
+							type,
+							hit,
+							registered_date)
 		VALUES(#{id},
-		#{title},
-		#{content},
-		#{image},
-		#{price},
-		#{period},
-		#{maker.id},
-		#{category},
-		#{hit})
+				#{title},
+				#{content},
+				#{image},
+				#{price},
+				#{period},
+				#{maker.id},
+				#{category},
+				#{hit},
+				SYSDATE)
 	</insert>
 
 	<update id="updateProductById" parameterType="Product">
@@ -98,22 +100,27 @@
 	<select id="selectProductsByCategoryOrderByHitsForMain"
 		parameterType="HashMap" resultMap="productMap">
 		<include refid="selectProduct" />
-		FROM (
-		<include refid="selectProductWithRowNum" />
-		FROM product
-		WHERE type = #{category}
-		ORDER BY hit DESC)
+		FROM (SELECT ROW_NUMBER() OVER (ORDER BY hit DESC) rnum,
+					id,
+					title,
+					content,
+					image,
+					price,
+					period,
+					maker_id,
+					type,
+					hit
+			FROM product
+			WHERE type = #{category})
 		WHERE rnum BETWEEN 1 AND #{page}
 	</select>
 
 	<select id="selectProductsByCategoryOrderByIdForMain"
 		parameterType="HashMap" resultMap="productMap">
 		<include refid="selectProduct" />
-		FROM (
-		<include refid="selectProductWithRowNum" />
-		FROM product
-		WHERE type = #{category}
-		ORDER BY id DESC)
+		FROM (<include refid="selectProductWithRowNum" />
+			FROM product
+			WHERE type = #{category})
 		WHERE rnum BETWEEN 1 AND #{page}
 	</select>
 
@@ -123,8 +130,7 @@
 		FROM (
 		<include refid="selectProductWithRowNum" />
 		FROM product
-		WHERE type = #{category}
-		ORDER BY id DESC)
+		WHERE type = #{category})
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
@@ -133,15 +139,14 @@
 		<include refid="selectProduct" />
 		FROM (<include refid="selectProductWithRowNum" />
 				FROM product
-				WHERE type = #{category} AND title LIKE '%${title}%'
-				ORDER BY id DESC)
+				WHERE type = #{category} AND title LIKE '%${title}%')
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
 	<select id="selectProductsByCategoryAndMakerName" parameterType="HashMap"
 		resultMap="productMap">
 		<include refid="selectProduct" />
-		FROM (SELECT rownum rnum,
+		FROM (SELECT ROW_NUMBER() OVER (ORDER BY product.regdate DESC) rnum,
 						product.id, 
 						product.title, 
 						product.content, 
@@ -152,8 +157,7 @@
 						product.type,
 						product.hit
 				FROM product INNER JOIN member ON product.maker_id = member.id
-				WHERE product.type = #{category} AND member.name LIKE '%${makerName}%'
-				ORDER BY product.id DESC)
+				WHERE product.type = #{category} AND member.name LIKE '%${makerName}%')
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
@@ -163,8 +167,7 @@
 		FROM (
 		<include refid="selectProductWithRowNum" />
 		FROM product
-		WHERE type = #{category} AND maker_id = #{makerId}
-		ORDER BY id DESC)
+		WHERE type = #{category} AND maker_id = #{makerId})
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
@@ -184,8 +187,7 @@
 		FROM (
 		<include refid="selectProductWithRowNum" />
 		FROM product
-		WHERE maker_id = #{makerId}
-		ORDER BY id DESC)
+		WHERE maker_id = #{makerId})
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
@@ -195,8 +197,7 @@
 		FROM (
 		<include refid="selectProductWithRowNum" />
 		FROM product
-		WHERE title LIKE '%${title}%' AND maker_id = #{makerId}
-		ORDER BY id DESC)
+		WHERE title LIKE '%${title}%' AND maker_id = #{makerId})
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
@@ -206,15 +207,14 @@
 		FROM (
 		<include refid="selectProductWithRowNum" />
 		FROM product
-		WHERE title LIKE '%${title}%'
-		ORDER BY id DESC)
+		WHERE title LIKE '%${title}%')
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 
 	<select id="selectProductsByMakerName" parameterType="HashMap"
 		resultMap="productMap">
 		<include refid="selectProduct" />
-		FROM (SELECT rownum rnum,
+		FROM (SELECT ROW_NUMBER() OVER (ORDER BY product.regdate DESC) rnum,
 						product.id, 
 						product.title, 
 						product.content, 
@@ -225,8 +225,7 @@
 						product.type,
 						product.hit
 				FROM product INNER JOIN member ON product.maker_id = member.id
-				WHERE member.name LIKE '%${makerName}%'
-				ORDER BY product.id DESC)
+				WHERE member.name LIKE '%${makerName}%')
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
 

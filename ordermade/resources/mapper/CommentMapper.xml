@@ -22,12 +22,12 @@
   			select comment_seq.nextval FROM DUAL
   		</selectKey>
 		INSERT INTO COMM(id, content, content_type, member_id, request_id, time)
-		VALUES (#{id}, #{content}, #{contentType}, #{member.id}, #{request.id}, TO_DATE(sysdate,'yyyy/mm/dd hh24:mi:ss'))
+		VALUES (#{id}, #{content}, #{contentType}, #{member.id}, #{request.id}, SYSDATE)
   	</insert>
   	
   	<update id="updateCommentById" parameterType="Comment">
   		UPDATE COMM 
-  		SET content = #{content}, content_type=#{contentType}, member_id=#{member.id}, request_id=#{request.id}, time=TO_DATE(sysdate,'yyyy/mm/dd hh24:mi:ss')
+  		SET content = #{content}, content_type=#{contentType}, member_id=#{member.id}, request_id=#{request.id}
   		WHERE id = #{id}
   	</update>
 
@@ -38,11 +38,22 @@
   	
   	<!-- 의뢰서에 관한 답변 10개씩 불러오기 -->
   	<select id="selectCommentsByRequestId" resultMap="commentMap">
-  		SELECT * FROM (
-  			SELECT rownum limitNum, A.* FROM COMM A 
-  			WHERE REQUEST_ID=#{requestId} 
-  			and rownum &lt;= #{page}*10)
-  		WHERE limitNum > (#{page}-1)*10
+  		SELECT id, 
+  				content, 
+  				content_type, 
+  				member_id, 
+  				request_id, 
+  				time
+  		FROM (SELECT ROW_NUMBER() OVER (ORDER BY time DESC) rnum,
+  						id, 
+  						content, 
+  						content_type, 
+  						member_id, 
+  						request_id, 
+  						time
+  				FROM comm
+	  			WHERE request_id = #{requestId})
+  		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@COMMENT_ROW_SIZE}) AND (#{page}*${@ordermade.constants.Constants@COMMENT_ROW_SIZE})
   	</select>
   
   </mapper>
