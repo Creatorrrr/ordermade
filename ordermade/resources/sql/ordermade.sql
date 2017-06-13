@@ -37,7 +37,8 @@ CREATE TABLE review (
   consumer_id VARCHAR2(50),
   content VARCHAR2(2000),
   grade NUMBER,
-  product_id VARCHAR2(50)
+  product_id VARCHAR2(50),
+  regdate DATE
 );
 
 CREATE TABLE request (
@@ -50,7 +51,8 @@ CREATE TABLE request (
   hope_price NUMBER,
   price NUMBER,
   bound VARCHAR2(50),
-  payment VARCHAR2(50)
+  payment VARCHAR2(50),
+  regdate DATE
 );
 
 CREATE TABLE invite_request (
@@ -102,7 +104,8 @@ CREATE TABLE portfolio (
   type VARCHAR2(200),
   content VARCHAR2(2000),
   maker_id VARCHAR2(50),
-  image VARCHAR2(500)
+  image VARCHAR2(500),
+  regdate DATE
 );
 
 CREATE TABLE tag (
