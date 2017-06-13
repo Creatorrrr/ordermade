@@ -34,7 +34,8 @@
 	</sql>
 
 	<sql id="selectProductWithRowNum">
-		SELECT ROW_NUMBER() OVER (ORDER BY regdate DESC) rnum,
+		SELECT ROW_NUMBER() OVER (ORDER BY regdate
+		 DESC) rnum,
 				id,
 				title,
 				content,
@@ -59,7 +60,7 @@
 							maker_id,
 							type,
 							hit,
-							registered_date)
+							regdate)   <!--registered_date  -->
 		VALUES(#{id},
 				#{title},
 				#{content},

@@ -45,7 +45,7 @@ ${head_body}
 						<div class='listBox'>
 							<div align="center">
 								<a href="${ctx}/product/ui/detail.do?id=${product.id}">
-									<img src="${ctx }/main/file/download.do?fileName=${product.image}" style="width: 200px; height: 170px">
+									<img src="${ctx }/main/file/download.do?fileName=${product.image}" style="width: 250px; height: 180px">
 								</a>     
 							</div>
 							<table class="table">
@@ -259,8 +259,8 @@ var productController = {
 		content += "<div class='listBox'>";
 		content += "		<div align='center'>";
 		content += "			<a href='${ctx}/product/ui/detail.do?id=" + $(xml).find("product>id").text() + "'>";
-		content += '				<img src="${ctx }/main/file/download.do?fileName=' + $(xml).find("product>image").text() + ;'">';
-		content += "			</a>";
+		content += '				<img src="${ctx }/main/file/download.do?fileName=' + $(xml).find("product>image").text() + '"style="width: 250px; height: 180px">';
+		content += "			</a>";            
 		content += "		</div>";
 		content += "		<table class='table'>";
 		content += "			<tr>";
