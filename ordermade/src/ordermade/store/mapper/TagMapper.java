@@ -7,9 +7,7 @@ import ordermade.domain.Tag;
 public interface TagMapper {
 	public int insertTag(Tag tag);
 
-	public int deleteTagById(String id);
+	public int deleteTagByProductId(String productId);
 
-	public List<Tag> selectTagsByPortfolioId(String portfolioId);
-
-	public List<Tag> retrieveTagsFromGoogleVision(String path);
+	public List<Tag> selectTagsByProductId(String productId);
 }

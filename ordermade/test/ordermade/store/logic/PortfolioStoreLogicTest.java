@@ -98,22 +98,4 @@ public class PortfolioStoreLogicTest {
 //			System.out.println(p.toString());
 //		}
 //	}
-
-	@Test
-	public void testSelectPortfoliosByTags() {
-		List<Tag> tags = new ArrayList<>();
-		Tag tag = new Tag();
-		tag.setKeyword("1");
-		tags.add(tag);
-		tag = new Tag();
-		tag.setKeyword("2");
-		tags.add(tag);
-		tag = new Tag();
-		tag.setKeyword("3");
-		tags.add(tag);
-		List<Portfolio> list = store.selectPortfoliosByTags(tags);
-		for(Portfolio p : list){
-			System.out.println(p.toString());
-		}
-	}
 }

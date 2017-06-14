@@ -3,3 +3,4 @@ eclipse.preferences.version=1
 encoding//WebContent/views/product/search.jsp=UTF-8
 encoding//resources/sql/dataset.sql=UTF-8
 encoding//resources/sql/ordermade.sql=UTF-8
+encoding//test/dataset/portfoliodata.txt=UTF-8

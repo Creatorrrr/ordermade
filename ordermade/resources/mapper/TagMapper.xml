@@ -8,26 +8,25 @@
 	<resultMap type="ordermade.domain.Tag" id="TagMap">
 		<result column="keyword" property="keyword" />
 		<result column="score" property="score" />
-		<association column="portfolioid" property="portfolio"
-			javaType="Portfolio" jdbcType="VARCHAR"
-			select="ordermade.store.mapper.PortfolioMapper.selectPortfolioById" />
+		<association column="product_id" property="product"
+			javaType="Product" jdbcType="VARCHAR"
+			select="ordermade.store.mapper.ProductMapper.selectProductById" />
 	</resultMap>
 
 	<insert id="insertTag" parameterType="Tag">
-		INSERT INTO tag(keyword,score,portfolio_id)
+		INSERT INTO tag(keyword,score,product_id)
 		VALUES
-		(#{keyword},#{score},#{portfolio.id})
+		(#{keyword},#{score},#{product.id})
 
 	</insert>
-	<select id="selectTagsByPortfolioId" parameterType="string" resultMap="TagMap">
-		SELECT keyword,score,portfolio_id
+	<select id="selectTagsByProductId" parameterType="string" resultMap="TagMap">
+		SELECT keyword,score,product_id
 		FROM tag
-		WHERE portfolio_id = #{portfolioId}
+		WHERE product_id = #{productId}
 	</select>
-	<delete id="deleteTagById" parameterType="string">
+	<delete id="deleteTagByProductId" parameterType="string">
 		DELETE FROM tag
-		WHERE id
-		= #{id}
+		WHERE product_id = #{productId}
 	</delete>
 
 </mapper>

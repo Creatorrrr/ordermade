@@ -1,7 +1,5 @@
 package ordermade.domain;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -13,7 +11,6 @@ public class Portfolio {
 	private String id;
 	private String title;
 	private String content;
-	private List<Tag> tags;
 	private String category;
 	private Member maker;
 	private String image;
@@ -35,12 +32,6 @@ public class Portfolio {
 	}
 	public void setContent(String content) {
 		this.content = content;
-	}
-	public List<Tag> getTags() {
-		return tags;
-	}
-	public void setTags(List<Tag> tags) {
-		this.tags = tags;
 	}
 	public String getCategory() {
 		return category;

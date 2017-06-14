@@ -56,12 +56,12 @@ public class TagStoreLogic implements TagStore {
 	}
 
 	@Override
-	public boolean deleteTagById(String id) {
+	public boolean deleteTagByProductId(String productId) {
 		SqlSession session = factory.openSession();
 		int check = 0;
 		try {
 			TagMapper mapper = session.getMapper(TagMapper.class);
-			if((check = mapper.deleteTagById(id)) > 0) {
+			if((check = mapper.deleteTagByProductId(productId)) > 0) {
 				session.commit();
 			} else {
 				session.rollback();
@@ -73,10 +73,10 @@ public class TagStoreLogic implements TagStore {
 	}
 
 	@Override
-	public List<Tag> selectTagsByPortfolioId(String portfolioId) {
+	public List<Tag> selectTagsByProductId(String productId) {
 		SqlSession session = factory.openSession();
 		TagMapper mapper = session.getMapper(TagMapper.class);
-		List<Tag> list = mapper.selectTagsByPortfolioId(portfolioId);
+		List<Tag> list = mapper.selectTagsByProductId(productId);
 		session.close();
 		return list;
 
@@ -88,12 +88,12 @@ public class TagStoreLogic implements TagStore {
 
 		try {
 			ObjectMapper mapper = new ObjectMapper();
-			JsonNode root = mapper.readTree(getJsonFromGoogleVision(Constants.GOOGLE_VISION_URL, Constants.FILE_PATH + path, "LABEL_DETECTION", 5));
-		    JsonNode labelNode = root.path("responses").get(0).path("labelAnnotations");
+			JsonNode root = mapper.readTree(getJsonFromGoogleVision(Constants.GOOGLE_VISION_URL, Constants.FILE_PATH + path, "WEB_DETECTION", 5));
+		    JsonNode labelNode = root.path("responses").get(0).path("webDetection").path("webEntities");
 		    
 		    for(JsonNode node : labelNode) {
 		    	Tag tag = new Tag();
-		    	tag.setKeyword(node.path("description").asText());
+		    	tag.setKeyword(node.path("entityId").asText());
 		    	tag.setScore(node.path("score").asDouble());
 		    	tagList.add(tag);
 		    }

@@ -10,8 +10,7 @@
   		<result property="content" column="content"/>
   		<result property="category" column="type" />
   		<result property="image" column="image"/>
-  		<association property="maker" column="maker_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member" jdbcType="VARCHAR" />
-		<collection property="tags" column="id" ofType="Tag" select="ordermade.store.mapper.TagMapper.selectTagsByPortfolioId" javaType="ArrayList" jdbcType="VARCHAR"/> 
+  		<association property="maker" column="maker_id" select="ordermade.store.mapper.MemberMapper.selectMemberById" javaType="Member" jdbcType="VARCHAR" /> 
   	</resultMap>
   
   <sql id="selectPortfolio">
@@ -83,16 +82,6 @@
 				WHERE type = #{category})
 				WHERE rnum BETWEEN #{begin} AND #{end}
   	</select>
-  	
-  	
-  	<select id="selectPortfoliosByTags" parameterType="List" resultMap="portfolioMap">
-		SELECT DISTINCT portfolio.id, portfolio.title, portfolio.content, portfolio.type, portfolio.image, portfolio.maker_id
-		FROM portfolio INNER JOIN tag ON portfolio.id = tag.portfolio_id
-		WHERE tag.keyword IN
-			<foreach collection="list" item="tag" open="(" close=")" separator=",">
-	            #{tag.keyword}
-	        </foreach>
- 	</select>
  	
  	<!--추가  -->
  	

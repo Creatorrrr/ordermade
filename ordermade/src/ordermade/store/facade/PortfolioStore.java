@@ -18,7 +18,6 @@ public interface PortfolioStore {
 	public List<Portfolio> selectPortfoliosByMakerId(String makerId,String begin, String end);
 	public List<Portfolio> selectPortfoliosByMakerIdAndTitle(String makerId, String title,String begin, String end );
 	public List<Portfolio> selectPortfoliosByCategory(String category, String begin, String end);
-	public List<Portfolio> selectPortfoliosByTags(List<Tag> tags);
 	
 	//추가-----------
 	public List<Category> selectAllCategory();

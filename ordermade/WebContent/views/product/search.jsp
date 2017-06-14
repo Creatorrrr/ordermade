@@ -31,7 +31,7 @@ ${head_body}
 								<option value="title">제목</option>
 								<option value="makerName">제작자</option>
 							</select> 
-							<input id="productSearchKeyword" name="productSearchKeyword"
+							<input id="productSearchKeyword" name="keyword"
 								class="form-control" type="text" value=""
 								placeholder="Search Here" style="display: inline-block" />
 							<button id="productSearchBtn" class="fa fa-search btn btn-default" type="button" title="Search">검색</button>

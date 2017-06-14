@@ -8,13 +8,11 @@ import org.springframework.stereotype.Service;
 import ordermade.constants.Constants;
 import ordermade.domain.Category;
 import ordermade.domain.Member;
-import ordermade.domain.Portfolio;
 import ordermade.domain.Product;
 import ordermade.domain.Review;
 import ordermade.domain.Tag;
 import ordermade.service.facade.ProductService;
 import ordermade.store.facade.CategoryStore;
-import ordermade.store.facade.PortfolioStore;
 import ordermade.store.facade.ProductStore;
 import ordermade.store.facade.ReviewStore;
 import ordermade.store.facade.TagStore;
@@ -29,13 +27,19 @@ public class ProductServiceLogic implements ProductService{
 	@Autowired
 	private CategoryStore cStore;
 	@Autowired
-	private PortfolioStore pfStore;
-	@Autowired
 	private TagStore tStore;
 
 	@Override
 	public boolean registerProduct(Product product) {
-		return pStore.insertProduct(product);
+		boolean result = pStore.insertProduct(product);
+
+		List<Tag> tagList = tStore.retrieveTagsFromGoogleVision(product.getImage());
+		for(Tag t : tagList) {
+			t.setProduct(product);
+			tStore.insertTag(t);
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -69,9 +73,7 @@ public class ProductServiceLogic implements ProductService{
 	@Override
 	public List<Product> findProductsByImage(String image) {
 		List<Tag> tagList = tStore.retrieveTagsFromGoogleVision(image);	// 현재 이미지의 특징을 추출함
-		List<Portfolio> portfolioList = pfStore.selectPortfoliosByTags(tagList);	// 태그에 해당하는 포트폴리오 불러옴
-
-		return excludePassword(pStore.selectProductsByCategoryAndMakerIdForImage(portfolioList));
+		return excludePassword(pStore.selectProductsByTags(tagList));	// 태그에 해당하는 상품 불러옴
 	}
 
 	@Override

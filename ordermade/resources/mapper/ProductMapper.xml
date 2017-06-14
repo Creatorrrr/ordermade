@@ -229,6 +229,23 @@
 				WHERE member.name LIKE '%${makerName}%')
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
+  	
+  	<select id="selectProductsByTags" parameterType="List" resultMap="productMap">
+		SELECT DISTINCT product.id,
+						product.title,
+						product.content,
+						product.image,
+						product.price,
+						product.period,
+						product.maker_id,
+						product.type,
+						product.hit
+		FROM product INNER JOIN tag ON product.id = tag.product_id
+		WHERE tag.keyword IN
+			<foreach collection="list" item="tag" open="(" close=")" separator=",">
+	            #{tag.keyword}
+	        </foreach>
+ 	</select>
 
 	<select id="selectAllCategory" parameterType="HashMap"
 		resultType="Category">

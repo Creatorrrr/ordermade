@@ -6,6 +6,7 @@ import java.util.List;
 import ordermade.domain.Category;
 import ordermade.domain.Portfolio;
 import ordermade.domain.Product;
+import ordermade.domain.Tag;
 
 public interface ProductMapper {
 	public boolean insertProduct(Product product);
@@ -23,5 +24,6 @@ public interface ProductMapper {
 	public List<Product> selectProductsByMakerIdAndTitle(HashMap<String, String> map);
 	public List<Product> selectProductsByTitle(HashMap<String, String> map);
 	public List<Product> selectProductsByMakerName(HashMap<String, String> map);
+	public List<Product> selectProductsByTags(List<Tag> tags);
 	public List<Category> selectAllCategory();
 }
