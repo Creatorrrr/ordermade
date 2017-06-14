@@ -58,79 +58,81 @@ ${box2 }
 				<td><p>희망 가격 : ${request.hopePrice }</p></td>
 			</tr>
 		</table>
-		<table class="table" style="color: black">
-			<tr>
-				<td>
-					<h3 style="line-height:200%">
-						대화 기록
-						<!-- <button  class="btn btn-default" style="float: right;">파일함</button> -->
-					</h3>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div id="commentList">
-						<!-- comments from server -->
-					</div>
-	            </td>
-			</tr>
-			<tr>
-				<td>
-					<button class="btn btn-default btn-lg" type=button style="width:100%" onclick="javascript:commentController.appendCommentsByRequestId()">더보기</button>
-	            </td>
-			</tr>
-			<tr><td><h3>추가 요구 사항</h3></td></tr>
-			<tr>
-				<td>
-					<div id="tabs">
-						<ul>
-					    	<li><a href="#tabs-1">코멘트 입력</a></li>
-					    	<li><a href="#tabs-2">파일 업로드</a></li>
-						</ul>
-						<div id="tabs-1">
-							<textarea id="commentRegisterContent" rows="5" style="width:100%"></textarea>
-							<div align="right">
-								<button id="commentRegister" class="btn btn-default">코멘트 등록</button>
+		<c:if test="${request.maker ne null }">
+			<c:if test="${request.maker.id eq sessionScope.loginId || request.consumer.id eq sessionScope.loginId }">
+				<table class="table" style="color: black">
+					<tr>
+						<td>
+							<h3 style="line-height:200%">
+								대화 기록
+								<!-- <button  class="btn btn-default" style="float: right;">파일함</button> -->
+							</h3>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div id="commentList">
+								<!-- comments from server -->
 							</div>
-						</div>
-						<div id="tabs-2">
-							<div id='fileuploader'>Upload</div>
-						</div>
-					</div>
-				</td>
-			</tr>
-		</table>
-		
-		<div>
-			<c:if test="${request.maker ne null }">
-				<c:choose>
-					<c:when test="${sessionScope.memberType eq 'C'}">
-						<c:choose>
-							<c:when test="${request.price eq 0 }"></c:when>
-							<c:when test="${request.payment eq 'N' }">
-								<p align="right">결제금액: ${request.price }원</p>
-								<input id="requestPayment" type="button" onclick="dealController.consumerMoneyToAccount();" 
-								 class="btn btn-default" value="결제" style="float:right">
-							</c:when>
-							<c:when test="${request.payment eq 'Y' }">
-								<p align="right">결제금액: ${request.price }원</p>
-								<input type="button" class="btn btn-default" value="결제완료" style="float:right" disabled>
-							</c:when>
-						</c:choose>
-					</c:when>
-					<c:when test="${sessionScope.memberType eq 'M'}">
-						<form id="registerPayment">
-							<p align="right">
-								결제금액: 
-								<input name="id" type="hidden" value="${request.id }">
-								<input name="price" class="form-control" type="number" style="width:200px;display: inline-block" value="${request.price }">원
-							</p>
-							<input id="" type="button" class="btn btn-default" value="등록" style="float: right" onclick="registerPayment()">
-						</form>
-					</c:when>
-				</c:choose>
+			            </td>
+					</tr>
+					<tr>
+						<td>
+							<button class="btn btn-default btn-lg" type=button style="width:100%" onclick="javascript:commentController.appendCommentsByRequestId()">더보기</button>
+			            </td>
+					</tr>
+					<tr><td><h3>추가 요구 사항</h3></td></tr>
+					<tr>
+						<td>
+							<div id="tabs">
+								<ul>
+							    	<li><a href="#tabs-1">코멘트 입력</a></li>
+							    	<li><a href="#tabs-2">파일 업로드</a></li>
+								</ul>
+								<div id="tabs-1">
+									<textarea id="commentRegisterContent" rows="5" style="width:100%"></textarea>
+									<div align="right">
+										<button id="commentRegister" class="btn btn-default">코멘트 등록</button>
+									</div>
+								</div>
+								<div id="tabs-2">
+									<div id='fileuploader'>Upload</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</table>
+			
+				<div>
+					<c:choose>
+						<c:when test="${sessionScope.memberType eq 'C'}">
+							<c:choose>
+								<c:when test="${request.price eq 0 }"></c:when>
+								<c:when test="${request.payment eq 'N' }">
+									<p align="right">결제금액: ${request.price }원</p>
+									<input id="requestPayment" type="button" onclick="dealController.consumerMoneyToAccount();" 
+									 class="btn btn-default" value="결제" style="float:right">
+								</c:when>
+								<c:when test="${request.payment eq 'Y' }">
+									<p align="right">결제금액: ${request.price }원</p>
+									<input type="button" class="btn btn-default" value="결제완료" style="float:right" disabled>
+								</c:when>
+							</c:choose>
+						</c:when>
+						<c:when test="${sessionScope.memberType eq 'M'}">
+							<form id="registerPayment">
+								<p align="right">
+									결제금액: 
+									<input name="id" type="hidden" value="${request.id }">
+									<input name="price" class="form-control" type="number" style="width:200px;display: inline-block" value="${request.price }">원
+								</p>
+								<input id="" type="button" class="btn btn-default" value="등록" style="float: right" onclick="registerPayment()">
+							</form>
+						</c:when>
+					</c:choose>
+				</div>
 			</c:if>
-		</div>
+		</c:if>
 	</div>
 
 

@@ -114,12 +114,13 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/ajax/products/makerid.do", produces = "application/xml")
-	public @ResponseBody Products findMyProducts(String page, HttpSession session) {
+	public @ResponseBody Products findMyProducts(String page, String makerId, HttpSession session) {
 		// Ajax 나의 생산품들 전체 출력
 		if (page == null || page.isEmpty()) page = "1";
-		return new Products(pService.findProductsByMakerId(
-				(String)session.getAttribute("loginId"), 
-				page));
+		if (makerId == null || makerId.isEmpty()) {
+			makerId = (String)session.getAttribute("loginId");
+		}
+		return new Products(pService.findProductsByMakerId(makerId, page));
 	}
 
 	// test : http://localhost:8080/ordermade/ajax/products/category.do

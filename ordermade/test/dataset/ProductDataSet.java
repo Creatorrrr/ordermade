@@ -1,7 +1,9 @@
 package dataset;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import org.junit.Test;
@@ -31,7 +33,7 @@ public class ProductDataSet {
 		BufferedReader bufReader = null;
 		
 		try {
-			bufReader = new BufferedReader(new FileReader("test/dataset/portfoliodata.txt"));
+			bufReader = new BufferedReader(new FileReader("test/dataset/productdata"));
 			String check = null;
 			while((check = bufReader.readLine()) != null) {
 				product.setTitle(check);
@@ -55,5 +57,32 @@ public class ProductDataSet {
 			}
 		}
 	}
+	
+//	@Test
+//	public void alignProductDataSet() {
+//		BufferedReader bufReader = null;
+//		BufferedWriter bufWriter = null;
+//		
+//		try {
+//			bufReader = new BufferedReader(new FileReader("test/dataset/productdata"));
+//			bufWriter = new BufferedWriter(new FileWriter("test/dataset/productdata2"));
+//			
+//			String str = null;
+//			String temp = null;
+//			while((str = bufReader.readLine()) != null) {
+//				temp = str.replace("'", "");
+//				bufWriter.write(temp + "\n");
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if(bufReader != null) bufReader.close();
+//				if(bufWriter != null) bufWriter.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 
 }

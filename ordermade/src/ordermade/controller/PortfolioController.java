@@ -167,18 +167,11 @@ public class PortfolioController {
 	// ----------mobile ->xml
 
 	@RequestMapping(value = "xml/search.do", produces = "application/xml")
-	public @ResponseBody Portfolios findMyPortfolios(String page, HttpSession session) {
-
-		String makerId = (String) session.getAttribute("loginId");
-		//String makerId = "user1";
-//		if (page == null)
-//			page = "1";
-		
-		List<Portfolio> pList = pService.findPortfoliosByMakerId(makerId, "1");System.out.println(pList.get(0).getImage());
-		Portfolios portfolios = new Portfolios();
-		portfolios.setPortfolios(pList);
-		
-		return portfolios;
+	public @ResponseBody Portfolios findMyPortfolios(String page, String makerId, HttpSession session) {
+		if(makerId == null || makerId.isEmpty()) {
+			makerId = (String) session.getAttribute("loginId");
+		}
+		return new Portfolios(pService.findPortfoliosByMakerId(makerId, page));
 	} // test http://localhost:8080/ordermade/portfolio/xml/search.do?page=2
 
 	@RequestMapping(value = "xml/searchByTitle.do", produces = "application/xml")                                 

@@ -207,7 +207,7 @@ var requestController = {
 		content += 	"<table class='request_table'>";
 		content += 		"<tr>";
 		content += 			"<td>의뢰명 : </td>";
-		content += 			"<td>" + $(xml).find("request>title").text() + "</td>";
+		content += 			"<td><a href=${ctx}/request/ui/detail.do?id=" + $(xml).find("request>id").text() + ">" + $(xml).find("request>title").text() + "</a></td>";
 		content += 		"</tr>";
 		content += 		"<tr>";
 		content += 			"<td>의뢰자 : </td>";

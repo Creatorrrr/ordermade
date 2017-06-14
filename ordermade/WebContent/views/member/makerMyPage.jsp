@@ -62,7 +62,7 @@ ${box2 }
 	var getPortfolios = function(page) {
 
 		$.ajax({
-					url : "${ctx}/portfolio/xml/search.do?page=" + page,
+					url : "${ctx}/portfolio/xml/search.do?page=" + page + "&makerId=${member.id}",
 					type : "get",
 					dataType : "xml",
 					success : function(xml) {
@@ -110,8 +110,7 @@ ${box2 }
 	var getProducts = function(page) {
 
 		$.ajax({
-					url : "${ctx}/product/ajax/products/makerid.do?page="
-							+ page,
+					url : "${ctx}/product/ajax/products/makerid.do?page=" + page + "&makerId=${member.id}",
 					type : "get",
 					dataType : "xml",
 					success : function(xml) {
