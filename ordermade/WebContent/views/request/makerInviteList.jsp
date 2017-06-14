@@ -54,7 +54,7 @@ ${box2 }
 	                            </td>
 	                            <td style="text-align: center">
 	                            	<!-- 수락 ajax 구현 -->
-	                           		<input type="button" class="btn btn-default" value="수락" style="display: inline-block;" onclick="javascript:inviteRequestController.acceptInviteRequest(${inviteRequest.request.id}, ${inviteRequest.maker.id})">
+	                           		<input type="button" class="btn btn-default" value="수락" style="display: inline-block;" onclick="javascript:inviteRequestController.acceptInviteRequest('${inviteRequest.request.id}, ${inviteRequest.maker.id}')">
 	                           		<!-- 거절 ajax 구현 -->
 	                           		<span><input type="button" class="btn btn-default" value="거절" style="display: inline-block;" onclick="javascript:inviteRequestController.rejectInviteRequest('${inviteRequest.id}')"></span>
 	                            </td>
@@ -79,6 +79,7 @@ var inviteRequestController = {
 			success: function(text) {
 					if(text === "true"){
 						alert("수락되었습니다");
+						/* location,href="${ctx}/product/ui/myProducts.do"; */
 					}
 			},
 			error: function(xml){
@@ -119,4 +120,4 @@ var inviteRequestController = {
 	}
 };
 
-</script>
+</script >

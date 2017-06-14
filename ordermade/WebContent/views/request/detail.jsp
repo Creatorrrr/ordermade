@@ -100,6 +100,7 @@ ${box2 }
 				</td>
 			</tr>
 		</table>
+		
 		<div>
 			<c:if test="${request.maker ne null }">
 				<c:choose>
@@ -124,7 +125,7 @@ ${box2 }
 								<input name="id" type="hidden" value="${request.id }">
 								<input name="price" class="form-control" type="number" style="width:200px;display: inline-block" value="${request.price }">원
 							</p>
-							<input type="button" class="btn btn-default" value="등록" style="float: right" onclick="registerPayment()">
+							<input id="" type="button" class="btn btn-default" value="등록" style="float: right" onclick="registerPayment()">
 						</form>
 					</c:when>
 				</c:choose>
@@ -328,7 +329,7 @@ var commentController = {
 		var content = "";
 
 		content += "<div class='commentBox'>";
-		content += 		"<div class='commentWriterBox'><img class='imgl borderedbox' src='${ctx}/main/file/download.do?fileName=" + $(xml).find("comment>member>image").text() + "'></div>";
+		content += 		"<div class='commentWriterBox'><img class='imgl borderedbox' src='${ctx}/main/file/download.do?fileName=" + $(xml).find("comment>member>image").text() + "'style='width: 70px; height: 70px'></div>";
 		content += 		"<div class='commentControlBox'>";
 		content += 			"<p>작성자 : " + $(xml).find("comment>member>id").text() + "</p>";
 		if($(xml).find("comment>member>id").text() === "${sessionScope.loginId}") {
