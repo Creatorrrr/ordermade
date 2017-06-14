@@ -152,10 +152,10 @@ public class PortfolioController {
 	@RequestMapping(value = "ui/mylist.do", method = RequestMethod.GET)
 	public ModelAndView showMyPortfolioListUI(String page, HttpServletRequest req) { 
 		// -------session으로 로그인 정보 갖고 오기.
-		String makerId = (String) req.getSession().getAttribute("loginId");
+		String makerId = (String) req.getSession().getAttribute("loginId"); 
 		List<Portfolio> portfolios = pService.findPortfoliosByMakerId(makerId, "1");
 		
-		ModelAndView modelAndView = new ModelAndView("portfolio/myList");
+		ModelAndView modelAndView = new ModelAndView("portfolio/myList");  
 		
 		modelAndView.addObject("portfolios", portfolios);
 		modelAndView.addObject("makerId", makerId);

@@ -15,6 +15,7 @@ ${box2 }
 
 			<h1>포트폴리오 등록</h1>
 			<br>
+			
 			<form id="pRegister">
 				<table class="table">
 					<tr>
