@@ -176,6 +176,19 @@ public class RequestStoreLogic implements RequestStore {
 		}
 		return list;
 	}
+	
+	@Override
+	public int selectRowsByConsumerId(String consumerId) {
+		SqlSession session = factory.openSession();
+		int rows = 0;
+		try {
+			RequestMapper mapper = session.getMapper(RequestMapper.class);
+			rows = mapper.selectRowsByConsumerId(consumerId);
+		} finally {
+			session.close();
+		}
+		return rows;
+	}
 
 	@Override
 	public List<Request> selectRequestsByConsumerIdWithMaker(String consumerId, String begin, String end) {

@@ -361,7 +361,10 @@ public class RequestController {
 	@RequestMapping(value="request/xml/searchMyRequests.do", method=RequestMethod.GET, produces="application/xml")
 	public @ResponseBody Requests findMyRequestsByConsumerId(String page, HttpSession session){
 		if(page == null) page = "1";
-		return new Requests(service.findRequestsByConsumerId((String)session.getAttribute("loginId"), page));
+		String loginId = (String)session.getAttribute("loginId");
+		return new Requests(
+				service.findRequestsByConsumerId(loginId, page), 
+				service.findRowsByConsumerId(loginId) / Constants.REQUEST_ROW_SIZE + 1);
 	}
 	// Complete
 	@RequestMapping(value="request/xml/searchMyRequestsWithMaker.do", method=RequestMethod.GET, produces="application/xml")

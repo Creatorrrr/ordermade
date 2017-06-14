@@ -149,6 +149,12 @@
 				WHERE consumer_id = #{consumerId})       
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
+	
+	<select id="selectRowsByConsumerId" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM request
+		WHERE consumer_id = #{consumerId}
+	</select>
 
 	<select id="selectRequestsByConsumerIdWithMaker" parameterType="HashMap"
 		resultMap="requestMap">

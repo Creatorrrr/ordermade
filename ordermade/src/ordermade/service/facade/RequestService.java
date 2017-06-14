@@ -17,6 +17,7 @@ public interface RequestService {
 	public List<Request> findRequestsByBoundAndTitle(String bound, String title, String page);
 	public List<Request> findRequestsByBoundAndContent(String bound, String content, String page);
 	public List<Request> findRequestsByConsumerId(String consumerId, String page);
+	public int findRowsByConsumerId(String consumerId);
 	public List<Request> findRequestsByConsumerIdWithMaker(String consumerId, String page);
 	public List<Request> findRequestsByConsumerIdWithPayment(String consumerId, String page);
 	public List<Request> findRequestsByMakerId(String makerId, String page);

@@ -111,7 +111,7 @@ CREATE TABLE portfolio (
 CREATE TABLE tag (
   keyword VARCHAR2(200),
   score NUMBER,
-  portfolio_id VARCHAR2(50)
+  product_id VARCHAR2(50)
 );
 
 CREATE TABLE category (

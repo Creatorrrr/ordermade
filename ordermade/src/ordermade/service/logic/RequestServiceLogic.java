@@ -72,6 +72,11 @@ public class RequestServiceLogic implements RequestService{
 	public List<Request> findRequestsByConsumerId(String consumerId, String page) {
 		return rStore.selectRequestsByConsumerId(consumerId, getRequestBegin(page),getRequestEnd(page));
 	}
+	
+	@Override
+	public int findRowsByConsumerId(String consumerId) {
+		return rStore.selectRowsByConsumerId(consumerId);
+	}
 
 	@Override
 	public List<Request> findRequestsByConsumerIdWithMaker(String consumerId, String page) {
