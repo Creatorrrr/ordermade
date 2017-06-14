@@ -45,7 +45,7 @@ public class ProductDataSet {
 //				product.setPeriod(Integer.parseInt(bufReader.readLine()));
 //				product.setHit(Integer.parseInt(bufReader.readLine()));
 //				
-//				pService.registerProduct(product);
+//				pService.registerProduct(product); 
 //			}
 //		} catch (Exception e) {
 //			e.printStackTrace();
@@ -85,30 +85,30 @@ public class ProductDataSet {
 //		}
 //	}
 	
-	@Test
-	public void accountDataSet() {
-		BufferedWriter bufWriter = null;
-		
-		try {
-			bufWriter = new BufferedWriter(new FileWriter("test/dataset/accountdata"));
-			
-			String str = null;
-			String temp = null;
-			for(int i = 1 ; i <= 50 ; i++) {
-				bufWriter.write("INSERT INTO account(member_id, money) VALUES ('m" + i + "', 1000000);\n");
-			}
-			for(int i = 1 ; i <= 50 ; i++) {
-				bufWriter.write("INSERT INTO account(member_id, money) VALUES ('c" + i + "', 1000000);\n");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(bufWriter != null) bufWriter.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+//	@Test
+//	public void accountDataSet() {
+//		BufferedWriter bufWriter = null;
+//		
+//		try {
+//			bufWriter = new BufferedWriter(new FileWriter("test/dataset/accountdata"));
+//			
+//			String str = null;
+//			String temp = null;
+//			for(int i = 1 ; i <= 50 ; i++) {
+//				bufWriter.write("INSERT INTO account(member_id, money) VALUES ('m" + i + "', 1000000);\n");
+//			}
+//			for(int i = 1 ; i <= 50 ; i++) {
+//				bufWriter.write("INSERT INTO account(member_id, money) VALUES ('c" + i + "', 1000000);\n");
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if(bufWriter != null) bufWriter.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 
 }
