@@ -80,7 +80,7 @@ public class DealController {
 	
 	
 	// http://localhost:8080/ordermade/deal/xml/searchPurchaseConsumerList.do
-	@RequestMapping(value="xml/searchPurchaseConsumerList.do", produces="application/xml")
+	@RequestMapping(value="xml/searchPurchaseConsumerList.do", method=RequestMethod.GET, produces="application/xml")
 	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesForConsumer(String page, HttpSession session){
 		// session에서 회원ID 가져오기
 		String consumerId = (String)session.getAttribute("loginId");
@@ -103,7 +103,7 @@ public class DealController {
 	}
 	
 	// http://localhost:8080/ordermade/deal/xml/searchPurchaseMakerList.do
-	@RequestMapping(value="xml/searchPurchaseMakerList.do", produces="application/xml")
+	@RequestMapping(value="xml/searchPurchaseMakerList.do", method=RequestMethod.GET, produces="application/xml")
 	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesForMaker(String makerId, String page, HttpSession session){
 		makerId = "";
 		if(page == null || page == "") page = "1"; // String page 추가 17/06/03 11:58am By MBS
@@ -114,7 +114,7 @@ public class DealController {
 	}
 	
 	// http://localhost:8080/ordermade/deal/xml/searchMakerListByRequestTitle.do
-	@RequestMapping(value="xml/searchPurchaseMakerListByRequestTitle.do", produces="application/xml")
+	@RequestMapping(value="xml/searchPurchaseMakerListByRequestTitle.do", method=RequestMethod.GET, produces="application/xml")
 	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesByRequestTitleForMaker(String requestTitle, String makerId, String page, HttpSession session){
 		makerId="";
 		requestTitle = "";

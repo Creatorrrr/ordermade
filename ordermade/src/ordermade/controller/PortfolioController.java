@@ -1,16 +1,8 @@
 package ordermade.controller;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import ordermade.constants.Constants;
 import ordermade.domain.Category;
@@ -166,7 +155,7 @@ public class PortfolioController {
 
 	// ----------mobile ->xml
 
-	@RequestMapping(value = "xml/search.do", produces = "application/xml")
+	@RequestMapping(value = "xml/search.do", method=RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody Portfolios findMyPortfolios(String page, String makerId, HttpSession session) {
 		if(makerId == null || makerId.isEmpty()) {
 			makerId = (String) session.getAttribute("loginId");
@@ -174,7 +163,7 @@ public class PortfolioController {
 		return new Portfolios(pService.findPortfoliosByMakerId(makerId, page));
 	} // test http://localhost:8080/ordermade/portfolio/xml/search.do?page=2
 
-	@RequestMapping(value = "xml/searchByTitle.do", produces = "application/xml")                                 
+	@RequestMapping(value = "xml/searchByTitle.do", method=RequestMethod.GET, produces = "application/xml")                                 
 	public @ResponseBody Portfolios findMyPortfoliosByMakerIdAndTitle(String title, String page, String makerId,  HttpServletRequest req) {         //findPortfoliosByMakerIdAndTitle		
 
 //-------------------------------------		
@@ -194,7 +183,7 @@ public class PortfolioController {
 		return new Portfolios(pService.findPortfoliosByMakerIdAndTitle(makerId, title, page));
 	} 
 
-	@RequestMapping(value = "xml/searchById.do", produces = "application/xml")
+	@RequestMapping(value = "xml/searchById.do", method=RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody Portfolio findPortfolioById(String id) {
 //		if (id == null)
 //			return null;
@@ -207,13 +196,13 @@ public class PortfolioController {
 	
 	
 	//추가---------------------------
-	@RequestMapping(value = "ajax/portfolios/CT.do", produces = "application/xml")
+	@RequestMapping(value = "ajax/portfolios/CT.do", method=RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody Portfolios findPortfoliosByCategoryAndTitle(String page, String category, String title) {
 		// Ajax 생산품 종류와 내용 검색으로 생산품들 출력
 		return new Portfolios(pService.findPortfoliosByCategoryAndTitle(category, title, page)); 
 	}
 	
-	@RequestMapping(value = "ajax/portfolios/CM.do", produces = "application/xml")
+	@RequestMapping(value = "ajax/portfolios/CM.do", method=RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody Portfolios findPortfoliosByCategoryAndMakerName(String page, String category, String makerName) {
 		// Ajax 생산자 이름 그리고 생산품 종류로 생산품들 출력
 		return new Portfolios(pService.findPortfoliosByCategoryAndMakerName(category, makerName, page));
@@ -223,54 +212,6 @@ public class PortfolioController {
 	public @ResponseBody Portfolios findPortfoliosByCategory(String page, String category) {
 		// Ajax 한 종류 생산품검색으로 생산품들 출력
 		return new Portfolios(pService.findPortfoliosByCategory(category, page));
-	}
-	//--------------------------
-	
-	@RequestMapping("/image.do")
-	public void getProductImage(String img, HttpServletResponse resp) {
-		File image = new File(Constants.IMAGE_PATH+img);
-		//System.out.println(img+"img");
-		try {//test
-			System.out.println(image.getCanonicalPath());
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}//--/test
-
-		if(!image.exists()){
-			throw new RuntimeException("No product image");
-		}
-		
-		try (InputStream in = new BufferedInputStream(new FileInputStream(image));
-				OutputStream out = resp.getOutputStream();){
-			byte[] buf = new byte[8096];
-			int readByte = 0;
-			while((readByte = in.read(buf))>-1){
-				out.write(buf,0,readByte);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@RequestMapping(value = "imageUpload.do", method = RequestMethod.POST, produces = "text/plain")
-	public @ResponseBody String uploadPortfolioImage(HttpServletRequest req) {
-		String imagePath = Constants.IMAGE_PATH;
-
-		File dir = new File(imagePath);
-		if (!dir.exists()) {
-			// 폴더가 존재하지 않으면 폴더 생성
-			dir.mkdirs();
-		}
-
-		try {
-			return new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy())
-					.getFile("image").getName();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return "fail";
 	}
 	
 	// Complete

@@ -1,15 +1,5 @@
 package ordermade.controller;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import ordermade.constants.Constants;
 import ordermade.domain.Member;
@@ -55,7 +42,7 @@ public class ProductController {
 		return pService.modifyProductById(product) + "";
 	}
 
-	@RequestMapping(value = "xml/remove.do", produces = "text/plain")
+	@RequestMapping(value = "xml/remove.do", method=RequestMethod.GET, produces = "text/plain")
 	public @ResponseBody String removeProductById(String id, HttpSession session) {
 		// 상품페이지 삭제후 상품페이지 목록으로 이동
 		if(checkLogined(session)) return "error";	// check logined
@@ -80,7 +67,7 @@ public class ProductController {
 		return pService.modifyReviewById(review) + "";
 	}
 
-	@RequestMapping(value = "/review/remove.do", produces = "text/plain")
+	@RequestMapping(value = "/review/remove.do", method=RequestMethod.GET, produces = "text/plain")
 	public @ResponseBody String removeReviewById(String id, HttpSession session) {
 		// Ajax 리뷰 삭제후 화면유지
 		if(checkLogined(session)) return "member/login";	// check logined
@@ -91,14 +78,14 @@ public class ProductController {
 	// Product start
 
 	// main start
-	@RequestMapping(value = "xml/main/category/hit.do", produces = "application/xml")
+	@RequestMapping(value = "xml/main/category/hit.do", method=RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody Products findProductsByCategoryOrderByHitsForMain(String category, String page) {
 		// Ajax 메인화면에서 히트 상품 종류 나옴
 		if (page == null || page.isEmpty()) page = "1";
 		return new Products(pService.findProductsByCategoryOrderByHitsForMain(category, page));
 	}
 
-	@RequestMapping(value = "xml/main/category/brandNew.do", produces = "application/xml")
+	@RequestMapping(value = "xml/main/category/brandNew.do", method=RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody Products findProductsByCategoryOrderByIdForMain(String category, String page) {
 		// Ajax 메인화면에서 히트 상품 종류 나옴
 		if (page == null || page.isEmpty()) page = "1";
@@ -107,13 +94,13 @@ public class ProductController {
 
 	// main end
 
-	@RequestMapping(value = "ajax/product/productId.do")
+	@RequestMapping(value = "ajax/product/productId.do", method=RequestMethod.GET)
 	public @ResponseBody Product findProductById(String productId) {
 		// Ajax 생산품 id 검색으로 생산품 출력
 		return pService.findProductById(productId);
 	}
 
-	@RequestMapping(value = "/ajax/products/makerid.do", produces = "application/xml")
+	@RequestMapping(value = "/ajax/products/makerid.do", method=RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody Products findMyProducts(String page, String makerId, HttpSession session) {
 		// Ajax 나의 생산품들 전체 출력
 		if (page == null || page.isEmpty()) page = "1";
@@ -124,43 +111,43 @@ public class ProductController {
 	}
 
 	// test : http://localhost:8080/ordermade/ajax/products/category.do
-	@RequestMapping(value = "ajax/products/category.do", produces = "application/xml")
+	@RequestMapping(value = "ajax/products/category.do", method=RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody Products findProductsByCategory(String page, String category) {
 		// Ajax 한 종류 생산품검색으로 생산품들 출력
 		return new Products(pService.findProductsByCategory(category, page));
 	}
 
-	@RequestMapping(value = "ajax/products/image.do", produces = "application/xml")
+	@RequestMapping(value = "ajax/products/image.do", method=RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody Products findProductsByImage(String image) {
 		// Ajax 생산품 그리고 이미지로 생산품들 출력
 		return new Products(pService.findProductsByImage(image));
 	}
 
-	@RequestMapping(value = "ajax/products/CT.do", produces = "application/xml")
+	@RequestMapping(value = "ajax/products/CT.do", method=RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody Products findProductsByCategoryAndTitle(String page, String category, String title) {
 		// Ajax 생산품 종류와 내용 검색으로 생산품들 출력
 		return new Products(pService.findProductsByCategoryAndTitle(category, title, page));
 	}
 
-	@RequestMapping(value = "ajax/products/CM.do", produces = "application/xml")
+	@RequestMapping(value = "ajax/products/CM.do", method=RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody Products findProductsByCategoryAndMakerName(String page, String category, String makerName) {
 		// Ajax 생산자 이름 그리고 생산품 종류로 생산품들 출력
 		return new Products(pService.findProductsByCategoryAndMakerName(category, makerName, page));
 	}
 	
-	@RequestMapping(value = "/ajax/products/title.do", produces = "application/xml")
+	@RequestMapping(value = "/ajax/products/title.do", method=RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody Products findProductsByTitle(String page, String title) {
 		// Ajax 생산자 아이디 그리고 내용으로 생산품들 출력
 		return new Products(pService.findProductsByTitle(title, page));
 	}
 	
-	@RequestMapping(value = "/ajax/products/makerName.do", produces = "application/xml")
+	@RequestMapping(value = "/ajax/products/makerName.do", method=RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody Products findProductsByMakerName(String page, String makerName) {
 		// Ajax 생산자 아이디 그리고 내용으로 생산품들 출력
 		return new Products(pService.findProductsByMakerName(makerName, page));
 	}
 
-	@RequestMapping(value = "/ajax/products/MT.do", produces = "application/xml")
+	@RequestMapping(value = "/ajax/products/MT.do", method=RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody Products findProductsByMakerIdAndTitle(String page, String title, HttpSession session) {
 		// Ajax 생산자 아이디 그리고 내용으로 생산품들 출력
 		return new Products(pService.findProductsByMakerIdAndTitle(
@@ -173,20 +160,20 @@ public class ProductController {
 
 	// Review start
 
-	@RequestMapping(value = "/ajax/reviews/productid.do", produces = "application/xml")
+	@RequestMapping(value = "/ajax/reviews/productid.do", method=RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody Reviews findReviewsByProductId(String page, String productId) {
 		// Ajax 생산품 아이디로 리뷰들 출력
 		return new Reviews(pService.findReviewsByProductId(productId, page));
 	}
 
-	@RequestMapping(value = "/ajax/reviews/TP.do")
+	@RequestMapping(value = "/ajax/reviews/TP.do", method=RequestMethod.GET)
 	public @ResponseBody Reviews findReviewsByTitleAndProductId(String page, String productId, String title) {
 		// Ajax 생산품 아이디 그리고 내용으로 리뷰들 출력
 		if(page == null || page.isEmpty()) page = "1";
 		return new Reviews(pService.findReviewsByTitleAndProductId(title, productId, page));
 	}
 
-	@RequestMapping(value = "/ajax/reviews/CP.do")
+	@RequestMapping(value = "/ajax/reviews/CP.do", method=RequestMethod.GET)
 	public @ResponseBody Reviews findReviewsByConsumerIdAndProductId(String page, String productId, String consumerId) {
 		// Ajax 생산품 아이디 그리고 내용으로 리뷰들 출력
 		if(page == null || page.isEmpty()) page = "1";
@@ -197,14 +184,14 @@ public class ProductController {
 	// ************************
 	// ui start
 
-	@RequestMapping("ui/register.do")
+	@RequestMapping(value="ui/register.do", method=RequestMethod.GET)
 	public String showRegisterProductUI(HttpSession session) {
 		// 상품 등록 페이지 productRegister.jsp로 이동
 		if(checkLogined(session)) return "member/login";	// check logined
 		return "product/register";
 	}
 
-	@RequestMapping("ui/modify.do")
+	@RequestMapping(value="ui/modify.do", method=RequestMethod.GET)
 	public ModelAndView showEditProductUI(String id, HttpSession session) {
 		// 상품 수정 페이지로 이동
 		if(checkLogined(session)) return new ModelAndView("member/login");	// check logined
@@ -212,7 +199,7 @@ public class ProductController {
 				.addObject("product", pService.findProductById(id));
 	}
 
-	@RequestMapping("ui/myProducts.do")
+	@RequestMapping(value="ui/myProducts.do", method=RequestMethod.GET)
 	public ModelAndView showMyProductListUI(String page, HttpSession session) {
 		// GET 나의 생산품들 출력
 		if(checkLogined(session)) return new ModelAndView("member/login");	// check logined
@@ -223,54 +210,14 @@ public class ProductController {
 						page));
 	}
 
-	@RequestMapping("ui/detail.do")
+	@RequestMapping(value="ui/detail.do", method=RequestMethod.GET)
 	public ModelAndView showDetailProductUI(String id) {
 		// GET 상품 상세정보 출력후 상품 상세 페이지로 이동
 		return new ModelAndView("product/detail")
 				.addObject("product", pService.findProductById(id));
 	}
 
-	@RequestMapping("image.do")
-	public void getProductImage(String img, HttpServletResponse resp) {
-		File image = new File(Constants.IMAGE_PATH + img);
-		if (!image.exists()) {
-			throw new RuntimeException("No product image");
-		}
-
-		try (InputStream in = new BufferedInputStream(new FileInputStream(image));
-				OutputStream out = resp.getOutputStream();) {
-			byte[] buf = new byte[8096];
-			int readByte = 0;
-			while ((readByte = in.read(buf)) > -1) {
-				out.write(buf, 0, readByte);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@RequestMapping(value = "imageUpload.do", method = RequestMethod.POST, produces = "text/plain")
-	public @ResponseBody String uploadProductImage(HttpServletRequest req) {
-		String imagePath = Constants.IMAGE_PATH;
-
-		File dir = new File(imagePath);
-		if (!dir.exists()) {
-			// 폴더가 존재하지 않으면 폴더 생성
-			dir.mkdirs();
-		}
-
-		try {
-			return new MultipartRequest(req, imagePath, 5 * 1024 * 1024, "UTF-8", new DefaultFileRenamePolicy())
-					.getFile("image").getName();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return "fail";
-	}
-
-	@RequestMapping("ui/search.do")
+	@RequestMapping(value="ui/search.do", method=RequestMethod.GET)
 	public ModelAndView showSearchProductsUI(String category, String page) {
 		if (category == null || category.isEmpty()) category = Constants.CategoryType.values()[0] + "";
 		if (page == null || page.isEmpty()) page = "1";
@@ -280,7 +227,7 @@ public class ProductController {
 				.addObject("products", pService.findProductsByCategory(category, page));
 	}
 	
-	@RequestMapping("ui/searchMain.do")
+	@RequestMapping(value="ui/searchMain.do", method=RequestMethod.GET)
 	public ModelAndView showSearchProductsUIForMain(String page, String keyword) {
 		if (page == null || page.isEmpty()) page = "1";
 		return new ModelAndView("product/search")
