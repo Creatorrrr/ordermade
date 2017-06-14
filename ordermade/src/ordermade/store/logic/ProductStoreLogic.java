@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import ordermade.domain.Category;
 import ordermade.domain.Portfolio;
 import ordermade.domain.Product;
+import ordermade.domain.Tag;
 import ordermade.store.facade.ProductStore;
 import ordermade.store.mapper.ProductMapper;
 
@@ -269,6 +270,19 @@ public class ProductStoreLogic implements ProductStore {
 			ProductMapper mapper = session.getMapper(ProductMapper.class);
 			productList = mapper.selectProductsByMakerName(map);
 		}finally {
+			session.close();
+		}
+		return productList;
+	}
+	
+	@Override
+	public List<Product> selectProductsByTags(List<Tag> tags) {
+		SqlSession session = factory.openSession();
+		List<Product> productList = null;
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			productList = mapper.selectProductsByTags(tags);
+		} finally {
 			session.close();
 		}
 		return productList;

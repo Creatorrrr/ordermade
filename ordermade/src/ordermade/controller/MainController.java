@@ -33,18 +33,18 @@ public class MainController {
 	@Autowired
 	private ProductService pService;
 
-	@RequestMapping("/main.do")
+	@RequestMapping(value="/main.do", method=RequestMethod.GET)
 	public ModelAndView showMainUI(){
 		return new ModelAndView("main/main")
 				.addObject("categories", pService.findAllCategory());
 	}
 	
-	@RequestMapping(value="xml/categoryList.do", produces="application/xml")
+	@RequestMapping(value="xml/categoryList.do", method=RequestMethod.GET, produces="application/xml")
 	public @ResponseBody Categories findAllCategories(){
 		return new Categories(pService.findAllCategory());
 	}
 	
-	@RequestMapping("file/download.do")
+	@RequestMapping(value="file/download.do", method=RequestMethod.GET)
 	public void downloadFile(String fileName, HttpServletResponse resp) {
 		File file = new File(Constants.FILE_PATH + fileName);
 		System.out.println(file.toString());

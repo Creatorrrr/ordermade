@@ -54,7 +54,7 @@ select { padding: 10px;}
 .itemBox { width: 300px;}
 .itemImageBox a img { height: 200px;}
 .itemExplainBox { margin-top:5px;width:90%;font-size:120%;color:black;display:inline-block }
-.itemTitleBox { word-break:break-all;font-weight:bold;width:50%;display:inline-block;color:black; }
+.itemTitleBox { word-break:break-all;font-weight:bold;width:60%;display:inline-block;color:black; }
 .itemPriceBox { font-weight : bold;color : black;float : right; }
 .itemHitBox { font-size : 80%;color : black;text-align: right; }
 

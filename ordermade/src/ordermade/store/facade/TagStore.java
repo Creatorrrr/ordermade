@@ -7,9 +7,9 @@ import ordermade.domain.Tag;
 public interface TagStore {
 	public boolean insertTag(Tag tag);
 
-	public boolean deleteTagById(String id);
+	public boolean deleteTagByProductId(String productId);
 
-	public List<Tag> selectTagsByPortfolioId(String portfolioId);
+	public List<Tag> selectTagsByProductId(String productId);
 
 	public List<Tag> retrieveTagsFromGoogleVision(String path);
 }

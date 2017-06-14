@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Tag {
 	private String keyword;
 	private double score;
-	private Portfolio portfolio;
+	private Product product;
 	
 	public String getKeyword() {
 		return keyword;
@@ -23,10 +23,11 @@ public class Tag {
 	public void setScore(double score) {
 		this.score = score;
 	}
-	public Portfolio getPortfolio() {
-		return portfolio;
+	public Product getProduct() {
+		return product;
 	}
-	public void setPortfolio(Portfolio portfolio) {
-		this.portfolio = portfolio;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
+	
 }

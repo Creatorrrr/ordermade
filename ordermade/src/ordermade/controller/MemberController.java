@@ -21,7 +21,7 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 
-	@RequestMapping("/join.do") // end
+	@RequestMapping(value="/join.do", method=RequestMethod.GET) // end
 	public String showRegisterUI() {
 		// 회원가입 join.jsp 화면으로 이동
 		return "member/memberRegister";
@@ -37,7 +37,7 @@ public class MemberController {
 		return service.registerMember(member) + "";
 	}
 
-	@RequestMapping("/login.do") // end
+	@RequestMapping(value="/login.do", method=RequestMethod.GET) // end
 	public String showLoginUI() {
 		// login.jsp 화면으로 이동
 		return "member/login";
@@ -58,14 +58,14 @@ public class MemberController {
 		}
 	}
 
-	@RequestMapping("/logout.do") // end
+	@RequestMapping(value="/logout.do", method=RequestMethod.GET) // end
 	public String logoutMember(HttpSession session) {
 		// 로그아웃시 main/main.do로 이동
 		session.invalidate();
 		return "redirect:/main/main.do";
 	}
 
-	@RequestMapping("/modify.do") // end
+	@RequestMapping(value="/modify.do", method=RequestMethod.GET) // end
 	public ModelAndView showEditMyPageUI(HttpSession session) {
 		if (checkLogined(session))
 			return new ModelAndView("member/login"); // check logined
@@ -84,7 +84,7 @@ public class MemberController {
 		return service.modifyMemberById(member) + "";
 	}
 
-	@RequestMapping("/remove.do") // end
+	@RequestMapping(value="/remove.do", method=RequestMethod.GET) // end
 	public String removeMemberById(HttpSession session) {
 		if (checkLogined(session))
 			return "member/login"; // check logined
@@ -98,7 +98,7 @@ public class MemberController {
 		}
 	}
 
-	@RequestMapping("/myPage.do")
+	@RequestMapping(value="/myPage.do", method=RequestMethod.GET)
 	public ModelAndView showMyPageUI(String makerId, HttpSession session) {
 		// 다른 사람이 나의 페이지를 이동할 때 profile 
 		if (makerId == null) {
@@ -133,7 +133,7 @@ public class MemberController {
 
 	// Mobile용
 	// http://localhost:8080/ordermade/member/xml/myPage.do
-	@RequestMapping(value = "/xml/myPage.do", produces = "application/xml")
+	@RequestMapping(value = "/xml/myPage.do", method=RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody Member findMyMember(HttpSession session) {
 		return service.findMemberById((String) session.getAttribute("loginId"));
 	}

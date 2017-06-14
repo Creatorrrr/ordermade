@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import ordermade.domain.Category;
 import ordermade.domain.Portfolio;
-import ordermade.domain.Tag;
 import ordermade.store.facade.PortfolioStore;
 import ordermade.store.mapper.PortfolioMapper;
 import ordermade.store.mapper.ProductMapper;
@@ -140,13 +139,6 @@ public class PortfolioStoreLogic implements PortfolioStore {
 		
 //		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
 //		return mapper.selectPortfoliosByCategory(category, page);
-	}
-	
-	@Override
-	public List<Portfolio> selectPortfoliosByTags(List<Tag> tags) {
-		SqlSession session = factory.openSession();
-		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
-		return mapper.selectPortfoliosByTags(tags);
 	}
 	
 	//추가---------------------

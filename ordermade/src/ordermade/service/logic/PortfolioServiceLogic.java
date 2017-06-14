@@ -9,11 +9,9 @@ import ordermade.constants.Constants;
 import ordermade.domain.Category;
 import ordermade.domain.Member;
 import ordermade.domain.Portfolio;
-import ordermade.domain.Tag;
 import ordermade.service.facade.PortfolioService;
 import ordermade.store.facade.CategoryStore;
 import ordermade.store.facade.PortfolioStore;
-import ordermade.store.facade.TagStore;
 import ordermade.store.logic.PortfolioStoreLogic;
 
 @Service
@@ -21,8 +19,6 @@ public class PortfolioServiceLogic implements PortfolioService{
 
 	@Autowired
 	private PortfolioStore store;
-	@Autowired
-	private TagStore tStore;
 	@Autowired
 	private CategoryStore cStore;
 	
@@ -32,15 +28,7 @@ public class PortfolioServiceLogic implements PortfolioService{
 	
 	@Override
 	public boolean registerPortfolio(Portfolio portfolio) {
-		boolean portfolioResult = store.insertPortfolio(portfolio);
-		
-		List<Tag> tagList = tStore.retrieveTagsFromGoogleVision(portfolio.getImage());
-		for(Tag t : tagList) {
-			t.setPortfolio(portfolio);
-			tStore.insertTag(t);
-		}
-		
-		return portfolioResult;
+		return store.insertPortfolio(portfolio);
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.util.List;
 import ordermade.domain.Category;
 import ordermade.domain.Portfolio;
 import ordermade.domain.Product;
+import ordermade.domain.Tag;
 
 public interface ProductStore {
 	public boolean insertProduct(Product product);
@@ -22,5 +23,6 @@ public interface ProductStore {
 	public List<Product> selectProductsByMakerIdAndTitle(String makerId, String title, String begin, String end);
 	public List<Product> selectProductsByTitle(String title, String begin, String end);
 	public List<Product> selectProductsByMakerName(String makerName, String begin, String end);
+	public List<Product> selectProductsByTags(List<Tag> tags);
 	public List<Category> selectAllCategory();
 }
