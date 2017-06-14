@@ -25,38 +25,38 @@ public class ProductDataSet {
 	@Autowired
 	private ProductServiceLogic pService;
 	
-//	@Test
-//	public void registerProductDataSet() {
-//		Product product = new Product();
-//		product.setMaker(new Member());
-//		
-//		BufferedReader bufReader = null;
-//		
-//		try {
-//			bufReader = new BufferedReader(new FileReader("test/dataset/productdata"));
-//			String check = null;
-//			while((check = bufReader.readLine()) != null) {
-//				product.setTitle(check);
-//				product.getMaker().setId(bufReader.readLine());
-//				product.setCategory(bufReader.readLine());
-//				product.setContent(bufReader.readLine());
-//				product.setImage(bufReader.readLine());
-//				product.setPrice(Integer.parseInt(bufReader.readLine()));
-//				product.setPeriod(Integer.parseInt(bufReader.readLine()));
-//				product.setHit(Integer.parseInt(bufReader.readLine()));
-//				
-//				pService.registerProduct(product);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				if(bufReader != null) bufReader.close();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//	}
+	@Test
+	public void registerProductDataSet() {
+		Product product = new Product();
+		product.setMaker(new Member());
+		
+		BufferedReader bufReader = null;
+		
+		try {
+			bufReader = new BufferedReader(new FileReader("test/dataset/productdata"));
+			String check = null;
+			while((check = bufReader.readLine()) != null) {
+				product.setTitle(check);
+				product.getMaker().setId(bufReader.readLine());
+				product.setCategory(bufReader.readLine());
+				product.setContent(bufReader.readLine());
+				product.setImage(bufReader.readLine());
+				product.setPrice(Integer.parseInt(bufReader.readLine()));
+				product.setPeriod(Integer.parseInt(bufReader.readLine()));
+				product.setHit(Integer.parseInt(bufReader.readLine()));
+				
+				pService.registerProduct(product);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(bufReader != null) bufReader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 //	
 //	@Test
 //	public void alignProductDataSet() {
@@ -85,30 +85,30 @@ public class ProductDataSet {
 //		}
 //	}
 	
-	@Test
-	public void accountDataSet() {
-		BufferedWriter bufWriter = null;
-		
-		try {
-			bufWriter = new BufferedWriter(new FileWriter("test/dataset/accountdata"));
-			
-			String str = null;
-			String temp = null;
-			for(int i = 1 ; i <= 50 ; i++) {
-				bufWriter.write("INSERT INTO account(member_id, money) VALUES ('m" + i + "', 1000000);\n");
-			}
-			for(int i = 1 ; i <= 50 ; i++) {
-				bufWriter.write("INSERT INTO account(member_id, money) VALUES ('c" + i + "', 1000000);\n");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(bufWriter != null) bufWriter.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+//	@Test
+//	public void accountDataSet() {
+//		BufferedWriter bufWriter = null;
+//		
+//		try {
+//			bufWriter = new BufferedWriter(new FileWriter("test/dataset/accountdata"));
+//			
+//			String str = null;
+//			String temp = null;
+//			for(int i = 1 ; i <= 50 ; i++) {
+//				bufWriter.write("INSERT INTO account(member_id, money) VALUES ('m" + i + "', 1000000);\n");
+//			}
+//			for(int i = 1 ; i <= 50 ; i++) {
+//				bufWriter.write("INSERT INTO account(member_id, money) VALUES ('c" + i + "', 1000000);\n");
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if(bufWriter != null) bufWriter.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 
 }

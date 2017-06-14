@@ -19,7 +19,6 @@
 <script src="${ctx }/resources/js/vendor/ckeditor/ckeditor.js"></script>
 <script src="${ctx }/resources/js/bootstrap.min.js"></script>
 <script src="${ctx }/resources/js/jquery-ui.min.js"></script>
-
 <script src="${ctx }/resources/js/js_simplePagination/jquery.simplePagination.js"></script>
 <%-- <script src="${ctx }/resources/js/jquery.validate.min.js"></script>
 <script src="${ctx }/resources/js/additional-methods.min.js"></script>

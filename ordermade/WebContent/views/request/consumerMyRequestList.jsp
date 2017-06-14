@@ -26,7 +26,7 @@ ${box2 }
 					
 					<div id="resultBox">
 					<c:forEach items="${requests }" var="request" varStatus="status">
-						<div class="request_table" data="${request.id }" page="${request.page }" >
+						<div class="request_table" data="${request.id }">
 							<div class="fl_left"><b style="padding: 20px 0 0 10px;font-size: 20px;">No: ${request.id }</b></div>
 							<div class="fl_right" style="padding: 4px;">
 								<c:choose>
@@ -42,7 +42,7 @@ ${box2 }
 								<tr><td>의뢰 명 : ${request.title}</td></tr>
 								<c:choose>
 									<c:when test='${request.maker.id ne null }'><tr><td>제작자 : ${request.maker.id }</td></tr></c:when>
-									<c:otherwise><tr><td>제작자 : 없음</td></td></c:otherwise>
+									<c:otherwise><tr><td>제작자 : 없음</td></tr></c:otherwise>
 								</c:choose>
 								<tr><td>제작항목 : ${request.category }</td></tr>
 								<tr><td>희망 가격 : ${request.hopePrice }</td></tr>
@@ -54,9 +54,6 @@ ${box2 }
 				</li>
 				
 				<!-- 페이지 구현  -->
-
-				<link href="${ctx }/resources/js/js_simplePagination/simplePagination.css" rel="stylesheet" type="text/css">
-				<script src="${ctx }/resources/js/js_simplePagination/jquery.simplePagination.js"></script>	
 				<li><div id = "pagination"></div></li>
 
 			</ul>
@@ -64,13 +61,13 @@ ${box2 }
 <script type="text/javaScript">
 
 $(document).ready(function() {
+	pagination('searchMyRequests');
 
 	//공개 설정 버튼 구현 
 	$("#resultBox").on('click','.boundBtn', function(){
 		var requestId = $(this).parent().parent().attr("data");
 		var bound = ($(this).text() == "비공개") ? 1 : 0;
-		console.log(requestId);
-		//console.log($(this).text() + bound);
+		
 		$.ajax({
 			url : '${ctx}/request/xml/modifyBound.do?bound='+bound+'&requestId='+requestId,
 			type : "get",
@@ -139,39 +136,39 @@ $(document).ready(function() {
 	
 	//-------------page
 	
-	var pagination = function(doName, pageNum) {
-	    $('#pagination').pagination({
-	        items: pageNum,
-	        itemOnPage: 10,
-	        cssStyle: 'light-theme',
-	        onPageClick: function (page, evt) {
-	            tab1(doName, page);	// ******************************* 페이징 초기화 해결 필요
-	        }
-	    });
+	// 페이지 생성 함수
+	function pagination(doName){
+		$.ajax({
+			url : "${ctx}/request/pages/" + doName + ".do",
+			type : "get",
+			dataType : "text",
+			success : function(pages) {
+			    $('#pagination').pagination({	// 페이지 총 개수를 구한 다음 생성
+			        items: pages,
+			        itemOnPage: 10,
+			        cssStyle: 'light-theme',
+			        onPageClick: function (page, evt) {
+			        	getRequests(doName, page);
+			        }
+			    });
+			}
+		});
 	};
 	
 	//-------------------tab
-	var status = 'tab1';
-	
-	function tab1(doName, page){
-		var page = page || 1;
-		ajaxName = doName;
-		//var ctx = ${ctx};
+	function getRequests(doName, page){
 		$.ajax({
 			url : '${ctx}/request/xml/'+doName+'.do?page='+page,
 			type : "get",
 			dataType : "xml",
 			success : function(xml) {
-				console.log(xml);
 				$('#resultBox').html('');
 				var list = $(xml).find("request");
-				var pageNum = $('>page',list.get(0)).text();
-				pagination(doName, $(xml).find("rows").text());
 				list.each(function(){
 					var makerId = $(">maker>id",this).text();
 					var bound = $(">bound",this).text();
 					
-					var rs = '<div class="request_table" data="'+ $(">id",this).text() +'" page="'+ pageNum +'" >';
+					var rs = '<div class="request_table" data="' + $(">id",this).text() + '\">';
 						rs+='<div class="fl_left"><b style="padding: 20px 0 0 10px;font-size: 20px;">No : '+ $(">id",this).text() +'</b></div>';
 						rs+='<div class="fl_right" style="padding: 4px;">';
 						
@@ -198,24 +195,22 @@ $(document).ready(function() {
 						rs+='</table>';
 						rs+="<button class=\"fl_right btn btn-default\" onclick=\"javascript:location.href='${ctx}/request/ui/detail.do?id=" + $(">id",this).text() + "'\">자세히보기</button>";
 						rs+='</div>'; 
+						
 					$('#resultBox').append(rs);
-					//console.log(rs);
-					
 				});
-		
-				
-
-				
 			}
 		});
 	}
+	
+	var status = 'tab1';
 	
 	$('#tab1').addClass("btn-primary");
 	
 	//모든 의뢰서 탭구현
 	$('#tab1').click(function(){
 		if(status != 'tab1'){
-			tab1('searchMyRequests');
+			pagination('searchMyRequests');
+			
 			status = 'tab1';
 			
 			$('#tab1').addClass("btn-primary").removeClass('btn-default');
@@ -228,8 +223,10 @@ $(document).ready(function() {
 	//진행중 탭 구현
 	$('#tab2').click(function(){
 		if(status != 'tab2'){
-			tab1('searchMyRequestsWithMaker');
+			pagination('searchMyRequestsWithMaker');
+			
 			status = 'tab2';
+			
 			$('#tab2').addClass("btn-primary").removeClass('btn-default');
 			$('#tab1').removeClass("btn-primary").addClass('btn-default');
 			$('#tab3').removeClass("btn-primary").addClass('btn-default');
@@ -240,8 +237,10 @@ $(document).ready(function() {
 	//완료 탭 구현
 	$('#tab3').click(function(){
 		if(status != 'tab3'){
-			tab1('searchMyRequestsWithPayment');
+			pagination('searchMyRequestsWithPayment');
+			
 			status = 'tab3';
+			
 			$('#tab3').addClass("btn-primary").removeClass('btn-default');
 			$('#tab1').removeClass("btn-primary").addClass('btn-default');
 			$('#tab2').removeClass("btn-primary").addClass('btn-default');

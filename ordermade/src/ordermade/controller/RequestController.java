@@ -361,10 +361,14 @@ public class RequestController {
 	@RequestMapping(value="request/xml/searchMyRequests.do", method=RequestMethod.GET, produces="application/xml")
 	public @ResponseBody Requests findMyRequestsByConsumerId(String page, HttpSession session){
 		if(page == null) page = "1";
-		String loginId = (String)session.getAttribute("loginId");
-		return new Requests(
-				service.findRequestsByConsumerId(loginId, page), 
-				service.findRowsByConsumerId(loginId) / Constants.REQUEST_ROW_SIZE + 1);
+		return new Requests(service.findRequestsByConsumerId(
+				(String)session.getAttribute("loginId"), 
+				page));
+	}
+	// Complete
+	@RequestMapping(value="request/pages/searchMyRequests.do", method=RequestMethod.GET, produces="text/plain")
+	public @ResponseBody String findRowsByConsumerId(HttpSession session){
+		return service.findRowsByConsumerId((String)session.getAttribute("loginId")) / Constants.REQUEST_ROW_SIZE + 1 + "";
 	}
 	// Complete
 	@RequestMapping(value="request/xml/searchMyRequestsWithMaker.do", method=RequestMethod.GET, produces="application/xml")
