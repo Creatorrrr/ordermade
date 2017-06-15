@@ -22,6 +22,8 @@ public interface PortfolioService {
 
 	public List<Portfolio> findPortfoliosByCategory(String category, String page);
 	
+	public int findRowsPortfoliosByCategory(String category);
+	
 	//추가-----------------
 	
 	public List<Category> findAllCategory();

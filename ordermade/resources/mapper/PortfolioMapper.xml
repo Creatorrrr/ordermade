@@ -87,6 +87,12 @@
 				WHERE type = #{category})
 				WHERE rnum BETWEEN #{begin} AND #{end}
   	</select>
+  	
+  	<select id="selectRowsPortfoliosByCategory" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM portfolio
+		WHERE type = #{category}
+  	</select>
  	
  	<!--추가  -->
  	

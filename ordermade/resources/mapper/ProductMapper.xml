@@ -134,6 +134,12 @@
 		WHERE type = #{category})
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
+	
+	<select id="selectRowsProductsByCategory" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM product
+		WHERE type = #{category}
+	</select>
 
 	<select id="selectProductsByCategoryAndTitle" parameterType="HashMap"
 		resultMap="productMap">

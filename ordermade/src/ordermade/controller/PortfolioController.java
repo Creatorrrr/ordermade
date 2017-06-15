@@ -116,27 +116,22 @@ public class PortfolioController {
 
 	@RequestMapping(value = "ui/search.do", method = RequestMethod.GET)
 	public ModelAndView showSearchPortfolioUI(String category, String page) {
-		
 		if (category == null)
 			category = Constants.CategoryType.values()[0] + "";
-		if (page == null)
-			page = "1";
+		if (page == null) page = "1";
 		return new ModelAndView("portfolio/search")
 				.addObject("categories", pService.findAllCategory())
 				.addObject("category", category)
-				.addObject("portfolio", pService.findPortfoliosByCategory(category, page));
-		
-//		if(category == null) 
-//			category = Constants.CategoryType.values()[0] +"";
-//		if(page == null) 
-//			page = "1";
-//		List<Portfolio> portfolios = pService.findPortfoliosByCategory(category, page);
-//		
-//		return new ModelAndView("portfolio/search")
-//			.addObject("categories", pService.findAllCategory())
-//			.addObject("category", category)
-//			.addObject("portfolios", portfolios);
+				.addObject("portfolio", pService.findPortfoliosByCategory(category, page))
+				.addObject("thisPage", page);
 	} // test http://localhost:8080/ordermade/portfolio/ui/search.do?type=뷰티
+	
+	@RequestMapping(value = "pages/searchCategory.do", method = RequestMethod.GET, produces="text/plain")
+	public @ResponseBody String findPagesByCategory(String category) {
+		if (category == null)
+			category = Constants.CategoryType.values()[0] + "";
+		return pService.findRowsPortfoliosByCategory(category) / Constants.PORTFOLIO_ROW_SIZE + 1 + "";
+	}
 
 	@RequestMapping(value = "ui/mylist.do", method = RequestMethod.GET)
 	public ModelAndView showMyPortfolioListUI(String page, HttpServletRequest req) { 
@@ -164,7 +159,7 @@ public class PortfolioController {
 	} // test http://localhost:8080/ordermade/portfolio/xml/search.do?page=2
 	
 	@RequestMapping(value = "pages/search.do", method=RequestMethod.GET, produces = "text/plain")
-	public @ResponseBody String findMyPortfolios(String makerId, HttpSession session) {
+	public @ResponseBody String findPages(String makerId, HttpSession session) {
 		if(makerId == null || makerId.isEmpty()) {
 			makerId = (String) session.getAttribute("loginId");
 		}

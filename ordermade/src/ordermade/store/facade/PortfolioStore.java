@@ -18,6 +18,7 @@ public interface PortfolioStore {
 	public int selectRowsByMakerId(String makerId);
 	public List<Portfolio> selectPortfoliosByMakerIdAndTitle(String makerId, String title,String begin, String end );
 	public List<Portfolio> selectPortfoliosByCategory(String category, String begin, String end);
+	public int selectRowsPortfoliosByCategory(String category);
 	
 	//추가-----------
 	public List<Category> selectAllCategory();

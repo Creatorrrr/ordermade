@@ -157,6 +157,11 @@ public class RequestServiceLogic implements RequestService{
 	public List<InviteRequest> findInviteRequestsByConsumerId(String consumerId, String form, String page) {
 		return irStore.selectInviteRequestsByConsumerId(consumerId, form, page);
 	}
+	
+	@Override
+	public int findRowsInviteRequestsByConsumerId(String consumerId, String form) {
+		return irStore.selectRowsInviteRequestsByConsumerId(consumerId, form);
+	}
 
 	@Override
 	public boolean registerComment(Comment comment) {

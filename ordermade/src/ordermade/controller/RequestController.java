@@ -338,7 +338,15 @@ public class RequestController {
 						service.findInviteRequestsByConsumerId(
 								(String)session.getAttribute("loginId"), 
 								Constants.FORM_REQUEST, 
-								page));
+								page))
+				.addObject("thisPage", page);
+	}
+	
+	@RequestMapping(value="request/pages/consumerInviteList.do",method=RequestMethod.GET, produces="text/plain")
+	public @ResponseBody String showPagesConsumerInviteRequestListUI(HttpSession session){
+		return service.findRowsInviteRequestsByConsumerId(
+				(String)session.getAttribute("loginId"), 
+				Constants.FORM_REQUEST) / Constants.INVITEREQUEST_ROW_SIZE + 1 + "";
 	}
 	
 	//==================mobile -> xml

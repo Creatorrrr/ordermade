@@ -66,6 +66,12 @@
 			 FROM invite_request ir INNER JOIN request r ON ir.request_id = r.id
 			 WHERE r.consumer_id = #{consumerId} AND ir.form = #{form})
 		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@INVITEREQUEST_ROW_SIZE} + 1) AND (#{page}*${@ordermade.constants.Constants@INVITEREQUEST_ROW_SIZE})
-	</select> 
+	</select>
+	
+	<select id="selectRowsInviteRequestsByConsumerId" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM invite_request ir INNER JOIN request r ON ir.request_id = r.id
+		WHERE r.consumer_id = #{consumerId} AND ir.form = #{form}
+	</select>
 </mapper>
   

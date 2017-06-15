@@ -7,10 +7,7 @@ ${head_body}
 <%@ include file="/views/common/header.jsp"%>
 
 
-	<div class="wrapper row3">
-		<div class="rounded">
-			<main class="container clear"> <!-- main body -->
-			<div class="sidebar one_third first">
+${box1 }
 				<h6>상품 카테고리</h6>
 				<nav class="sdb_holder">
 					<ul>
@@ -19,9 +16,9 @@ ${head_body}
 						</c:forEach>
 					</ul>
 				</nav>
-			</div>
+				
+${box2 }
 
-			<div id="content" class="two_third">
 				<div class="content" align="center">
 					<h1 id="productCategory">[${category }] 상품페이지</h1>
 					
@@ -73,16 +70,18 @@ ${head_body}
 						</div>
 					</c:forEach>
 				</div>
-			</div>
-			</main>
-		</div>
-	</div>
-
+				<!-- 페이지 구현  -->
+				<div id = "pagination"></div>
+	
 ${box3 }
 
 <%@ include file="/views/common/footer.jsp"%>
 
 <script type="text/javascript">
+$(document).ready(function(){
+	pagination();
+});
+
 //검색을 클릭하면 검색된 상품 목록을 가져온다.
 $("#productSearchBtn").click(
 		function() {
@@ -302,5 +301,25 @@ var productController = {
 
 		return content;
 	}
+};
+
+//페이지 생성 함수
+function pagination(){
+	$.ajax({
+		url : "${ctx}/product/pages/search.do?category=${category}",
+		type : "get",
+		dataType : "text",
+		success : function(pages) {
+		    $('#pagination').pagination({	// 페이지 총 개수를 구한 다음 생성
+		        items: pages,
+		        itemOnPage: 10,
+				currentPage: "${thisPage}", // 초기에 보여주는 페이지
+		        cssStyle: 'light-theme',
+		        onPageClick: function (page, evt) {
+		        	location.href='${ctx}/product/ui/search.do?category=${category}&page=' + page;
+		        }
+		    });
+		}
+	});
 };
 </script>

@@ -138,6 +138,19 @@ public class ProductStoreLogic implements ProductStore {
 		}
 		return productList;
 	}
+	
+	@Override
+	public int selectRowsProductsByCategory(String category) {
+		SqlSession session = factory.openSession();
+		int rows = 0;
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			rows = mapper.selectRowsProductsByCategory(category);
+		}finally {
+			session.close();
+		}
+		return rows;
+	}
 
 	@Override
 	public List<Product> selectProductsByCategoryAndTitle(String category, String title, String begin, String end) {

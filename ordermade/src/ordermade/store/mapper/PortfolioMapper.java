@@ -18,6 +18,7 @@ public interface PortfolioMapper {
 	public int selectRowsByMakerId(String makerId);
 	public List<Portfolio> selectPortfoliosByMakerIdAndTitle(HashMap<String, String> map);
 	public List<Portfolio> selectPortfoliosByCategory(HashMap<String, String> map);
+	public int selectRowsPortfoliosByCategory(String category);
 	
 //	public List<Portfolio> selectPortfoliosByMakerId(@Param("makerId")String makerId, @Param("page")String page);
 //	public List<Portfolio> selectPortfoliosByMakerIdAndTitle(@Param("makerId")String makerId, @Param("title")String title, @Param("page")String page );

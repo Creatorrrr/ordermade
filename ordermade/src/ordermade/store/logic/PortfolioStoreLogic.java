@@ -154,6 +154,22 @@ public class PortfolioStoreLogic implements PortfolioStore {
 //		return mapper.selectPortfoliosByCategory(category, page);
 	}
 	
+	@Override
+	public int selectRowsPortfoliosByCategory(String category) {
+		SqlSession session = factory.openSession();
+		int rows = 0;
+		try {
+			PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+			rows = mapper.selectRowsPortfoliosByCategory(category);
+		}finally {
+			session.close();
+		}
+		return rows;
+		
+//		PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+//		return mapper.selectPortfoliosByCategory(category, page);
+	}
+	
 	//추가---------------------
 	
 	@Override

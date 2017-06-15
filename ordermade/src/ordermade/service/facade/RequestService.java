@@ -34,6 +34,7 @@ public interface RequestService {
 	public List<InviteRequest> findInviteRequestsByMakerId(String makerId, String form, String page);
 	public int findRowsInviteRequestsByMakerId(String makerId, String form);
 	public List<InviteRequest> findInviteRequestsByConsumerId(String consumerId, String form, String page);
+	public int findRowsInviteRequestsByConsumerId(String consumerId, String form);
 	public boolean registerComment(Comment comment);
 	public boolean modifyCommentById(Comment comment);
 	public boolean removeCommentById(String id);

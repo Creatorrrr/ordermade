@@ -7,10 +7,8 @@
 ${head_body}
 <%@ include file="/views/common/header.jsp"%>
 
-<div class="wrapper row3">
-	<div class="rounded">
-		<main class="container clear"> <!-- main body -->
-		<div class="sidebar one_third first">
+${box1 }
+
 			<h6>포트폴리오 카테고리</h6>
 			<nav class="sdb_holder">
 				<ul>
@@ -19,9 +17,9 @@ ${head_body}
 					</c:forEach>
 				</ul>
 			</nav>
-		</div>
 
-		<div id="content" class="two_third">
+${box2 }
+
 			<div class="content" align="center">
 				<h1>[${category }] 포트폴리오 페이지</h1>
 
@@ -70,159 +68,172 @@ ${head_body}
 					</div>
 				</c:forEach>
 			</div>
-		</div>
-		</main>
-	</div>
-</div>
+			<!-- 페이지 구현  -->
+			<div id = "pagination"></div>
+			
 ${box3} 
 
 <%@ include file="/views/common/footer.jsp"%>
 
 <script type="text/javascript">
-  $(document).ready(function(){
-	 
-	portfolioController.getPortfoliosByCategory("${category }",1);
-	
+$(document).ready(function(){
+	pagination();
+	portfolioController.getPortfoliosByCategory("${category }","${thisPage}");
  });
-	//검색을 클릭하면 검색된 의뢰서 목록을 가져온다.
-	$("#portfolioSearchBtn").click(
-			function() {
-				var type = $("#portfolioSearchType option:selected").val();
-				var keyword = $("#portfolioSearchKeyword");
-				if (type === "title") {
-					portfolioController.getPortfoliosByCategoryAndTitle(1, keyword.val());
-				} else if (type === "makerName") {
-					portfolioController.getPortfoliosByCategoryAndMakerName(1, keyword.val());
-				} else if(type === "category"){
-					portfolioController.getPortfoliosByCategory(1, keyword.val());
+  
+//검색을 클릭하면 검색된 의뢰서 목록을 가져온다.
+$("#portfolioSearchBtn").click(
+		function() {
+			var type = $("#portfolioSearchType option:selected").val();
+			var keyword = $("#portfolioSearchKeyword");
+			if (type === "title") {
+				portfolioController.getPortfoliosByCategoryAndTitle(1, keyword.val());
+			} else if (type === "makerName") {
+				portfolioController.getPortfoliosByCategoryAndMakerName(1, keyword.val());
+			} else if(type === "category"){
+				portfolioController.getPortfoliosByCategory(1, keyword.val());
+			}
+			keyword.val("");
+		});
+
+
+var portfolioController = {
+	getPortfoliosByCategoryAndTitle : function(page, title) {
+		$.ajax({
+			url : "${ctx}/portfolio/ajax/portfolios/CT.do?page=" + page
+					+ "&category=${category}&title=" + title,
+			type : "get",
+			dataType : "xml",
+			success : function(xml) {
+				var xmlData = $(xml).find("portfolio");
+				var listLength = xmlData.length;
+				$("#listSearchResult").empty();
+				if (listLength) {
+					var contentStr = "";
+					$(xmlData).each(function() {
+						contentStr += portfolioController.makeContent(this);
+					});
+					$("#listSearchResult").append(contentStr);
+				} else {
+					$("#listSearchResult").append(
+							portfolioController.makeContentForEmpty());
 				}
-				keyword.val("");
-			});
+			}
+		});
+	},
 
-
-	var portfolioController = {
-		getPortfoliosByCategoryAndTitle : function(page, title) {
-			$.ajax({
-				url : "${ctx}/portfolio/ajax/portfolios/CT.do?page=" + page
-						+ "&category=${category}&title=" + title,
-				type : "get",
-				dataType : "xml",
-				success : function(xml) {
-					var xmlData = $(xml).find("portfolio");
-					var listLength = xmlData.length;
-					$("#listSearchResult").empty();
-					if (listLength) {
-						var contentStr = "";
-						$(xmlData).each(function() {
-							contentStr += portfolioController.makeContent(this);
-						});
-						$("#listSearchResult").append(contentStr);
-					} else {
-						$("#listSearchResult").append(
-								portfolioController.makeContentForEmpty());
-					}
+	getPortfoliosByCategoryAndMakerName : function(page, makerName) {
+		$.ajax({
+			url : "${ctx}/portfolio/ajax/portfolios/CM.do?page=" + page
+					+ "&category=${category}&makerName=" + makerName,
+			type : "get",
+			dataType : "xml",
+			success : function(xml) {
+				var xmlData = $(xml).find("portfolio");
+				var listLength = xmlData.length;
+				$("#listSearchResult").empty();
+				if (listLength) {
+					var contentStr = "";
+					$(xmlData).each(function() {
+						contentStr += portfolioController.makeContent(this);
+					});
+					$("#listSearchResult").append(contentStr);
+				} else {
+					$("#listSearchResult").append(
+							portfolioController.makeContentForEmpty());
 				}
-			});
-		},
+			}
+		});
+	},
 
-		getPortfoliosByCategoryAndMakerName : function(page, makerName) {
-			$.ajax({
-				url : "${ctx}/portfolio/ajax/portfolios/CM.do?page=" + page
-						+ "&category=${category}&makerName=" + makerName,
-				type : "get",
-				dataType : "xml",
-				success : function(xml) {
-					var xmlData = $(xml).find("portfolio");
-					var listLength = xmlData.length;
-					$("#listSearchResult").empty();
-					if (listLength) {
-						var contentStr = "";
-						$(xmlData).each(function() {
-							contentStr += portfolioController.makeContent(this);
-						});
-						$("#listSearchResult").append(contentStr);
-					} else {
-						$("#listSearchResult").append(
-								portfolioController.makeContentForEmpty());
-					}
+	getPortfoliosByCategory : function(category, page) {
+		$.ajax({
+			url : "${ctx}/portfolio/ajax/portfolios/category.do?category=" + category + "&page="+page,
+			type : "get",
+			dataType : "xml",
+			success : function(xml) {
+				var xmlData = $(xml).find("portfolio");
+				var listLength = xmlData.length;
+				$("#listSearchResult").empty();
+				if (listLength) {
+					var contentStr = "";
+					$(xmlData).each(function() {
+						contentStr += portfolioController.makeContent(this);
+					});
+					$("#listSearchResult").append(contentStr);
+				} else {
+					$("#listSearchResult").append(
+							portfolioController.makeContentForEmpty());
 				}
-			});
-		},
+			}
+		});
+	},
 
- 		getPortfoliosByCategory : function(category, page) {
-			$.ajax({
-				url : "${ctx}/portfolio/ajax/portfolios/category.do?category=" + category + "&page="+page,
-				type : "get",
-				dataType : "xml",
-				success : function(xml) {
-					var xmlData = $(xml).find("portfolio");
-					var listLength = xmlData.length;
-					$("#listSearchResult").empty();
-					if (listLength) {
-						var contentStr = "";
-						$(xmlData).each(function() {
-							contentStr += portfolioController.makeContent(this);
-						});
-						$("#listSearchResult").append(contentStr);
-					} else {
-						$("#listSearchResult").append(
-								portfolioController.makeContentForEmpty());
-					}
-				}
-			});
-		},
+	
+	makeContent : function(xml) {
+		var content = "";
 
-		
-		makeContent : function(xml) {
-			var content = "";
+		content += "<div class='listBox'>";
+		content += "	<div class='listExplainBox'  align='right'>";
+		content += '		<img src="${ctx }/main/file/download.do?fileName='+ $(xml).find("portfolio>image").text() + '"style="width:120px;height: 100px";>';
+		content += "		<table>";
+		content += "			<tr>";
+		content += "				<td>포트폴리오 명 : </td>";
+		content += "				<td>" + $(xml).find("portfolio>title").text()
+				+ "</td>";
+		content += "			</tr>";
+		content += "			<tr>";
+		content += "				<td>제작자 : </td>";
+		content += "				<td>" + $(xml).find("portfolio>maker>name").text()
+				+ "</td>";
+		content += "			</tr>";
+		content += "			<tr>";
+		content += "				<td>제작항목 : </td>";
+		content += "				<td>" + $(xml).find("portfolio>category").text()
+				+ "</td>";
+		content += "			</tr>";
+		content += "		</table>";
+		content += "	</div>";
+		content += "	<div class='detailBtnBox'>";
+		content += "		<input class='btn btn-default' type='button' value='자세히보기' onclick=\"javascript:location.href='${ctx}/portfolio/ui/detail.do?id="+ $(xml).find("portfolio>id").text() + "'\">";
+		content += "	</div>";
+		content += "</div>";
 
-			content += "<div class='listBox'>";
-			content += "	<div class='listExplainBox'  align='right'>";
-			content += '		<img src="${ctx }/main/file/download.do?fileName='+ $(xml).find("portfolio>image").text() + '"style="width:120px;height: 100px";>';
-			content += "		<table>";
-			content += "			<tr>";
-			content += "				<td>포트폴리오 명 : </td>";
-			content += "				<td>" + $(xml).find("portfolio>title").text()
-					+ "</td>";
-			content += "			</tr>";
-			content += "			<tr>";
-			content += "				<td>제작자 : </td>";
-			content += "				<td>" + $(xml).find("portfolio>maker>name").text()
-					+ "</td>";
-			content += "			</tr>";
-			content += "			<tr>";
-			content += "				<td>제작항목 : </td>";
-			content += "				<td>" + $(xml).find("portfolio>category").text()
-					+ "</td>";
-			content += "			</tr>";
-			content += "		</table>";
-			content += "	</div>";
-			content += "	<div class='detailBtnBox'>";
-			content += "		<input class='btn btn-default' type='button' value='자세히보기' onclick=\"javascript:location.href='${ctx}/portfolio/ui/detail.do?id="+ $(xml).find("portfolio>id").text() + "'\">";
-			content += "	</div>";
-			content += "</div>";
+		return content;
+	},
 
-			return content;
-		},
+	makeContentForEmpty : function() {
+		var content = "";
 
-		makeContentForEmpty : function() {
-			var content = "";
+		content += "<div class='portfolioBox'>";
+		content += "<table>";
+		content += "<tr>";
+		content += "<td>조건에 해당하는 상품이 없습니다.</td>";
+		content += "</tr>";
+		content += "</table>";
+		content += "</div>";
 
-			content += "<div class='portfolioBox'>";
-			content += "<table>";
-			content += "<tr>";
-			content += "<td>조건에 해당하는 상품이 없습니다.</td>";
-			content += "</tr>";
-			content += "</table>";
-			content += "</div>";
-
-			return content;
+		return content;
+	}
+};
+	
+//페이지 생성 함수
+function pagination(){
+	$.ajax({
+		url : "${ctx}/portfolio/pages/searchCategory.do?category=${category}",
+		type : "get",
+		dataType : "text",
+		success : function(pages) {
+		    $('#pagination').pagination({	// 페이지 총 개수를 구한 다음 생성
+		        items: pages,
+		        itemOnPage: 10,
+				currentPage: "${thisPage}", // 초기에 보여주는 페이지
+		        cssStyle: 'light-theme',
+		        onPageClick: function (page, evt) {
+		        	location.href='${ctx}/portfolio/ui/search.do?category=${category}&page=' + page;
+		        }
+		    });
 		}
-	};
-
+	});
+};
 </script>
-
-
-
-${box3 }
-

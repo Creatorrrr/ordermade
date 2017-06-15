@@ -66,6 +66,11 @@ public class PortfolioServiceLogic implements PortfolioService{
 		return excludePassword(store.selectPortfoliosByCategory(category, getPortfolioBegin(page), getPortfolioEnd(page)));
 	}
 	
+	@Override
+	public int findRowsPortfoliosByCategory(String category) {
+		return store.selectRowsPortfoliosByCategory(category);
+	}
+	
 	//추가----------------------------
 	
 	@Override

@@ -117,5 +117,18 @@ public class InviteRequestStoreLogic implements InviteRequestStore {
 		}
 		return list;
 	}
+	
+	@Override
+	public int selectRowsInviteRequestsByConsumerId(String consumerId, String form) {
+		SqlSession session = factory.openSession();
+		int rows = 0;
+		try {
+			InviteRequestMapper mapper = session.getMapper(InviteRequestMapper.class);
+			rows = mapper.selectRowsInviteRequestsByConsumerId(consumerId, form);
+		} finally {
+			session.close();
+		}
+		return rows;
+	}
 
 }

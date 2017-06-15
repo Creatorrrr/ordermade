@@ -57,6 +57,7 @@ ${box2 }
                 </tbody>
           </table>
 	</div>
+	<div id="pagination">페이지 위치</div>
 
 ${box3 }
 
@@ -64,6 +65,9 @@ ${box3 }
 
 
 <script type="text/javascript">
+$(document).ready(function(){
+	pagination();
+});
 
 var inviteRequestController = {
 	acceptInviteRequest : function(requestId, makerId){
@@ -113,6 +117,26 @@ var inviteRequestController = {
 			}
 		});
 	}
+};
+
+//페이지 생성 함수
+function pagination(){
+	$.ajax({
+		url : "${ctx}/request/pages/consumerInviteList.do",
+		type : "get",
+		dataType : "text",
+		success : function(pages) {
+		    $('#pagination').pagination({	// 페이지 총 개수를 구한 다음 생성
+		        items: pages,
+		        itemOnPage: 10,
+				currentPage: "${thisPage}", // 초기에 보여주는 페이지
+		        cssStyle: 'light-theme',
+		        onPageClick: function (page, evt) {
+		        	location.href = "${ctx }/request/ui/consumerInviteList.do?page=" + page;
+		        }
+		    });
+		}
+	});
 };
 
 </script>

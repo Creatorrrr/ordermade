@@ -15,6 +15,7 @@ public interface ProductStore {
 	public List<Product> selectProductsByCategoryOrderByHitsForMain(String category, String page);
 	public List<Product> selectProductsByCategoryOrderByIdForMain(String category, String page);
 	public List<Product> selectProductsByCategory(String category, String begin, String end);
+	public int selectRowsProductsByCategory(String category);
 	public List<Product> selectProductsByCategoryAndTitle(String category, String title, String begin, String end);
 	public List<Product> selectProductsByCategoryAndMakerName(String category, String makerName, String begin, String end);
 	public List<Product> selectProductsByCategoryAndMakerId(String category, String makerId, String begin, String end);

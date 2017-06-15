@@ -233,7 +233,14 @@ public class ProductController {
 		return new ModelAndView("product/search")
 				.addObject("categories", pService.findAllCategory())
 				.addObject("category", category)
-				.addObject("products", pService.findProductsByCategory(category, page));
+				.addObject("products", pService.findProductsByCategory(category, page))
+				.addObject("thisPage", page);
+	}
+	
+	@RequestMapping(value="pages/search.do", method=RequestMethod.GET, produces="text/plain")
+	public @ResponseBody String findPagesByCategory(String category, String page) {
+		if (category == null || category.isEmpty()) category = Constants.CategoryType.values()[0] + "";
+		return pService.findRowsProductsByCategory(category) / Constants.PRODUCT_ROW_SIZE + 1 + "";
 	}
 	
 	@RequestMapping(value="ui/searchMain.do", method=RequestMethod.GET)
