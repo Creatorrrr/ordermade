@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/views/common/_html.jsp"%>
-<link href="${ctx }/resources/js/js_simplePagination/simplePagination.css" rel="stylesheet" type="text/css">
-<script src="${ctx }/resources/js/js_simplePagination/jquery.simplePagination.js"></script>
-<title>구매이력</title>
+<title>구매 이력</title>
 <%@ include file="/views/common/_common.jsp"%>
 
 ${head_body}
@@ -95,43 +93,13 @@ ${box2 }
 			</table>
           	<div id="pagination">페이지 위치</div>
 
+${box3 }
+
+<%@ include file="/views/common/footer.jsp"%>
+
 <script type="text/javascript">
 $(document).ready(function(){
-	// 페이지수 얻음
-	pagination($($('.purchaseTable').get(0)).attr("page"));
-	var pageNum = $($('.purchaseTable').get(0)).attr("page");
-	console.log($($('.purchaseTable').get(0)).attr("page"));
-	// simplePagination 
-	//http://flaviusmatis.github.io/simplePagination.js
-	function pagination(pageNum){
-		// URL 현재 페이지 값 얻어오기
-		var urlPageNum = location.search;
-		var list = urlPageNum.match(/[^\d]+/g);
-		thisPage = 1;
-		if ( list != null) {
-			for ( i = 0 ; i < list.length; i++ ){
-				if ( list[i].indexOf('page=') == 1){
-					var temp = urlPageNum.match(/\d+/g);
-					if( temp != null ) thisPage = temp[i];
-					console.log("this Page is :" + thisPage);
-				}
-			}
-		}
-	}
-	
-	$('#pagination').pagination({
-		items: pageNum,	// 게시글 수
-		itemOnPage: 7,	// 한 페이지에 보여주 게시글 수
-		currentPage: thisPage, // 초기에 보여주는 페이지
-		cssStyle: 'light-theme', 
-		hrefTextPrefix: '#page=', // href 속성에 사용되는 문자열
-		prevText: '', // 이전버튼 텍스트
-		nextText: '', // 다음버튼 텍스트
-		onPageClick: function ( page, evt) {
-			location.href = "${ctx }/deal/ui/transaction.do?page=" + page;
-		}
-	});
-	
+	pagination();
 });
 
 var dealController = {
@@ -155,9 +123,24 @@ var dealController = {
 		});
 	},
 };
+
+//페이지 생성 함수
+function pagination(){
+	$.ajax({
+		url : "${ctx}/deal/pages/transaction.do",
+		type : "get",
+		dataType : "text",
+		success : function(pages) {
+		    $('#pagination').pagination({	// 페이지 총 개수를 구한 다음 생성
+		        items: pages,
+		        itemOnPage: 10,
+				currentPage: "${thisPage}", // 초기에 보여주는 페이지
+		        cssStyle: 'light-theme',
+		        onPageClick: function (page, evt) {
+		        	location.href = "${ctx }/deal/ui/transaction.do?page=" + page;
+		        }
+		    });
+		}
+	});
+};
 </script>
-
-
-${box3 }
-
-<%@ include file="/views/common/footer.jsp"%>

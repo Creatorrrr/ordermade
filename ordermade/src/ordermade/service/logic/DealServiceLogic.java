@@ -91,6 +91,11 @@ public class DealServiceLogic implements DealService{
 	public List<PurchaseHistory> findpurchaseHistoriesByConsumerId(String consumerId, String page) {
 		return purchaseHistoryStore.selectPurchaseHistoriesByConsumerId(consumerId, page);
 	}
+	
+	@Override
+	public int findRowsPurchaseHistoriesByConsumerId(String consumerId) {
+		return purchaseHistoryStore.selectRowsPurchaseHistoriesByConsumerId(consumerId);
+	}
 
 	@Override
 	public List<PurchaseHistory> findpurchaseHistoriesByConsumerIdAndRequestTitle(String consumerId,
@@ -101,6 +106,11 @@ public class DealServiceLogic implements DealService{
 	@Override
 	public List<PurchaseHistory> findpurchaseHistoriesByMakerId(String makerId, String page) {
 		return purchaseHistoryStore.selectPurchaseHistoriesByMakerId(makerId, page);
+	}
+	
+	@Override
+	public int findRowsPurchaseHistoriesByMakerId(String makerId) {
+		return purchaseHistoryStore.selectRowsPurchaseHistoriesByMakerId(makerId);
 	}
 
 	@Override

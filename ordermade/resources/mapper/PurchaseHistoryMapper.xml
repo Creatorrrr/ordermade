@@ -85,6 +85,12 @@
 		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE} + 1) AND (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
   	</select>
   	
+  	<select id="selectRowsPurchaseHistoriesByConsumerId" parameterType="String" resultType="int">
+  		SELECT COUNT(*)
+		FROM purchase_history ph INNER JOIN request r ON ph.request_id = r.id
+		WHERE ph.consumer_id = #{consumerId}
+  	</select>
+  	
   	<select id="selectPurchaseHistoriesByConsumerIdAndRequestTitle" parameterType="java.util.Map" resultMap="purchaseHistoryMap">
   		<include refid="selectPurchaseHistory" />
   		FROM (<include refid="selectPurchaseHistoryWithRowNum" />
@@ -99,6 +105,12 @@
   			FROM purchase_history ph INNER JOIN request r ON ph.request_id = r.id
   			WHERE ph.maker_id = #{makerId})
 		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE} + 1) AND (#{page}*${@ordermade.constants.Constants@PURCHASEHISTORY_ROW_SIZE})
+  	</select>
+  	
+  	<select id="selectRowsPurchaseHistoriesByMakerId" parameterType="String" resultType="int">
+  		SELECT COUNT(*)
+		FROM purchase_history ph INNER JOIN request r ON ph.request_id = r.id
+		WHERE ph.maker_id = #{makerId}
   	</select>
   	
   	<select id="selectPurchaseHistoriesByMakerIdAndRequestTitle" parameterType="java.util.Map" resultMap="purchaseHistoryMap">

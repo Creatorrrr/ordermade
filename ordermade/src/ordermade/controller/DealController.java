@@ -73,7 +73,20 @@ public class DealController {
 			modelAndView = new ModelAndView("purchaseHistory/makerPurchaseHistory");
 		}
 		modelAndView.addObject("purchaseList", purchaseList);
+		modelAndView.addObject("thisPage", page);
 		return modelAndView;
+	}
+	
+	@RequestMapping(value="pages/transaction.do", method=RequestMethod.GET, produces="text/plain")
+	public @ResponseBody String findPagesPurchaseHistory(HttpSession session){
+		String memberType = (String)session.getAttribute("memberType");
+		String memberId = (String)session.getAttribute("loginId");
+		
+		if (memberType.equals(Constants.CONSUMER)){
+			return dService.findRowsPurchaseHistoriesByConsumerId(memberId) / Constants.PURCHASEHISTORY_ROW_SIZE + 1 + "";
+		} else {
+			return dService.findRowsPurchaseHistoriesByMakerId(memberId) / Constants.PURCHASEHISTORY_ROW_SIZE + 1 + "";
+		}
 	}
 	
 	// XML for Mobile

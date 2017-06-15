@@ -118,6 +118,19 @@ public class PurchaseHistoryStoreLogic implements PurchaseHistoryStore {
 		}
 		return list;
 	}
+	
+	@Override
+	public int selectRowsPurchaseHistoriesByConsumerId(String consumerId) {
+		SqlSession session = factory.openSession();
+		int rows = 0;
+		try {
+			PurchaseHistoryMapper mapper = session.getMapper(PurchaseHistoryMapper.class);
+			rows = mapper.selectRowsPurchaseHistoriesByConsumerId(consumerId);
+		} finally {
+			session.close();
+		}
+		return rows;
+	}
 
 	@Override
 	public List<PurchaseHistory> selectPurchaseHistoriesByConsumerIdAndRequestTitle(String consumerId,
@@ -146,6 +159,19 @@ public class PurchaseHistoryStoreLogic implements PurchaseHistoryStore {
 			session.close();
 		}
 		return list;
+	}
+	
+	@Override
+	public int selectRowsPurchaseHistoriesByMakerId(String makerId) {
+		SqlSession session = factory.openSession();
+		int rows = 0;
+		try {
+			PurchaseHistoryMapper mapper = session.getMapper(PurchaseHistoryMapper.class);
+			rows = mapper.selectRowsPurchaseHistoriesByMakerId(makerId);
+		} finally {
+			session.close();
+		}
+		return rows;
 	}
 
 	@Override

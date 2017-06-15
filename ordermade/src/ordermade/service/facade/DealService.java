@@ -22,10 +22,14 @@ public interface DealService {
 
 	public List<PurchaseHistory> findpurchaseHistoriesByConsumerId(String consumerId, String page);
 
+	public int findRowsPurchaseHistoriesByConsumerId(String consumerId);
+
 	public List<PurchaseHistory> findpurchaseHistoriesByConsumerIdAndRequestTitle(String consumerId,
 			String requestTitle, String page);
 
 	public List<PurchaseHistory> findpurchaseHistoriesByMakerId(String makerId, String page);
+
+	public int findRowsPurchaseHistoriesByMakerId(String makerId);
 
 	public List<PurchaseHistory> findpurchaseHistoriesByMakerIdAndRequestTitle(String makerId, String requestTitle,
 			String page);

@@ -318,7 +318,15 @@ public class RequestController {
 						service.findInviteRequestsByMakerId(
 								(String)session.getAttribute("loginId"), 
 								Constants.FORM_INVITE, 
-								page));
+								page))
+				.addObject("thisPage", page);
+	}
+	
+	@RequestMapping(value="request/pages/makerInviteList.do",method=RequestMethod.GET, produces="text/plain")
+	public @ResponseBody String findPagesMakerInviteRequestListUI(HttpSession session){
+		return service.findRowsInviteRequestsByMakerId(
+				(String)session.getAttribute("loginId"), 
+				Constants.FORM_INVITE) / Constants.INVITEREQUEST_ROW_SIZE + 1 + "";
 	}
 	
 	// 170530 Complete
