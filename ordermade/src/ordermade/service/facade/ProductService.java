@@ -26,6 +26,8 @@ public interface ProductService {
 	public List<Product> findProductsByCategoryAndMakerName(String category, String makerName, String page);
 
 	public List<Product> findProductsByMakerId(String makerId, String page);
+	
+	public int findRowsByMakerId(String makerId);
 
 	public List<Product> findProductsByMakerIdAndTitle(String makerId, String title, String page);
 

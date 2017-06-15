@@ -13,8 +13,9 @@ public interface PortfolioMapper {
 	public boolean deletePortfolioById(String id);
 	
 	public Portfolio selectPortfolioById(String id);
-	
+
 	public List<Portfolio> selectPortfoliosByMakerId(HashMap<String, String> map);
+	public int selectRowsByMakerId(String makerId);
 	public List<Portfolio> selectPortfoliosByMakerIdAndTitle(HashMap<String, String> map);
 	public List<Portfolio> selectPortfoliosByCategory(HashMap<String, String> map);
 	

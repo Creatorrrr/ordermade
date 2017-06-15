@@ -52,75 +52,43 @@ ${box2 }
 		</li>
 	
 		<!-- 페이지 구현  -->
-
-		<link href="${ctx }/resources/js/js_simplePagination/simplePagination.css" rel="stylesheet" type="text/css">
-		<script src="${ctx }/resources/js/js_simplePagination/jquery.simplePagination.js"></script>	
 		<li><div id = "pagination"></div></li>
 
 
 	</ul>
-			
+
+${box3 }
+
+<%@ include file="/views/common/footer.jsp"%>
 			
 <script type="text/javaScript">
 
 $(document).ready(function() {
-	
-/* 	//의뢰서 추가 버튼
-	$("#registerBtn").click(function(){
-		window.location.href = "${ctx}/request/ui/register.do";
-	}); */
-	
+	pagination('searchMyRequestsByMakerIdExceptPayment');
 	
 	//-------------page
 	
-	var ajaxName = 'searchMyRequestsByMakerId';
-	
-
-   	pagination($($('.request_table').get(0)).attr("page"));//페이지수 얻고 실행
-    function pagination(pageNum){//참고  http://flaviusmatis.github.io/simplePagination.js
-   		//URL에서 현재 페이지 번호 얻어오기.
-   		//var urlStr= location.search;//?...
-   		var urlStr= location.hash;//#...
-   		var list=urlStr.match(/[^\d]+/g);
-    	var thisPage=1;
-   		if(list != null){		   			
-	   		for(i=0; i<list.length; i++){
-	   			if(list[i].indexOf('page=')==1){
-	   				var temp = urlStr.match(/\d+/g);
-	   				if(temp != null) thisPage=temp[i];
-	   				console.log("thispage-----"+thisPage);
-	   			}
-	   		}
-   		}
-   	
-	    $('#pagination').pagination({
-	        items: pageNum,
-	        itemOnPage: 7,
-	        currentPage: thisPage,
-	        cssStyle: 'light-theme',
-	        hrefTextPrefix : '#page=', //#..
-	        prevText: '',
-	        nextText: '',
-	       /*  onInit: function () {
-	              console.log("------onInit---");
-	        }, */
-	        onPageClick: function (page, evt) {
-	           // console.log(page+"---"+ajaxName+"--"+status);
-	            tab1(ajaxName, page);
-	        }
-	    });
-    }
-	
-	
+	// 페이지 생성 함수
+	function pagination(doName){
+		$.ajax({
+			url : "${ctx}/request/pages/" + doName + ".do",
+			type : "get",
+			dataType : "text",
+			success : function(pages) {
+			    $('#pagination').pagination({	// 페이지 총 개수를 구한 다음 생성
+			        items: pages,
+			        itemOnPage: 10,
+			        cssStyle: 'light-theme',
+			        onPageClick: function (page, evt) {
+			        	getRequests(doName, page);
+			        }
+			    });
+			}
+		});
+	};
 	
 	//-------------------tab
-	var status = 'tab2';
-	
-	function tab1(doName, page){
-		var page = page || 1;
-		ajaxName = doName;
-//		console.log(ajaxName);
-		//var ctx = ${ctx};
+	function getRequests(doName, page){
 		$.ajax({
 			url : '${ctx}/request/xml/'+doName+'.do?page='+page,
 			type : "get",
@@ -129,14 +97,12 @@ $(document).ready(function() {
 				console.log(xml);
 				$('#resultBox').html('');
 				var list = $(xml).find("request");
-				var pageNum = $('>page',list.get(0)).text();
-				pagination(pageNum);
 				list.each(function(){
 					var makerId = $(">maker>id",this).text();
 					var bound = $(">bound",this).text();
 					var rs = "";
 					
-					rs += '<div class="request_table" data="${request.id }" page="${request.page }">';
+					rs += '<div class="request_table" data="${request.id }">';
 					rs += '	<table>';
 					rs += '		<tr>';
 					rs += '			<td>의뢰번호</td>';
@@ -166,14 +132,17 @@ $(document).ready(function() {
 		});
 	};
 
+	var status = 'tab2';
 	
 	//진행중 탭 구현
 	$('#tab2').click(function(){
 		if(status != 'tab2'){
-			tab1('searchMyRequestsByMakerIdExceptPayment');
+			pagination('searchMyRequestsByMakerIdExceptPayment');
+			getRequests('searchMyRequestsByMakerIdExceptPayment', 1);
+			
 			status = 'tab2';
+			
 			$('#tab2').addClass("btn-primary").removeClass('btn-default');
-			//$('#tab1').removeClass("btn-primary").addClass('btn-default');
 			$('#tab3').removeClass("btn-primary").addClass('btn-default');
 		}
 	});
@@ -182,10 +151,12 @@ $(document).ready(function() {
 	//완료 탭 구현
 	$('#tab3').click(function(){
 		if(status != 'tab3'){
-			tab1('searchMyRequestsByMakerIdWithPayment');
+			pagination('searchMyRequestsByMakerIdWithPayment');
+			getRequests('searchMyRequestsByMakerIdWithPayment', 1);
+			
 			status = 'tab3';
+			
 			$('#tab3').addClass("btn-primary").removeClass('btn-default');
-			//$('#tab1').removeClass("btn-primary").addClass('btn-default');
 			$('#tab2').removeClass("btn-primary").addClass('btn-default');
 		}
 	});
@@ -217,8 +188,3 @@ var removeRequest = function(requestId){
 	}
 };	
 </script>
-			
-
-${box3 }
-
-<%@ include file="/views/common/footer.jsp"%>

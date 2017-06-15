@@ -122,6 +122,19 @@ public class RequestStoreLogic implements RequestStore {
 		}
 		return list;
 	}
+	
+	@Override
+	public int selectRowsByBound(String bound) {
+		SqlSession session = factory.openSession();
+		int rows = 0;
+		try {
+			RequestMapper mapper = session.getMapper(RequestMapper.class);
+			rows = mapper.selectRowsByBound(bound);
+		} finally {
+			session.close();
+		}
+		return rows;
+	}
 
 	@Override
 	public List<Request> selectRequestsByBoundAndTitle(String bound, String title, String begin, String end) {
@@ -206,6 +219,19 @@ public class RequestStoreLogic implements RequestStore {
 		}
 		return list;
 	}
+	
+	@Override
+	public int selectRowsByConsumerIdWithMaker(String consumerId) {
+		SqlSession session = factory.openSession();
+		int rows = 0;
+		try {
+			RequestMapper mapper = session.getMapper(RequestMapper.class);
+			rows = mapper.selectRowsByConsumerIdWithMaker(consumerId);
+		} finally {
+			session.close();
+		}
+		return rows;
+	}
 
 	@Override
 	public List<Request> selectRequestsByConsumerIdWithPayment(String consumerId, String begin, String end) {
@@ -218,45 +244,41 @@ public class RequestStoreLogic implements RequestStore {
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
 			list = mapper.selectRequestsByConsumerIdWithPayment(map);
-			//--------pagefix
-//			double length = list.size()* 1.0;
-//			int pageNum = (int)Math.ceil(length/Constants.REQUEST_ROW_SIZE);
-//			System.out.println(pageNum);
-//			int index = 0 ;
-//			int start = (Integer.parseInt(page)-1)*Constants.REQUEST_ROW_SIZE;	//0*10=0 , 1*10=10
-//			int end = Integer.parseInt(page)*Constants.REQUEST_ROW_SIZE;		//1*10=10, 2*10=20
-//			for(Request request : list){//page bug 수정
-//				//페이지 만큼 불러주기
-//				//1페이지 일때0-9, 2페이지 일떄 10-19 내의 데이터만 불러옴
-//				if(start <= index && index < end){
-//					//System.out.println(pageNum+"");
-//					request.setPage(pageNum+"");//총페이지 수
-//				}
-//				//System.out.println(index);
-//				index++;
-//			}//--------
 		} finally {
 			session.close();
 		}
 		return list;
 	}
-
+	
 	@Override
-	public List<Request> selectRequestsByMakerId(String makerId, String begin, String end) {
+	public int selectRowsByConsumerIdWithPayment(String consumerId) {
 		SqlSession session = factory.openSession();
-		List<Request> list = null;
-		HashMap<String, String> map = new HashMap<>();
-		map.put("makerId", makerId);
-		map.put("begin", begin);
-		map.put("end", end);
+		int rows = 0;
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			list = mapper.selectRequestsByMakerId(map);
+			rows = mapper.selectRowsByConsumerIdWithPayment(consumerId);
 		} finally {
 			session.close();
 		}
-		return list;
+		return rows;
 	}
+
+//	@Override
+//	public List<Request> selectRequestsByMakerId(String makerId, String begin, String end) {
+//		SqlSession session = factory.openSession();
+//		List<Request> list = null;
+//		HashMap<String, String> map = new HashMap<>();
+//		map.put("makerId", makerId);
+//		map.put("begin", begin);
+//		map.put("end", end);
+//		try {
+//			RequestMapper mapper = session.getMapper(RequestMapper.class);
+//			list = mapper.selectRequestsByMakerId(map);
+//		} finally {
+//			session.close();
+//		}
+//		return list;
+//	}
 	
 	@Override
 	public List<Request> selectRequestsByMakerIdExceptPayment(String makerId, String begin, String end) {
@@ -274,6 +296,19 @@ public class RequestStoreLogic implements RequestStore {
 		}
 		return list;
 	}
+	
+	@Override
+	public int selectRowsByMakerIdExceptPayment(String makerId) {
+		SqlSession session = factory.openSession();
+		int rows = 0;
+		try {
+			RequestMapper mapper = session.getMapper(RequestMapper.class);
+			rows = mapper.selectRowsByMakerIdExceptPayment(makerId);
+		} finally {
+			session.close();
+		}
+		return rows;
+	}
 
 	@Override
 	public List<Request> selectRequestsByMakerIdWithPayment(String makerId, String begin, String end) {
@@ -285,29 +320,24 @@ public class RequestStoreLogic implements RequestStore {
 		map.put("end", end);
 		try {
 			RequestMapper mapper = session.getMapper(RequestMapper.class);
-			list = mapper.selectRequestsByMakerIdWithPayment(map);//모든것을 데이터를 불러옴.
-			//--------pagefix
-//			double length = list.size()* 1.0;
-//			int pageNum = (int)Math.ceil(length/Constants.REQUEST_ROW_SIZE);
-//			int index = 0 ;
-//			int start = (Integer.parseInt(page)-1)*Constants.REQUEST_ROW_SIZE;	//0*10=0 , 1*10=10
-//			int end = Integer.parseInt(page)*Constants.REQUEST_ROW_SIZE;		//1*10=10, 2*10=20
-//			for(Request request : list){//page bug 수정
-//				//페이지 만큼 불러주기
-//				//1페이지 일때0-9, 2페이지 일떄 10-19 내의 데이터만 불러옴
-//				if(start <= index && index < end){
-//					//System.out.println(pageNum+"");
-//					request.setPage(pageNum+"");//총페이지 수
-//				}
-//				//System.out.println(index);
-//				index++;
-//			}//--------
+			list = mapper.selectRequestsByMakerIdWithPayment(map);
 		} finally {
 			session.close();
 		}
 		return list;
 	}
 
-
+	@Override
+	public int selectRowsByMakerIdWithPayment(String makerId) {
+		SqlSession session = factory.openSession();
+		int rows = 0;
+		try {
+			RequestMapper mapper = session.getMapper(RequestMapper.class);
+			rows = mapper.selectRowsByMakerIdWithPayment(makerId);
+		} finally {
+			session.close();
+		}
+		return rows;
+	}
 	
 }

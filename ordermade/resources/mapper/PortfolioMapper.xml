@@ -65,6 +65,11 @@
 		WHERE rnum BETWEEN #{begin} AND #{end}
   	</select>
 
+	<select id="selectRowsByMakerId" parameterType="String" resultType="int">
+  		SELECT COUNT(*)
+  		FROM portfolio
+		WHERE maker_id = #{makerId}
+  	</select>
   	
   	<select id="selectPortfoliosByMakerIdAndTitle" parameterType="HashMap" resultMap="portfolioMap">
   		<include refid="selectPortfolio"/>

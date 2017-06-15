@@ -20,12 +20,14 @@ ${box2 }
 							<input id="productSearchKeyword" name="keyword" class="form-control" type="text" value="" placeholder="Search Title"  />
 						</div>
 						<button id="productSearchBtn" type="button" class="fa fa-search btn btn-default">검색</button>
-						<button class="fa fa-search btn btn-default" type="button" title="Search" onclick="javascript:productController.getMyProducts(1)">내 상품 전체 보기</button>
+						<button class="fa fa-search btn btn-default" type="button" title="Search" onclick="javascript:pagination('makerid');productController.getMyProducts(1)">내 상품 전체 보기</button>
 					</form>
 				</div>
 				<div id="listSearchResult" class="nospace listing" style="margin-top:20px; ">
 					<!-- products from server -->
 				</div>
+				<!-- 페이지 구현  -->
+				<div id = "pagination"></div>
 
 ${box3 }
 
@@ -33,6 +35,7 @@ ${box3 }
 
 <script type="text/javascript">
 $(document).ready(function(){
+	pagination("makerid");
 	productController.getMyProducts(1);
 });
 
@@ -133,5 +136,24 @@ var productController = {
 
 		return content;
 	}
+};
+
+//페이지 생성 함수
+function pagination(doName){
+	$.ajax({
+		url : "${ctx}/product/pages/" + doName + ".do",
+		type : "get",
+		dataType : "text",
+		success : function(pages) {
+		    $('#pagination').pagination({	// 페이지 총 개수를 구한 다음 생성
+		        items: pages,
+		        itemOnPage: 10,
+		        cssStyle: 'light-theme',
+		        onPageClick: function (page, evt) {
+		        	productController.getMyProducts(page);
+		        }
+		    });
+		}
+	});
 };
 </script>

@@ -222,6 +222,19 @@ public class ProductStoreLogic implements ProductStore {
 		}
 		return productList;
 	}
+	
+	@Override
+	public int selectRowsByMakerId(String makerId) {
+		SqlSession session = factory.openSession();
+		int rows = 0;
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			rows = mapper.selectRowsByMakerId(makerId);
+		}finally {
+			session.close();
+		}
+		return rows;
+	}
 
 	@Override
 	public List<Product> selectProductsByMakerIdAndTitle(String makerId, String title, String begin, String end) {

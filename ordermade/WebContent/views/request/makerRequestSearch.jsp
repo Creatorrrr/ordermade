@@ -45,19 +45,21 @@ ${box2 }
 	
 	<div class="content" align="left">					
 		<div class="btn-group btn-group-justified" id="tabBox">
-			<button class="btn btn-default" onclick="javascript:requestController.getRequestsByBound(1);">모든 의뢰서</button>
-			<button class="btn btn-default" onclick="javascript:requestController.getMyInviteRequestsForMaker(1);">내가 보낸 의뢰서</button>
+			<button class="btn btn-default" onclick="javascript:pagination('searchBound');requestController.getRequestsByBound(1);">모든 의뢰서</button>
+			<button class="btn btn-default" onclick="javascript:pagination('searchMyInviteRequestsForMaker');requestController.getMyInviteRequestsForMaker(1);">내가 보낸 의뢰서</button>
 		</div>
 	</div>
 	
 	<!-- requests from server -->
 	<div id="requestSearchResult"></div>
 
-
+	<!-- 페이지 구현  -->
+	<div id = "pagination"></div>
 
 <script type="text/javascript">	
 
 $(document).ready(function() {
+	pagination('searchBound');
 	requestController.getRequestsByBound(1);
 	//requestController.getRequestsByBoundAndTitle(1,1);	// test
 	//requestController.getRequestsByBoundAndContent(1,2);	// test
@@ -107,6 +109,7 @@ var requestController = {
 						alert("참가 요청 실패");
 					}
 					javascript:$.unblockUI();
+					pagination('searchBound');
 					requestController.getRequestsByBound(1);
 			}
 		});
@@ -245,6 +248,35 @@ var requestController = {
 
 		return content;
 	}
+};
+
+//페이지 생성 함수
+function pagination(doName){
+	var targetURL = "";
+	if(doName == "searchBound") {
+		targetURL = "${ctx}/request/pages/searchBound.do"
+	} else if(doName == "searchMyInviteRequestsForMaker") {
+		targetURL = "${ctx}/request/pages/searchMyInviteRequestsForMaker.do?form=R"
+	}
+	$.ajax({
+		url : targetURL,
+		type : "get",
+		dataType : "text",
+		success : function(pages) {
+		    $('#pagination').pagination({	// 페이지 총 개수를 구한 다음 생성
+		        items: pages,
+		        itemOnPage: 10,
+		        cssStyle: 'light-theme',
+		        onPageClick: function (page, evt) {
+		        	if(doName == "searchBound") {
+			        	requestController.getRequestsByBound(page);
+		        	} else if(doName == "searchMyInviteRequestsForMaker") {
+		        		requestController.getMyInviteRequestsForMaker(page);
+		        	}
+		        }
+		    });
+		}
+	});
 };
 </script>
 

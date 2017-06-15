@@ -97,6 +97,19 @@ public class PortfolioStoreLogic implements PortfolioStore {
 		//PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
 		//return mapper.selectPortfoliosByMakerId(makerId, begin, end);
 	}
+	
+	@Override
+	public int selectRowsByMakerId(String makerId) {
+		SqlSession session = factory.openSession();
+		int rows = 0;
+		try {
+			PortfolioMapper mapper = session.getMapper(PortfolioMapper.class);
+			rows = mapper.selectRowsByMakerId(makerId);
+		}finally {
+			session.close();
+		}
+		return rows;
+	}
 
 	@Override
 	public List<Portfolio> selectPortfoliosByMakerIdAndTitle(String makerId, String title, String begin, String end) {

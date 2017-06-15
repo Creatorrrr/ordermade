@@ -90,6 +90,11 @@ public class ProductServiceLogic implements ProductService{
 	public List<Product> findProductsByMakerId(String makerId, String page) {
 		return excludePassword(pStore.selectProductsByMakerId(makerId, getProductBegin(page), getProductEnd(page)));
 	}
+	
+	@Override
+	public int findRowsByMakerId(String makerId) {
+		return pStore.selectRowsByMakerId(makerId);
+	}
 
 	@Override
 	public List<Product> findProductsByMakerIdAndTitle(String makerId, String title, String page) {

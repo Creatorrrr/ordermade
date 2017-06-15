@@ -109,6 +109,15 @@ public class ProductController {
 		}
 		return new Products(pService.findProductsByMakerId(makerId, page));
 	}
+	
+	@RequestMapping(value = "/pages/makerid.do", method=RequestMethod.GET, produces = "text/plain")
+	public @ResponseBody String findPages(String makerId, HttpSession session) {
+		// Ajax 나의 생산품들 전체 출력
+		if (makerId == null || makerId.isEmpty()) {
+			makerId = (String)session.getAttribute("loginId");
+		}
+		return pService.findRowsByMakerId(makerId) / Constants.PRODUCT_ROW_SIZE + 1 + "";
+	}
 
 	// test : http://localhost:8080/ordermade/ajax/products/category.do
 	@RequestMapping(value = "ajax/products/category.do", method=RequestMethod.GET, produces = "application/xml")

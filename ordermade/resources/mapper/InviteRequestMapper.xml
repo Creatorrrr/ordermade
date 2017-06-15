@@ -54,6 +54,12 @@
 		WHERE rnum BETWEEN  ((#{page}-1)*${@ordermade.constants.Constants@INVITEREQUEST_ROW_SIZE} + 1) AND (#{page}*${@ordermade.constants.Constants@INVITEREQUEST_ROW_SIZE})
 	</select>
 	
+	<select id="selectRowsInviteRequestsByMakerId" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM invite_request
+		WHERE maker_id = #{makerId} AND form = #{form}
+	</select>
+	
 	<select id="selectInviteRequestsByConsumerId" parameterType="HashMap" resultMap="inviteRequestMap">
 		<include refid="selectInviteRequest"/>
 		FROM (SELECT ROW_NUMBER() OVER (ORDER BY request_time DESC) rnum, ir.id, ir.message, ir.maker_id, ir.request_time, ir.request_id, ir.form

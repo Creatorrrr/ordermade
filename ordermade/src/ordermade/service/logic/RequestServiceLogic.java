@@ -57,6 +57,11 @@ public class RequestServiceLogic implements RequestService{
 	public List<Request> findRequestsByBound(String bound, String page) {
 		return rStore.selectRequestsByBound(bound, getRequestBegin(page),getRequestEnd(page));
 	}
+	
+	@Override
+	public int findRowsByBound(String bound) {
+		return rStore.selectRowsByBound(bound);
+	}
 
 	@Override
 	public List<Request> findRequestsByBoundAndTitle(String bound, String title, String page) {
@@ -82,25 +87,45 @@ public class RequestServiceLogic implements RequestService{
 	public List<Request> findRequestsByConsumerIdWithMaker(String consumerId, String page) {
 		return rStore.selectRequestsByConsumerIdWithMaker(consumerId, getRequestBegin(page),getRequestEnd(page));
 	}
+	
+	@Override
+	public int findRowsByConsumerIdWithMaker(String consumerId) {
+		return rStore.selectRowsByConsumerIdWithMaker(consumerId);
+	}
 
 	@Override
 	public List<Request> findRequestsByConsumerIdWithPayment(String consumerId, String page) {
 		return rStore.selectRequestsByConsumerIdWithPayment(consumerId, getRequestBegin(page),getRequestEnd(page));
 	}
-
+	
 	@Override
-	public List<Request> findRequestsByMakerId(String makerId, String page) {
-		return rStore.selectRequestsByMakerId(makerId, getRequestBegin(page),getRequestEnd(page));
+	public int findRowsByConsumerIdWithPayment(String consumerId) {
+		return rStore.selectRowsByConsumerIdWithPayment(consumerId);
 	}
+
+//	@Override
+//	public List<Request> findRequestsByMakerId(String makerId, String page) {
+//		return rStore.selectRequestsByMakerId(makerId, getRequestBegin(page),getRequestEnd(page));
+//	}
 	
 	@Override
 	public List<Request> findRequestsByMakerIdExceptPayment(String makerId, String page) {
 		return rStore.selectRequestsByMakerIdExceptPayment(makerId, getRequestBegin(page),getRequestEnd(page));
 	}
+	
+	@Override
+	public int findRowsByMakerIdExceptPayment(String makerId) {
+		return rStore.selectRowsByMakerIdExceptPayment(makerId);
+	}
 
 	@Override
 	public List<Request> findRequestsByMakerIdWithPayment(String makerId, String page) {
 		return rStore.selectRequestsByMakerIdWithPayment(makerId, getRequestBegin(page),getRequestEnd(page));
+	}
+	
+	@Override
+	public int findRowsByMakerIdWithPayment(String makerId) {
+		return rStore.selectRowsByMakerIdWithPayment(makerId);
 	}
 	
 	@Override
@@ -121,6 +146,11 @@ public class RequestServiceLogic implements RequestService{
 	@Override
 	public List<InviteRequest> findInviteRequestsByMakerId(String makerId, String form, String page) {
 		return irStore.selectInviteRequestsByMakerId(makerId, form, page);
+	}
+	
+	@Override
+	public int findRowsInviteRequestsByMakerId(String makerId, String form) {
+		return irStore.selectRowsInviteRequestsByMakerId(makerId, form);
 	}
 
 	@Override

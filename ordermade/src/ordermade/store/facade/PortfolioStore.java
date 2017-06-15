@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import ordermade.domain.Category;
 import ordermade.domain.Portfolio;
-import ordermade.domain.Tag;
 
 @Repository
 public interface PortfolioStore {
@@ -16,6 +15,7 @@ public interface PortfolioStore {
 	public boolean deletePortfolioById(String id);
 	public Portfolio selectPortfolioById(String id);
 	public List<Portfolio> selectPortfoliosByMakerId(String makerId,String begin, String end);
+	public int selectRowsByMakerId(String makerId);
 	public List<Portfolio> selectPortfoliosByMakerIdAndTitle(String makerId, String title,String begin, String end );
 	public List<Portfolio> selectPortfoliosByCategory(String category, String begin, String end);
 	

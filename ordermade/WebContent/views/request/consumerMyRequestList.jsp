@@ -168,7 +168,7 @@ $(document).ready(function() {
 					var makerId = $(">maker>id",this).text();
 					var bound = $(">bound",this).text();
 					
-					var rs = '<div class="request_table" data="' + $(">id",this).text() + '\">';
+					var rs = "<div class='request_table' data='" + $(">id",this).text() + "'>";
 						rs+='<div class="fl_left"><b style="padding: 20px 0 0 10px;font-size: 20px;">No : '+ $(">id",this).text() +'</b></div>';
 						rs+='<div class="fl_right" style="padding: 4px;">';
 						
@@ -210,6 +210,7 @@ $(document).ready(function() {
 	$('#tab1').click(function(){
 		if(status != 'tab1'){
 			pagination('searchMyRequests');
+			getRequests('searchMyRequests', 1);
 			
 			status = 'tab1';
 			
@@ -224,6 +225,7 @@ $(document).ready(function() {
 	$('#tab2').click(function(){
 		if(status != 'tab2'){
 			pagination('searchMyRequestsWithMaker');
+			getRequests('searchMyRequestsWithMaker', 1);
 			
 			status = 'tab2';
 			
@@ -238,6 +240,7 @@ $(document).ready(function() {
 	$('#tab3').click(function(){
 		if(status != 'tab3'){
 			pagination('searchMyRequestsWithPayment');
+			getRequests('searchMyRequestsWithPayment', 1);
 			
 			status = 'tab3';
 			

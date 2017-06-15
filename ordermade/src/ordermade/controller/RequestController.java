@@ -337,12 +337,16 @@ public class RequestController {
 	
 	// Complete
 	@RequestMapping(value="request/xml/searchBound.do", method=RequestMethod.GET, produces="application/xml")
-	public @ResponseBody Requests findRequestsByBound(String page, String bound){
+	public @ResponseBody Requests findRequestsByBound(String page){
 		if(page == null) page = "1";
 		return new Requests(service.findRequestsByBound(Constants.BOUND_PUBLIC, page));
-		
-//		return new Requests(service.findRequestsByBound(bound, page));
 	}
+	// Complete
+	@RequestMapping(value="request/pages/searchBound.do", method=RequestMethod.GET, produces="text/plain")
+	public @ResponseBody String findPagesByBound(){
+		return service.findRowsByBound(Constants.BOUND_PUBLIC) / Constants.REQUEST_ROW_SIZE + 1 + "";
+	}
+		
 	// Complete
 	@RequestMapping(value="request/xml/searchBoundAndTitle.do", method=RequestMethod.GET, produces="application/xml")
 	public @ResponseBody Requests findRequestsByBoundAndTitle(String title, String page ){
@@ -357,6 +361,7 @@ public class RequestController {
 		if(page == null) page = "1";
 		return new Requests(service.findRequestsByBoundAndContent(Constants.BOUND_PUBLIC, content, page));
 	}
+	
 	// Complete
 	@RequestMapping(value="request/xml/searchMyRequests.do", method=RequestMethod.GET, produces="application/xml")
 	public @ResponseBody Requests findMyRequestsByConsumerId(String page, HttpSession session){
@@ -367,9 +372,10 @@ public class RequestController {
 	}
 	// Complete
 	@RequestMapping(value="request/pages/searchMyRequests.do", method=RequestMethod.GET, produces="text/plain")
-	public @ResponseBody String findRowsByConsumerId(HttpSession session){
+	public @ResponseBody String findPagesByConsumerId(HttpSession session){
 		return service.findRowsByConsumerId((String)session.getAttribute("loginId")) / Constants.REQUEST_ROW_SIZE + 1 + "";
 	}
+	
 	// Complete
 	@RequestMapping(value="request/xml/searchMyRequestsWithMaker.do", method=RequestMethod.GET, produces="application/xml")
 	public @ResponseBody Requests findMyRequestsByConsumerIdWithMaker(String page, HttpSession session){
@@ -377,17 +383,28 @@ public class RequestController {
 		return new Requests(service.findRequestsByConsumerIdWithMaker((String)session.getAttribute("loginId"), page));
 	}
 	// Complete
+	@RequestMapping(value="request/pages/searchMyRequestsWithMaker.do", method=RequestMethod.GET, produces="text/plain")
+	public @ResponseBody String findPagesByConsumerIdWithMaker(HttpSession session){
+		return service.findRowsByConsumerIdWithMaker((String)session.getAttribute("loginId")) / Constants.REQUEST_ROW_SIZE + 1 + "";
+	}
+	
+	// Complete
 	@RequestMapping(value="request/xml/searchMyRequestsWithPayment.do", method=RequestMethod.GET, produces="application/xml")
 	public @ResponseBody Requests findMyRequestsByConsumerIdWithPayment(String page, HttpSession session){
 		if(page == null) page = "1";
 		return new Requests(service.findRequestsByConsumerIdWithPayment((String)session.getAttribute("loginId"), page));
 	}
-	
-	@RequestMapping(value="request/xml/searchMyRequestsByMakerId.do", method=RequestMethod.GET, produces="application/xml")
-	public @ResponseBody Requests findMyRequestsByMakerId(String page, HttpSession session){
-		if(page == null) page = "1";
-		return new Requests(service.findRequestsByMakerId((String)session.getAttribute("loginId"), page));
-	}
+	// Complete
+		@RequestMapping(value="request/pages/searchMyRequestsWithPayment.do", method=RequestMethod.GET, produces="text/plain")
+		public @ResponseBody String findPagesByConsumerIdWithPayment(HttpSession session){
+			return service.findRowsByConsumerIdWithPayment((String)session.getAttribute("loginId")) / Constants.REQUEST_ROW_SIZE + 1 + "";
+		}
+		
+//	@RequestMapping(value="request/xml/searchMyRequestsByMakerId.do", method=RequestMethod.GET, produces="application/xml")
+//	public @ResponseBody Requests findMyRequestsByMakerId(String page, HttpSession session){
+//		if(page == null) page = "1";
+//		return new Requests(service.findRequestsByMakerId((String)session.getAttribute("loginId"), page));
+//	}
 	
 	@RequestMapping(value="request/xml/searchMyRequestsByMakerIdExceptPayment.do", method=RequestMethod.GET, produces="application/xml")
 	public @ResponseBody Requests findMyRequestsByMakerIdExceptPayment(String page, HttpSession session){
@@ -395,10 +412,20 @@ public class RequestController {
 		return new Requests(service.findRequestsByMakerIdExceptPayment((String)session.getAttribute("loginId"), page));
 	}
 	
+	@RequestMapping(value="request/pages/searchMyRequestsByMakerIdExceptPayment.do", method=RequestMethod.GET, produces="text/plain")
+	public @ResponseBody String findPagesByMakerIdExceptPayment(HttpSession session){
+		return service.findRowsByMakerIdExceptPayment((String)session.getAttribute("loginId")) / Constants.REQUEST_ROW_SIZE + 1 + "";
+	}
+	
 	@RequestMapping(value="request/xml/searchMyRequestsByMakerIdWithPayment.do", method=RequestMethod.GET, produces="application/xml")
 	public @ResponseBody Requests findMyRequestsByMakerIdWithPayment(String page, HttpSession session){
 		if(page == null) page = "1";
 		return new Requests(service.findRequestsByMakerIdWithPayment((String)session.getAttribute("loginId"), page));
+	}
+	
+	@RequestMapping(value="request/pages/searchMyRequestsByMakerIdWithPayment.do", method=RequestMethod.GET, produces="text/plain")
+	public @ResponseBody String findPagesByMakerIdWithPayment(HttpSession session){
+		return service.findRowsByMakerIdWithPayment((String)session.getAttribute("loginId")) / Constants.REQUEST_ROW_SIZE + 1 + "";
 	}
 	
 	// Complete
@@ -410,6 +437,12 @@ public class RequestController {
 				form,
 				page));
 	}
+	// Complete
+	@RequestMapping(value="request/pages/searchMyInviteRequestsForMaker.do", method=RequestMethod.GET, produces="text/plain")
+	public @ResponseBody String findPagesMyInviteRequestsForMaker(String form, HttpSession session){
+		return service.findRowsInviteRequestsByMakerId((String)session.getAttribute("loginId"), form) / Constants.REQUEST_ROW_SIZE + 1 + "";
+	}
+		
 	// Complete
 	@RequestMapping(value="request/xml/searchMyInviteRequestsForConsumer.do", method=RequestMethod.GET, produces="application/xml")
 	public @ResponseBody InviteRequests findMyInviteRequestsForConsumer(String page, String form, HttpSession session){

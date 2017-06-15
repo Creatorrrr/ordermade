@@ -88,22 +88,54 @@ ${box2 }
 			</div>
 		</c:forEach> 
 	</div>
+	<!-- 페이지 구현  -->
+	<div id = "pagination"></div>
 </ul>
 
+${box3 }
+
+<%@ include file="/views/common/footer.jsp"%>
 
 <script type="text/javascript">
-	//검색을 클릭하면 검색된 의뢰서 목록을 가져온다.
-	$("#portfolioSearchBtn").click(
-			function() {
-				var type = $("#portfolioSearchType option:selected").val();
-				var keyword = $("#portfolioSearchKeyword");
-				if (type === "title") {
-					portfolioController.getPortfoliosByMakerIdAndTitle(1, keyword.val());
-				} 
-				keyword.val("");
-			});
+$(document).ready(function(){
+	pagination("search");
+});
 
-	var portfolioController = {
+//검색을 클릭하면 검색된 의뢰서 목록을 가져온다.
+$("#portfolioSearchBtn").click(
+		function() {
+			var type = $("#portfolioSearchType option:selected").val();
+			var keyword = $("#portfolioSearchKeyword");
+			if (type === "title") {
+				portfolioController.getPortfoliosByMakerIdAndTitle(1, keyword.val());
+			} 
+			keyword.val("");
+		});
+
+var portfolioController = {
+		getMyPortfolios : function(page) {
+			$.ajax({
+				url : "${ctx}/portfolio/xml/search.do?page=" + page,
+				type : "get",
+				dataType : "xml",
+				success : function(xml) {
+					var xmlData = $(xml).find("portfolio");
+					var listLength = xmlData.length;
+					$("#listSearchResult").empty();
+					if (listLength) {
+						var contentStr = "";
+						$(xmlData).each(function() {
+							contentStr += portfolioController.makeContent(this);
+						});
+						$("#listSearchResult").append(contentStr);
+					} else {
+						$("#listSearchResult").append(
+								portfolioController.makeContentForEmpty());
+					}
+				}
+			});
+		},
+		
 		getPortfoliosByMakerIdAndTitle : function(page, title) {
 			$.ajax({
 				url : "${ctx}/portfolio/xml/searchByTitle.do?page=" + page
@@ -128,63 +160,59 @@ ${box2 }
 			});
 		},
 
-		makeContent : function(xml) {
-			var content = "";
-	 		content += '<div style="display:inline-block; padding-right: 10px;">';
-			content += '	<table class="table" style="width:210px;">';
-			content += '		<tr>';
-			content += '			<img src="${ctx }/main/file/download.do?fileName='+ $(xml).find("portfolio>image").text() +'"style="width: 220px; height: 180px" >';
-			content += '		</tr>';
-			content += "		<tr>";
-			content += "			<td>포트폴리오 명 : </td>";
-			content += "			<td><a class='portfolio' id='portfolioTitle' href='${ctx }/portfolio/ui/detail.do?id="+ $(xml).find("portfolio>id").text()+ "'>" + $(xml).find("portfolio>title").text()+"</a></td>";
-			content += "		</tr>";
-			content += "		<tr>";
-			content += "			<td>제작항목 : </td>";
-			content += "			<td>" + $(xml).find("portfolio>category").text()
-					+ "</td>";
-			content += "		</tr>";
-			content += "	</table>";
-			content += "</div>";
-			
-		/* 	content += "<div class='listBox'>";
-			content += "	<div class='listExplainBox'>";
-			content += '		<img src="${ctx }/portfolio/image.do?img='+ $(xml).find("portfolio>image").text() +'" class="portfolio-image">';
-			content += "		<table>";
-			content += "			<tr>";
-			content += "				<td>포트폴리오 명 : </td>";
-			content += "				<td><a class='portfolio' id='portfolioTitle' href='${ctx }/portfolio/ui/detail.do?id="+ $(xml).find("portfolio>id").text()+ "'>" + $(xml).find("portfolio>title").text()+"</a></td>";
-			content += "			</tr>";
-			content += "			<tr>";
-			content += "				<td>제작항목 : </td>";
-			content += "				<td>" + $(xml).find("portfolio>category").text()
-					+ "</td>";
-			content += "			</tr>";
-			content += "		</table>";
-			content += "	</div>";
-			content += "</div>"; */
+	makeContent : function(xml) {
+		var content = "";
+ 		content += '<div style="display:inline-block; padding-right: 10px;">';
+		content += '	<table class="table" style="width:210px;">';
+		content += '		<tr>';
+		content += '			<img src="${ctx }/main/file/download.do?fileName='+ $(xml).find("portfolio>image").text() +'"style="width: 220px; height: 180px" >';
+		content += '		</tr>';
+		content += "		<tr>";
+		content += "			<td>포트폴리오 명 : </td>";
+		content += "			<td><a class='portfolio' id='portfolioTitle' href='${ctx }/portfolio/ui/detail.do?id="+ $(xml).find("portfolio>id").text()+ "'>" + $(xml).find("portfolio>title").text()+"</a></td>";
+		content += "		</tr>";
+		content += "		<tr>";
+		content += "			<td>제작항목 : </td>";
+		content += "			<td>" + $(xml).find("portfolio>category").text()
+				+ "</td>";
+		content += "		</tr>";
+		content += "	</table>";
+		content += "</div>";
 
-			return content;
-		},
+		return content;
+	},
 
-		makeContentForEmpty : function() {
-			var content = "";
+	makeContentForEmpty : function() {
+		var content = "";
 
-			content += "<div class='portfolioBox'>";
-			content += "<table>";
-			content += "<tr>";
-			content += "<td>조건에 해당하는 상품이 없습니다.</td>";
-			content += "</tr>";
-			content += "</table>";
-			content += "</div>";
+		content += "<div class='portfolioBox'>";
+		content += "<table>";
+		content += "<tr>";
+		content += "<td>조건에 해당하는 상품이 없습니다.</td>";
+		content += "</tr>";
+		content += "</table>";
+		content += "</div>";
 
-			return content;
+		return content;
+	}
+};
+
+//페이지 생성 함수
+function pagination(doName){
+	$.ajax({
+		url : "${ctx}/portfolio/pages/" + doName + ".do",
+		type : "get",
+		dataType : "text",
+		success : function(pages) {
+		    $('#pagination').pagination({	// 페이지 총 개수를 구한 다음 생성
+		        items: pages,
+		        itemOnPage: 10,
+		        cssStyle: 'light-theme',
+		        onPageClick: function (page, evt) {
+		        	portfolioController.getMyPortfolios(page);
+		        }
+		    });
 		}
-	};
+	});
+};
 </script>
-
-
-
-${box3 }
-
-<%@ include file="/views/common/footer.jsp"%>

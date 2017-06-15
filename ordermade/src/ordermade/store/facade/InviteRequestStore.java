@@ -10,5 +10,6 @@ public interface InviteRequestStore {
 	public boolean deleteInviteRequestById(String id);
 	public boolean deleteInviteRequestsByRequestId(String requestId);
 	public List<InviteRequest> selectInviteRequestsByMakerId(String makerId, String form, String page);
+	public int selectRowsInviteRequestsByMakerId(String makerId, String form);
 	public List<InviteRequest> selectInviteRequestsByConsumerId(String consumerId, String form, String page);
 }

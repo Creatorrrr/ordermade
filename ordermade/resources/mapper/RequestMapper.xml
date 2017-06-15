@@ -122,6 +122,12 @@
 			WHERE r.bound = #{bound} AND ir.id IS NULL)
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
+	
+	<select id="selectRowsByBound" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM request r LEFT OUTER JOIN invite_request ir ON r.id = ir.request_id
+		WHERE r.bound = #{bound} AND ir.id IS NULL
+	</select>
 
 	<select id="selectRequestsByBoundAndTitle" parameterType="HashMap"
 		resultMap="requestMap">
@@ -171,50 +177,97 @@
 	                r.bound,
 	                r.payment
 				FROM request r LEFT OUTER JOIN purchase_history ph ON r.id = ph.request_id
-				WHERE r.consumer_id = #{consumerId} AND r.maker_id IS NOT NULL AND (ph.payment != 'Y' OR ph.payment IS NULL))   
+				WHERE r.consumer_id = #{consumerId} AND r.maker_id IS NOT NULL AND (ph.payment != '${@ordermade.constants.Constants@PAYMENT_Y}' OR ph.payment IS NULL))   
 		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
-
-	<select id="selectRequestsByConsumerIdWithPayment"
-		parameterType="HashMap" resultMap="requestMap">
-		(SELECT ROW_NUMBER() OVER (ORDER BY regdate DESC) rnum, r.id, r.title,
-		r.maker_id, r.consumer_id, r.type, r.content, r.hope_price, r.price,
-		r.bound, r.payment
-		FROM request r INNER JOIN purchase_history ph ON r.id = ph.request_id
-		WHERE r.consumer_id = #{consumerId} AND ph.payment = '${@ordermade.constants.Constants@PAYMENT_Y}')
+	
+	<select id="selectRowsByConsumerIdWithMaker" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM request r LEFT OUTER JOIN purchase_history ph ON r.id = ph.request_id
+		WHERE r.consumer_id = #{consumerId} AND r.maker_id IS NOT NULL AND (ph.payment != '${@ordermade.constants.Constants@PAYMENT_Y}' OR ph.payment IS NULL)
 	</select>
 
-	<select id="selectRequestsByMakerId" parameterType="HashMap"
+	<select id="selectRequestsByConsumerIdWithPayment" parameterType="HashMap" resultMap="requestMap">
+		<include refid="selectRequest" />
+		FROM (SELECT ROW_NUMBER() OVER (ORDER BY regdate DESC) rnum,
+				r.id,
+				r.title,
+				r.maker_id,
+				r.consumer_id, 
+				r.type, 
+				r.content,
+				r.hope_price, 
+				r.price,
+				r.bound, 
+				r.payment
+			FROM request r INNER JOIN purchase_history ph ON r.id = ph.request_id
+			WHERE r.consumer_id = #{consumerId} AND ph.payment = '${@ordermade.constants.Constants@PAYMENT_Y}')
+		WHERE rnum BETWEEN #{begin} AND #{end}
+	</select>
+	
+	<select id="selectRowsByConsumerIdWithPayment" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM request r INNER JOIN purchase_history ph ON r.id = ph.request_id
+		WHERE r.consumer_id = #{consumerId} AND ph.payment = '${@ordermade.constants.Constants@PAYMENT_Y}'
+	</select>
+
+	<!-- <select id="selectRequestsByMakerId" parameterType="HashMap"
 		resultMap="requestMap">
 		<include refid="selectRequest" />
 		FROM (<include refid="selectRequestRownum" />
 				FROM request
 				WHERE maker_id = #{makerId})
 		WHERE rnum BETWEEN #{begin} AND #{end}
-	</select>
+	</select> -->
 
 	<select id="selectRequestsByMakerIdExceptPayment" parameterType="HashMap"
 		resultMap="requestMap">
-		SELECT ROW_NUMBER() OVER (ORDER BY regdate DESC) rnum, r.id, r.title, r.maker_id,
-		r.consumer_id, r.type, r.content, r.hope_price, r.price, r.bound , r.payment, 1
-		page
-		FROM request r
-		LEFT OUTER JOIN purchase_history ph ON r.id = ph.request_id
-		WHERE r.maker_id = #{makerId} AND (ph.payment =
-		'${@ordermade.constants.Constants@PAYMENT_N}' OR ph.payment IS NULL)
+		<include refid="selectRequest" />
+		FROM (SELECT ROW_NUMBER() OVER (ORDER BY regdate DESC) rnum,
+						r.id, 
+						r.title,
+						r.maker_id,
+						r.consumer_id, 
+						r.type, 
+						r.content, 
+						r.hope_price, 
+						r.price, 
+						r.bound , 
+						r.payment
+			FROM request r LEFT OUTER JOIN purchase_history ph ON r.id = ph.request_id
+			WHERE r.maker_id = #{makerId} AND (ph.payment = '${@ordermade.constants.Constants@PAYMENT_N}' OR ph.payment IS NULL))
+		WHERE rnum BETWEEN #{begin} AND #{end}
+	</select>
+	
+	<select id="selectRowsByMakerIdExceptPayment" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM request r LEFT OUTER JOIN purchase_history ph ON r.id = ph.request_id
+		WHERE r.maker_id = #{makerId} AND (ph.payment = '${@ordermade.constants.Constants@PAYMENT_N}' OR ph.payment IS NULL)
 	</select>
 	
 	<select id="selectRequestsByMakerIdWithPayment" parameterType="HashMap"
 		resultMap="requestMap">
-		(SELECT ROW_NUMBER() OVER (ORDER BY regdate DESC) rnum, r.id, r.title, r.maker_id,
-		r.consumer_id, r.type, r.content, r.hope_price, r.price, r.bound , r.payment, 1
-		page
-		FROM request r
-		INNER JOIN purchase_history ph ON r.id = ph.request_id
-		WHERE r.maker_id = #{makerId} AND ph.payment =
-		'${@ordermade.constants.Constants@PAYMENT_Y}')
+		<include refid="selectRequest" />
+		FROM (SELECT ROW_NUMBER() OVER (ORDER BY regdate DESC) rnum, 
+					r.id, 
+					r.title, 
+					r.maker_id,
+					r.consumer_id, 
+					r.type, 
+					r.content, 
+					r.hope_price, 
+					r.price, 
+					r.bound , 
+					r.payment
+			FROM request r INNER JOIN purchase_history ph ON r.id = ph.request_id
+			WHERE r.maker_id = #{makerId} AND ph.payment = '${@ordermade.constants.Constants@PAYMENT_Y}')
+		WHERE rnum BETWEEN #{begin} AND #{end}
 	</select>
-
-
+	
+	<select id="selectRowsByMakerIdWithPayment" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM request r INNER JOIN purchase_history ph ON r.id = ph.request_id
+		WHERE r.maker_id = #{makerId} AND ph.payment = '${@ordermade.constants.Constants@PAYMENT_Y}'
+	</select>
 
 </mapper>

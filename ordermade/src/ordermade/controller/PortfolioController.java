@@ -162,6 +162,14 @@ public class PortfolioController {
 		}
 		return new Portfolios(pService.findPortfoliosByMakerId(makerId, page));
 	} // test http://localhost:8080/ordermade/portfolio/xml/search.do?page=2
+	
+	@RequestMapping(value = "pages/search.do", method=RequestMethod.GET, produces = "text/plain")
+	public @ResponseBody String findMyPortfolios(String makerId, HttpSession session) {
+		if(makerId == null || makerId.isEmpty()) {
+			makerId = (String) session.getAttribute("loginId");
+		}
+		return pService.findRowsByMakerId(makerId) / Constants.PORTFOLIO_ROW_SIZE + 1 + "";
+	}
 
 	@RequestMapping(value = "xml/searchByTitle.do", method=RequestMethod.GET, produces = "application/xml")                                 
 	public @ResponseBody Portfolios findMyPortfoliosByMakerIdAndTitle(String title, String page, String makerId,  HttpServletRequest req) {         //findPortfoliosByMakerIdAndTitle		

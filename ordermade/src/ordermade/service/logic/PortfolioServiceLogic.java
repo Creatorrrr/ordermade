@@ -50,6 +50,11 @@ public class PortfolioServiceLogic implements PortfolioService{
 	public List<Portfolio> findPortfoliosByMakerId(String makerId, String page) {
 		return excludePassword(store.selectPortfoliosByMakerId(makerId, getPortfolioBegin(page), getPortfolioEnd(page)));
 	}
+	
+	@Override
+	public int findRowsByMakerId(String makerId) {
+		return store.selectRowsByMakerId(makerId);
+	}
 
 	@Override
 	public List<Portfolio> findPortfoliosByMakerIdAndTitle(String makerId, String title,String page ) {
