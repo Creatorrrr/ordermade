@@ -31,9 +31,13 @@ public class MemberController {
 	public @ResponseBody String registerMember(Member member, HttpServletRequest request) {
 		// 회원가입 **회원가입이 실패하면 memberRegister.jsp 화면으로 이동 **회원가입이 성공하면 login.jsp으로
 		// 이동
-		if(member.getId().equals(service.findMemberById(member.getId()))) {
+		System.out.println("--------"+member.getId());
+		Member memberDB=service.findMemberById(member.getId());
+		if(memberDB != null) {
+			System.out.println(memberDB.getId());
 			return "false";
 		}
+		System.out.println("-------"+member.toString());
 		return service.registerMember(member) + "";
 	}
 
@@ -47,6 +51,7 @@ public class MemberController {
 	public @ResponseBody String loginMember(Member member, HttpSession session) {
 		// 로그인 --아이디와 비밀 번호 일치할 경우 main/main.do로 이동 --아이디와 비밀 번호 불일치할 경우
 		// login.jsp으로 이동
+		System.out.println("sessionId="+session.getId());
 		Member loginedUser = service.findMemberById(member.getId());
 
 		if (loginedUser != null && loginedUser.getPassword().equals(member.getPassword())) {
@@ -135,6 +140,7 @@ public class MemberController {
 	// http://localhost:8080/ordermade/member/xml/myPage.do
 	@RequestMapping(value = "/xml/myPage.do", method=RequestMethod.GET, produces = "application/xml")
 	public @ResponseBody Member findMyMember(HttpSession session) {
+		System.out.println("sessionId="+session.getId()+"-------------"+session.getAttribute("loginId"));
 		return service.findMemberById((String) session.getAttribute("loginId"));
 	}
 
