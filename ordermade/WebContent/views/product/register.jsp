@@ -76,7 +76,7 @@ $(document).ready(function() {
 	// DB에서 카테고리 리스트 불러오기
 	$.ajax({
 		url : "${ctx}/main/xml/categoryList.do",
-		type : "post",
+		type : "get",
 		dataType : "xml",
 		success : function(xml) {
 			var categoryId = "${categoryId}";
