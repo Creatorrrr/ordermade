@@ -69,6 +69,16 @@ public class MemberController {
 		session.invalidate();
 		return "redirect:/main/main.do";
 	}
+	
+	@RequestMapping(value="/xml/logout.do", method=RequestMethod.GET, produces="text/plain") // add 2017.6.17
+	public @ResponseBody String logoutMemberMobile(HttpSession session) {
+		
+		String loginId = (String) session.getAttribute("loginId");
+		if (loginId.isEmpty() || loginId == null) return "false";
+		session.invalidate();
+		return "true";
+	}
+	
 
 	@RequestMapping(value="/modify.do", method=RequestMethod.GET) // end
 	public ModelAndView showEditMyPageUI(HttpSession session) {
