@@ -1,12 +1,8 @@
 package ordermade.domain;
 
-import java.sql.Date;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.springframework.stereotype.Component;
 
 @XmlRootElement(name="inviterequest")
 @XmlAccessorType(XmlAccessType.PROPERTY)
@@ -14,7 +10,7 @@ public class InviteRequest {
 	private String id;
 	private String message;
 	private Member maker;
-	private Date requestTime;
+	private String requestTime;
 	private Request request;
 	private String form;
 	
@@ -41,10 +37,10 @@ public class InviteRequest {
 	public void setMaker(Member maker) {
 		this.maker = maker;
 	}
-	public Date getRequestTime() {
+	public String getRequestTime() {
 		return requestTime;
 	}
-	public void setRequestTime(Date requestTime) {
+	public void setRequestTime(String requestTime) {
 		this.requestTime = requestTime;
 	}
 	public Request getRequest() {

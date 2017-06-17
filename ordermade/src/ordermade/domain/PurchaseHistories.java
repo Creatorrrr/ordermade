@@ -7,14 +7,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.springframework.stereotype.Component;
-
 @XmlRootElement(name="purchaseHistories")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PurchaseHistories {
 	
 	@XmlElement(name="purchaseHistory")
 	private List<PurchaseHistory> purchaseList;
+	
+	public PurchaseHistories() {}
+
+	public PurchaseHistories(List<PurchaseHistory> purchaseList) {
+		this.purchaseList = purchaseList;
+	}
 
 	public List<PurchaseHistory> getPurchaseList() {
 		return purchaseList;

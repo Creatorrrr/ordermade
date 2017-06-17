@@ -5,8 +5,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.springframework.stereotype.Component;
-
 @XmlRootElement(name="member")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Member {
