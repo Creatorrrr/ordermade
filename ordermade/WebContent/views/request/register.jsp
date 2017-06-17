@@ -84,7 +84,7 @@ ${box3 }
 		
 		$.ajax({
 			url : "${ctx}/main/xml/categoryList.do",
-			type : "post",
+			type : "get",
 			dataType : "xml",
 			success : function(xml) {
 				var categoryId = "${categoryId}";

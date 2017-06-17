@@ -39,7 +39,7 @@ public class MainController {
 				.addObject("categories", pService.findAllCategory());
 	}
 	
-	@RequestMapping(value="xml/categoryList.do", method=RequestMethod.POST, produces="application/xml")
+	@RequestMapping(value="xml/categoryList.do", method=RequestMethod.GET, produces="application/xml")
 	public @ResponseBody Categories findAllCategories(){
 		return new Categories(pService.findAllCategory());
 	}
