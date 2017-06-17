@@ -7,8 +7,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.springframework.stereotype.Component;
-
 @XmlRootElement(name = "reviews")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Reviews {

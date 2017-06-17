@@ -1,7 +1,5 @@
 package ordermade.domain;
 
-import java.sql.Date;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,7 +13,7 @@ public class Comment {
 	private String contentType;
 	private Member member;
 	private Request request;
-	private Date time;
+	private String time;
 	
 	public String getId() {
 		return id;
@@ -58,10 +56,10 @@ public class Comment {
 		this.request = request;
 	}
 	
-	public Date getTime() {
+	public String getTime() {
 		return time;
 	}
-	public void setTime(Date time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 }

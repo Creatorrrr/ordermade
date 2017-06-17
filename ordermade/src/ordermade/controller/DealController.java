@@ -96,46 +96,39 @@ public class DealController {
 	@RequestMapping(value="xml/searchPurchaseConsumerList.do", method=RequestMethod.GET, produces="application/xml")
 	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesForConsumer(String page, HttpSession session){
 		// session에서 회원ID 가져오기
-		String consumerId = (String)session.getAttribute("loginId");
-		if(page == null || page == "") page = "1";
-		List<PurchaseHistory> purchaseConsumerList = dService.findpurchaseHistoriesByConsumerId(consumerId, page);
-		PurchaseHistories purchaseHistories = new PurchaseHistories();
-		purchaseHistories.setPurchaseList(purchaseConsumerList);
-		return purchaseHistories;
+		if(page == null || page.isEmpty()) page = "1";
+		return new PurchaseHistories(dService.findpurchaseHistoriesByConsumerId(
+				(String)session.getAttribute("loginId"), 
+				page));
 	}
 	
 	// http://localhost:8080/ordermade/deal/xml/searchPurchaseConsumerTitleList.do
 	@RequestMapping(value="xml/searchPurchaseConsumerTitleList.do", method=RequestMethod.POST, produces="application/xml")
-	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesByRequestTitleForConsumer(String requestTitle, String consumerId, String page, HttpSession session){
-		consumerId = "user1";
-		if(page == null || page == "") page = "1";
-		List<PurchaseHistory> purchaseConsumerTitleList = dService.findpurchaseHistoriesByConsumerIdAndRequestTitle(consumerId, requestTitle, page);
-		PurchaseHistories purchaseHistories = new PurchaseHistories();
-		purchaseHistories.setPurchaseList(purchaseConsumerTitleList);
-		return purchaseHistories;
+	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesByRequestTitleForConsumer(String requestTitle, String page, HttpSession session){
+		if(page == null || page.isEmpty()) page = "1";
+		return new PurchaseHistories(dService.findpurchaseHistoriesByConsumerIdAndRequestTitle(
+				(String)session.getAttribute("loginId"), 
+				requestTitle, 
+				page));
 	}
 	
 	// http://localhost:8080/ordermade/deal/xml/searchPurchaseMakerList.do
 	@RequestMapping(value="xml/searchPurchaseMakerList.do", method=RequestMethod.GET, produces="application/xml")
-	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesForMaker(String makerId, String page, HttpSession session){
-		makerId = "";
-		if(page == null || page == "") page = "1"; // String page 추가 17/06/03 11:58am By MBS
-		List<PurchaseHistory> purchaseMakerList = dService.findpurchaseHistoriesByMakerId(makerId, page);
-		PurchaseHistories purchaseHistories = new PurchaseHistories();
-		purchaseHistories.setPurchaseList(purchaseMakerList);
-		return purchaseHistories;
+	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesForMaker(String page, HttpSession session){
+		if(page == null || page.isEmpty()) page = "1"; // String page 추가 17/06/03 11:58am By MBS
+		return new PurchaseHistories(dService.findpurchaseHistoriesByMakerId(
+				(String)session.getAttribute("loginId"), 
+				page));
 	}
 	
 	// http://localhost:8080/ordermade/deal/xml/searchMakerListByRequestTitle.do
 	@RequestMapping(value="xml/searchPurchaseMakerListByRequestTitle.do", method=RequestMethod.GET, produces="application/xml")
-	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesByRequestTitleForMaker(String requestTitle, String makerId, String page, HttpSession session){
-		makerId="";
-		requestTitle = "";
-		if(page == null || page == "") page = "1";
-		List<PurchaseHistory> purchaseMakerTitleList = dService.findpurchaseHistoriesByMakerIdAndRequestTitle(makerId, requestTitle, page);
-		PurchaseHistories purchaseHistories = new PurchaseHistories();
-		purchaseHistories.setPurchaseList(purchaseMakerTitleList);
-		return purchaseHistories;
+	public @ResponseBody PurchaseHistories findMyPurchaseHistoriesByRequestTitleForMaker(String requestTitle, String page, HttpSession session){
+		if(page == null || page.isEmpty()) page = "1";
+		return new PurchaseHistories(dService.findpurchaseHistoriesByMakerIdAndRequestTitle(
+				(String)session.getAttribute("loginId"), 
+				requestTitle, 
+				page));
 	}
 	
 	// Complete

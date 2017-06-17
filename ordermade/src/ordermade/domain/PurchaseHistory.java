@@ -1,12 +1,8 @@
 package ordermade.domain;
 
-import java.sql.Date;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.springframework.stereotype.Component;
 
 @XmlRootElement(name="purchasehistory")
 @XmlAccessorType(XmlAccessType.PROPERTY)
@@ -15,7 +11,7 @@ public class PurchaseHistory {
 	private Member maker;
 	private Member consumer;
 	private Request request;
-	private Date orderDate;
+	private String orderDate;
 	private String invoiceNumber;
 	private int charge;
 	private String deliveryStatus;
@@ -58,10 +54,10 @@ public class PurchaseHistory {
 	public void setRequest(Request request) {
 		this.request = request;
 	}
-	public Date getOrderDate() {
+	public String getOrderDate() {
 		return orderDate;
 	}
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
 	}
 	public String getInvoiceNumber() {
