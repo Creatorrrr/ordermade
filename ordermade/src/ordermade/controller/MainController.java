@@ -102,6 +102,6 @@ public class MainController {
 			e.printStackTrace();
 		}
 		
-		return new Image(1, fileName, "http://localhost:8080/ordermade/main/file/download.do?fileName=" + fileName);
+		return new Image(1, fileName, Constants.ROOT_URL + "/main/file/download.do?fileName=" + fileName);
 	}
 }

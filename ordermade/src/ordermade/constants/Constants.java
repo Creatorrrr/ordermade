@@ -12,7 +12,8 @@ public class Constants {
 	
 	// 본인 이클립스 경로의 WebContent 폴더에 생성됨
 	// ex) C:\kosta_14\down\eclipse-jee-neon-2-win32-x86_64\eclipse\WebContent
-	public static final String ROOT = "C:/Users/Administrator/ordermade";	
+	public static final String ROOT = "C:/Users/Administrator/ordermade";
+	public static final String ROOT_URL = "http://52.78.240.104:8080/ordermade";
 
 	public static final String FILE_PATH = ROOT +"/file/";
 	public static final String IMAGE_PATH = ROOT +"/img/";
