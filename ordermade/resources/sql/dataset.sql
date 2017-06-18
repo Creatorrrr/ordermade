@@ -341,3 +341,39 @@ INSERT INTO PORTFOLIO (id, title, type, content, maker_id, image, regdate) VALUE
 INSERT INTO PORTFOLIO (id, title, type, content, maker_id, image, regdate) VALUES (portfolio_seq.nextval, '따르릉 따르릉은? 자전거!', 'SPORT', '고객님이 원하는 색상, 사이즈, 디자인 그리고 무게까지 맞추어 만들었습니다. 작은 디테일까지 살리고, 부품하나까지 좋은 것으로만 사용했습니다. 작은 것 하나라도 꼼꼼히 만들겠습니다.', 'm1', 'sport/3.jpg', SYSDATE);
 
 COMMIT;
+
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c1', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '1','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c1', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '2','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c1', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '3','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c1', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '4','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c1', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '5','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '괜찮네요', 'c2', '그냥 괜찮아요', '4', '1','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c2', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '2','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c2', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '3','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c2', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '4','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '괜찮네요', 'c2', '그냥 괜찮아요', '4', '5');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '추천합니다~~', 'c3', '진짜 잘 만들어졌어요 감사감사', '5', '1');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c3', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '2','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c3', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '4', '3','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c3', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '4','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c3', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '5','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '제가 원한건 이게 아닌데', 'c4', '어쨌든 사용해야겠죠;', '2', '1','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c4', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '2','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c4', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '3','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c4', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '4','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c4', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '5','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '제가 원한건 이게 아닌데', 'c1', '어쨌든 사용해야겠죠;', '1', '11','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c7', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '10','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '추천합니다~~', 'c8', '진짜 잘 만들어졌어요 감사감사', '5', '11','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c14', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '10','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '추천해여~~~~~~~', 'c9', '마음에 들어요', '5', '9','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '여기서 주문하세요', 'c18', '친절해요', '5', '10','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '제가 원한건 이게 아닌데', 'c4', '어쨌든 사용해야겠죠;', '2', '1','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '질이 좋아요', 'c14', '고급스러운 느낌나요!!', '5', '10','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '딱 예상한대로', 'c10', '그냥 생각한 만큼 만들어졌네요', '3', '10','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '짱짱', 'c12', '최고에요', '5', '10','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '마음에 들어요!!', 'c7', '제가 원하는대로 만들어져 왔네요 마음에 쏙 들어요', '5', '1','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '추천합니다~~', 'c8', '진짜 잘 만들어졌어요 감사감사', '5', '10','17/06/19');
+INSERT INTO REVIEW (id, title, consumer_id, content, grade, product_id, regdate) VALUES (review_seq.nextval, '여기서 주문하세요', 'c9', '친절해요', '5', '1','17/06/19');
+
+COMMIT;
