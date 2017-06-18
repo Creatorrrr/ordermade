@@ -82,8 +82,7 @@
 		price = #{price},
 		period = #{period},
 		maker_id = #{maker.id},
-		type = #{category},
-		hit = #{hit}
+		type = #{category}
 		WHERE id = #{id}
 	</update>
 

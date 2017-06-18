@@ -47,7 +47,7 @@ public class MainController {
 	@RequestMapping(value="file/download.do", method=RequestMethod.GET)
 	public void downloadFile(String fileName, HttpServletResponse resp) {
 		File file = new File(Constants.FILE_PATH + fileName);
-		System.out.println(file.toString());
+		
 		if (!file.exists()) {
 			throw new RuntimeException("No such file");
 		}
@@ -81,6 +81,7 @@ public class MainController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		return "fail";
 	}
 	

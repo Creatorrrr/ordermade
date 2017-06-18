@@ -30,6 +30,7 @@ public class ProductController {
 		if(checkLogined(session)) return "error";	// check logined
 		product.setMaker(new Member());
 		product.getMaker().setId((String)session.getAttribute("loginId"));
+		product.setHit(0);
 		return pService.registerProduct(product) + "";
 	}
 
